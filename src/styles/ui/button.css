@@ -1,0 +1,99 @@
+.button {
+  &-default,
+  &-primary,
+  &-secondary,
+  &-warning,
+  &-danger {
+    &--no-spacing:not(:disabled) {
+      @apply hover:underline underline-offset-4;
+
+      &.selected {
+        @apply underline;
+      }
+    }
+  }
+
+  &-default {
+    @apply bg-secondary;
+
+    &:not(:disabled) {
+      @apply hover:bg-tertiary;
+
+      &.selected {
+        @apply bg-tertiary;
+      }
+    }
+  }
+
+  &-primary {
+    @apply !text-dark bg-blue;
+
+    &:not(:disabled) {
+      @apply bg-blue--hover;
+
+      &.selected {
+        @apply bg-blue-600 dark:bg-blue-500;
+      }
+
+      &--no-spacing {
+        @apply hover:text-blue decoration-blue;
+
+        &.selected {
+          @apply text-blue decoration-blue;
+        }
+      }
+    }
+  }
+
+  &-secondary {
+    @apply bg-transparent;
+
+    &:not(:disabled) {
+      @apply hover:bg-secondary;
+
+      &.selected {
+        @apply bg-secondary;
+      }
+    }
+  }
+
+  &-warning {
+    @apply !text-light bg-yellow;
+
+    &:not(:disabled) {
+      @apply bg-yellow--hover;
+
+      &.selected {
+        @apply bg-yellow-500 dark:bg-yellow-400;
+      }
+
+      &--no-spacing {
+        @apply hover:text-yellow decoration-yellow;
+
+        &.selected {
+          @apply text-yellow decoration-yellow;
+        }
+      }
+    }
+  }
+
+  &-danger {
+    @apply !text-dark bg-red;
+
+    &:not(:disabled) {
+      @apply bg-red--hover;
+
+      &.selected {
+        @apply bg-red-600 dark:bg-red-500;
+      }
+
+      &--no-spacing {
+        @apply hover:text-red decoration-red;
+
+        &.selected {
+          @apply text-red decoration-red;
+        }
+      }
+    }
+  }
+}
