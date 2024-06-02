@@ -1,20 +1,12 @@
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
-import type { IconType } from "react-icons";
 
-import type { ButtonProps, ElementExtendedVariant } from "@/types";
+import type { ButtonProps, ContentWithIcon, ElementExtendedVariant } from "@/types";
 import { ICON_SIZE } from "@/data/constant";
 
-interface TextButtonIcon {
-    content: IconType;
-    size?: TextButtonProps['size'];
-};
-
-interface TextButtonProps extends ButtonProps {
+interface TextButtonProps extends ButtonProps, ContentWithIcon {
     label: string;
     variant?: ElementExtendedVariant;
-    iconBefore?: TextButtonIcon;
-    iconAfter?: TextButtonIcon;
 };
 
 export default function TextButton({ label, variant = 'default', size = 'md', spacing = 'default', href, iconBefore, iconAfter, ...props }: TextButtonProps) {
