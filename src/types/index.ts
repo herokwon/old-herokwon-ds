@@ -41,7 +41,7 @@ export interface ContentWithIcon {
 export interface ItemsWithHeading {
     id: string;
     heading: string;
-    items: ContentWithId[];
+    items: (ContentWithId & ContentWithIcon)[];
 };
 
 export * from "./form/input";
