@@ -6,6 +6,11 @@ export const ELEMENT_SPACING = ['default', 'compact', 'none'] as const;
 export const ELEMENT_BASE_VARIANT = ['default', 'primary', 'secondary'] as const
 export const ELEMENT_EXTENDED_VARIANT = [...ELEMENT_BASE_VARIANT, 'warning', 'danger'] as const;
 
+export const ALIGNMENT_X = ['left', 'center', 'right'] as const;
+export const ALIGNMENT_Y = ['top', 'middle', 'bottom'] as const;
+
+export const SELECTING_INPUT = ['text', 'multi-text', 'radio', 'checkbox'] as const;
+
 export const ICON_SIZE: { [size in ElementExtendedSize]: number } = {
     xs: 8,
     sm: 12,

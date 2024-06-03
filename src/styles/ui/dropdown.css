@@ -1,0 +1,127 @@
+.dropdown {
+  &-items-container {
+    @apply w-max max-w-[80vw] p-2 transition-all absolute z-10;
+
+    &:not(.open) {
+      @apply opacity-0 pointer-events-none;
+    }
+
+    &.to {
+      &-top-left,
+      &-top-center,
+      &-top-right {
+        @apply px-0 bottom-full;
+
+        &:not(.open) {
+          @apply -translate-y-[0.125rem];
+        }
+      }
+
+      &-bottom-left,
+      &-bottom-center,
+      &-bottom-right {
+        @apply px-0 top-full;
+
+        &:not(.open) {
+          @apply translate-y-[0.125rem];
+        }
+      }
+
+      &-left-top,
+      &-left-middle,
+      &-left-bottom {
+        @apply py-0 right-full;
+
+        &:not(.open) {
+          @apply -translate-x-[0.125rem];
+        }
+      }
+
+      &-right-top,
+      &-right-middle,
+      &-right-bottom {
+        @apply py-0 left-full;
+
+        &:not(.open) {
+          @apply translate-x-[0.125rem];
+        }
+      }
+
+      /* 세부 위치 설정 ------------------------------ */
+
+      &-top-left,
+      &-bottom-left {
+        @apply left-0;
+      }
+
+      &-top-center,
+      &-bottom-center {
+        @apply left-1/2 -translate-x-1/2;
+      }
+
+      &-top-right,
+      &-bottom-right {
+        @apply right-0;
+      }
+
+      &-left-top,
+      &-right-top {
+        @apply top-0;
+      }
+
+      &-left-middle,
+      &-right-middle {
+        @apply top-1/2 -translate-y-1/2;
+      }
+
+      &-left-bottom,
+      &-right-bottom {
+        @apply bottom-0;
+      }
+    }
+
+    & .dropdown-items-inner {
+      @apply p-2 rounded-ms border border-tertiary bg-light-primary dark:bg-dark-secondary shadow-primary overflow-y-auto relative;
+
+      & .dropdown-items {
+        &--label {
+          @apply mx-2 py-2 flex justify-between items-center border-b border-tertiary;
+
+          & p {
+            @apply text-sm font-bold opacity-off;
+          }
+        }
+
+        &-list {
+          &--flat {
+            @apply w-full flex flex-col gap-y-1;
+          }
+
+          &--group {
+            @apply w-full p-2 flex flex-col gap-y-1;
+          }
+        }
+      }
+
+      & .dropdown-item {
+        @apply w-full px-2 py-1 rounded-ms;
+
+        &:not(.disabled) {
+          @apply hover:bg-light-secondary dark:hover:bg-dark-tertiary cursor-pointer;
+
+          &.selected {
+            @apply !text-dark bg-blue;
+          }
+        }
+
+        &-heading {
+          @apply w-full text-sm font-semibold whitespace-pre;
+        }
+
+        &-description {
+          @apply w-full text-xs whitespace-pre opacity-off;
+        }
+      }
+    }
+  }
+}

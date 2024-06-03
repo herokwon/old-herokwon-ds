@@ -1,4 +1,5 @@
 @import "./ui/button.css";
+@import "./ui/dropdown.css";
 
 @tailwind base;
 @tailwind components;
