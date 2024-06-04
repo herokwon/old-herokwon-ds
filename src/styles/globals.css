@@ -9,6 +9,24 @@
   button:disabled {
     @apply disabled;
   }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+    box-shadow: 0 0 0 1000px white inset;
+    -webkit-text-fill-color: black;
+  }
+
+  :is(.dark) input:-webkit-autofill,
+  :is(.dark) input:-webkit-autofill:hover,
+  :is(.dark) input:-webkit-autofill:focus,
+  :is(.dark) input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #121212 inset;
+    box-shadow: 0 0 0 1000px #121212 inset;
+    -webkit-text-fill-color: white;
+  }
 }
 
 @layer components {

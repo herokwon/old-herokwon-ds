@@ -10,6 +10,8 @@ export const ALIGNMENT_X = ['left', 'center', 'right'] as const;
 export const ALIGNMENT_Y = ['top', 'middle', 'bottom'] as const;
 
 export const SELECTING_INPUT = ['text', 'multi-text', 'radio', 'checkbox'] as const;
+export const TEXT_INPUT = ['email', 'number', 'password', 'search', 'tel', 'text', 'url'] as const;
+export const DATETIME_INPUT = ['date', 'datetime-local', 'month', 'time', 'week'] as const;
 
 export const ICON_SIZE: { [size in ElementExtendedSize]: number } = {
     xs: 8,
