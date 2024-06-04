@@ -7,7 +7,7 @@ export type SelectingInput = typeof SELECTING_INPUT[number];
 export type TextInput = typeof TEXT_INPUT[number];
 export type DatetimeInput = typeof DATETIME_INPUT[number];
 
-interface InputBaseProps extends Omit<React.ComponentPropsWithoutRef<'input'>, 'type'> {
+interface InputBaseProps extends Pick<ElementStates, 'isDisabled'>, Omit<React.ComponentPropsWithoutRef<'input'>, 'type'> {
     label?: string;
     helperMessage?: string;
     errorMessage?: string;
@@ -16,6 +16,6 @@ interface InputBaseProps extends Omit<React.ComponentPropsWithoutRef<'input'>, '
 export type InputProps<T extends TextInput | DatetimeInput = never> = ([T] extends [never] ?
     InputBaseProps :
     InputBaseProps &
-    Pick<ElementStates, 'isDisabled'> & {
+    {
         type?: T;
     });

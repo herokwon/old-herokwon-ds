@@ -48,6 +48,14 @@
     &-tertiary {
       @apply border-light-tertiary dark:border-dark-tertiary;
     }
+
+    &-blue {
+      @apply border-blue-500 dark:border-blue-600;
+    }
+
+    &-red {
+      @apply border-red-500 dark:border-red-600;
+    }
   }
 
   .text {
