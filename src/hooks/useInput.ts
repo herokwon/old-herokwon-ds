@@ -18,8 +18,8 @@ type InputHookReturn = {
     onChangeInput: (e: React.ChangeEvent<InputElement>) => void;
 };
 
-const useInput = ({ isDisabled, autoFocus = false, label, maxLength, helperMessage, errorMessage, defaultValue, value, onChange }: InputHookProps): InputHookReturn => {
-    const [isFocused, setIsFocused] = useState<boolean>(autoFocus);
+const useInput = ({ isDisabled, label, helperMessage, errorMessage, autoFocus, maxLength, defaultValue, value, onChange }: InputHookProps): InputHookReturn => {
+    const [isFocused, setIsFocused] = useState<boolean>(autoFocus ?? false);
     const [currentInputLength, setCurrentInputLength] = useState<number>((defaultValue ?? value)?.toString().length ?? 0);
 
     const hasHeader = useMemo(() =>
@@ -36,7 +36,7 @@ const useInput = ({ isDisabled, autoFocus = false, label, maxLength, helperMessa
         if (isDisabled) return;
 
         onChange && onChange(e);
-        setCurrentInputLength(e.currentTarget.value.length);
+        maxLength && setCurrentInputLength(e.currentTarget.value.length);
     };
 
     useEffect(() => {
