@@ -8,8 +8,10 @@ export type DropdownItemList<T extends DropdownFlatItem | DropdownGroupItem> =
     (T extends DropdownGroupItem ?
         {
             items: T[];
+            setItems: React.Dispatch<React.SetStateAction<T[]>>;
         } :
         {
             selectingInput: SelectingInput;
             items: T[];
+            setItems: React.Dispatch<React.SetStateAction<T[]>>;
         });

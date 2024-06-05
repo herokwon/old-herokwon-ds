@@ -4,7 +4,10 @@ import { FaChevronDown } from "react-icons/fa6";
 import type { AbsolutePosition, DropdownFlatItem, DropdownGroupItem, DropdownItemList, ElementBaseSize, ElementStates } from "@/types";
 import TextButton from "./TextButton";
 
-interface DropdownBaseProps extends ElementStates, React.ComponentPropsWithoutRef<'div'> {
+interface DropdownProps extends Omit<ElementStates, 'isSelected'>, React.ComponentPropsWithoutRef<'div'> {
+    children: React.ReactNode;
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     size?: ElementBaseSize;
     position?: AbsolutePosition;
     triggerEvent?: Extract<keyof HTMLElementEventMap, 'click' | 'mouseenter'>;
@@ -12,51 +15,34 @@ interface DropdownBaseProps extends ElementStates, React.ComponentPropsWithoutRe
     emptyMessage?: string;
 };
 
-type DropdownSelectingProps = ({
-    isGroupBy?: false;
-} & DropdownItemList<DropdownFlatItem>) | {
-    isGroupBy: true;
-} & DropdownItemList<DropdownGroupItem>;
-
-type DropdownProps = DropdownBaseProps & DropdownSelectingProps;
-type DropdownItemsProps<T extends DropdownFlatItem | DropdownGroupItem> = DropdownItemList<T> & {
-    isOpen: boolean;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+type DropdownItemsProps<T extends DropdownFlatItem | DropdownGroupItem> = DropdownItemList<T> & Pick<DropdownProps, 'isOpen' | 'setIsOpen'>;
 
 const EMPTY_MESSAGE = '선택 가능한 데이터가 없습니다.';
 
-export default function Dropdown({ size = 'md', position = 'bottom-center', triggerEvent = 'click', triggerItem, emptyMessage = EMPTY_MESSAGE, ...props }: DropdownProps) {
-    const { isDisabled = false, isSelected = false, isLoading = false, ...rest } = props;
+const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEvent = 'click', triggerItem, emptyMessage = EMPTY_MESSAGE, ...props }: DropdownProps) => {
+    const { isDisabled = false, isLoading = false, isOpen, setIsOpen, ...rest } = props;
 
-    const [isOpen, setIsOpen] = useState<boolean>(isSelected);
     const [maxHeight, setMaxHeight] = useState<number>(0);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const updateContainerMaxHeight = () => {
         const dropdownItemsContainer = dropdownRef.current?.lastElementChild;
-        if (!dropdownItemsContainer) {
-            setMaxHeight(0);
-            return;
-        }
-
-        const containerTop = dropdownItemsContainer.getBoundingClientRect().top;
-        setMaxHeight(document.documentElement.scrollHeight - containerTop - 16);
+        setMaxHeight(!dropdownItemsContainer ?
+            0 :
+            document.documentElement.scrollHeight - dropdownItemsContainer.getBoundingClientRect().top - 16);
     };
-
-    useEffect(() => {
-        setIsOpen(isSelected);
-    }, [isSelected]);
 
     useEffect(() => {
         if (!isOpen) return;
 
-        const handleClick = (e: Event) => {
-            isOpen && !dropdownRef.current?.contains(e.target as Node | null) && setIsOpen(false);
-        };
+        const handleClick = (e: Event) =>
+            isOpen &&
+            !dropdownRef.current?.contains(e.target as Node | null) &&
+            setIsOpen(false);
 
         document.addEventListener('click', handleClick);
         return () => document.removeEventListener('click', handleClick);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
 
     useEffect(() => {
@@ -107,34 +93,14 @@ export default function Dropdown({ size = 'md', position = 'bottom-center', trig
                     ''}`} style={{
                         maxHeight: `${maxHeight}px`,
                     }}>
-                    {rest.items.length === 0 ?
-                        <p className="text-center">
-                            {emptyMessage}
-                        </p> :
-                        rest.isGroupBy ?
-                            <GroupItems
-                                isOpen={isOpen}
-                                setIsOpen={setIsOpen}
-                                items={rest.items} /> :
-                            <FlatItems
-                                isOpen={isOpen}
-                                setIsOpen={setIsOpen}
-                                selectingInput={rest.selectingInput}
-                                items={rest.items} />}
+                    {children}
                 </div>
             </div>
         </div>
     );
 }
 
-const FlatItems = ({ isOpen, setIsOpen, selectingInput, items }: DropdownItemsProps<DropdownFlatItem>) => {
-    const [flatItems, setFlatItems] = useState<DropdownFlatItem[]>((selectingInput === 'multi-text' || selectingInput === 'checkbox') ?
-        items :
-        items.map((item, index) => ({
-            ...item,
-            isSelected: items.findIndex((item) => item.isSelected) === index,
-        })));
-
+const FlatItems = ({ selectingInput, isOpen, items, setIsOpen, setItems }: DropdownItemsProps<DropdownFlatItem>) => {
     useEffect(() => {
         if (!isOpen) return;
 
@@ -143,16 +109,16 @@ const FlatItems = ({ isOpen, setIsOpen, selectingInput, items }: DropdownItemsPr
                 setIsOpen(false);
                 break;
             case 'multi-text': case 'checkbox':
-                !flatItems.find((flatItem) => flatItem.isSelected) &&
+                !items.find((item) => item.isSelected) &&
                     setIsOpen(false);
                 break;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectingInput, flatItems]);
+    }, [items]);
 
     return (
         <ul className="dropdown-items-list--flat">
-            {flatItems.map((flatItem) =>
+            {items.map((flatItem) =>
                 <li
                     key={flatItem.id}
                     className={`dropdown-item ${flatItem.isDisabled ?
@@ -160,7 +126,7 @@ const FlatItems = ({ isOpen, setIsOpen, selectingInput, items }: DropdownItemsPr
                         flatItem.isSelected ?
                             'selected' :
                             ''}`}
-                    onClick={() => setFlatItems((prevFlatItems) =>
+                    onClick={() => setItems((prevFlatItems) =>
                         prevFlatItems.map((prevFlatItem) => ({
                             ...prevFlatItem,
                             isSelected: (selectingInput === 'text' || selectingInput === 'radio') ?
@@ -181,32 +147,24 @@ const FlatItems = ({ isOpen, setIsOpen, selectingInput, items }: DropdownItemsPr
     );
 };
 
-const GroupItems = ({ isOpen, setIsOpen, items }: DropdownItemsProps<DropdownGroupItem>) => {
-    const [groupItems, setGroupItems] = useState<DropdownGroupItem[]>(items.map((groupItem) =>
-        (groupItem.selectingInput === 'multi-text' || groupItem.selectingInput === 'checkbox') ?
-            groupItem :
-            ({
-                ...groupItem,
-                items: groupItem.items.map((item, index) => ({
-                    ...item,
-                    isSelected: groupItem.items.findIndex((item) => item.isSelected) === index
-                }))
-            })));
+const GroupItems = ({ isOpen, items, setIsOpen, setItems }: DropdownItemsProps<DropdownGroupItem>) => {
     const inputsOfGroupItems = useMemo(() =>
-        Array.from(new Set(groupItems.map((groupItem) => groupItem.selectingInput))), [groupItems]);
+        Array.from(new Set(items.map((groupItem) => groupItem.selectingInput))), [items]);
     const isNotSelected = useMemo(() =>
-        groupItems.reduce((acc, groupItem) =>
+        items.reduce((acc, groupItem) =>
             acc && groupItem.items.filter((item) =>
-                item.isSelected).length === 0, true), [groupItems]);
+                item.isSelected).length === 0, true), [items]);
 
     useEffect(() => {
         if (!isOpen) return;
-        ((inputsOfGroupItems.length === 1 && inputsOfGroupItems[0] === 'text') || isNotSelected) && setIsOpen(false);
+
+        ((inputsOfGroupItems.length === 1 && inputsOfGroupItems[0] === 'text') || isNotSelected) &&
+            setIsOpen(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [groupItems]);
+    }, [items]);
 
     return (
-        groupItems.map((groupItem) =>
+        items.map((groupItem) =>
             <div
                 key={groupItem.id}
                 data-groupby={groupItem.id}
@@ -223,7 +181,7 @@ const GroupItems = ({ isOpen, setIsOpen, items }: DropdownItemsProps<DropdownGro
                                 item.isSelected ?
                                     'selected' :
                                     ''}`}
-                            onClick={() => setGroupItems((prevGroupItems) =>
+                            onClick={() => setItems((prevGroupItems) =>
                                 prevGroupItems.map((prevGroupItem) => ({
                                     ...prevGroupItem,
                                     items: prevGroupItem.items.map((prevItem) => ({
@@ -249,3 +207,8 @@ const GroupItems = ({ isOpen, setIsOpen, items }: DropdownItemsProps<DropdownGro
             </div>)
     );
 };
+
+Dropdown.FlatItems = FlatItems;
+Dropdown.GroupItems = GroupItems;
+
+export default Dropdown;
