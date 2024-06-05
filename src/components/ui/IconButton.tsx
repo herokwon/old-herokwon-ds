@@ -13,7 +13,7 @@ interface IconButtonProps extends Omit<ButtonProps, 'size'> {
 };
 
 export default function IconButton({ icon, variant = 'default', size = 'md', spacing = 'default', shape = 'circle', href, ...props }: IconButtonProps) {
-    const { isDisabled = false, isSelected = false, isLoading = false, ...rest } = props;
+    const { isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const { push, replace } = useRouter();
     const Icon = useMemo(() =>
@@ -21,7 +21,7 @@ export default function IconButton({ icon, variant = 'default', size = 'md', spa
 
     const onClickIconButton = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (isDisabled) return;
-        rest.onClick && rest.onClick(e);
+        restProps.onClick && restProps.onClick(e);
 
         if (!href) return;
         href.replace ?
@@ -31,7 +31,7 @@ export default function IconButton({ icon, variant = 'default', size = 'md', spa
 
     return (
         <button
-            {...rest}
+            {...restProps}
             disabled={isDisabled}
             onClick={onClickIconButton}
             className={`button-${variant} ${isSelected ?
@@ -42,7 +42,7 @@ export default function IconButton({ icon, variant = 'default', size = 'md', spa
                         'p-0.5' :
                         'p-0 !bg-transparent'} flex justify-center items-center ${shape === 'square' ?
                             'rounded-ms' :
-                            'rounded-full'} outline-none transition-all ${rest.className ?? ''}`}>
+                            'rounded-full'} outline-none transition-all ${restProps.className ?? ''}`}>
             <Icon size={ICON_SIZE[size]} className='m-1' />
         </button>
     );

@@ -5,7 +5,7 @@ import type { ContentWithId, ElementBaseSize, InputProps } from "@/types";
 import { useInput } from "@/hooks";
 import InputMessage from "./InputMessage";
 
-interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'helperMessage'> {
+interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage'> {
     size?: ElementBaseSize;
     isDependent?: boolean;
     subItems?: React.ComponentProps<typeof Checkbox>[];
@@ -13,7 +13,7 @@ interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 
 };
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ id, size = 'md', heading, description, subItems = [], onChangeItems, ...props }, ref) {
-    const { isDisabled = false, isSelected = false, isDependent = false, errorMessage, ...rest } = props;
+    const { isDisabled = false, isSelected = false, isDependent = false, errorMessage, ...restProps } = props;
 
     const [isChecked, setIsChecked] = useState<boolean>(isSelected);
     const { hasError, hasMessage, onChangeInput } = useInput({
@@ -47,7 +47,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
                         '' :
                         'scale-0 opacity-0'} transition-all`} />}
                     <input
-                        {...rest}
+                        {...restProps}
                         ref={ref}
                         id={id}
                         hidden

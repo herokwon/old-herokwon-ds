@@ -12,20 +12,21 @@ interface RadioGroupProps extends Pick<ElementStates, 'isDisabled'>, React.Compo
     groupErrorMessage?: InputProps['errorMessage'];
 };
 
-export default function RadioGroup({ isDisabled = false, direction = 'vertical', size = 'md', items, groupErrorMessage, ...props }: RadioGroupProps) {
-    const [groupItems, setGroupItems] = useState<typeof items>([...items]);
+export default function RadioGroup({ direction = 'vertical', size = 'md', items, groupErrorMessage, ...props }: RadioGroupProps) {
+    const { isDisabled = false, ...restProps } = props;
 
+    const [groupItems, setGroupItems] = useState<typeof items>([...items]);
     const { hasError, hasMessage } = useInput({
         isDisabled: isDisabled,
         errorMessage: groupErrorMessage,
     });
 
     return (
-        <div {...props} className={`${isDisabled ?
+        <div {...restProps} className={`${isDisabled ?
             'disabled' :
             ''} flex ${direction === 'horizontal' ?
                 'flex-row' :
-                'flex-col'} gap-2 ${props.className ?? ''}`}>
+                'flex-col'} gap-2 ${restProps.className ?? ''}`}>
             {groupItems.map((groupItem) =>
                 <Radio
                     {...groupItem}
@@ -41,7 +42,8 @@ export default function RadioGroup({ isDisabled = false, direction = 'vertical',
                             ...prevGroupItem,
                             isSelected: groupItem.id === prevGroupItem.id,
                         })))} />)}
-            {!isDisabled && hasMessage &&
+            {!isDisabled &&
+                hasMessage &&
                 <InputMessage
                     hasError={hasError}
                     errorMessage={groupErrorMessage}

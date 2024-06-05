@@ -15,12 +15,12 @@ const meta = {
         type: 'text',
         fieldIcon: PiTextTBold,
     },
-    argTypes: {
-        type: {
-            control: 'select',
-            options: [...TEXT_INPUT],
-        },
-    },
+    // argTypes: {
+    //     type: {
+    //         control: 'select',
+    //         options: [...TEXT_INPUT],
+    //     },
+    // },
 } satisfies Meta<typeof TextField>;
 export default meta;
 

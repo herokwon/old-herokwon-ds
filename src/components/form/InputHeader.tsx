@@ -12,7 +12,8 @@ export default function InputHeader({ label, id, required, maxLength, currentInp
         <div className={`w-full flex ${!label && maxLength ?
             'justify-end' :
             'justify-between'} items-center`}>
-            {label && label.length > 0 &&
+            {label &&
+                label.length > 0 &&
                 <label htmlFor={id} className={`w-full flex items-center text-xs font-semibold ${id ?
                     'cursor-pointer' :
                     ''} opacity-bold`}>
