@@ -15,8 +15,11 @@ interface TextFieldProps extends InputProps<TextInput> {
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField({ type = 'text', label, fieldIcon, ...props }, ref) {
-    const { isDisabled = false, helperMessage, errorMessage, ...rest } = props;
+    const { isDisabled = false, helperMessage, errorMessage, ...restProps } = props;
 
+    const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
+    const FieldIcon = useMemo(() =>
+        fieldIcon ?? null, [fieldIcon]);
     const { hasHeader, hasError, hasMessage, isFocused, currentInputLength, onFocusInput, onBlurInput, onChangeInput } = useInput({
         isDisabled: isDisabled,
         label: label,
@@ -28,9 +31,6 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextFiel
         value: props.value,
         onChange: props.onChange,
     });
-    const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
-    const FieldIcon = useMemo(() =>
-        fieldIcon ?? null, [fieldIcon]);
 
     return (
         <div className={`${isDisabled ?
@@ -52,7 +52,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextFiel
                         <div className="w-1 h-[1rem] mr-1 bg-light-secondary dark:bg-dark-tertiary" />
                     </>}
                 <input
-                    {...rest}
+                    {...restProps}
                     ref={ref}
                     type={type !== 'password' ?
                         type :
@@ -62,7 +62,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextFiel
                     onFocus={onFocusInput}
                     onBlur={onBlurInput}
                     onChange={onChangeInput}
-                    className={`w-full px-1 py-2 text-sm bg-inherit outline-none placeholder:opacity-normal ${rest.className ?? ''}`} />
+                    className={`w-full px-1 py-2 text-sm bg-inherit outline-none placeholder:opacity-normal ${restProps.className ?? ''}`} />
                 {type === 'password' &&
                     <div className="w-max h-[2rem] aspect-square p-0.5">
                         <IconButton

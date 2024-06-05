@@ -42,7 +42,8 @@ export default function Select({ selectingInput, items, setItems, ...props }: Se
                                 prevItems.map((prevItem) => ({
                                     ...prevItem,
                                     isSelected: false,
-                                })))} />}
+                                }))
+                            )} />}
                 </div>}>
             <Dropdown.FlatItems
                 selectingInput={selectingInput}

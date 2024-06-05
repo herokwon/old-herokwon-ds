@@ -16,8 +16,8 @@ interface RangeProps extends Omit<InputProps, 'label'> {
 };
 
 const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ isShowingLabel = false, labelDirection = 'left', labelPrefix, labelSuffix, helperMessage, errorMessage, ...props }, ref) {
-    const { isDisabled = false, min = 0, max = 100, step = 1, ...rest } = props;
-    const rangeDefaultValue = (props.defaultValue ?? props.value)?.toString();
+    const { isDisabled = false, min = 0, max = 100, step = 1, ...restProps } = props;
+    const rangeDefaultValue = (restProps.defaultValue ?? restProps.value)?.toString();
 
     const [rangeValue, setRangeValue] = useState<number>(isNaN(Number(rangeDefaultValue)) ?
         0 :
@@ -40,7 +40,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ isShowin
 
     return (
         <div className="w-full">
-            <label htmlFor={rest.id} className={`${isDisabled ?
+            <label htmlFor={restProps.id} className={`${isDisabled ?
                 'disabled' :
                 'cursor-pointer'} w-full flex ${labelDirection.includes('top') ?
                     'flex-col-reverse justify-center' :
@@ -50,7 +50,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ isShowin
                             'flex-row-reverse items-center' :
                             'flex-row items-center'} gap-x-3 gap-y-1.5`}>
                 <input
-                    {...rest}
+                    {...restProps}
                     ref={ref}
                     type='range'
                     min={min}
@@ -58,7 +58,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ isShowin
                     step={step}
                     value={rangeValue}
                     onChange={onChangeInput}
-                    className={`w-full ${rest.className ?? ''}`} />
+                    className={`w-full ${restProps.className ?? ''}`} />
                 {isShowingLabel &&
                     <p className={`text-sm whitespace-nowrap ${(labelDirection === 'left' || labelDirection === 'right') ?
                         '' :

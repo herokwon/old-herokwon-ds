@@ -20,7 +20,7 @@ interface SplitButtonProps extends Omit<ButtonProps, 'spacing' | 'href'> {
 };
 
 export default function SplitButton({ defaultLabel, variant = 'default', size = 'md', spacing = 'default', items, ...props }: SplitButtonProps) {
-    const { isDisabled = false, isSelected = false, isLoading = false, ...rest } = props;
+    const { isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const [isShowingItems, setIsShowingItems] = useState<boolean>(isSelected);
     const [splitButtonItems, setSplitButtonItems] = useState<SplitButtonItem[]>([...items]);
@@ -29,13 +29,14 @@ export default function SplitButton({ defaultLabel, variant = 'default', size = 
             item.isSelected) ?? null, [splitButtonItems]);
 
     useEffect(() => {
-        if (selectedItem) setIsShowingItems(false);
+        selectedItem &&
+            setIsShowingItems(false);
     }, [selectedItem]);
 
     return (
         <div className="h-full flex relative group">
             <TextButton
-                {...rest}
+                {...restProps}
                 label={selectedItem?.heading ?? defaultLabel ?? ''}
                 variant={variant}
                 size={size}
@@ -83,12 +84,12 @@ export default function SplitButton({ defaultLabel, variant = 'default', size = 
                                 (item.isSelected ?
                                     'bg-light-secondary dark:bg-dark-tertiary' :
                                     'hover:bg-light-secondary dark:hover:bg-dark-tertiary')} cursor-pointer transition-all`}
-                            onClick={() => setSplitButtonItems((prevItems) => [
-                                ...prevItems.map((prevItem) => ({
+                            onClick={() => setSplitButtonItems((prevItems) =>
+                                prevItems.map((prevItem) => ({
                                     ...prevItem,
                                     isSelected: prevItem.id === item.id,
                                 }))
-                            ])}>
+                            )}>
                             <p className="w-full font-semibold whitespace-pre">
                                 {item.heading}
                             </p>

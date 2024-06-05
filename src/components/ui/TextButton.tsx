@@ -10,7 +10,7 @@ interface TextButtonProps extends ButtonProps, ContentWithIcon {
 };
 
 export default function TextButton({ label, variant = 'default', size = 'md', spacing = 'default', href, iconBefore, iconAfter, ...props }: TextButtonProps) {
-    const { isDisabled = false, isSelected = false, isLoading = false, ...rest } = props;
+    const { isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const { push, replace } = useRouter();
     const BeforeIcon = useMemo(() =>
@@ -20,7 +20,7 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
 
     const onClickTextButton = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (isDisabled) return;
-        rest.onClick && rest.onClick(e);
+        restProps.onClick && restProps.onClick(e);
 
         if (!href) return;
         href.replace ?
@@ -30,7 +30,7 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
 
     return (
         <button
-            {...rest}
+            {...restProps}
             disabled={isDisabled}
             onClick={onClickTextButton}
             className={`button-${spacing === 'none' ?
@@ -47,7 +47,7 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
                                     'text-sm' :
                                     'text-base'} outline-none ${spacing === 'none' ?
                                         '' :
-                                        'transition-all'} ${rest.className ?? ''}`}>
+                                        'transition-all'} ${restProps.className ?? ''}`}>
             {BeforeIcon &&
                 <BeforeIcon size={ICON_SIZE[iconBefore?.size ?? size]} className='mr-1.5' />}
             {label}

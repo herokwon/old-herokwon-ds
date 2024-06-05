@@ -4,7 +4,7 @@ import type { ContentWithId, ElementBaseSize, InputProps } from "@/types";
 import { useInput } from "@/hooks";
 import RadioGroup from "./RadioGroup";
 
-interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'helperMessage' | 'errorMessage'> {
+interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage' | 'errorMessage'> {
     size?: ElementBaseSize;
     groupErrorMessage?: InputProps['errorMessage'];
     subGroupItem?: React.ComponentProps<typeof RadioGroup>;
@@ -12,7 +12,7 @@ interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'he
 };
 
 const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size = 'md', heading, description, subGroupItem, onChangeItems, ...props }, ref) {
-    const { isDisabled = false, isSelected = false, groupErrorMessage, ...rest } = props;
+    const { isDisabled = false, isSelected = false, groupErrorMessage, ...restProps } = props;
 
     const [isChecked, setIsChecked] = useState<boolean>(isSelected);
     const { hasError, onChangeInput } = useInput({
@@ -47,7 +47,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size
                                         '' :
                                         'after:opacity-0'} after:transition-opacity after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2`}>
                     <input
-                        {...rest}
+                        {...restProps}
                         hidden
                         readOnly
                         ref={ref}
