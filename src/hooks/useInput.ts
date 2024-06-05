@@ -20,27 +20,34 @@ type InputHookReturn = {
 
 const useInput = ({ isDisabled, label, helperMessage, errorMessage, autoFocus, maxLength, defaultValue, value, onChange }: InputHookProps): InputHookReturn => {
     const [isFocused, setIsFocused] = useState<boolean>(autoFocus ?? false);
-    const [currentInputLength, setCurrentInputLength] = useState<number>((defaultValue ?? value)?.toString().length ?? 0);
+    const [currentInputLength, setCurrentInputLength] = useState<number>((maxLength && maxLength > 0) ?
+        (defaultValue ?? value)?.toString().length ?? 0 :
+        0);
 
     const hasHeader = useMemo(() =>
-        (!(!label) && label.length > 0) || !(!maxLength), [label, maxLength]);
+        (!(!label) && label.length > 0) ||
+        !(!maxLength), [label, maxLength]);
     const hasError = useMemo(() =>
-        !(!errorMessage) && errorMessage.length > 0, [errorMessage]);
+        !(!errorMessage) &&
+        errorMessage.length > 0, [errorMessage]);
     const hasMessage = useMemo(() =>
-        (!(!helperMessage) && helperMessage.length > 0) || hasError, [helperMessage, hasError]);
+        (!(!helperMessage) && helperMessage.length > 0) ||
+        hasError, [helperMessage, hasError]);
 
     const onFocusInput = () => setIsFocused(true);
     const onBlurInput = () => setIsFocused(false);
-
     const onChangeInput = (e: React.ChangeEvent<InputElement>) => {
         if (isDisabled) return;
-
-        onChange && onChange(e);
-        maxLength && setCurrentInputLength(e.currentTarget.value.length);
+        onChange &&
+            onChange(e);
+        maxLength &&
+            maxLength > 0 &&
+            setCurrentInputLength(e.currentTarget.value.length);
     };
 
     useEffect(() => {
-        if (hasError) onFocusInput();
+        hasError &&
+            onFocusInput();
     }, [hasError]);
 
     return {

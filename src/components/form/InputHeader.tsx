@@ -21,7 +21,8 @@ export default function InputHeader({ label, id, required, maxLength, currentInp
                     {required &&
                         <FaStar size={8} className="ml-1" />}
                 </label>}
-            {maxLength && maxLength > 0 &&
+            {maxLength &&
+                maxLength > 0 &&
                 <span className="input-length-label text-[0.625rem] leading-[0.75rem] opacity-off">
                     {`${currentInputLength} / ${maxLength}`}
                 </span>}
