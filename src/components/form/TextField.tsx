@@ -1,6 +1,5 @@
 import { forwardRef, useMemo, useState } from "react";
 import type { IconType } from "react-icons";
-import { PiTextTBold } from "react-icons/pi";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 import type { InputProps, TextInput } from "@/types";
@@ -15,7 +14,7 @@ interface TextFieldProps extends InputProps<TextInput> {
     fieldIcon?: IconType;
 };
 
-const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField({ type = 'text', label, fieldIcon = PiTextTBold, ...props }, ref) {
+const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField({ type = 'text', label, fieldIcon, ...props }, ref) {
     const { isDisabled = false, helperMessage, errorMessage, ...rest } = props;
 
     const { hasHeader, hasError, hasMessage, isFocused, currentInputLength, onFocusInput, onBlurInput, onChangeInput } = useInput({
@@ -30,7 +29,8 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextFiel
         onChange: props.onChange,
     });
     const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
-    const FieldIcon = useMemo(() => fieldIcon, [fieldIcon]);
+    const FieldIcon = useMemo(() =>
+        fieldIcon ?? null, [fieldIcon]);
 
     return (
         <div className={`${isDisabled ?
@@ -44,10 +44,13 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextFiel
                     maxLength={props.maxLength}
                     currentInputLength={currentInputLength} />}
             <InputWrapper isFocused={isFocused} hasError={hasError}>
-                <div className="w-max h-[2rem] aspect-square p-2 opacity-bold">
-                    <FieldIcon size={ICON_SIZE.md} className="w-full h-full" />
-                </div>
-                <div className="w-1 h-[1rem] mr-1 bg-light-secondary dark:bg-dark-tertiary" />
+                {FieldIcon &&
+                    <>
+                        <div className="w-max h-[2rem] aspect-square p-2 opacity-bold">
+                            <FieldIcon size={ICON_SIZE.md} className="w-full h-full" />
+                        </div>
+                        <div className="w-1 h-[1rem] mr-1 bg-light-secondary dark:bg-dark-tertiary" />
+                    </>}
                 <input
                     {...rest}
                     ref={ref}
