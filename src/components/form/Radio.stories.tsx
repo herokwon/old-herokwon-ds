@@ -9,7 +9,6 @@ const meta = {
     args: {
         isDisabled: false,
         isSelected: false,
-        hasError: false,
         id: crypto.randomUUID(),
         size: 'md',
         description: 'This is a description for Radio Item',
