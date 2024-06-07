@@ -1,18 +1,33 @@
-import type { ElementExtendedSize } from "@/types";
+import type { ElementExtendedSize, Months } from "@/types";
 
-export const ELEMENT_BASE_SIZE = ['sm', 'md', 'lg'] as const;
-export const ELEMENT_EXTENDED_SIZE = ['xs', ...ELEMENT_BASE_SIZE, 'xl'] as const;
-export const ELEMENT_SPACING = ['default', 'compact', 'none'] as const;
-export const ELEMENT_BASE_VARIANT = ['default', 'primary', 'secondary'] as const
-export const ELEMENT_EXTENDED_VARIANT = [...ELEMENT_BASE_VARIANT, 'warning', 'danger'] as const;
-export const ELEMENT_DIRECTION = ['horizontal', 'vertical'] as const;
+export const ELEMENT_BASE_SIZES = ['sm', 'md', 'lg'] as const;
+export const ELEMENT_EXTENDED_SIZES = ['xs', ...ELEMENT_BASE_SIZES, 'xl'] as const;
+export const ELEMENT_SPACINGS = ['default', 'compact', 'none'] as const;
+export const ELEMENT_BASE_VARIANTS = ['default', 'primary', 'secondary'] as const
+export const ELEMENT_EXTENDED_VARIANTS = [...ELEMENT_BASE_VARIANTS, 'warning', 'danger'] as const;
+export const ELEMENT_DIRECTIONS = ['horizontal', 'vertical'] as const;
 
-export const ALIGNMENT_X = ['left', 'center', 'right'] as const;
-export const ALIGNMENT_Y = ['top', 'middle', 'bottom'] as const;
+export const ALIGNMENTS_X = ['left', 'center', 'right'] as const;
+export const ALIGNMENTS_Y = ['top', 'middle', 'bottom'] as const;
 
-export const SELECTING_INPUT = ['text', 'multi-text', 'radio', 'checkbox'] as const;
-export const TEXT_INPUT = ['email', 'number', 'password', 'search', 'tel', 'text', 'url'] as const;
-export const DATETIME_INPUT = ['date', 'datetime-local', 'month', 'time', 'week'] as const;
+export const SELECTING_INPUTS = ['text', 'multi-text', 'radio', 'checkbox'] as const;
+export const TEXT_INPUTS = ['email', 'number', 'password', 'search', 'tel', 'text', 'url'] as const;
+export const DATETIME_INPUTS = ['date', 'datetime-local', 'month', 'time', 'week'] as const;
+
+export const CALENDAR_FORMS = ['daily', 'weekly', 'monthly', 'yearly'] as const;
+export const MONTHS: Months[] = new Proxy([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], {
+    get(target, prop, receiver) {
+        if (!isNaN(Number(prop)) && Number(prop) < 0) {
+            prop = `${Number(prop) + target.length}`;
+        }
+
+        if (!isNaN(Number(prop)) && Number(prop) >= target.length) {
+            prop = `${Number(prop) % target.length}`;
+        }
+
+        return Reflect.get(target, prop, receiver);
+    }
+});
 
 export const ICON_SIZE: { [size in ElementExtendedSize]: number } = {
     xs: 8,

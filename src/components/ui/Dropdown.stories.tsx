@@ -27,7 +27,7 @@ const DropdownRender = {
             ...Array.from({ length: 10 }, (_, i) => ({
                 id: crypto.randomUUID(),
                 heading: `item ${i + 1}`,
-                description: Math.random() < 0.5 ?
+                description: i < 5 ?
                     undefined :
                     `This is a description for item ${i + 1}`,
             })),
@@ -55,7 +55,7 @@ const DropdownRender = {
                     ...Array.from({ length: 3 }, (_, j) => ({
                         id: crypto.randomUUID(),
                         heading: `item ${j + 1}`,
-                        description: Math.random() < 0.5 ?
+                        description: j < 1 ?
                             undefined :
                             `This is a description for item ${i + 1} in Group ${i + 1}`,
                     })),

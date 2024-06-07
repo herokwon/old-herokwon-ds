@@ -1,22 +1,22 @@
 import type { IconType } from "react-icons";
 
 import {
-    ALIGNMENT_X,
-    ALIGNMENT_Y,
-    ELEMENT_BASE_SIZE,
-    ELEMENT_BASE_VARIANT,
-    ELEMENT_DIRECTION,
-    ELEMENT_EXTENDED_SIZE,
-    ELEMENT_EXTENDED_VARIANT,
-    ELEMENT_SPACING
+    ALIGNMENTS_X,
+    ALIGNMENTS_Y,
+    ELEMENT_BASE_SIZES,
+    ELEMENT_BASE_VARIANTS,
+    ELEMENT_DIRECTIONS,
+    ELEMENT_EXTENDED_SIZES,
+    ELEMENT_EXTENDED_VARIANTS,
+    ELEMENT_SPACINGS
 } from "@/data/constant";
 
-export type ElementBaseSize = typeof ELEMENT_BASE_SIZE[number];
-export type ElementExtendedSize = typeof ELEMENT_EXTENDED_SIZE[number];
-export type ElementSpacing = typeof ELEMENT_SPACING[number];
-export type ElementBaseVariant = typeof ELEMENT_BASE_VARIANT[number];
-export type ElementExtendedVariant = typeof ELEMENT_EXTENDED_VARIANT[number];
-export type ElementDirection = typeof ELEMENT_DIRECTION[number];
+export type ElementBaseSize = typeof ELEMENT_BASE_SIZES[number];
+export type ElementExtendedSize = typeof ELEMENT_EXTENDED_SIZES[number];
+export type ElementSpacing = typeof ELEMENT_SPACINGS[number];
+export type ElementBaseVariant = typeof ELEMENT_BASE_VARIANTS[number];
+export type ElementExtendedVariant = typeof ELEMENT_EXTENDED_VARIANTS[number];
+export type ElementDirection = typeof ELEMENT_DIRECTIONS[number];
 
 export interface ElementStates {
     isDisabled?: boolean;
@@ -24,8 +24,8 @@ export interface ElementStates {
     isLoading?: boolean;
 };
 
-export type AlignmentX = typeof ALIGNMENT_X[number];
-export type AlignmentY = typeof ALIGNMENT_Y[number];
+export type AlignmentX = typeof ALIGNMENTS_X[number];
+export type AlignmentY = typeof ALIGNMENTS_Y[number];
 export type AbsolutePositionX = `${Exclude<AlignmentX, 'center'>}-${AlignmentY}`;
 export type AbsolutePositionY = `${Exclude<AlignmentY, 'middle'>}-${AlignmentX}`;
 
@@ -55,5 +55,7 @@ export interface ItemsWithHeading {
 };
 
 export * from "./form/input";
+
 export * from "./ui/button";
+export * from "./ui/calendar";
 export * from "./ui/dropdown";

@@ -15,9 +15,9 @@ const meta = {
             isSelected: i === 0,
             id: crypto.randomUUID(),
             heading: `Radio Item ${i + 1}`,
-            description: Math.random() < 0.5 ?
-                undefined :
-                `This is a description for Radio Item ${i + 1}`,
+            description: i < 1 ?
+                `This is a description for Radio Item ${i + 1}` :
+                undefined,
             subGroupItem: {
                 isDisabled: false,
                 direction: 'vertical',
@@ -27,7 +27,6 @@ const meta = {
                     isSelected: false,
                     id: crypto.randomUUID(),
                     heading: `Radio SubItem ${j + 1}`,
-
                 })),
             },
         })),
