@@ -57,5 +57,5 @@ export interface ItemsWithHeading {
 export * from "./form/input";
 
 export * from "./ui/button";
-export * from "./ui/calendar";
+export * from "./ui/datetime";
 export * from "./ui/dropdown";
