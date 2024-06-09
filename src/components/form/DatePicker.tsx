@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaCalendarDays } from "react-icons/fa6";
 
 import type { ElementStates } from "@/types";
@@ -8,11 +8,18 @@ import DatetimeField from "./DatetimeField";
 
 type DatePickerProps =
     Pick<ElementStates, 'isDisabled'> &
-    Omit<React.ComponentProps<typeof Calendar>, 'form'>;
+    Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'isOpen' | 'setIsOpen'> &
+    Pick<React.ComponentProps<typeof DatetimeField>, 'label' | 'helperMessage' | 'errorMessage' | 'required' | 'maxLength'> &
+    Pick<React.ComponentProps<typeof Calendar>, 'today' | 'pickedDate' | 'setPickedDate'>;
 
 export default function DatePicker({ today, pickedDate, setPickedDate, ...props }: DatePickerProps) {
-    const { isDisabled = false, ...restProps } = props;
+    const { label, required, maxLength, helperMessage, errorMessage, ...restProps } = props;
+
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const pickedDateValue = useMemo(() =>
+        props.isDisabled ?
+            '' :
+            `${pickedDate.year}-${pickedDate.month.toString().padStart(2, '0')}-${pickedDate.date.toString().padStart(2, '0')}`, [props.isDisabled, pickedDate]);
 
     useEffect(() => {
         setIsOpen(false);
@@ -20,14 +27,18 @@ export default function DatePicker({ today, pickedDate, setPickedDate, ...props 
 
     return (
         <Dropdown
-            {...restProps}
-            isDisabled={isDisabled}
+            {...props}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             triggerItem={
                 <DatetimeField
                     readOnly
-                    value={`${pickedDate.year}-${pickedDate.month.toString().padStart(2, '0')}-${pickedDate.date.toString().padStart(2, '0')}`}
+                    label={label}
+                    required={required}
+                    maxLength={maxLength}
+                    helperMessage={helperMessage}
+                    errorMessage={errorMessage}
+                    value={pickedDateValue}
                     fieldIcon={FaCalendarDays} />}>
             <Calendar
                 form='monthly'

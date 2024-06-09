@@ -14,12 +14,13 @@ export default meta;
 
 type Story = StoryObj<typeof DatePicker>;
 
-const DatePickerRender = () => {
+const DatePickerRender = ({ ...props }: Omit<React.ComponentProps<typeof DatePicker>, 'today' | 'pickeddate' | 'setPickedDate'>) => {
     const today = getDateItem(new Date());
     const [pickedDate, setPickedDate] = useState<DateItem>(today);
 
     return (
         <DatePicker
+            {...props}
             today={today}
             pickedDate={pickedDate}
             setPickedDate={setPickedDate} />
@@ -27,14 +28,14 @@ const DatePickerRender = () => {
 };
 
 export const Default: Story = {
-    render: () =>
-        <DatePickerRender />
+    render: ({ ...props }) =>
+        <DatePickerRender {...props} />
 };
 
 export const Disabled: Story = {
     args: {
         isDisabled: true,
     },
-    render: () =>
-        <DatePickerRender />
+    render: ({ ...props }) =>
+        <DatePickerRender {...props} />
 };
