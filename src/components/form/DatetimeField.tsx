@@ -54,7 +54,7 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(function 
                     <>
                         <div className="w-1 h-[1rem] mr-1 bg-light-secondary dark:bg-dark-tertiary" />
                         <div className={`w-max h-[2rem] aspect-square p-2 ${isFocused ?
-                            'opacity-100' :
+                            'opacity-bold' :
                             'opacity-normal'}`}>
                             <FieldIcon size={ICON_SIZE.md} className="w-full h-full" />
                         </div>

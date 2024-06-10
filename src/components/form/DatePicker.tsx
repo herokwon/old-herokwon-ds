@@ -9,17 +9,14 @@ import DatetimeField from "./DatetimeField";
 type DatePickerProps =
     Pick<ElementStates, 'isDisabled'> &
     Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'isOpen' | 'setIsOpen'> &
-    Pick<React.ComponentProps<typeof DatetimeField>, 'label' | 'helperMessage' | 'errorMessage' | 'required' | 'maxLength'> &
     Pick<React.ComponentProps<typeof Calendar>, 'today' | 'pickedDate' | 'setPickedDate'>;
 
 export default function DatePicker({ today, pickedDate, setPickedDate, ...props }: DatePickerProps) {
-    const { label, required, maxLength, helperMessage, errorMessage, ...restProps } = props;
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const pickedDateValue = useMemo(() =>
-        props.isDisabled ?
-            '' :
-            `${pickedDate.year}-${pickedDate.month.toString().padStart(2, '0')}-${pickedDate.date.toString().padStart(2, '0')}`, [props.isDisabled, pickedDate]);
+    const pickedDateValue = useMemo(() => props.isDisabled ?
+        '' :
+        `${pickedDate.year}-${pickedDate.month.toString().padStart(2, '0')}-${pickedDate.date.toString().padStart(2, '0')}`, [props.isDisabled, pickedDate]);
 
     useEffect(() => {
         setIsOpen(false);
@@ -33,11 +30,6 @@ export default function DatePicker({ today, pickedDate, setPickedDate, ...props 
             triggerItem={
                 <DatetimeField
                     readOnly
-                    label={label}
-                    required={required}
-                    maxLength={maxLength}
-                    helperMessage={helperMessage}
-                    errorMessage={errorMessage}
                     value={pickedDateValue}
                     fieldIcon={FaCalendarDays} />}>
             <Calendar
