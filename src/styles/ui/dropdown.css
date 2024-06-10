@@ -94,11 +94,25 @@
 
         &-list {
           &--flat {
-            @apply w-full flex flex-col gap-y-1;
+            @apply w-full flex flex-col gap-y-1 overflow-y-auto;
+
+            & {
+              -ms-overflow-style: none;
+            }
+            &::-webkit-scrollbar {
+              @apply hidden;
+            }
           }
 
           &--group {
-            @apply w-full p-2 flex flex-col gap-y-1;
+            @apply w-full p-2 flex flex-col gap-y-1 overflow-y-auto;
+
+            & {
+              -ms-overflow-style: none;
+            }
+            &::-webkit-scrollbar {
+              @apply hidden;
+            }
           }
         }
       }
