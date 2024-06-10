@@ -17,3 +17,8 @@ export interface DateItem {
 export interface ViewedDate extends Partial<DateItem> {
     year: number;
 };
+
+export interface TimeItem {
+    hour: number;
+    minute: number;
+};
