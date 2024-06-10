@@ -35,7 +35,7 @@ export default function TimePicker({ pickedTime, setPickedTime, ...props }: Time
             isDisabled: false,
             isSelected: false,
             id: crypto.randomUUID(),
-            heading: `${i}`,
+            heading: `${i}`.padStart(2, '0'),
         }))
     ]);
 
@@ -63,11 +63,13 @@ export default function TimePicker({ pickedTime, setPickedTime, ...props }: Time
             {...restProps}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
+            className='*:*:first:*:last:*:text-center'
             triggerItem={
                 <DatetimeField
                     readOnly
                     type='time'
                     value={`${pickedTime.hour.toString().padStart(2, '0')}:${pickedTime.minute.toString().padStart(2, '0')}`}
+                    className='cursor-pointer'
                     fieldIcon={FaClock} />}>
             <Dropdown.FlatItems
                 selectingInput='text'
