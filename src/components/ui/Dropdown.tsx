@@ -131,43 +131,48 @@ const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEv
 }
 
 const FlatItems = ({ selectingInput, isOpen, items, setIsOpen, setItems }: DropdownItemsProps<DropdownFlatItem>) => {
+    const flatItemsRef = useRef<HTMLUListElement>(null);
+
     useEffect(() => {
-        if (!isOpen || !setIsOpen) return;
-        (selectingInput === 'text' || selectingInput === 'radio') &&
+        if (!flatItemsRef.current || !isOpen || !setIsOpen) return;
+        (flatItemsRef.current.parentElement?.childElementCount === 1) &&
+            (selectingInput === 'text' || selectingInput === 'radio') &&
             setIsOpen(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [items]);
 
     return (
-        <ul className="dropdown-items-list--flat">
-            {items.map((flatItem) =>
-                <li
-                    key={flatItem.id}
-                    data-input={selectingInput}
-                    className={`dropdown-item ${flatItem.isDisabled ?
-                        'disabled' :
-                        flatItem.isSelected ?
-                            'selected' :
-                            ''}`}
-                    onClick={() => setItems((prevFlatItems) =>
-                        prevFlatItems.map((prevFlatItem) => ({
-                            ...prevFlatItem,
-                            isSelected: (selectingInput === 'text' || selectingInput === 'radio') ?
-                                prevFlatItem.id === flatItem.id :
-                                prevFlatItem.id === flatItem.id ?
-                                    !prevFlatItem.isSelected :
-                                    prevFlatItem.isSelected
-                        }))
-                    )}>
-                    <p className="dropdown-item-heading">
-                        {flatItem.heading}
-                    </p>
-                    {flatItem.description &&
-                        <p className="dropdown-item-description">
-                            {flatItem.description}
-                        </p>}
-                </li>)}
-        </ul>
+        items.length === 0 ?
+            null :
+            <ul ref={flatItemsRef} className="dropdown-items-list--flat">
+                {items.map((flatItem) =>
+                    <li
+                        key={flatItem.id}
+                        data-input={selectingInput}
+                        className={`dropdown-item ${flatItem.isDisabled ?
+                            'disabled' :
+                            flatItem.isSelected ?
+                                'selected' :
+                                ''}`}
+                        onClick={() => setItems((prevFlatItems) =>
+                            prevFlatItems.map((prevFlatItem) => ({
+                                ...prevFlatItem,
+                                isSelected: (selectingInput === 'text' || selectingInput === 'radio') ?
+                                    prevFlatItem.id === flatItem.id :
+                                    prevFlatItem.id === flatItem.id ?
+                                        !prevFlatItem.isSelected :
+                                        prevFlatItem.isSelected
+                            }))
+                        )}>
+                        <p className="dropdown-item-heading">
+                            {flatItem.heading}
+                        </p>
+                        {flatItem.description &&
+                            <p className="dropdown-item-description">
+                                {flatItem.description}
+                            </p>}
+                    </li>)}
+            </ul>
 
     );
 };
