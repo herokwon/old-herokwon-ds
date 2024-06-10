@@ -9,17 +9,17 @@ interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 
     size?: ElementBaseSize;
     isDependent?: boolean;
     subItems?: React.ComponentProps<typeof Checkbox>[];
-    onChangeItems?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ id, size = 'md', heading, description, subItems = [], onChangeItems, ...props }, ref) {
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ id, size = 'md', heading, description, subItems = [], ...props }, ref) {
     const { isDisabled = false, isSelected = false, isDependent = false, errorMessage, ...restProps } = props;
 
     const [isChecked, setIsChecked] = useState<boolean>(isSelected);
     const { hasError, hasMessage, onChangeInput } = useInput({
         isDisabled: isDisabled,
         errorMessage: errorMessage,
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIsChecked(e.currentTarget.checked),
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+            restProps.onChange && restProps.onChange(e)
     });
 
     useEffect(() => {
