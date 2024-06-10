@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import type { DropdownFlatItem, DropdownGroupItem } from "@/types";
@@ -14,6 +14,7 @@ const meta = {
         triggerEvent: 'click',
         isDisabled: false,
         isLoading: false,
+        isOpen: false,
     },
 } satisfies Meta<typeof Dropdown>;
 export default meta;
@@ -21,8 +22,8 @@ export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
 const DropdownRender = {
-    flatItems: ({ ...props }: React.ComponentProps<typeof Dropdown> & Pick<DropdownGroupItem, 'selectingInput'>) => {
-        const [isOpen, setIsOpen] = useState<boolean>(false);
+    flatItems: ({ selectingInput, ...props }: Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'setIsOpen'> & Pick<DropdownGroupItem, 'selectingInput'>) => {
+        const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
         const [items, setItems] = useState<DropdownFlatItem[]>([
             ...Array.from({ length: 10 }, (_, i) => ({
                 id: crypto.randomUUID(),
@@ -33,42 +34,52 @@ const DropdownRender = {
             })),
         ]);
 
+        useEffect(() => {
+            setIsOpen(props.isOpen);
+        }, [props.isOpen]);
+
         return (
-            <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
+            <Dropdown
+                {...props}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}>
                 <Dropdown.FlatItems
-                    selectingInput={props.selectingInput}
-                    isOpen={isOpen}
+                    selectingInput={selectingInput}
                     items={items}
-                    setIsOpen={setIsOpen}
                     setItems={setItems} />
             </Dropdown>
         );
     },
-    groupItems: ({ ...props }: React.ComponentProps<typeof Dropdown> & Partial<Pick<DropdownGroupItem, 'selectingInput'>>) => {
-        const [isOpen, setIsOpen] = useState<boolean>(false);
+    groupItems: ({ selectingInput, ...props }: Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'setIsOpen'> & Pick<DropdownGroupItem, 'selectingInput'>) => {
+        const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
         const [items, setItems] = useState<DropdownGroupItem[]>([
             ...Array.from({ length: 5 }, (_, i) => ({
                 id: crypto.randomUUID(),
-                heading: `item ${i + 1}`,
-                selectingInput: props.selectingInput ?? 'text',
+                heading: `group ${i + 1}`,
+                selectingInput: selectingInput,
                 items: [
                     ...Array.from({ length: 3 }, (_, j) => ({
                         id: crypto.randomUUID(),
                         heading: `item ${j + 1}`,
                         description: j < 1 ?
                             undefined :
-                            `This is a description for item ${i + 1} in Group ${i + 1}`,
+                            `This is a description for item ${j + 1} in Group ${i + 1}`,
                     })),
                 ],
             })),
         ]);
 
+        useEffect(() => {
+            setIsOpen(props.isOpen);
+        }, [props.isOpen]);
+
         return (
-            <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
+            <Dropdown
+                {...props}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}>
                 <Dropdown.GroupItems
-                    isOpen={isOpen}
                     items={items}
-                    setIsOpen={setIsOpen}
                     setItems={setItems} />
             </Dropdown>
         );
@@ -89,4 +100,20 @@ export const MultiText: Story = {
     },
     render: ({ ...props }) =>
         <DropdownRender.flatItems {...props} selectingInput='multi-text' />,
+};
+
+export const Radio: Story = {
+    args: {
+        triggerItem: 'Radio',
+    },
+    render: ({ ...props }) =>
+        <DropdownRender.groupItems {...props} selectingInput='radio' />,
+};
+
+export const Checkbox: Story = {
+    args: {
+        triggerItem: 'Checkbox',
+    },
+    render: ({ ...props }) =>
+        <DropdownRender.groupItems {...props} selectingInput='checkbox' />,
 };
