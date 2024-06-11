@@ -49,10 +49,14 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
                                         '' :
                                         'transition-all'} ${restProps.className ?? ''}`}>
             {BeforeIcon &&
-                <BeforeIcon size={ICON_SIZE[iconBefore?.size ?? size]} className='mr-1.5' />}
+                <BeforeIcon size={ICON_SIZE[iconBefore?.size ?? size]} className={spacing === 'default' ?
+                    'mr-1.5' :
+                    'mr-1'} />}
             {label}
             {AfterIcon &&
-                <AfterIcon size={ICON_SIZE[iconAfter?.size ?? size]} className='ml-1.5' />}
+                <AfterIcon size={ICON_SIZE[iconAfter?.size ?? size]} className={spacing === 'default' ?
+                    'ml-1.5' :
+                    'ml-1'} />}
         </button>
     );
 }
