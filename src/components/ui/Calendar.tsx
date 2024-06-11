@@ -3,7 +3,7 @@ import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 import type { ViewedDate, CalendarForm, DateItem, Months } from "@/types";
 import { MONTHS } from "@/data/constant";
-import { getDatesOfMonth, getFirstDayOfTheWeek, getWeeksOfMonth } from "@/utils";
+import { getDateHandler, getDayHandler, getTheNumberOfWeeksInMonth } from "@/utils";
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
 
@@ -125,37 +125,37 @@ export default function Calendar({ form, today, pickedDate, setPickedDate, ...pr
 }
 
 const MonthlyCalendar = ({ month, viewedDate, pickedDate, setPickedDate }: MonthlyCalendarProps) => {
-    const weeksOfMonth = useMemo(() =>
-        getWeeksOfMonth(viewedDate.year, viewedDate.month ?? month), [viewedDate, month]);
+    const theNumberOfWeeksInMonth = useMemo(() =>
+        getTheNumberOfWeeksInMonth(viewedDate.year, viewedDate.month ?? month), [viewedDate, month]);
     const firstDayOfTheWeek = useMemo(() =>
-        getFirstDayOfTheWeek(viewedDate.year, viewedDate.month ?? month), [viewedDate, month]);
-    const datesOfThisMonth = useMemo(() =>
-        getDatesOfMonth(viewedDate.year, viewedDate.month ?? month), [viewedDate, month]);
-    const datesOfLastMonth = useMemo(() =>
-        getDatesOfMonth((viewedDate.month === 1) ?
+        getDayHandler.firstDateInMonth(viewedDate.year, viewedDate.month ?? month), [viewedDate, month]);
+    const datesInThisMonth = useMemo(() =>
+        getDateHandler.month(viewedDate.year, viewedDate.month ?? month), [viewedDate, month]);
+    const datesInLastMonth = useMemo(() =>
+        getDateHandler.month((viewedDate.month === 1) ?
             viewedDate.year - 1 :
             viewedDate.year, MONTHS[MONTHS.indexOf(viewedDate.month ?? month) - 1]), [viewedDate, month]);
 
     return (
         <div className="w-full">
-            {Array.from({ length: weeksOfMonth }, (_, index) => index).map((weeklyIndex) =>
+            {Array.from({ length: theNumberOfWeeksInMonth }, (_, index) => index).map((weeklyIndex) =>
                 <div key={weeklyIndex} className="w-full grid grid-cols-7 justify-items-center">
                     {Array.from({ length: 7 }, (_, index) => {
                         const dailyIndex = (weeklyIndex * 7 + index) - firstDayOfTheWeek;
 
                         switch (true) {
                             case dailyIndex < 0:
-                                return datesOfLastMonth + (dailyIndex + 1);
-                            case dailyIndex >= datesOfThisMonth:
-                                return (dailyIndex + 1) - datesOfThisMonth;
+                                return datesInLastMonth + (dailyIndex + 1);
+                            case dailyIndex >= datesInThisMonth:
+                                return (dailyIndex + 1) - datesInThisMonth;
                             default:
                                 return dailyIndex + 1;
                         }
                     }).map((date, index) => {
                         const dailyIndex = (weeklyIndex * 7 + index) - firstDayOfTheWeek;
-                        const isDisabled = dailyIndex < 0 || dailyIndex >= datesOfThisMonth;
+                        const isDisabled = dailyIndex < 0 || dailyIndex >= datesInThisMonth;
                         const isSelected = 0 <= dailyIndex &&
-                            dailyIndex < datesOfThisMonth &&
+                            dailyIndex < datesInThisMonth &&
                             viewedDate.year === pickedDate.year &&
                             (viewedDate.month ?? month) === pickedDate.month &&
                             date === pickedDate.date;
@@ -176,7 +176,7 @@ const MonthlyCalendar = ({ month, viewedDate, pickedDate, setPickedDate }: Month
                                         'text-red' :
                                         index === 6 ?
                                             'text-blue' :
-                                            ''} justify-center leading-[1.5] transition-none`}
+                                            ''} justify-center transition-none`}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setPickedDate((prev) => ({

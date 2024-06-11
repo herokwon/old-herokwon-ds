@@ -8,20 +8,17 @@ interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'la
     size?: ElementBaseSize;
     groupErrorMessage?: InputProps['errorMessage'];
     subGroupItem?: React.ComponentProps<typeof RadioGroup>;
-    onChangeItems?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size = 'md', heading, description, subGroupItem, onChangeItems, ...props }, ref) {
+const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size = 'md', heading, description, subGroupItem, ...props }, ref) {
     const { isDisabled = false, isSelected = false, groupErrorMessage, ...restProps } = props;
 
     const [isChecked, setIsChecked] = useState<boolean>(isSelected);
     const { hasError, onChangeInput } = useInput({
         isDisabled: isDisabled,
         errorMessage: groupErrorMessage,
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-            onChangeItems && onChangeItems(e);
-            setIsChecked(e.currentTarget.checked);
-        },
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+            restProps.onChange && restProps.onChange(e)
     });
 
     useEffect(() => {

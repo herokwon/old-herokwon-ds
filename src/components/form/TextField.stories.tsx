@@ -3,7 +3,6 @@ import { PiTextTBold } from "react-icons/pi";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { LuLock } from "react-icons/lu";
 
-import { TEXT_INPUT } from "@/data/constant";
 import TextField from "./TextField";
 
 const meta = {
@@ -15,12 +14,6 @@ const meta = {
         type: 'text',
         fieldIcon: PiTextTBold,
     },
-    // argTypes: {
-    //     type: {
-    //         control: 'select',
-    //         options: [...TEXT_INPUT],
-    //     },
-    // },
 } satisfies Meta<typeof TextField>;
 export default meta;
 

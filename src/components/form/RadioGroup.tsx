@@ -37,7 +37,7 @@ export default function RadioGroup({ direction = 'vertical', size = 'md', items,
                         undefined :
                         groupItem.description}
                     groupErrorMessage={groupErrorMessage}
-                    onChangeItems={() => setGroupItems((prevGroupItems) =>
+                    onChange={() => setGroupItems((prevGroupItems) =>
                         prevGroupItems.map((prevGroupItem) => ({
                             ...prevGroupItem,
                             isSelected: groupItem.id === prevGroupItem.id,
