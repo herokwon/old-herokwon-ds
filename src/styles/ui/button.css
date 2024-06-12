@@ -16,7 +16,7 @@
   &-default {
     @apply bg-secondary;
 
-    &:not(:disabled) {
+    &:not(:disabled):is(.hoverable) {
       @apply hover:bg-tertiary;
 
       &.selected {
@@ -28,7 +28,7 @@
   &-primary {
     @apply !text-dark bg-blue;
 
-    &:not(:disabled) {
+    &:not(:disabled):is(.hoverable) {
       @apply bg-blue--hover;
 
       &.selected {
@@ -48,7 +48,7 @@
   &-secondary {
     @apply bg-transparent;
 
-    &:not(:disabled) {
+    &:not(:disabled):is(.hoverable) {
       @apply hover:bg-secondary;
 
       &.selected {
@@ -60,7 +60,7 @@
   &-warning {
     @apply !text-light bg-yellow;
 
-    &:not(:disabled) {
+    &:not(:disabled):is(.hoverable) {
       @apply bg-yellow--hover;
 
       &.selected {
@@ -80,7 +80,7 @@
   &-danger {
     @apply !text-dark bg-red;
 
-    &:not(:disabled) {
+    &:not(:disabled):is(.hoverable) {
       @apply bg-red--hover;
 
       &.selected {

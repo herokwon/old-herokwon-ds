@@ -10,6 +10,7 @@ const meta = {
         isDisabled: false,
         isSelected: false,
         isLoading: false,
+        isRemovable: false,
         variant: 'default',
         size: 'sm',
         spacing: 'compact',
@@ -32,6 +33,13 @@ export const Link: Story = {
             to: '/#',
             replace: false,
         },
+    },
+};
+
+export const Removable: Story = {
+    args: {
+        label: 'Removable Tag',
+        isRemovable: true,
     },
 };
 

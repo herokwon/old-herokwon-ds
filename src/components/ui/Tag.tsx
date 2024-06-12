@@ -1,30 +1,42 @@
-import { LuHash } from "react-icons/lu";
+import { useState } from "react";
+import { LuHash, LuX } from "react-icons/lu";
 
+import type { ElementBaseSize, ElementSpacing } from "@/types";
 import TextButton from "./TextButton";
 
-type TagProps = React.ComponentPropsWithoutRef<typeof TextButton>;
+interface TagProps extends Omit<React.ComponentPropsWithoutRef<typeof TextButton>, 'isHoverable' | 'size' | 'spacing'> {
+    isRemovable?: boolean;
+    size?: Exclude<ElementBaseSize, 'lg'>;
+    spacing?: Exclude<ElementSpacing, 'default'>;
+};
 
-export default function Tag({ label, variant = 'default', size = 'sm', spacing = 'compact', href, iconBefore = { content: LuHash }, iconAfter, ...props }: TagProps) {
-    const { isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
+export default function Tag({ isRemovable = false, ...props }: TagProps) {
+    const { size = 'sm', spacing = 'compact', iconBefore = { content: LuHash }, iconAfter, ...restProps } = props;
+
+    const [isRemoved, setIsRemoved] = useState<boolean>(false);
 
     return (
         <TextButton
             {...restProps}
-            isDisabled={isDisabled}
-            isSelected={isSelected}
-            isLoading={isLoading}
-            label={label}
-            variant={variant}
+            isHoverable={false}
             size={size}
             spacing={spacing}
-            href={href}
             iconBefore={iconBefore}
-            iconAfter={iconAfter}
-            tabIndex={!href ?
+            iconAfter={isRemovable ?
+                {
+                    content: LuX,
+                    onClick: () => setIsRemoved(true),
+                } :
+                iconAfter}
+            tabIndex={!restProps.href ?
                 -1 :
                 undefined}
-            className={!href ?
-                'pointer-events-none' :
-                ''} />
+            className={`${isRemoved ?
+                'hidden' :
+                ''} ${isRemovable ?
+                    '!cursor-default last:*:cursor-pointer' :
+                    !restProps.href ?
+                        '!cursor-default' :
+                        ''}`} />
     );
 }
