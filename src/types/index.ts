@@ -1,8 +1,6 @@
 import type { IconType } from "react-icons";
 
 import {
-    ALIGNMENTS_X,
-    ALIGNMENTS_Y,
     ELEMENT_BASE_SIZES,
     ELEMENT_BASE_VARIANTS,
     ELEMENT_DIRECTIONS,
@@ -24,12 +22,6 @@ export interface ElementStates {
     isLoading?: boolean;
 };
 
-export type AlignmentX = typeof ALIGNMENTS_X[number];
-export type AlignmentY = typeof ALIGNMENTS_Y[number];
-export type AbsolutePositionX = `${Exclude<AlignmentX, 'center'>}-${AlignmentY}`;
-export type AbsolutePositionY = `${Exclude<AlignmentY, 'middle'>}-${AlignmentX}`;
-
-export type AbsolutePosition = AbsolutePositionX | AbsolutePositionY;
 
 export interface ContentWithId extends Omit<ElementStates, 'isLoading'> {
     id: string;
@@ -38,14 +30,18 @@ export interface ContentWithId extends Omit<ElementStates, 'isLoading'> {
 };
 
 export interface ContentWithIcon {
-    iconBefore?: {
+    iconBefore?: EventHandler<keyof SVGSVGElementEventMap> & {
         content: IconType;
         size?: ElementExtendedSize;
     };
-    iconAfter?: {
+    iconAfter?: EventHandler<keyof SVGSVGElementEventMap> & {
         content: IconType;
         size?: ElementExtendedSize;
-    }
+    };
+};
+
+export type EventHandler<T extends string> = {
+    [H in `on${Capitalize<T>}`]?: (event: Event) => void;
 };
 
 export interface ItemsWithHeading {
@@ -55,6 +51,9 @@ export interface ItemsWithHeading {
 };
 
 export * from "./datetime";
+export * from "./position";
+
 export * from "./form/input";
+
 export * from "./ui/button";
 export * from "./ui/dropdown";
