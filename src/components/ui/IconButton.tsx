@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import type { IconType } from "react-icons";
 
@@ -12,7 +12,7 @@ interface IconButtonProps extends Omit<ButtonProps, 'size'> {
     shape?: 'square' | 'circle';
 };
 
-export default function IconButton({ icon, variant = 'default', size = 'md', spacing = 'default', shape = 'circle', href, ...props }: IconButtonProps) {
+const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton({ icon, variant = 'default', size = 'md', spacing = 'default', shape = 'circle', href, ...props }, ref) {
     const { isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const { push, replace } = useRouter();
@@ -32,6 +32,7 @@ export default function IconButton({ icon, variant = 'default', size = 'md', spa
     return (
         <button
             {...restProps}
+            ref={ref}
             disabled={isDisabled}
             onClick={onClickIconButton}
             className={`button-${variant} ${isSelected ?
@@ -46,4 +47,6 @@ export default function IconButton({ icon, variant = 'default', size = 'md', spa
             <Icon size={ICON_SIZE[size]} className='m-1' />
         </button>
     );
-}
+});
+
+export default IconButton;

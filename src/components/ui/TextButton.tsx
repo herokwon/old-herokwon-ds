@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 import type { ButtonProps, ContentWithIcon, ElementExtendedVariant } from "@/types";
@@ -10,7 +10,7 @@ interface TextButtonProps extends ButtonProps, ContentWithIcon {
     isHoverable?: boolean;
 };
 
-export default function TextButton({ label, variant = 'default', size = 'md', spacing = 'default', href, iconBefore, iconAfter, ...props }: TextButtonProps) {
+const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(function TextButton({ label, variant = 'default', size = 'md', spacing = 'default', href, iconBefore, iconAfter, ...props }, ref) {
     const { isHoverable = !href, isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const { push, replace } = useRouter();
@@ -32,25 +32,26 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
     return (
         <button
             {...restProps}
+            ref={ref}
             disabled={isDisabled}
             onClick={onClickTextButton}
             className={`button-${spacing === 'none' ?
                 `${variant}--no-spacing` :
                 variant} ${isSelected ?
                     'selected' :
-                    ''} ${isHoverable && !href ?
+                    ''} ${isHoverable ?
                         'hoverable' :
-                        ''} ${spacing === 'default' ?
-                            'px-2.5 py-1' :
-                            spacing === 'compact' ?
-                                'px-1.5 py-0.5' :
-                                'p-0'} flex justify-center items-center rounded-ms ${size === 'lg' ?
-                                    'text-lg' :
-                                    size === 'sm' ?
-                                        'text-sm' :
-                                        'text-base'} outline-none ${spacing === 'none' ?
-                                            '' :
-                                            'transition-all'} group ${restProps.className ?? ''}`}>
+                        href ?
+                            'linkable' :
+                            ''} ${spacing === 'default' ?
+                                'px-2.5 py-1' :
+                                spacing === 'compact' ?
+                                    'px-1.5 py-0.5' :
+                                    'p-0'} flex justify-center items-center rounded-ms ${size === 'lg' ?
+                                        'text-lg' :
+                                        size === 'sm' ?
+                                            'text-sm' :
+                                            'text-base'} outline-none ${restProps.className ?? ''}`}>
             {BeforeIcon &&
                 <BeforeIcon
                     size={ICON_SIZE[iconBefore?.size ?? size]}
@@ -58,9 +59,7 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
                     className={spacing === 'default' ?
                         'mr-1.5' :
                         'mr-1'} />}
-            <p className={isHoverable && !href ?
-                '' :
-                'group-hover:text-blue group-hover:underline underline-offset-2 decoration-blue'}>
+            <p>
                 {label}
             </p>
             {AfterIcon &&
@@ -72,4 +71,6 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
                         'ml-1'} />}
         </button>
     );
-}
+});
+
+export default TextButton;
