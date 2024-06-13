@@ -42,3 +42,9 @@ export const Primary: Story = {
         variant: 'primary',
     },
 };
+
+export const Disabled: Story = {
+    args: {
+        isDisabled: true,
+    },
+};

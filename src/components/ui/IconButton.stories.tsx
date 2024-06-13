@@ -40,3 +40,9 @@ export const Secondary: Story = {
         variant: 'secondary',
     },
 };
+
+export const Disabled: Story = {
+    args: {
+        isDisabled: true,
+    },
+};
