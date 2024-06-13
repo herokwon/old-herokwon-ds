@@ -1,3 +1,4 @@
+@import "./ui/badge.css";
 @import "./ui/button.css";
 @import "./ui/dropdown.css";
 
@@ -74,6 +75,10 @@
 
     &-red {
       @apply border-red-500 dark:border-red-600;
+    }
+
+    &-green {
+      @apply border-green-500 dark:border-green-600;
     }
   }
 

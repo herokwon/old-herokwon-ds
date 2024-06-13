@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
 import type { ButtonProps, ElementBaseVariant, ElementSpacing, ElementStates } from "@/types";
@@ -19,7 +19,7 @@ interface SplitButtonProps extends Omit<ButtonProps, 'spacing' | 'href'> {
     items: SplitButtonItem[];
 };
 
-export default function SplitButton({ defaultLabel, variant = 'default', size = 'md', spacing = 'default', items, ...props }: SplitButtonProps) {
+const SplitButton = forwardRef<HTMLButtonElement, SplitButtonProps>(function SplitButton({ defaultLabel, variant = 'default', size = 'md', spacing = 'default', items, ...props }, ref) {
     const { isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const [isShowingItems, setIsShowingItems] = useState<boolean>(isSelected);
@@ -37,6 +37,7 @@ export default function SplitButton({ defaultLabel, variant = 'default', size = 
         <div className="h-full flex relative group">
             <TextButton
                 {...restProps}
+                ref={ref}
                 label={selectedItem?.heading ?? defaultLabel ?? ''}
                 variant={variant}
                 size={size}
@@ -102,4 +103,6 @@ export default function SplitButton({ defaultLabel, variant = 'default', size = 
             </div>
         </div>
     );
-}
+});
+
+export default SplitButton;

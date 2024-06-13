@@ -1,0 +1,17 @@
+.badge {
+  &-default {
+    @apply bg-secondary;
+  }
+
+  &-primary {
+    @apply !text-dark bg-blue;
+  }
+
+  &-added {
+    @apply text-green-900 dark:text-green-200 bg-green-200 dark:bg-green-900;
+  }
+
+  &-removed {
+    @apply text-red-900 dark:text-red-200 bg-red-200 dark:bg-red-900;
+  }
+}
