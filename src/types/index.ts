@@ -41,7 +41,7 @@ export interface ContentWithIcon {
 };
 
 export type EventHandler<T extends string> = {
-    [H in `on${Capitalize<T>}`]?: (event: Event) => void;
+    [H in `on${Capitalize<T>}`]?: (event: React.BaseSyntheticEvent) => void;
 };
 
 export interface ItemsWithHeading {
