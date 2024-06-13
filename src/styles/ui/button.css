@@ -5,11 +5,19 @@
   &-warning,
   &-danger {
     &--no-spacing:not(:disabled) {
-      @apply hover:underline underline-offset-4;
+      @apply hover:underline underline-offset-2;
 
       &.selected {
         @apply underline;
       }
+    }
+
+    &:not(.hoverable):is(.linkable) {
+      @apply hover:text-blue hover:underline underline-offset-2 decoration-blue;
+    }
+
+    &:not(.hoverable):is(.removable) {
+      @apply text-red hover:underline underline-offset-2 decoration-red;
     }
   }
 
