@@ -11,7 +11,7 @@ interface TextButtonProps extends ButtonProps, ContentWithIcon {
 };
 
 export default function TextButton({ label, variant = 'default', size = 'md', spacing = 'default', href, iconBefore, iconAfter, ...props }: TextButtonProps) {
-    const { isHoverable = true, isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
+    const { isHoverable = !href, isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const { push, replace } = useRouter();
     const BeforeIcon = useMemo(() =>
@@ -38,7 +38,7 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
                 `${variant}--no-spacing` :
                 variant} ${isSelected ?
                     'selected' :
-                    ''} ${isHoverable ?
+                    ''} ${isHoverable && !href ?
                         'hoverable' :
                         ''} ${spacing === 'default' ?
                             'px-2.5 py-1' :
@@ -58,7 +58,7 @@ export default function TextButton({ label, variant = 'default', size = 'md', sp
                     className={spacing === 'default' ?
                         'mr-1.5' :
                         'mr-1'} />}
-            <p className={!href ?
+            <p className={isHoverable && !href ?
                 '' :
                 'group-hover:text-blue group-hover:underline underline-offset-2 decoration-blue'}>
                 {label}

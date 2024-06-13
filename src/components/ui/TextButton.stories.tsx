@@ -28,6 +28,17 @@ export const Default: Story = {
     },
 };
 
+export const Link: Story = {
+    args: {
+        label: 'Link',
+        variant: 'default',
+        href: {
+            to: '/#',
+            replace: false,
+        },
+    },
+};
+
 export const IconBefore: Story = {
     args: {
         label: 'Icon Before',
