@@ -1,0 +1,33 @@
+.inline-message {
+  &--default,
+  &--success,
+  &--info,
+  &--warning,
+  &--danger {
+    @apply opacity-bold;
+  }
+
+  &--success {
+    & > :first-child {
+      @apply text-green;
+    }
+  }
+
+  &--info {
+    & > :first-child {
+      @apply text-blue;
+    }
+  }
+
+  &--warning {
+    & > :first-child {
+      @apply text-yellow;
+    }
+  }
+
+  &--danger {
+    & > :first-child {
+      @apply text-red;
+    }
+  }
+}

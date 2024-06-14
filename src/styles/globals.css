@@ -1,6 +1,7 @@
 @import "./ui/badge.css";
 @import "./ui/button.css";
 @import "./ui/dropdown.css";
+@import "./ui/feedback.css";
 
 @tailwind base;
 @tailwind components;
