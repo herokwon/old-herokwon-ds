@@ -59,3 +59,4 @@ export * from "./form/input";
 
 export * from "./ui/button";
 export * from "./ui/dropdown";
+export * from "./ui/feedback";

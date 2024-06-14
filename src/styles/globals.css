@@ -81,6 +81,10 @@
     &-green {
       @apply border-green-500 dark:border-green-600;
     }
+
+    &-yellow {
+      @apply border-yellow-400 dark:border-yellow-500;
+    }
   }
 
   .text {

@@ -31,3 +31,25 @@
     }
   }
 }
+
+.section-message {
+  &--default {
+    @apply border-tertiary bg-secondary;
+  }
+
+  &--success {
+    @apply border-green bg-green-100 dark:bg-green-950;
+  }
+
+  &--info {
+    @apply border-blue bg-blue-100 dark:bg-blue-950;
+  }
+
+  &--warning {
+    @apply border-yellow bg-yellow-100 dark:bg-yellow-950;
+  }
+
+  &--danger {
+    @apply border-red bg-red-100 dark:bg-red-950;
+  }
+}
