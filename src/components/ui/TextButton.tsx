@@ -51,7 +51,7 @@ const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(function TextB
                                         'text-lg' :
                                         size === 'sm' ?
                                             'text-sm' :
-                                            'text-base'} outline-none ${restProps.className ?? ''}`}>
+                                            'text-base'} outline-none transition-[background-color] ${restProps.className ?? ''}`}>
             {BeforeIcon &&
                 <BeforeIcon
                     size={ICON_SIZE[iconBefore?.size ?? size]}
