@@ -23,8 +23,8 @@ export default function Badge({ value, size = 'sm', shape = 'round', ...props }:
         props.maxValue ?? null :
         null;
     const restProps = useMemo(() => ({
-        ...Object.fromEntries(Object.entries(props).filter((props) =>
-            props[0] !== 'variant' && props[0] !== 'maxValue'))
+        ...Object.fromEntries(Object.entries(props).filter((prop) =>
+            prop[0] !== 'variant' && prop[0] !== 'maxValue'))
     }), [props]);
 
     const renderBadgeValue = (value: number, maxValue: number | null): string => {
