@@ -17,41 +17,35 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        message: 'This is a default message',
-    },
-};
-
-export const Heading: Story = {
-    args: {
         heading: 'Heading',
-        message: 'This is a default message with heading',
+        message: 'This is a default inline message with heading',
     },
 };
 
 export const Success: Story = {
     args: {
+        message: 'This is a success inline message',
         variant: 'success',
-        message: 'This is a success message',
     },
 };
 
 export const Info: Story = {
     args: {
+        message: 'This is an info inline message',
         variant: 'info',
-        message: 'This is a info message',
     },
 };
 
 export const Warning: Story = {
     args: {
+        message: 'This is a warning inline message',
         variant: 'warning',
-        message: 'This is a warning message',
     },
 };
 
 export const Danger: Story = {
     args: {
+        message: 'This is a danger inline message',
         variant: 'danger',
-        message: 'This is a danger message',
     },
 };
