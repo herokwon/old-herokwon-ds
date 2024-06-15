@@ -22,6 +22,26 @@ export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
 const DropdownRender = {
+    empty: ({ selectingInput, ...props }: Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'setIsOpen'> & Pick<DropdownGroupItem, 'selectingInput'>) => {
+        const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
+        const [items, setItems] = useState<DropdownFlatItem[]>([]);
+
+        useEffect(() => {
+            setIsOpen(props.isOpen);
+        }, [props.isOpen]);
+
+        return (
+            <Dropdown
+                {...props}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}>
+                <Dropdown.FlatItems
+                    selectingInput={selectingInput}
+                    items={items}
+                    setItems={setItems} />
+            </Dropdown>
+        );
+    },
     flatItems: ({ selectingInput, ...props }: Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'setIsOpen'> & Pick<DropdownGroupItem, 'selectingInput'>) => {
         const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
         const [items, setItems] = useState<DropdownFlatItem[]>([
@@ -84,6 +104,14 @@ const DropdownRender = {
             </Dropdown>
         );
     },
+};
+
+export const Empty: Story = {
+    args: {
+        triggerItem: 'Empty',
+    },
+    render: ({ ...props }) =>
+        <DropdownRender.empty {...props} selectingInput='text' />
 };
 
 export const Text: Story = {
