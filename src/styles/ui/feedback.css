@@ -5,28 +5,74 @@
   &--warning,
   &--danger {
     @apply opacity-bold;
+
+    &:not(.inline-message--info) > :last-child a {
+      @apply text-blue underline underline-offset-2 decoration-blue;
+    }
+
+    &:is(.inline-message--info) > :last-child a {
+      @apply underline underline-offset-2 decoration-white;
+    }
+  }
+
+  &--default {
+    &:is(.banner) {
+      @apply bg-secondary;
+    }
   }
 
   &--success {
-    & > :first-child {
+    &:is(.banner) {
+      @apply !text-dark bg-green;
+
+      & > :first-child {
+        @apply !text-dark;
+      }
+    }
+
+    &:not(.banner) > :first-child {
       @apply text-green;
     }
   }
 
   &--info {
-    & > :first-child {
+    &:is(.banner) {
+      @apply !text-dark bg-blue;
+
+      & > :first-child {
+        @apply !text-dark;
+      }
+    }
+
+    &:not(.banner) > :first-child {
       @apply text-blue;
     }
   }
 
   &--warning {
-    & > :first-child {
+    &:is(.banner) {
+      @apply !text-light bg-yellow;
+
+      & > :first-child {
+        @apply !text-light;
+      }
+    }
+
+    &:not(.banner) > :first-child {
       @apply text-yellow;
     }
   }
 
   &--danger {
-    & > :first-child {
+    &:is(.banner) {
+      @apply !text-dark bg-red;
+
+      & > :first-child {
+        @apply !text-dark;
+      }
+    }
+
+    &:not(.banner) > :first-child {
       @apply text-red;
     }
   }

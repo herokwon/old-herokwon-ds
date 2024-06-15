@@ -24,7 +24,9 @@ export default function SectionMessage({ heading, message, variant = 'default', 
 
     return (
         <section className={`section-message--${variant} w-full px-4 py-3 border rounded-ms shadow-md shadow-secondary ${props.className ?? ''}`}>
-            <div className="w-full flex items-start">
+            <div className={`w-full flex ${isHidden ?
+                'items-center' :
+                'items-start'}`}>
                 <InlineMessage
                     {...restProps}
                     heading={heading}
