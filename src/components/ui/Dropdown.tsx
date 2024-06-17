@@ -86,7 +86,10 @@ const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEv
                     setIsOpen((prev) => !prev)}
                 onMouseEnter={() => !isDisabled &&
                     triggerEvent === 'mouseenter' &&
-                    setIsOpen((prev) => !prev)}
+                    setIsOpen(true)}
+                onMouseLeave={() => !isDisabled &&
+                    triggerEvent === 'mouseenter' &&
+                    setIsOpen(false)}
                 className={`dropdown-trigger ${isDisabled ?
                     'disabled' :
                     ''}`}>
