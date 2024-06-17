@@ -2,6 +2,7 @@
 @import "./ui/button.css";
 @import "./ui/dropdown.css";
 @import "./ui/feedback.css";
+@import "./ui/toggle.css";
 
 @tailwind base;
 @tailwind components;
