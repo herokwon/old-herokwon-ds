@@ -1,0 +1,101 @@
+.inline-message {
+  &--default,
+  &--success,
+  &--info,
+  &--warning,
+  &--danger {
+    @apply opacity-bold;
+
+    &:not(.inline-message--info) > :last-child a {
+      @apply text-blue underline underline-offset-2 decoration-blue;
+    }
+
+    &:is(.inline-message--info) > :last-child a {
+      @apply underline underline-offset-2 decoration-white;
+    }
+  }
+
+  &--default {
+    &:is(.banner) {
+      @apply bg-secondary;
+    }
+  }
+
+  &--success {
+    &:is(.banner) {
+      @apply !text-dark bg-green;
+
+      & > :first-child {
+        @apply !text-dark;
+      }
+    }
+
+    &:not(.banner) > :first-child {
+      @apply text-green;
+    }
+  }
+
+  &--info {
+    &:is(.banner) {
+      @apply !text-dark bg-blue;
+
+      & > :first-child {
+        @apply !text-dark;
+      }
+    }
+
+    &:not(.banner) > :first-child {
+      @apply text-blue;
+    }
+  }
+
+  &--warning {
+    &:is(.banner) {
+      @apply !text-light bg-yellow;
+
+      & > :first-child {
+        @apply !text-light;
+      }
+    }
+
+    &:not(.banner) > :first-child {
+      @apply text-yellow;
+    }
+  }
+
+  &--danger {
+    &:is(.banner) {
+      @apply !text-dark bg-red;
+
+      & > :first-child {
+        @apply !text-dark;
+      }
+    }
+
+    &:not(.banner) > :first-child {
+      @apply text-red;
+    }
+  }
+}
+
+.section-message {
+  &--default {
+    @apply border-tertiary bg-secondary;
+  }
+
+  &--success {
+    @apply border-green bg-green-100 dark:bg-green-950;
+  }
+
+  &--info {
+    @apply border-blue bg-blue-100 dark:bg-blue-950;
+  }
+
+  &--warning {
+    @apply border-yellow bg-yellow-100 dark:bg-yellow-950;
+  }
+
+  &--danger {
+    @apply border-red bg-red-100 dark:bg-red-950;
+  }
+}

@@ -1,6 +1,8 @@
 @import "./ui/badge.css";
 @import "./ui/button.css";
 @import "./ui/dropdown.css";
+@import "./ui/feedback.css";
+@import "./ui/toggle.css";
 
 @tailwind base;
 @tailwind components;
@@ -79,6 +81,10 @@
 
     &-green {
       @apply border-green-500 dark:border-green-600;
+    }
+
+    &-yellow {
+      @apply border-yellow-400 dark:border-yellow-500;
     }
   }
 

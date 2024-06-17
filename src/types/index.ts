@@ -6,7 +6,8 @@ import {
     ELEMENT_DIRECTIONS,
     ELEMENT_EXTENDED_SIZES,
     ELEMENT_EXTENDED_VARIANTS,
-    ELEMENT_SPACINGS
+    ELEMENT_SPACINGS,
+    FEEDBACK_VARIANTS
 } from "@/data/constant";
 
 export type ElementBaseSize = typeof ELEMENT_BASE_SIZES[number];
@@ -22,6 +23,7 @@ export interface ElementStates {
     isLoading?: boolean;
 };
 
+export type FeedbackVariant = typeof FEEDBACK_VARIANTS[number];
 
 export interface ContentWithId extends Omit<ElementStates, 'isLoading'> {
     id: string;
@@ -57,3 +59,4 @@ export * from "./form/input";
 
 export * from "./ui/button";
 export * from "./ui/dropdown";
+export * from "./ui/feedback";

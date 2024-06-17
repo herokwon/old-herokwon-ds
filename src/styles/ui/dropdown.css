@@ -6,6 +6,10 @@
       @apply opacity-0 pointer-events-none;
     }
 
+    :not(.tooltip) & {
+      @apply min-w-full;
+    }
+
     &.to {
       &-top-left,
       &-top-center,
