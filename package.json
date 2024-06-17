@@ -1,10 +1,37 @@
 {
   "name": "hero-ds",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "author": {
+    "name": "herokwon",
+    "email": "contact@herokwon.dev",
+    "url": "https://github.com/herokwon"
+  },
+  "bugs": {
+    "url": "https://github.com/herokwon/hero-ds/issues",
+    "email": "contact@herokwon.dev"
+  },
+  "keywords": [
+    "nextjs",
+    "tailwindcss",
+    "design-system"
+  ],
+  "description": "This is simple design system by herokwon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/herokwon/hero-ds.git"
+  },
+  "license": "MIT",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "type": "module",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "rollup -c",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
@@ -17,7 +44,17 @@
     "react-icons": "^5.2.1"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
     "@chromatic-com/storybook": "^1.5.0",
+    "@rollup/plugin-alias": "^5.1.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-image": "^3.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-essentials": "^8.1.5",
     "@storybook/addon-interactions": "^8.1.5",
     "@storybook/addon-links": "^8.1.5",
@@ -28,8 +65,10 @@
     "@storybook/test": "^8.1.5",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^20",
+    "@types/postcss-import": "^14.0.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.5",
     "autoprefixer": "^10.4.19",
     "chromatic": "^11.5.0",
     "eslint": "^8",
@@ -38,6 +77,8 @@
     "postcss": "^8",
     "postcss-import": "^16.1.0",
     "postcss-nesting": "^12.1.5",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^8.1.5",
     "storybook-dark-mode": "^4.0.1",
     "tailwindcss": "^3.4.1",

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import EmptyImage from "@/public/empty.png";
+import EmptyImage from "@public/empty.png";
 
 interface EmptyProps extends React.ComponentPropsWithoutRef<'div'> {
     imgData?: Omit<React.ComponentProps<typeof Image>, 'alt'>;

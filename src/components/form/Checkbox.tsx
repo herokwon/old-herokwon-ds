@@ -8,7 +8,7 @@ import InputMessage from "./InputMessage";
 interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage'> {
     size?: ElementBaseSize;
     isDependent?: boolean;
-    subItems?: React.ComponentProps<typeof Checkbox>[];
+    subItems?: CheckboxProps[];
 };
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ id, size = 'md', heading, description, subItems = [], ...props }, ref) {

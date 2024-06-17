@@ -13,6 +13,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
     "plugins": [
       {
         "name": "next"
@@ -21,9 +24,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"],
+      "@public/*": ["./public/*"],
     }
   },
   "include": ["src/custom.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.stories.tsx"]
 }
