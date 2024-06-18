@@ -11,10 +11,11 @@ import typescript from "@rollup/plugin-typescript";
 import autoprefixer from "autoprefixer";
 import cssimport from "postcss-import";
 import pkg from "./package.json" assert { type: "json" };
-import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const extensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx'];
 
 const config = [
@@ -25,6 +26,7 @@ const config = [
                 file: pkg.main,
                 format: 'cjs',
                 sourcemap: true,
+                exports: 'named',
             }, {
                 file: pkg.module,
                 format: 'es',
@@ -38,19 +40,23 @@ const config = [
                 entries: [
                     {
                         find: '@public',
-                        replacement: resolve(__dirname, 'public'),
+                        replacement: path.resolve(__dirname, 'public'),
                     },
                     {
                         find: '@',
-                        replacement: resolve(__dirname, 'src'),
+                        replacement: path.resolve(__dirname, 'src'),
                     },
                 ],
             }),
             babel({
                 babelHelpers: 'runtime',
+                presets: [
+                    '@babel/preset-env',
+                    '@babel/preset-react',
+                    '@babel/preset-typescript',
+                ],
+                extensions: extensions,
                 exclude: 'node_modules/**',
-                extensions,
-                presets: ['@babel/preset-react'],
             }),
             commonjs({
                 include: 'node_modules/**',
@@ -70,11 +76,12 @@ const config = [
                 ],
             }),
             nodeResolve({
-                extensions,
+                extensions: extensions,
             }),
             terser(),
             typescript({
                 tsconfig: './tsconfig.json',
+                exclude: ['node_modules', '**/*.stories.tsx']
             }),
         ],
     },
