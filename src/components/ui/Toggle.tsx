@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { IconType } from "react-icons";
 
-import type { ButtonProps, ElementExtendedSize } from "@/types";
+import type { ButtonProps, ElementExtendedSize } from "../../types";
 
 interface ToggleProps extends Omit<ButtonProps, 'isLoading' | 'size' | 'spacing' | 'href'> {
     size?: ElementExtendedSize;

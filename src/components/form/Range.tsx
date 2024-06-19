@@ -1,7 +1,7 @@
 import { forwardRef, useState } from "react";
 
-import type { AbsolutePositionY, AlignmentX, InputProps } from "@/types";
-import { useInput } from "@/hooks";
+import type { AbsolutePositionY, AlignmentX, InputProps } from "../../types";
+import { useInput } from "../../hooks";
 import InputMessage from "./InputMessage";
 
 interface RangeProps extends Omit<InputProps, 'label'> {

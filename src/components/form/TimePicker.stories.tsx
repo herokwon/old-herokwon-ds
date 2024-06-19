@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import type { TimeItem } from "@/types";
+import type { TimeItem } from "../../types";
 import TimePicker from "./TimePicker";
 
 const meta = {

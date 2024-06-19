@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { LuX } from "react-icons/lu";
 
-import type { ContentWithId, InputProps, SelectingInput } from "@/types";
+import type { ContentWithId, InputProps, SelectingInput } from "../../types";
 import Dropdown from "../ui/Dropdown";
 import TextField from "./TextField";
 import IconButton from "../ui/IconButton";

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import type { ElementBaseSize, FeedbackVariant } from "@/types";
-import { FEEDBACK_ICONS } from "@/data/constant";
+import type { ElementBaseSize, FeedbackVariant } from "../../types";
+import { FEEDBACK_ICONS } from "../../data/constant";
 
 interface InlineMessageProps extends React.ComponentPropsWithoutRef<'div'> {
     heading?: string;

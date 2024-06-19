@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
-import type { ViewedDate, CalendarForm, DateItem, Months } from "@/types";
-import { MONTHS } from "@/data/constant";
-import { getDateHandler, getDayHandler, getTheNumberOfWeeksInMonth } from "@/utils";
+import type { ViewedDate, CalendarForm, DateItem, Months } from "../../types";
+import { MONTHS } from "../../data/constant";
+import { getDateHandler, getDayHandler, getTheNumberOfWeeksInMonth } from "../../utils";
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
 

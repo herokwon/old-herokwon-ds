@@ -1,5 +1,5 @@
 import type { ContentWithId, EventHandler } from "..";
-import TextButton from "@/components/ui/TextButton";
+import TextButton from "../../components/ui/TextButton";
 
 export type FeedbackAction =
     EventHandler<'click'> &

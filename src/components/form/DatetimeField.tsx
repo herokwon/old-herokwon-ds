@@ -1,9 +1,9 @@
 import { forwardRef, useMemo } from "react";
 import type { IconType } from "react-icons";
 
-import type { DatetimeInput, InputProps } from "@/types";
-import { ICON_SIZE } from "@/data/constant";
-import { useInput } from "@/hooks";
+import type { DatetimeInput, InputProps } from "../../types";
+import { ICON_SIZE } from "../../data/constant";
+import { useInput } from "../../hooks";
 import InputHeader from "./InputHeader";
 import InputWrapper from "./InputWrapper";
 import InputMessage from "./InputMessage";

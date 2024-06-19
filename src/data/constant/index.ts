@@ -1,7 +1,7 @@
 import type { IconType } from "react-icons";
 import { FaCircleCheck, FaCircleExclamation, FaCircleInfo, FaCommentDots, FaTriangleExclamation } from "react-icons/fa6";
 
-import type { ElementExtendedSize, FeedbackVariant, Months } from "@/types";
+import type { ElementExtendedSize, FeedbackVariant, Months } from "../../types";
 
 export const ELEMENT_BASE_SIZES = ['sm', 'md', 'lg'] as const;
 export const ELEMENT_EXTENDED_SIZES = ['xs', ...ELEMENT_BASE_SIZES, 'xl'] as const;

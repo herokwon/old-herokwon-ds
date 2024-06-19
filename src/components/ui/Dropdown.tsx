@@ -16,7 +16,7 @@ import type {
     DropdownItemList,
     ElementBaseSize,
     ElementStates
-} from "@/types";
+} from "../../types";
 import TextButton from "./TextButton";
 import Checkbox from "../form/Checkbox";
 import Radio from "../form/Radio";

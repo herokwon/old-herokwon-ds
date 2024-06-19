@@ -2,9 +2,9 @@ import { forwardRef, useMemo, useState } from "react";
 import type { IconType } from "react-icons";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
-import type { InputProps, TextInput } from "@/types";
-import { ICON_SIZE } from "@/data/constant";
-import { useInput } from "@/hooks";
+import type { InputProps, TextInput } from "../../types";
+import { ICON_SIZE } from "../../data/constant";
+import { useInput } from "../../hooks";
 import InputHeader from "./InputHeader";
 import InputWrapper from "./InputWrapper";
 import InputMessage from "./InputMessage";
