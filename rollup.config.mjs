@@ -75,13 +75,16 @@ const config = [
                     autoprefixer(),
                 ],
             }),
-            nodeResolve({
-                extensions: extensions,
-            }),
             terser(),
             typescript({
                 tsconfig: './tsconfig.json',
-                exclude: ['node_modules', '**/*.stories.tsx']
+                outputToFilesystem: true,
+                declaration: true,
+                declarationDir: 'dist',
+                exclude: ['node_modules', '**/*.stories.tsx'],
+            }),
+            nodeResolve({
+                extensions: extensions,
             }),
         ],
     },
