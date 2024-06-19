@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useMemo, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
-import type { ButtonProps, ElementBaseVariant, ElementSpacing, ElementStates } from "@/types";
+import type { ButtonProps, ElementBaseVariant, ElementSpacing, ElementStates } from "../../types";
 import TextButton from "./TextButton";
 import IconButton from "./IconButton";
 

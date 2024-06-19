@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import type { DateItem } from "@/types";
-import { getDateItem } from "@/utils";
+import type { DateItem } from "../../types";
+import { getDateItem } from "../../utils";
 import DatePicker from "./DatePicker";
 
 const meta = {

@@ -2,8 +2,8 @@ import { forwardRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import type { IconType } from "react-icons";
 
-import type { ButtonProps, ElementBaseVariant, ElementExtendedSize } from "@/types";
-import { ICON_SIZE } from "@/data/constant";
+import type { ButtonProps, ElementBaseVariant, ElementExtendedSize } from "../../types";
+import { ICON_SIZE } from "../../data/constant";
 
 interface IconButtonProps extends Omit<ButtonProps, 'size'> {
     icon: IconType;

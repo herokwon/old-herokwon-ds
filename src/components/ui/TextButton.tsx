@@ -1,8 +1,8 @@
 import { forwardRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
-import type { ButtonProps, ContentWithIcon, ElementExtendedVariant } from "@/types";
-import { ICON_SIZE } from "@/data/constant";
+import type { ButtonProps, ContentWithIcon, ElementExtendedVariant } from "../../types";
+import { ICON_SIZE } from "../../data/constant";
 
 interface TextButtonProps extends ButtonProps, ContentWithIcon {
     label: string;

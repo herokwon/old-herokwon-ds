@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { FaCalendarDays } from "react-icons/fa6";
 
-import type { ElementStates } from "@/types";
+import type { ElementStates } from "../../types";
 import Dropdown from "../ui/Dropdown";
 import Calendar from "../ui/Calendar";
 import DatetimeField from "./DatetimeField";

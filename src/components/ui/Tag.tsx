@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { LuHash, LuX } from "react-icons/lu";
 
-import type { ElementBaseSize, ElementSpacing } from "@/types";
+import type { ElementBaseSize, ElementSpacing } from "../../types";
 import TextButton from "./TextButton";
 
 interface TagProps extends Omit<React.ComponentPropsWithoutRef<typeof TextButton>, 'isHoverable' | 'size' | 'spacing'> {

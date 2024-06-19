@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from "react";
 
-import type { ContentWithId, ElementBaseSize, InputProps } from "@/types";
-import { useInput } from "@/hooks";
+import type { ContentWithId, ElementBaseSize, InputProps } from "../../types";
+import { useInput } from "../../hooks";
 import RadioGroup from "./RadioGroup";
 
 interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage' | 'errorMessage'> {

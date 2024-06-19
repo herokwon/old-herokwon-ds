@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import type { ElementStates, InputElement, InputProps } from "@/types";
+import type { ElementStates, InputElement, InputProps } from "../types";
 
 type InputHookProps =
     Pick<ElementStates, 'isDisabled'> &

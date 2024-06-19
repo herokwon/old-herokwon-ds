@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
-import type { FeedbackAction } from "@/types";
+import type { FeedbackAction } from "../../types";
 import InlineMessage from "./InlineMessage";
 import TextButton from "./TextButton";
 import IconButton from "./IconButton";

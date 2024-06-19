@@ -1,7 +1,7 @@
 import { FaStar } from "react-icons/fa6";
 
-import type { InputProps } from "@/types";
-import { useInput } from "@/hooks";
+import type { InputProps } from "../../types";
+import { useInput } from "../../hooks";
 
 type InputHeaderProps =
     Pick<InputProps, 'label' | 'id' | 'maxLength' | 'required'> &

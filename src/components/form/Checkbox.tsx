@@ -1,8 +1,8 @@
 import { forwardRef, useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 
-import type { ContentWithId, ElementBaseSize, InputProps } from "@/types";
-import { useInput } from "@/hooks";
+import type { ContentWithId, ElementBaseSize, InputProps } from "../../types";
+import { useInput } from "../../hooks";
 import InputMessage from "./InputMessage";
 
 interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage'> {

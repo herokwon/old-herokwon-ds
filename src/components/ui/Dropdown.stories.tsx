@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import type { DropdownFlatItem, DropdownGroupItem } from "@/types";
+import type { DropdownFlatItem, DropdownGroupItem } from "../../types";
 import Dropdown from "./Dropdown";
 
 const meta = {
@@ -9,6 +9,7 @@ const meta = {
     tags: ['autodocs'],
     component: Dropdown,
     args: {
+        children: [],
         size: 'md',
         position: 'bottom-center',
         triggerEvent: 'click',

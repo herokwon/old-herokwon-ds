@@ -1,5 +1,5 @@
-import type { InputProps } from "@/types";
-import { useInput } from "@/hooks";
+import type { InputProps } from "../../types";
+import { useInput } from "../../hooks";
 import InputHeader from "./InputHeader";
 import InputMessage from "./InputMessage";
 

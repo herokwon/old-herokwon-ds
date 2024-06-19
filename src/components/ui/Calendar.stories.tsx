@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import type { DateItem } from "@/types";
-import { MONTHS } from "@/data/constant";
+import type { DateItem } from "../../types";
+import { MONTHS } from "../../data/constant";
 import Calendar from "./Calendar";
 
 const meta = {
@@ -19,7 +19,10 @@ const CalendarRender = ({ ...props }: Pick<React.ComponentProps<typeof Calendar>
     const todayDateItem: DateItem = {
         year: today.getFullYear(),
         month: MONTHS[today.getMonth()],
-        week: 0,
+        week: {
+            baseMonth: 0,
+            weekNum: 0,
+        },
         date: today.getDate(),
         day: today.getDay(),
     };

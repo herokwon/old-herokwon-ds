@@ -1,6 +1,6 @@
 import { FaCircleExclamation } from "react-icons/fa6";
 
-import type { InputProps } from "@/types";
+import type { InputProps } from "../../types";
 
 interface InputMessageProps extends Pick<InputProps, 'helperMessage' | 'errorMessage'>, React.ComponentPropsWithoutRef<'p'> {
     hasError: boolean;

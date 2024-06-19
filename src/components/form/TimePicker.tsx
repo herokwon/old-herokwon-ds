@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { FaClock } from "react-icons/fa6";
 
-import type { DropdownFlatItem, TimeItem } from "@/types";
+import type { DropdownFlatItem, TimeItem } from "../../types";
 import Dropdown from "../ui/Dropdown";
 import DatetimeField from "./DatetimeField";
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import type { ElementBaseSize, ElementDirection, ElementStates, InputProps } from "@/types";
-import { useInput } from "@/hooks";
+import type { ElementBaseSize, ElementDirection, ElementStates, InputProps } from "../../types";
+import { useInput } from "../../hooks";
 import Radio from "./Radio";
 import InputMessage from "./InputMessage";
 
