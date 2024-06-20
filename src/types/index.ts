@@ -8,7 +8,7 @@ import {
     ELEMENT_EXTENDED_VARIANTS,
     ELEMENT_SPACINGS,
     FEEDBACK_VARIANTS
-} from "@/data/constant";
+} from "../data/constant";
 
 export type ElementBaseSize = typeof ELEMENT_BASE_SIZES[number];
 export type ElementExtendedSize = typeof ELEMENT_EXTENDED_SIZES[number];
