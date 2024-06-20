@@ -61,6 +61,7 @@ const config = [
                     '@babel/preset-typescript',
                 ],
                 extensions: extensions,
+                include: ['src/**/*'],
                 exclude: 'node_modules/**',
             }),
             commonjs({

@@ -1,5 +1,5 @@
 import type { ElementStates } from "..";
-import { DATETIME_INPUTS, SELECTING_INPUTS, TEXT_INPUTS } from "@/data/constant";
+import { DATETIME_INPUTS, SELECTING_INPUTS, TEXT_INPUTS } from "../../data/constant";
 
 export type InputElement = HTMLInputElement | HTMLTextAreaElement;
 
