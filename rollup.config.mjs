@@ -10,8 +10,9 @@ import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import autoprefixer from "autoprefixer";
 import cssimport from "postcss-import";
-import pkg from "./package.json" assert { type: "json" };
 import path from "path";
+import pkg from "./package.json" assert { type: "json" };
+import tailwindcss from "tailwindcss";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,14 +28,15 @@ const config = [
                 format: 'cjs',
                 sourcemap: true,
                 exports: 'named',
-            }, {
+            },
+            {
                 file: pkg.module,
                 format: 'es',
                 sourcemap: true,
                 exports: 'named',
-            }
+            },
         ],
-        external: [/@babel\/runtime/],
+        external: [/@babel\/runtime/, 'react', 'react-dom'],
         plugins: [
             alias({
                 entries: [
@@ -74,19 +76,26 @@ const config = [
             }),
             peerDepsExternal(),
             postcss({
+                config: {
+                    path: './postcss.config.mjs',
+                },
                 extensions: ['.css'],
                 minimize: true,
+                extract: true,
                 plugins: [
                     cssimport(),
                     autoprefixer(),
+                    tailwindcss(),
                 ],
             }),
             terser(),
             typescript({
                 tsconfig: './tsconfig.json',
                 outputToFilesystem: true,
-                declaration: true,
-                declarationDir: 'dist',
+                compilerOptions: {
+                    declaration: true,
+                    declarationDir: 'dist',
+                },
                 exclude: ['node_modules', '**/*.stories.tsx'],
             }),
             nodeResolve({

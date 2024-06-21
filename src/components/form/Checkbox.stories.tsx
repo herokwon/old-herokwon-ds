@@ -8,13 +8,14 @@ const meta = {
     component: Checkbox,
     args: {
         id: crypto.randomUUID(),
+        size: 'md',
     },
 } satisfies Meta<typeof Checkbox>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const dummySubItems: React.ComponentProps<typeof Checkbox>['subItems'] = [
+const dummySubItems: React.ComponentPropsWithoutRef<typeof Checkbox>['subItems'] = [
     ...Array.from({ length: 3 }, (_, i) => ({
         id: crypto.randomUUID(),
         heading: `Checkbox SubItem ${i + 1}`,

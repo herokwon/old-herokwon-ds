@@ -173,9 +173,9 @@ const MonthlyCalendar = ({ month, viewedDate, pickedDate, setPickedDate }: Month
                                 className={`${isDisabled ?
                                     'hover:!bg-transparent' :
                                     ''} ${index === 0 ?
-                                        'text-red' :
+                                        'text-light-red dark:text-dark-red' :
                                         index === 6 ?
-                                            'text-blue' :
+                                            'text-light-blue dark:text-dark-blue' :
                                             ''} justify-center transition-none`}
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -201,7 +201,7 @@ const YearlyCalendar = ({ viewedDate, pickedDate, setViewedDate, setPickedDate }
             {MONTHS.map((month) =>
                 <div
                     key={month}
-                    className="p-2 mx-auto rounded-ms border border-transparent hover:border-tertiary shadow-md shadow-transparent hover:shadow-tertiary cursor-pointer"
+                    className="p-2 mx-auto rounded-ms border border-transparent hover:border-light-tertiary dark:border-dark-tertiary shadow-md shadow-transparent hover:shadow-light-tertiary dark:hover:shadow-dark-tertiary cursor-pointer"
                     onClick={(e) => {
                         e.stopPropagation();
                         setViewedDate((prev) => ({

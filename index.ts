@@ -1,3 +1,5 @@
+import "./index.css";
+
 // form components
 export { default as Checkbox } from "./src/components/form/Checkbox";
 export { default as DatePicker } from "./src/components/form/DatePicker";

@@ -23,7 +23,7 @@ export default function SectionMessage({ heading, message, variant = 'default', 
     }), [props]);
 
     return (
-        <section className={`section-message--${variant} w-full px-4 py-3 border rounded-ms shadow-md shadow-secondary ${props.className ?? ''}`}>
+        <section className={`section-message--${variant} w-full px-4 py-3 border rounded-ms shadow-md shadow-light-secondary dark:shadow-dark-secondary ${props.className ?? ''}`}>
             <div className={`w-full flex ${isHidden ?
                 'items-center' :
                 'items-start'}`}>

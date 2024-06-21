@@ -39,13 +39,19 @@ export default function Badge({ value, size = 'sm', shape = 'round', ...props }:
     };
 
     return (
-        <span {...restProps} className={`badge-${props.variant} px-1 flex justify-center items-center ${shape === 'square' ?
-            'rounded-ms' :
-            'rounded-full'} ${size === 'md' ?
-                'text-base' :
-                size === 'xs' ?
-                    'text-xs' :
-                    'text-sm'} font-medium ${props.className ?? ''}`}>
+        <span {...restProps} className={`${props.variant === 'primary' ?
+            '!text-dark bg-light-blue dark:bg-dark-blue' :
+            props.variant === 'added' ?
+                'text-feedback-light-green dark:text-feedback-dark-green bg-feedback-light-green dark:bg-feedback-dark-green' :
+                props.variant === 'removed' ?
+                    'text-feedback-light-red dark:text-feedback-dark-red bg-feedback-light-red dark:bg-feedback-dark-red' :
+                    'bg-light-secondary dark:bg-dark-secondary'} px-1 flex justify-center items-center ${shape === 'square' ?
+                        'rounded-ms' :
+                        'rounded-full'} ${size === 'md' ?
+                            'text-base' :
+                            size === 'xs' ?
+                                'text-xs' :
+                                'text-sm'} font-medium ${props.className ?? ''}`}>
             {renderBadgeValue(value, maxValue)}
         </span>
     );
