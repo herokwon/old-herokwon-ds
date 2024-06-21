@@ -4,7 +4,7 @@ import type { ContentWithId, ElementBaseSize, InputProps } from "../../types";
 import { useInput } from "../../hooks";
 import RadioGroup from "./RadioGroup";
 
-interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage' | 'errorMessage'> {
+interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage' | 'errorMessage' | 'checked' | 'defaultChecked'> {
     size?: ElementBaseSize;
     groupErrorMessage?: InputProps['errorMessage'];
     subGroupItem?: React.ComponentProps<typeof RadioGroup>;
@@ -17,8 +17,10 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size
     const { hasError, onChangeInput } = useInput({
         isDisabled: isDisabled,
         errorMessage: groupErrorMessage,
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-            restProps.onChange && restProps.onChange(e)
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+            restProps.onChange && restProps.onChange(e);
+            setIsChecked(e.currentTarget.checked);
+        }
     });
 
     useEffect(() => {
@@ -31,26 +33,25 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size
                 'disabled' :
                 'cursor-pointer group'} w-full flex`}>
                 <span className={`w-max ${size === 'lg' ?
-                    'h-[1.25rem]' :
+                    'h-xl' :
                     size === 'sm' ?
-                        'h-[0.75rem]' :
-                        'h-[1rem]'} aspect-square mr-1.5 my-0.5 flex justify-center items-center rounded-full border-[0.1rem] ${isDisabled ?
+                        'h-xs' :
+                        'h-base'} aspect-square mr-1.5 my-0.5 flex justify-center items-center rounded-full border-[0.1rem] ${isDisabled ?
                             '' :
                             isChecked ?
-                                'border-blue' :
+                                'border-light-blue dark:border-dark-blue' :
                                 hasError ?
-                                    'border-red' :
-                                    'border-tertiary group-hover:border-blue'} transition-colors relative after:w-4/5 after:h-4/5 after:aspect-square after:rounded-full after:content-[""] after:bg-blue ${isChecked ?
+                                    'border-light-red dark:border-dark-red' :
+                                    'border-light-tertiary dark:border-dark-tertiary group-hover:border-light-blue dark:group-hover:border-dark-blue'} transition-colors relative after:w-4/5 after:h-4/5 after:aspect-square after:rounded-full after:content-[""] after:bg-light-blue after:dark:bg-dark-blue ${isChecked ?
                                         '' :
                                         'after:opacity-0'} after:transition-opacity after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2`}>
                     <input
                         {...restProps}
-                        hidden
-                        readOnly
                         ref={ref}
                         id={id}
+                        hidden
                         type='radio'
-                        checked={isChecked}
+                        defaultChecked={isSelected}
                         onChange={onChangeInput} />
                 </span>
                 <div className="w-full">
@@ -71,7 +72,8 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size
                         </p>}
                 </div>
             </label>
-            {subGroupItem && subGroupItem.items.length > 0 &&
+            {subGroupItem &&
+                subGroupItem.items.length > 0 &&
                 <RadioGroup
                     {...subGroupItem}
                     isDisabled={!isChecked}

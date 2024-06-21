@@ -37,9 +37,9 @@ export default function Textarea({ isDisabled = false, label, helperMessage, err
                     true :
                     props?.autoFocus}
                 onChange={onChangeInput}
-                className={`w-full px-2.5 py-1.5 rounded-ms border border-tertiary ${hasError ?
-                    'focus:border-red' :
-                    'focus:border-blue'} text-sm bg-light-primary dark:bg-dark-secondary outline-none transition-all ${props.className ?? ''}`} />
+                className={`w-full px-2.5 py-1.5 rounded-ms border border-light-tertiary dark:border-dark-tertiary ${hasError ?
+                    'focus:border-light-red dark:focus:border-dark-red' :
+                    'focus:border-light-blue dark:focus:border-dark-blue'} text-sm bg-light-primary dark:bg-dark-secondary outline-none transition-all ${props.className ?? ''}`} />
             {hasMessage &&
                 <InputMessage
                     hasError={hasError}

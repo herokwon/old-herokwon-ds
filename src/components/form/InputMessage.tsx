@@ -9,7 +9,7 @@ interface InputMessageProps extends Pick<InputProps, 'helperMessage' | 'errorMes
 export default function InputMessage({ hasError, helperMessage, errorMessage, ...props }: InputMessageProps) {
     return (
         <p {...props} className={`w-full flex items-center text-xs ${errorMessage ?
-            'text-red' :
+            'text-light-red dark:text-dark-red' :
             'opacity-normal'} whitespace-pre-wrap ${props.className ?? ''}`}>
             {hasError &&
                 <FaCircleExclamation className="mr-1" />}

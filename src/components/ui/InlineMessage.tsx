@@ -33,10 +33,10 @@ export default function InlineMessage({ children, heading, message, variant = 'd
                             'mr-1.5' :
                             'mr-2'}`}>
                 <FeedbackIcon className={size === 'lg' ?
-                    'h-[1.125rem]' :
+                    'h-lg' :
                     size === 'sm' ?
-                        'h-[0.875rem]' :
-                        'h-[1rem]'} />
+                        'h-sm' :
+                        'h-base'} />
             </div>
             <div className="w-full flex flex-col justify-center">
                 {heading &&

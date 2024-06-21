@@ -8,9 +8,9 @@ export default function InputWrapper({ children, isFocused, hasError, ...props }
     return (
         <div {...props} className={`w-full flex items-center rounded-ms border ${isFocused ?
             (hasError ?
-                'border-red' :
-                'border-blue') :
-            'border-tertiary'} bg-light-primary dark:bg-dark-secondary overflow-hidden transition-all ${props.className ?? ''}`}>
+                'border-light-red dark:border-dark-red' :
+                'border-light-blue dark:border-dark-blue') :
+            'border-light-tertiary dark:border-dark-tertiary'} bg-light-primary dark:bg-dark-secondary overflow-hidden transition-all ${props.className ?? ''}`}>
             {children}
         </div>
     );

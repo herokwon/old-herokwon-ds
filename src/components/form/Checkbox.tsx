@@ -4,11 +4,12 @@ import { FaCheck } from "react-icons/fa6";
 import type { ContentWithId, ElementBaseSize, InputProps } from "../../types";
 import { useInput } from "../../hooks";
 import InputMessage from "./InputMessage";
+import CheckboxGroup from "./CheckboxGroup";
 
-interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage'> {
+interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage' | 'checked' | 'defaultChecked'> {
     size?: ElementBaseSize;
     isDependent?: boolean;
-    subItems?: CheckboxProps[];
+    subItems?: React.ComponentProps<typeof Checkbox>[];
 };
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ id, size = 'md', heading, description, subItems = [], ...props }, ref) {
@@ -18,8 +19,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
     const { hasError, hasMessage, onChangeInput } = useInput({
         isDisabled: isDisabled,
         errorMessage: errorMessage,
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-            restProps.onChange && restProps.onChange(e)
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+            restProps.onChange && restProps.onChange(e);
+            setIsChecked(e.currentTarget.checked);
+        }
     });
 
     useEffect(() => {
@@ -32,16 +35,16 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
                 'disabled' :
                 'cursor-pointer group'} w-full flex`}>
                 <span className={`w-max ${size === 'lg' ?
-                    'h-[1.25rem]' :
+                    'h-xl' :
                     size === 'sm' ?
-                        'h-[0.75rem]' :
-                        'h-[1rem]'} aspect-square mr-1.5 my-0.5 flex justify-center items-center ${size === 'sm' ?
-                            'rounded-[3px]' :
+                        'h-xs' :
+                        'h-base'} aspect-square mr-1.5 my-0.5 flex justify-center items-center ${size === 'sm' ?
+                            'rounded-sm' :
                             'rounded-ms'} border-[0.1rem] ${isChecked ?
-                                'border-blue bg-blue' :
+                                'border-light-blue dark:border-dark-blue bg-light-blue dark:bg-dark-blue' :
                                 errorMessage ?
-                                    'border-red' :
-                                    'border-tertiary group-hover:border-blue'
+                                    'border-light-red dark:border-dark-red' :
+                                    'border-light-tertiary dark:border-dark-tertiary group-hover:border-light-blue dark:group-hover:border-dark-blue'
                     } transition-colors`}>
                     {<FaCheck className={`w-full h-full text-dark ${isChecked ?
                         '' :
@@ -51,9 +54,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
                         ref={ref}
                         id={id}
                         hidden
-                        readOnly
                         type='checkbox'
-                        checked={isChecked}
+                        defaultChecked={isSelected}
                         onChange={onChangeInput} />
                 </span>
                 <div className="w-full">
@@ -75,22 +77,11 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
                 </div>
             </label>
             {subItems.length > 0 &&
-                <div className={`w-full flex flex-col gap-2 ${size === 'lg' ?
-                    'pl-6' :
-                    size === 'sm' ?
-                        'pl-4' :
-                        'pl-5'} py-2`}>
-                    {subItems.map((subItem) =>
-                        <Checkbox
-                            {...subItem}
-                            key={subItem.id}
-                            isSelected={isDependent ?
-                                isChecked :
-                                subItem.isSelected}
-                            size={size === 'lg' ?
-                                'md' :
-                                'sm'} />)}
-                </div>}
+                <CheckboxGroup
+                    isDependent={isDependent}
+                    isSelected={isChecked}
+                    size={size}
+                    subItems={subItems} />}
             {hasMessage &&
                 <InputMessage
                     hasError={hasError}

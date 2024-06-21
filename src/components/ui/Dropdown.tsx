@@ -158,16 +158,17 @@ const FlatItems = ({ selectingInput, isOpen, items, setIsOpen, setItems }: Dropd
                             flatItem.isSelected ?
                                 'selected' :
                                 ''}`}
-                        onClick={() => setItems((prevFlatItems) =>
-                            prevFlatItems.map((prevFlatItem) => ({
-                                ...prevFlatItem,
-                                isSelected: (selectingInput === 'text' || selectingInput === 'radio') ?
-                                    prevFlatItem.id === flatItem.id :
-                                    prevFlatItem.id === flatItem.id ?
-                                        !prevFlatItem.isSelected :
-                                        prevFlatItem.isSelected
-                            }))
-                        )}>
+                        onClick={() => !flatItem.isDisabled &&
+                            setItems((prevFlatItems) =>
+                                prevFlatItems.map((prevFlatItem) => ({
+                                    ...prevFlatItem,
+                                    isSelected: (selectingInput === 'text' || selectingInput === 'radio') ?
+                                        prevFlatItem.id === flatItem.id :
+                                        prevFlatItem.id === flatItem.id ?
+                                            !prevFlatItem.isSelected :
+                                            prevFlatItem.isSelected
+                                }))
+                            )}>
                         <p className="dropdown-item-heading">
                             {flatItem.heading}
                         </p>
@@ -236,21 +237,22 @@ const GroupItems = ({ isOpen, items, setIsOpen, setItems }: DropdownItemsProps<D
                                     item.isSelected ?
                                         'selected' :
                                         ''}`}
-                                onClick={() => setItems((prevGroupItems) =>
-                                    prevGroupItems.map((prevGroupItem) => ({
-                                        ...prevGroupItem,
-                                        items: prevGroupItem.items.map((prevItem) => ({
-                                            ...prevItem,
-                                            isSelected: (groupItem.selectingInput === 'text' || groupItem.selectingInput === 'radio') ?
-                                                (prevGroupItem.id === groupItem.id ?
-                                                    prevItem.id === item.id :
-                                                    prevItem.isSelected) :
-                                                (prevItem.id === item.id ?
-                                                    !prevItem.isSelected :
-                                                    prevItem.isSelected)
+                                onClick={() => !item.isDisabled &&
+                                    setItems((prevGroupItems) =>
+                                        prevGroupItems.map((prevGroupItem) => ({
+                                            ...prevGroupItem,
+                                            items: prevGroupItem.items.map((prevItem) => ({
+                                                ...prevItem,
+                                                isSelected: (groupItem.selectingInput === 'text' || groupItem.selectingInput === 'radio') ?
+                                                    (prevGroupItem.id === groupItem.id ?
+                                                        prevItem.id === item.id :
+                                                        prevItem.isSelected) :
+                                                    (prevItem.id === item.id ?
+                                                        !prevItem.isSelected :
+                                                        prevItem.isSelected)
+                                            }))
                                         }))
-                                    }))
-                                )}>
+                                    )}>
                                 <div className="w-full">
                                     {groupItem.selectingInput === 'radio' ?
                                         <Radio
