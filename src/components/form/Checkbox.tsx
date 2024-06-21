@@ -8,14 +8,13 @@ import InputMessage from "./InputMessage";
 interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage' | 'checked' | 'defaultChecked'> {
     size?: ElementBaseSize;
     isDependent?: boolean;
-    subItems?: React.ComponentProps<typeof Checkbox>[];
+    subItems?: CheckboxProps[];
 };
 
-interface CheckboxGroupProps extends Pick<ElementStates, 'isSelected'>, React.ComponentPropsWithoutRef<'div'> {
-    size?: ElementBaseSize;
-    isDependent?: boolean;
-    subItems?: React.ComponentProps<typeof Checkbox>[];
-};
+type CheckboxGroupProps =
+    Pick<ElementStates, 'isSelected'> &
+    Pick<React.ComponentProps<typeof Checkbox>, 'size' | 'isDependent' | 'subItems'> &
+    React.ComponentPropsWithoutRef<'div'>;
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ id, size = 'md', heading, description, subItems = [], ...props }, ref) {
     const { isDisabled = false, isSelected = false, isDependent = false, errorMessage, ...restProps } = props;

@@ -1,6 +1,6 @@
 {
-  "name": "hero-ds",
-  "version": "1.0.0",
+  "name": "herokwon-ds",
+  "version": "1.0.1",
   "private": false,
   "author": {
     "name": "herokwon",
@@ -12,6 +12,7 @@
     "email": "contact@herokwon.dev"
   },
   "keywords": [
+    "react",
     "nextjs",
     "tailwindcss",
     "design-system"
@@ -26,7 +27,7 @@
     "dist/**/*"
   ],
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
+  "module": "dist/esm/index.js",
   "type": "module",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -83,7 +84,7 @@
     "typescript": "^5"
   },
   "peerDependencies": {
-    "next": "14.2.3",
+    "next": "^14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1"
