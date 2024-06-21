@@ -1,12 +1,17 @@
 import { forwardRef, useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 
-import type { ContentWithId, ElementBaseSize, InputProps } from "../../types";
+import type { ContentWithId, ElementBaseSize, ElementStates, InputProps } from "../../types";
 import { useInput } from "../../hooks";
 import InputMessage from "./InputMessage";
-import CheckboxGroup from "./CheckboxGroup";
 
 interface CheckboxProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'label' | 'helperMessage' | 'checked' | 'defaultChecked'> {
+    size?: ElementBaseSize;
+    isDependent?: boolean;
+    subItems?: React.ComponentProps<typeof Checkbox>[];
+};
+
+interface CheckboxGroupProps extends Pick<ElementStates, 'isSelected'>, React.ComponentPropsWithoutRef<'div'> {
     size?: ElementBaseSize;
     isDependent?: boolean;
     subItems?: React.ComponentProps<typeof Checkbox>[];
@@ -39,7 +44,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
                     size === 'sm' ?
                         'h-xs' :
                         'h-base'} aspect-square mr-1.5 my-0.5 flex justify-center items-center ${size === 'sm' ?
-                            'rounded-sm' :
+                            'rounded-[0.1875rem]' :
                             'rounded-ms'} border-[0.1rem] ${isChecked ?
                                 'border-light-blue dark:border-dark-blue bg-light-blue dark:bg-dark-blue' :
                                 errorMessage ?
@@ -92,5 +97,28 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
         </div>
     );
 });
+
+const CheckboxGroup = ({ size = 'md', subItems = [], ...props }: CheckboxGroupProps) => {
+    const { isDependent = false, isSelected = false, ...restProps } = props;
+
+    return (
+        <div {...restProps} className={`w-full flex flex-col gap-2 ${size === 'lg' ?
+            'pl-6' :
+            size === 'sm' ?
+                'pl-4' :
+                'pl-5'} py-2 ${restProps.className ?? ''}`}>
+            {subItems.map((subItem) =>
+                <Checkbox
+                    {...subItem}
+                    key={subItem.id}
+                    isSelected={isDependent ?
+                        isSelected :
+                        subItem.isSelected}
+                    size={size === 'lg' ?
+                        'md' :
+                        'sm'} />)}
+        </div>
+    );
+}
 
 export default Checkbox;
