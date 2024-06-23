@@ -10,21 +10,24 @@ type _HeadingProps = ElementWithHref & {
 
 type HeadingProps<T extends HeadingElement> = PolymorphicElementPropsWithoutRef<T, _HeadingProps>;
 
-export default function Heading<T extends HeadingElement = 'h1'>({ as, href, content, ...props }: HeadingProps<T>) {
+export default function Heading<T extends HeadingElement = 'h1'>({ children, as, href, content, ...props }: HeadingProps<T>) {
     const Element = as || 'h1';
 
     return (
         <Element
             {...props}
             className={`${props.className ?? ''}`}>
-            {!href ?
-                content :
-                <Link
-                    href={href.to}
-                    replace={href.replace}
-                    className="hover:text-light-blue dark:hover:text-dark-blue hover:underline underline-offset-2 decoration-light-blue dark:decoration-dark-blue">
-                    {content}
-                </Link>}
+            <p>
+                {!href ?
+                    content :
+                    <Link
+                        href={href.to}
+                        replace={href.replace}
+                        className="hover:underline underline-offset-2">
+                        {content}
+                    </Link>}
+            </p>
+            {children}
         </Element>
     );
 }
