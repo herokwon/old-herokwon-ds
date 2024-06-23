@@ -1,10 +1,6 @@
-import type { ElementBaseSize, ElementSpacing, ElementStates } from "..";
+import type { ElementBaseSize, ElementSpacing, ElementStates, ElementWithHref } from "..";
 
-export interface ButtonProps extends ElementStates, Omit<React.ComponentPropsWithoutRef<'button'>, 'disabled' | 'children'> {
+export interface ButtonProps extends ElementStates, ElementWithHref, Omit<React.ComponentPropsWithoutRef<'button'>, 'disabled' | 'children'> {
     size?: ElementBaseSize;
     spacing?: ElementSpacing;
-    href?: {
-        to: string;
-        replace?: boolean;
-    };
 }

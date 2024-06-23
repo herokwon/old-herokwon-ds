@@ -7,6 +7,36 @@
 @tailwind utilities;
 
 @layer base {
+  :is(h1, h2, h3, h4, h5, h6) {
+    &:is(h1) {
+      @apply text-[1.8rem] font-extrabold;
+    }
+
+    &:not(h1) {
+      @apply font-bold;
+
+      &:is(h2) {
+        @apply text-[1.64rem];
+      }
+
+      &:is(h3) {
+        @apply text-[1.48rem];
+      }
+
+      &:is(h4) {
+        @apply text-[1.32rem];
+      }
+
+      &:is(h5) {
+        @apply text-[1.16rem];
+      }
+
+      &:is(h6) {
+        @apply text-[1rem];
+      }
+    }
+  }
+
   button:disabled {
     @apply !cursor-not-allowed *:!pointer-events-none !opacity-off;
   }
