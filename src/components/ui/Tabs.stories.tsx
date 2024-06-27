@@ -7,6 +7,7 @@ const meta = {
     tags: ['autodocs'],
     component: Tabs,
     args: {
+        size: 'sm',
         alignX: 'left',
         className: 'min-w-[300px]',
         tabItems: Array.from({ length: 3 }, (_, i) => ({

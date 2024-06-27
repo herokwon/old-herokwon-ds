@@ -1,6 +1,6 @@
 import { forwardRef, useState } from "react";
 
-import type { AlignmentX } from "../../types";
+import type { AlignmentX, ElementBaseSize } from "../../types";
 import TextButton from "./TextButton";
 
 interface TabItem {
@@ -10,11 +10,12 @@ interface TabItem {
 };
 
 interface TabsProps extends React.ComponentPropsWithoutRef<'div'> {
+    size?: ElementBaseSize;
     alignX?: AlignmentX;
     tabItems: TabItem[];
 };
 
-const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({ alignX = 'left', tabItems, ...props }, ref) {
+const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({ size = 'sm', alignX = 'left', tabItems, ...props }, ref) {
     const [selectedTabItem, setSelectedTabItem] = useState<TabItem | null>(tabItems.length === 0 ?
         null :
         tabItems[0]);
@@ -34,7 +35,7 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({ alignX = 'lef
                         key={index}
                         label={tabItem.tabName}
                         variant='secondary'
-                        size='sm'
+                        size={size}
                         onClick={() => setSelectedTabItem(tabItem)}
                         className={`hover:!bg-transparent ${selectedTabItem?.id === tabItem.id ?
                             'text-light-blue dark:text-dark-blue' :
