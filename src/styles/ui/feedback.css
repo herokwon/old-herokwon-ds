@@ -1,0 +1,99 @@
+:is(
+    .inline-message--default,
+    .inline-message--success,
+    .inline-message--info,
+    .inline-message--warning,
+    .inline-message--danger
+  ) {
+  @apply opacity-bold;
+
+  &:not(.inline-message--info) > :last-child a {
+    @apply text-light-blue dark:text-dark-blue underline underline-offset-2 decoration-light-blue dark:decoration-dark-blue;
+  }
+
+  &:is(.inline-message--info) > :last-child a {
+    @apply underline underline-offset-2 decoration-white;
+  }
+}
+
+.inline-message--default {
+  &:is(.banner) {
+    @apply bg-light-secondary dark:bg-dark-secondary;
+  }
+}
+
+.inline-message--success {
+  &:is(.banner) {
+    @apply !text-dark bg-light-green dark:bg-dark-green;
+
+    & > :first-child {
+      @apply !text-dark;
+    }
+  }
+
+  &:not(.banner) > :first-child {
+    @apply text-light-green dark:text-dark-green;
+  }
+}
+
+.inline-message--info {
+  &:is(.banner) {
+    @apply !text-dark bg-light-blue dark:bg-dark-blue;
+
+    & > :first-child {
+      @apply !text-dark;
+    }
+  }
+
+  &:not(.banner) > :first-child {
+    @apply text-light-blue dark:text-dark-blue;
+  }
+}
+
+.inline-message--warning {
+  &:is(.banner) {
+    @apply !text-light bg-light-yellow dark:bg-dark-yellow;
+
+    & > :first-child {
+      @apply !text-light;
+    }
+  }
+
+  &:not(.banner) > :first-child {
+    @apply text-light-yellow dark:text-dark-yellow;
+  }
+}
+
+.inline-message--danger {
+  &:is(.banner) {
+    @apply !text-dark bg-light-red dark:bg-dark-red;
+
+    & > :first-child {
+      @apply !text-dark;
+    }
+  }
+
+  &:not(.banner) > :first-child {
+    @apply text-light-red dark:text-dark-red;
+  }
+}
+
+.section-message--default {
+  @apply border-light-tertiary dark:border-dark-tertiary bg-light-secondary dark:bg-dark-secondary;
+}
+
+.section-message--success {
+  @apply border-light-green dark:border-dark-green bg-feedback-light-green dark:bg-feedback-dark-green;
+}
+
+.section-message--info {
+  @apply border-light-blue dark:border-dark-blue bg-feedback-light-blue dark:bg-feedback-dark-blue;
+}
+
+.section-message--warning {
+  @apply border-light-yellow dark:border-dark-yellow bg-feedback-light-yellow dark:bg-feedback-dark-yellow;
+}
+
+.section-message--danger {
+  @apply border-light-red dark:border-dark-red bg-feedback-light-red dark:bg-feedback-dark-red;
+}

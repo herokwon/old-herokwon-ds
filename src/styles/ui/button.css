@@ -1,0 +1,107 @@
+:is(
+    .button-default--no-spacing,
+    .button-primary--no-spacing,
+    .button-secondary--no-spacing,
+    .button-warning--no-spacing,
+    .button-danger--no-spacing
+  ) {
+  &:not(:disabled) {
+    @apply hover:underline underline-offset-2;
+
+    &.selected {
+      @apply underline;
+    }
+  }
+
+  &:not(.hoverable):is(.linkable) {
+    @apply hover:text-light-blue dark:hover:text-dark-blue hover:underline underline-offset-2 decoration-light-blue dark:decoration-dark-blue;
+  }
+
+  &:not(.hoverable):is(.removable) {
+    @apply text-light-red dark:text-dark-red hover:underline underline-offset-2 decoration-light-red dark:decoration-dark-red;
+  }
+
+  &:is(.button-primary--no-spacing) {
+    @apply hover:text-light-blue dark:hover:text-dark-blue decoration-light-blue dark:decoration-dark-blue;
+
+    &.selected {
+      @apply text-light-blue dark:text-dark-blue decoration-light-blue dark:decoration-dark-blue;
+    }
+  }
+
+  &:is(.button-warning--no-spacing) {
+    @apply hover:text-light-yellow dark:hover:text-dark-yellow decoration-light-yellow dark:decoration-dark-yellow;
+
+    &.selected {
+      @apply text-light-yellow dark:text-dark-yellow decoration-light-yellow dark:decoration-dark-yellow;
+    }
+  }
+
+  &:is(.button-danger--no-spacing) {
+    @apply hover:text-light-red dark:hover:text-dark-red decoration-light-red dark:decoration-dark-red;
+
+    &.selected {
+      @apply text-light-red dark:text-dark-red decoration-light-red dark:decoration-dark-red;
+    }
+  }
+}
+
+.button-default {
+  @apply bg-light-secondary dark:bg-dark-secondary;
+
+  &:not(:disabled):is(.hoverable) {
+    @apply hover:bg-light-tertiary dark:hover:bg-dark-tertiary;
+
+    &.selected {
+      @apply bg-light-tertiary dark:bg-dark-tertiary;
+    }
+  }
+}
+
+.button-primary {
+  @apply !text-dark bg-light-blue dark:bg-dark-blue;
+
+  &:not(:disabled):is(.hoverable) {
+    @apply bg-light-blue hover:bg-dark-blue dark:bg-dark-blue dark:hover:bg-light-blue;
+
+    &.selected {
+      @apply bg-dark-blue dark:bg-light-blue;
+    }
+  }
+}
+
+.button-secondary {
+  @apply bg-transparent;
+
+  &:not(:disabled):is(.hoverable) {
+    @apply hover:bg-light-secondary dark:hover:bg-dark-secondary;
+
+    &.selected {
+      @apply bg-light-secondary dark:bg-dark-secondary;
+    }
+  }
+}
+
+.button-warning {
+  @apply !text-light bg-light-yellow dark:bg-dark-yellow;
+
+  &:not(:disabled):is(.hoverable) {
+    @apply bg-light-yellow hover:bg-dark-yellow dark:bg-dark-yellow dark:hover:bg-light-yellow;
+
+    &.selected {
+      @apply bg-dark-yellow dark:bg-light-yellow;
+    }
+  }
+}
+
+.button-danger {
+  @apply !text-dark bg-light-red dark:bg-dark-red;
+
+  &:not(:disabled):is(.hoverable) {
+    @apply bg-light-red hover:bg-dark-red dark:bg-dark-red dark:hover:bg-light-red;
+
+    &.selected {
+      @apply bg-dark-red dark:bg-light-red;
+    }
+  }
+}

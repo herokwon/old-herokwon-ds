@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import { create } from "@storybook/theming";
 
-import "../src/styles/globals.css";
+import "../index.css";
 
 const lightTheme = create({
     base: 'light',
