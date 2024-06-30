@@ -1,6 +1,6 @@
 {
   "name": "herokwon-ds",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "author": {
     "name": "herokwon",
@@ -8,7 +8,7 @@
     "url": "https://github.com/herokwon"
   },
   "bugs": {
-    "url": "https://github.com/herokwon/hero-ds/issues",
+    "url": "https://github.com/herokwon/herokwon-ds/issues",
     "email": "contact@herokwon.dev"
   },
   "keywords": [
@@ -20,7 +20,7 @@
   "description": "This is simple design system by herokwon",
   "repository": {
     "type": "git",
-    "url": "https://github.com/herokwon/hero-ds.git"
+    "url": "https://github.com/herokwon/herokwon-ds.git"
   },
   "license": "MIT",
   "files": [
