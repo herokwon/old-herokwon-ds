@@ -1,12 +1,19 @@
 {
   "name": "herokwon-ds",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "author": {
     "name": "HeroKwon",
     "email": "contact@herokwon.dev",
     "url": "https://github.com/herokwon"
   },
+  "contributors": [
+    {
+      "name": "HeroKwon",
+      "email": "contact@herokwon.dev",
+      "url": "https://github.com/herokwon"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/herokwon/herokwon-ds/issues",
     "email": "contact@herokwon.dev"
@@ -21,6 +28,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/herokwon/herokwon-ds.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npmjs.com/package/herokwon-ds"
   },
   "license": "MIT",
   "files": [
