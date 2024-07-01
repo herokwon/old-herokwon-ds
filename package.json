@@ -31,7 +31,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://npmjs.com/package/herokwon-ds"
+    "registry": "https://npm.pkg.github.com"
   },
   "license": "MIT",
   "files": [
