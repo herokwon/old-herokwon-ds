@@ -1,5 +1,8 @@
 import "./index.css";
 
+// configs
+export { default as tailwindExtendConfig } from "./src/configs";
+
 // form components
 export { default as Checkbox } from "./src/components/form/Checkbox";
 export { default as DatePicker } from "./src/components/form/DatePicker";
