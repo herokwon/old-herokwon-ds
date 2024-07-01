@@ -30,7 +30,6 @@ const config: StorybookConfig = {
         if (config.resolve) {
             config.resolve.alias = {
                 ...config.resolve.alias,
-                '@': resolve(__dirname, '../src'),
                 '@public': resolve(__dirname, '../public'),
             };
         }
