@@ -4,11 +4,10 @@ import type { ElementBaseSize, ElementBaseVariant, ElementExtendedSize } from ".
 
 type BadgeFixedVariant = Exclude<ElementBaseVariant, 'secondary'>;
 type BadgeChangedVariant = 'added' | 'removed';
-type BadgeSize = Extract<ElementExtendedSize, 'xs'> | Exclude<ElementBaseSize, 'lg'>;
 
 type BadgeProps = React.ComponentPropsWithoutRef<'span'> & {
     value: number;
-    size?: BadgeSize;
+    size?: ElementBaseSize;
     shape?: 'square' | 'round';
 } & ({
     maxValue?: number;
@@ -17,7 +16,7 @@ type BadgeProps = React.ComponentPropsWithoutRef<'span'> & {
     variant: BadgeChangedVariant;
 });
 
-export default function Badge({ value, size = 'sm', shape = 'round', ...props }: BadgeProps) {
+export default function Badge({ value, size = 'md', shape = 'round', ...props }: BadgeProps) {
     const isFixedVariant = props.variant === 'default' || props.variant === 'primary';
     const maxValue = isFixedVariant ?
         props.maxValue ?? null :
@@ -47,11 +46,11 @@ export default function Badge({ value, size = 'sm', shape = 'round', ...props }:
                     'text-feedback-light-red dark:text-feedback-dark-red bg-feedback-light-red dark:bg-feedback-dark-red' :
                     'bg-light-secondary dark:bg-dark-secondary'} px-1 flex justify-center items-center ${shape === 'square' ?
                         'rounded-ms' :
-                        'rounded-full'} ${size === 'md' ?
-                            'text-base' :
-                            size === 'xs' ?
-                                'text-xs' :
-                                'text-sm'} font-medium ${props.className ?? ''}`}>
+                        'rounded-full'} ${size === 'lg' ?
+                            'text-sm' :
+                            size === 'sm' ?
+                                'text-[0.625rem] leading-[0.75]' :
+                                'text-xs'} font-medium ${props.className ?? ''}`}>
             {renderBadgeValue(value, maxValue)}
         </span>
     );
