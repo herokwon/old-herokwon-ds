@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import type { IconType } from "react-icons";
 
 import type { ButtonProps, ElementExtendedSize } from "../../types";
 
-interface ToggleProps extends Omit<ButtonProps, 'isLoading' | 'size' | 'spacing' | 'href'> {
+interface ToggleProps extends Omit<ButtonProps, 'isSelected' | 'isLoading' | 'size' | 'spacing' | 'href'> {
     size?: ElementExtendedSize;
+    isActive: boolean;
+    setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
     activeIcon?: IconType;
     inactiveIcon?: IconType;
 };
@@ -17,22 +19,19 @@ const TOGGLE_SIZES: { [size in ElementExtendedSize]: number } = {
     xs: 1.5,
 };
 
-export default function Toggle({ size = 'md', activeIcon, inactiveIcon, ...props }: ToggleProps) {
-    const { isDisabled = false, isSelected = false, ...restProps } = props;
-
-    const [isActive, setIsActive] = useState<boolean>(isSelected);
-    const InactiveIcon = inactiveIcon ?? null;
-    const ActiveIcon = activeIcon ?? null;
-
-    useEffect(() => {
-        setIsActive(false);
-    }, [isDisabled]);
+export default function Toggle({ size = 'md', isActive, setIsActive, activeIcon, inactiveIcon, ...props }: ToggleProps) {
+    const { isDisabled = false, ...restProps } = props;
+    const InactiveIcon = useMemo(() =>
+        inactiveIcon ?? null, [inactiveIcon]);
+    const ActiveIcon = useMemo(() =>
+        activeIcon ?? null, [activeIcon]);
 
     return (
         <button
             {...restProps}
             disabled={isDisabled}
-            onClick={() => setIsActive((prev) => !prev)}
+            onClick={() => !isDisabled &&
+                setIsActive((prev) => !prev)}
             className={`aspect-[2/1] flex items-center rounded-full text-xs ${isActive ?
                 'bg-light-blue hover:bg-dark-blue dark:bg-dark-blue dark:hover:bg-light-blue' :
                 'bg-light-secondary dark:bg-dark-secondary'} transition-all relative ${restProps.className ?? ''}`}
@@ -44,13 +43,15 @@ export default function Toggle({ size = 'md', activeIcon, inactiveIcon, ...props
                 paddingLeft: `${(TOGGLE_SIZES[size] / 2) * 0.125}rem`,
                 paddingRight: `${(TOGGLE_SIZES[size] / 2) * 0.125}rem`,
             }}>
-                {isActive && ActiveIcon &&
+                {isActive &&
+                    ActiveIcon &&
                     <span className="h-full mr-auto flex justify-center" style={{
                         width: `${(TOGGLE_SIZES[size] / 2)}rem`
                     }}>
                         <ActiveIcon className='w-fit h-full aspect-square text-dark' />
                     </span>}
-                {!isActive && InactiveIcon &&
+                {!isActive &&
+                    InactiveIcon &&
                     <span className="h-full ml-auto flex justify-center" style={{
                         width: `${(TOGGLE_SIZES[size] / 2)}rem`
                     }}>

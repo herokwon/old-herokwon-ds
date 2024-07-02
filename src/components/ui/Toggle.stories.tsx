@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FaCheck, FaX } from "react-icons/fa6";
 
@@ -8,20 +9,40 @@ const meta = {
     tags: ['autodocs'],
     component: Toggle,
     args: {
-        isDisabled: false,
-        isSelected: false,
         size: 'md',
+        isDisabled: false,
+        isActive: false,
     },
 } satisfies Meta<typeof Toggle>;
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Toggle>;
 
-export const Default: Story = {};
+const ToggleRender = ({ ...props }: React.ComponentPropsWithoutRef<typeof Toggle>) => {
+    const [isActive, setIsActive] = useState<boolean>(props.isActive ?? false);
+
+    useEffect(() => {
+        setIsActive(props.isActive);
+    }, [props.isActive]);
+
+    return (
+        <Toggle
+            {...props}
+            isActive={isActive}
+            setIsActive={setIsActive} />
+    );
+};
+
+export const Default: Story = {
+    render: ({ ...props }) =>
+        <ToggleRender {...props} />
+};
 
 export const Icon: Story = {
     args: {
         activeIcon: FaCheck,
         inactiveIcon: FaX,
     },
+    render: ({ ...props }) =>
+        <ToggleRender {...props} />
 };
