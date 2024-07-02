@@ -19,12 +19,7 @@ const CalendarRender = ({ ...props }: Pick<React.ComponentProps<typeof Calendar>
     const todayDateItem: DateItem = {
         year: today.getFullYear(),
         month: MONTHS[today.getMonth()],
-        week: {
-            baseMonth: 0,
-            weekNum: 0,
-        },
         date: today.getDate(),
-        day: today.getDay(),
     };
     const [pickedDate, setPickedDate] = useState<DateItem>(todayDateItem);
 
