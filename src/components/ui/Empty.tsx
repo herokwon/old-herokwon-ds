@@ -7,7 +7,7 @@ interface EmptyProps extends React.ComponentPropsWithoutRef<'div'> {
     message?: string;
 };
 
-export default function Empty({ imgData, message = 'No Data..', ...props }: EmptyProps) {
+export default function Empty({ imgData, message, ...props }: EmptyProps) {
     return (
         <div {...props} className={`p-10 ${!imgData ?
             '' :
@@ -18,9 +18,9 @@ export default function Empty({ imgData, message = 'No Data..', ...props }: Empt
                 width={imgData?.width ?? 128}
                 height={imgData?.height ?? 128}
                 priority
-                className={`aspect-auto dark:brightness-90 ${imgData?.className ?? ''}`}
+                className={`aspect-auto opacity-normal dark:opacity-off ${imgData?.className ?? ''}`}
                 alt='empty-image' />
-            <p className="w-full mt-1 text-center font-medium">
+            <p className="w-full mt-1 text-center font-medium opacity-normal">
                 {message}
             </p>
         </div>

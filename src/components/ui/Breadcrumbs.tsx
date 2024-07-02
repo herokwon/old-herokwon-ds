@@ -22,11 +22,11 @@ export default function Breadcrumbs({ path, size = 'md' }: BreadcrumbsProps) {
                 {paths.map((path, index) =>
                     <li key={index} className={`${index + 1 === paths.length ?
                         '' :
-                        'after:px-1 after:content-["/"] after:opacity-normal'}`}>
+                        'after:px-1 after:content-["/"] after:opacity-off'}`}>
                         <Link
                             href={paths.slice(0, index + 1).join('/')}
                             title={paths.slice(0, index + 1).join('/')}
-                            className="px-1 opacity-normal hover:opacity-bold hover:underline underline-offset-2">
+                            className="px-1 opacity-off hover:opacity-bold hover:underline underline-offset-2">
                             {path}
                         </Link>
                     </li>)}
