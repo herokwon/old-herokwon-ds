@@ -1,9 +1,9 @@
 import { forwardRef, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import type { IconType } from "react-icons";
 
 import type { ButtonProps, ElementBaseVariant, ElementExtendedSize } from "../../types";
 import { ICON_SIZE } from "../../data/constant";
+import LinkWrapper from "../LinkWrapper";
 
 interface IconButtonProps extends Omit<ButtonProps, 'size'> {
     icon: IconType;
@@ -16,39 +16,36 @@ interface IconButtonProps extends Omit<ButtonProps, 'size'> {
 const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton({ icon, variant = 'default', size = 'md', spacing = 'default', shape = 'circle', href, ...props }, ref) {
     const { isHoverable = !href, isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
-    const { push, replace } = useRouter();
     const Icon = useMemo(() =>
         icon, [icon]);
 
-    const onClickIconButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (isDisabled) return;
-        restProps.onClick && restProps.onClick(e);
-
-        if (!href) return;
-        href.replace ?
-            replace(href.to) :
-            push(href.to);
-    };
-
     return (
-        <button
-            {...restProps}
-            ref={ref}
-            disabled={isDisabled}
-            onClick={onClickIconButton}
-            className={`button-${variant} ${isSelected ?
-                'selected' :
-                ''} ${!isDisabled && isHoverable ?
-                    'hoverable' :
-                    ''} ${spacing === 'default' ?
-                        'p-1' :
-                        spacing === 'compact' ?
-                            'p-0.5' :
-                            'p-0 !bg-transparent'} flex justify-center items-center ${shape === 'square' ?
-                                'rounded-ms' :
-                                'rounded-full'} outline-none transition-all ${restProps.className ?? ''}`}>
-            <Icon size={ICON_SIZE[size]} className='m-1' />
-        </button>
+        <LinkWrapper
+            isDisabled={isDisabled}
+            href={href?.to}
+            replace={href?.replace}>
+            <button
+                {...restProps}
+                ref={ref}
+                disabled={isDisabled}
+                onClick={(e) => {
+                    if (!(!href)) e.preventDefault();
+                    restProps.onClick && restProps.onClick(e);
+                }}
+                className={`button-${variant} ${isSelected ?
+                    'selected' :
+                    ''} ${!isDisabled && isHoverable ?
+                        'hoverable' :
+                        ''} ${spacing === 'default' ?
+                            'p-1' :
+                            spacing === 'compact' ?
+                                'p-0.5' :
+                                'p-0 !bg-transparent'} flex justify-center items-center ${shape === 'square' ?
+                                    'rounded-ms' :
+                                    'rounded-full'} outline-none transition-all ${restProps.className ?? ''}`}>
+                <Icon size={ICON_SIZE[size]} className='m-1' />
+            </button>
+        </LinkWrapper>
     );
 });
 
