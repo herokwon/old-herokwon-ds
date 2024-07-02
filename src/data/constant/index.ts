@@ -46,16 +46,11 @@ export const SELECTING_INPUTS = ['text', 'multi-text', 'radio', 'checkbox'] as c
 export const TEXT_INPUTS = ['email', 'number', 'password', 'search', 'tel', 'text', 'url'] as const;
 export const DATETIME_INPUTS = ['date', 'datetime-local', 'month', 'time', 'week'] as const;
 
-export const CALENDAR_FORMS = ['daily', 'weekly', 'monthly', 'yearly'] as const;
+export const CALENDAR_FORMS = ['monthly', 'yearly'] as const;
 export const MONTHS: Months[] = new Proxy([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], {
     get(target, prop, receiver) {
-        if (!isNaN(Number(prop)) && Number(prop) < 0) {
-            prop = `${Number(prop) + target.length}`;
-        }
-
-        if (!isNaN(Number(prop)) && Number(prop) >= target.length) {
-            prop = `${Number(prop) % target.length}`;
-        }
+        if (!isNaN(Number(prop)) && Number(prop) < 0) prop = `${Number(prop) + target.length}`;
+        if (!isNaN(Number(prop)) && Number(prop) >= target.length) prop = `${Number(prop) % target.length}`;
 
         return Reflect.get(target, prop, receiver);
     }
