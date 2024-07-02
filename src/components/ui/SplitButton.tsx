@@ -42,9 +42,7 @@ const SplitButton = forwardRef<HTMLButtonElement, SplitButtonProps>(function Spl
                         isLoading={isLoading}
                         title={selectedItem?.description}
                         className='rounded-r-none'
-                        onClick={isDisabled ?
-                            undefined :
-                            selectedItem?.onClick} />
+                        onClick={selectedItem?.onClick} />
                     <div className={`w-1 min-h-full ${isDisabled ?
                         'disabled' :
                         variant === 'primary' ?
