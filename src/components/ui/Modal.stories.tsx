@@ -14,19 +14,22 @@ export default meta;
 
 type Story = StoryObj<typeof Modal.Container>;
 
-const ModalRender = ({ ...props }: React.ComponentProps<typeof Modal.Container>) => {
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(props.isActive ?? false);
+const ModalRender = ({ ...props }: Omit<React.ComponentProps<typeof Modal.Container>, 'setIsActive'>) => {
+    const [isActive, setIsActive] = useState<boolean>(props.isActive ?? false);
 
     useEffect(() => {
-        setIsOpenModal(props.isActive ?? false);
+        setIsActive(props.isActive ?? false);
     }, [props.isActive]);
 
     return (
-        <Modal.Wrapper isActive={isOpenModal}>
-            <TextButton
-                label='Open Modal'
-                variant='primary'
-                onClick={() => setIsOpenModal((prev) => !prev)} />
+        <Modal.Wrapper
+            isActive={isActive}
+            setIsActive={setIsActive}
+            triggerItem={
+                <TextButton
+                    label='Open Modal'
+                    variant='primary'
+                    onClick={() => setIsActive(true)} />}>
             <Modal.Container {...props}>
                 <InlineMessage message='This is a modal.' />
             </Modal.Container>

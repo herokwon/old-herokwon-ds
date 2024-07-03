@@ -9,6 +9,6 @@ export default function Banner({ message, variant = 'default', size = 'md', ...p
             message={message}
             variant={variant}
             size={size}
-            className='banner px-3 py-1 rounded-ms' />
+            className='banner px-3 py-1.5 rounded-ms' />
     );
 }

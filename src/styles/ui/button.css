@@ -1,4 +1,16 @@
 :is(
+    .button-default,
+    .button-primary,
+    .button-secondary,
+    .button-warning,
+    .button-danger
+  ) {
+  &:not(.hoverable):is(.removable) {
+    @apply text-light-red dark:text-dark-red hover:underline underline-offset-2 decoration-light-red dark:decoration-dark-red;
+  }
+}
+
+:is(
     .button-default--no-spacing,
     .button-primary--no-spacing,
     .button-secondary--no-spacing,

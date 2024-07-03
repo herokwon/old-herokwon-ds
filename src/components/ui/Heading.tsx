@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import type { ElementType, ElementWithHref, PolymorphicElementPropsWithoutRef } from "../../types";
+import LinkWrapper from "../LinkWrapper";
 
 type HeadingElement = Extract<ElementType, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>;
 
@@ -18,14 +17,12 @@ export default function Heading<T extends HeadingElement = 'h1'>({ children, as,
             {...props}
             className={`${props.className ?? ''}`}>
             <p>
-                {!href ?
-                    content :
-                    <Link
-                        href={href.to}
-                        replace={href.replace}
-                        className="hover:underline underline-offset-2">
-                        {content}
-                    </Link>}
+                <LinkWrapper
+                    href={href?.to}
+                    replace={href?.replace}
+                    className="hover:underline underline-offset-2">
+                    {content}
+                </LinkWrapper>
             </p>
             {children}
         </Element>

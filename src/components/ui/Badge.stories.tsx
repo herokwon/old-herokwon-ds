@@ -8,7 +8,7 @@ const meta = {
     component: Badge,
     args: {
         value: 100,
-        size: 'sm',
+        size: 'md',
         shape: 'round',
         maxValue: undefined,
     },

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import type { IconType } from "react-icons";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
@@ -8,10 +7,11 @@ import IconButton from "./IconButton";
 
 interface PageIndicatorProps extends React.ComponentPropsWithoutRef<'div'> {
     totalPage: number;
-    defaultSelectedPage?: number;
     size?: ElementBaseSize;
     prev?: string | IconType;
     next?: string | IconType;
+    selectedIndex: number;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const IndicatorRadiusSize: { [size in ElementBaseSize]: number } = {
@@ -20,17 +20,11 @@ const IndicatorRadiusSize: { [size in ElementBaseSize]: number } = {
     sm: 3,
 };
 
-export default function PageIndicator({ totalPage, defaultSelectedPage = 1, size = 'md', prev, next, ...props }: PageIndicatorProps) {
-    const [selectedIndex, setSelectedIndex] = useState<number>(parseInt(Math.abs(defaultSelectedPage).toFixed(0)) - 1);
-
+export default function PageIndicator({ totalPage, size = 'md', prev, next, selectedIndex, setSelectedIndex, ...props }: PageIndicatorProps) {
     const onClickHandler = {
         prevButton: () => setSelectedIndex((prev) => Math.max(0, prev - 1)),
         nextButton: () => setSelectedIndex((prev) => Math.min(prev + 1, totalPage - 1)),
     };
-
-    useEffect(() => {
-        setSelectedIndex(parseInt(Math.abs(defaultSelectedPage).toFixed(0)) - 1);
-    }, [defaultSelectedPage]);
 
     return (
         <div {...props} className={`w-full flex items-center ${props.className ?? ''}`}>
