@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Tabs from "./Tabs";
@@ -10,10 +11,11 @@ const meta = {
         size: 'sm',
         alignX: 'left',
         className: 'min-w-[300px]',
+        selectedIndex: 0,
         tabItems: Array.from({ length: 3 }, (_, i) => ({
-            id: crypto.randomUUID(),
-            tabName: `Tab ${i + 1}`,
-            tabContent: (
+            index: i,
+            heading: `Tab ${i + 1}`,
+            content: (
                 <div className="w-full">
                     <p className="w-full">
                         {`This is content for Tab ${i + 1}.`}
@@ -25,18 +27,44 @@ const meta = {
 } satisfies Meta<typeof Tabs>;
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Tabs>;
 
-export const Default: Story = {};
+const TabsRender = ({ ...props }: Omit<React.ComponentPropsWithoutRef<typeof Tabs>, 'setSelectedIndex'>) => {
+    const [selectedIndex, setSelectedIndex] = useState<number>(props.selectedIndex);
+
+    return (
+        <Tabs
+            {...props}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex} />
+    );
+};
+
+export const Default: Story = {
+    render: ({ ...props }) =>
+        <TabsRender {...props} />,
+};
+
+export const SelectedIndex: Story = {
+    args: {
+        selectedIndex: meta.args.tabItems.length - 1,
+    },
+    render: ({ ...props }) =>
+        <TabsRender {...props} />,
+};
 
 export const AlignCenter: Story = {
     args: {
         alignX: 'center',
     },
+    render: ({ ...props }) =>
+        <TabsRender {...props} />,
 };
 
 export const AlignRight: Story = {
     args: {
         alignX: 'right',
     },
+    render: ({ ...props }) =>
+        <TabsRender {...props} />,
 };
