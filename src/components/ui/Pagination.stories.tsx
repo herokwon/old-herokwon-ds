@@ -21,7 +21,7 @@ export default meta;
 type Story = StoryObj<typeof Pagination>;
 
 const PaginationRender = ({ defaultSelectedPage, ...props }: PaginationRenderProps) => {
-    const [selectedIndex, setSelectedIndex] = useState<number>(defaultSelectedPage ?? 0);
+    const [selectedIndex, setSelectedIndex] = useState<number>(Math.floor((defaultSelectedPage ?? 1) - 1) ?? 0);
 
     return (
         <Pagination
@@ -37,12 +37,4 @@ export const Default: Story = {
     },
     render: ({ ...props }) =>
         <PaginationRender {...props} />,
-};
-
-export const DefaultSelectedPage: Story = {
-    args: {
-        totalPage: 100,
-    },
-    render: ({ ...props }) =>
-        <PaginationRender {...props} defaultSelectedPage={77} />,
 };
