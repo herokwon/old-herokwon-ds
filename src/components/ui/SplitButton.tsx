@@ -1,7 +1,7 @@
 import { forwardRef, useMemo, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
-import type { ButtonProps, DropdownFlatItem, ElementBaseVariant, ElementSpacing, ElementStates, EventHandler } from "../../types";
+import type { ButtonProps, DropdownFlatItem, ElementBaseVariant, ElementSpacing, EventHandler } from "../../types";
 import TextButton from "./TextButton";
 import IconButton from "./IconButton";
 import Dropdown from "./Dropdown";

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import type { ElementBaseSize, ElementBaseVariant, ElementExtendedSize } from "../../types";
+import type { ElementBaseSize, ElementBaseVariant } from "../../types";
 
 type BadgeFixedVariant = Exclude<ElementBaseVariant, 'secondary'>;
 type BadgeChangedVariant = 'added' | 'removed';
