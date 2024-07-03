@@ -23,7 +23,10 @@ export default function SectionMessage({ heading, message, variant = 'default', 
     }), [props]);
 
     return (
-        <section className={`section-message--${variant} w-full px-4 py-3 border rounded-ms shadow-md shadow-light-secondary dark:shadow-dark-secondary ${props.className ?? ''}`}>
+        <section className={`section-message--${variant} w-full px-4 py-3 border rounded-ms shadow-md shadow-light-secondary dark:shadow-dark-secondary ${!(!props.isHidable) ?
+            'cursor-pointer' :
+            ''} ${props.className ?? ''}`}
+            onClick={() => setIsHidden((prev) => !prev)}>
             <div className={`w-full flex ${isHidden ?
                 'items-center' :
                 'items-start'}`}>
@@ -33,9 +36,13 @@ export default function SectionMessage({ heading, message, variant = 'default', 
                     message={message}
                     variant={variant}
                     size={size}
-                    className={isHidden ?
-                        'last:*:line-clamp-1' :
-                        ''}>
+                    className={`${!heading ?
+                        '' :
+                        size === 'sm' ?
+                            'first:*:mr-2.5' :
+                            'first:*:mr-3'} ${isHidden ?
+                                'last:*:line-clamp-1' :
+                                ''}`}>
                     {actions.length > 0 &&
                         <div className="w-full pt-4 pb-1 flex justify-end items-center gap-x-1">
                             {actions.map((action) =>
@@ -45,19 +52,23 @@ export default function SectionMessage({ heading, message, variant = 'default', 
                                     size={size === 'lg' ?
                                         'md' :
                                         'sm'}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        action.onClick && action.onClick(e);
+                                    }}
                                 />)}
                         </div>}
                 </InlineMessage>
                 {props.isHidable &&
                     <IconButton
                         icon={FaChevronDown}
-                        onClick={() => setIsHidden((prev) => !prev)}
                         variant='secondary'
                         size={size === 'lg' ?
                             'md' :
                             size === 'sm' ?
                                 'xs' :
                                 'sm'}
+                        spacing='none'
                         className={`${size === 'sm' ?
                             'ml-1.5' :
                             'ml-2'} ${isHidden ?

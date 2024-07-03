@@ -1,25 +1,23 @@
-import { forwardRef, useState } from "react";
+import { forwardRef } from "react";
 
 import type { AlignmentX, ElementBaseSize } from "../../types";
 import TextButton from "./TextButton";
 
 interface TabItem {
-    id: string;
-    tabName: string;
-    tabContent: React.ReactNode;
+    index: number;
+    heading: string;
+    content: React.ReactNode;
 };
 
 interface TabsProps extends React.ComponentPropsWithoutRef<'div'> {
     size?: ElementBaseSize;
     alignX?: AlignmentX;
     tabItems: TabItem[];
+    selectedIndex: number;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({ size = 'sm', alignX = 'left', tabItems, ...props }, ref) {
-    const [selectedTabItem, setSelectedTabItem] = useState<TabItem | null>(tabItems.length === 0 ?
-        null :
-        tabItems[0]);
-
+const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({ size = 'sm', alignX = 'left', tabItems, selectedIndex, setSelectedIndex, ...props }, ref) {
     return (
         <div
             {...props}
@@ -30,21 +28,21 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({ size = 'sm', 
                 alignX === 'right' ?
                     'justify-end' :
                     'justify-center'} items-center relative after:w-full after:h-2 after:rounded-full after:content-[''] after:bg-light-secondary after:dark:bg-dark-secondary after:absolute after:top-full after:left-0 after:z-0`}>
-                {tabItems.map((tabItem, index) =>
+                {tabItems.map((tabItem) =>
                     <TextButton
-                        key={index}
-                        label={tabItem.tabName}
+                        key={tabItem.index}
+                        label={tabItem.heading}
                         variant='secondary'
                         size={size}
-                        onClick={() => setSelectedTabItem(tabItem)}
-                        className={`hover:!bg-transparent ${selectedTabItem?.id === tabItem.id ?
+                        onClick={() => setSelectedIndex(tabItem.index)}
+                        className={`hover:!bg-transparent ${tabItem.index === selectedIndex ?
                             'text-light-blue dark:text-dark-blue' :
-                            'text-light/off dark:text-dark/off hover:text-light/normal dark:hover:text-dark/normal'} font-semibold transition-colors relative after:w-full after:h-2 after:rounded-full after:content-[""] ${selectedTabItem?.id === tabItem.id ?
+                            'text-light/off dark:text-dark/off hover:text-light/normal dark:hover:text-dark/normal'} font-semibold transition-colors relative after:w-full after:h-2 after:rounded-full after:content-[""] ${tabItem.index === selectedIndex ?
                                 'after:bg-light-blue after:dark:bg-dark-blue' :
                                 'after:bg-transparent hover:after:bg-black/off dark:hover:after:bg-white/off'} after:transition-colors after:absolute after:top-full after:left-0 after:z-[1]`} />)}
             </div>
             <div className="w-full my-4">
-                {selectedTabItem?.tabContent}
+                {tabItems.find((tabItem) => tabItem.index === selectedIndex)?.content}
             </div>
         </div>
     );

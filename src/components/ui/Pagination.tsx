@@ -8,24 +8,19 @@ import TextButton from "./TextButton";
 interface PaginationProps extends React.ComponentPropsWithoutRef<'div'> {
     totalPage: number;
     pagePerIndex?: number;
-    defaultSelectedPage?: number;
     size?: ElementBaseSize;
+    selectedIndex: number;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function Pagination({ totalPage, pagePerIndex = 5, defaultSelectedPage = 1, size = 'md', ...props }: PaginationProps) {
-    const [viewedIndex, setViewedIndex] = useState<number>(Math.floor((parseInt(Math.abs(defaultSelectedPage).toFixed(0)) - 1) / pagePerIndex));
-    const [selectedIndex, setSelectedIndex] = useState<number>(parseInt(Math.abs(defaultSelectedPage).toFixed(0)) - 1);
-
+export default function Pagination({ totalPage, pagePerIndex = 5, size = 'md', selectedIndex, setSelectedIndex, ...props }: PaginationProps) {
+    const [viewedIndex, setViewedIndex] = useState<number>(Math.floor((selectedIndex / pagePerIndex)));
     const onClickHandler = {
         firstButton: () => setSelectedIndex(0),
         prevButton: () => setSelectedIndex((prev) => Math.max(0, prev - pagePerIndex)),
         nextButton: () => setSelectedIndex((prev) => Math.min(prev + pagePerIndex, totalPage - 1)),
         lastButton: () => setSelectedIndex(totalPage - 1),
     };
-
-    useEffect(() => {
-        setSelectedIndex(parseInt(Math.abs(defaultSelectedPage).toFixed(0)) - 1);
-    }, [defaultSelectedPage]);
 
     useEffect(() => {
         setViewedIndex(Math.floor(selectedIndex / pagePerIndex));
@@ -65,7 +60,7 @@ export default function Pagination({ totalPage, pagePerIndex = 5, defaultSelecte
                                 'w-[2.25rem]' :
                                 size === 'sm' ?
                                     'w-[1.75rem]' :
-                                    'w-[2rem]'} aspect-square whitespace-nowrap`}
+                                    'w-[2rem]'} !aspect-square whitespace-nowrap`}
                             style={{
                                 letterSpacing: `-${pageNumberLength * 0.03}rem`
                             }} />

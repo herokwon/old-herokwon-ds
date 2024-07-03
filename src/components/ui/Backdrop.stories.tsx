@@ -24,12 +24,15 @@ const BackdropRender = ({ ...props }: React.ComponentPropsWithoutRef<typeof Back
     }, [props.isActive]);
 
     return (
-        <Backdrop isActive={isActive} triggerItem={
-            <TextButton
-                label='Click on Button'
-                variant='primary'
-                onClick={() => setIsActive((prev) => !prev)} />
-        } />
+        <Backdrop
+            isActive={isActive}
+            onClickBackdrop={() => setIsActive(false)}
+            triggerItem={
+                <TextButton
+                    label='Click on Button'
+                    variant='primary'
+                    onClick={() => setIsActive((prev) => !prev)} />
+            } />
     );
 };
 

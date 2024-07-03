@@ -6,7 +6,7 @@ interface TooltipProps extends Omit<React.ComponentPropsWithoutRef<typeof Dropdo
     content: string;
 };
 
-export default function Tooltip({ content, ...props }: TooltipProps) {
+export default function Tooltip({ size = 'md', content, ...props }: TooltipProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [activeContent, setActiveContent] = useState<string>(content);
 
@@ -19,8 +19,12 @@ export default function Tooltip({ content, ...props }: TooltipProps) {
             {...props}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            className='tooltip'>
-            <p className="px-1 text-xs whitespace-pre">
+            className='tooltip first:*:last:*:shadow-md'>
+            <p className={`px-1 ${size === 'lg' ?
+                'text-base' :
+                size === 'sm' ?
+                    'text-xs' :
+                    'text-sm'} whitespace-pre`}>
                 {activeContent}
             </p>
         </Dropdown>

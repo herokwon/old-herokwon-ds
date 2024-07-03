@@ -8,11 +8,11 @@
   @apply opacity-bold;
 
   &:not(.inline-message--info) > :last-child a {
-    @apply text-light-blue dark:text-dark-blue underline underline-offset-2 decoration-light-blue dark:decoration-dark-blue;
+    @apply hover:text-light-blue dark:hover:text-dark-blue underline underline-offset-2 hover:decoration-light-blue dark:hover:decoration-dark-blue;
   }
 
   &:is(.inline-message--info) > :last-child a {
-    @apply underline underline-offset-2 decoration-white;
+    @apply hover:text-light-yellow dark:hover:text-dark-yellow underline underline-offset-2 decoration-white hover:decoration-light-yellow dark:hover:decoration-dark-yellow;
   }
 }
 

@@ -10,6 +10,7 @@ import TextButton from "./TextButton";
 interface CalendarProps extends React.ComponentPropsWithoutRef<'div'> {
     form: CalendarForm;
     today: DateItem;
+    holidays?: DateItem[];
     pickedDate: DateItem;
     setPickedDate: React.Dispatch<React.SetStateAction<CalendarProps['pickedDate']>>;
 };
@@ -17,27 +18,20 @@ interface CalendarProps extends React.ComponentPropsWithoutRef<'div'> {
 interface MonthlyCalendarProps extends Pick<CalendarProps, 'pickedDate' | 'setPickedDate'> {
     month: Months;
     viewedDate: ViewedDate;
+    holidays: DateItem[];
 };
 
 interface YearlyCalendarProps extends Omit<MonthlyCalendarProps, 'month'> {
     setViewedDate: React.Dispatch<React.SetStateAction<ViewedDate>>;
-}
+};
 
-export default function Calendar({ form, today, pickedDate, setPickedDate, ...props }: CalendarProps) {
+export default function Calendar({ form, today, holidays = [], pickedDate, setPickedDate, ...props }: CalendarProps) {
     const [viewedDate, setViewedDate] = useState<ViewedDate>({
         year: today.year,
         month: form === 'yearly' ?
-            undefined :
+            null :
             today.month,
-        week: (form === 'weekly' || form === 'daily') ?
-            today.week :
-            undefined,
-        date: form === 'daily' ?
-            today.date :
-            undefined,
-        day: form === 'daily' ?
-            today.day :
-            undefined,
+        date: null,
     });
 
     const clickHandler = {
@@ -69,18 +63,22 @@ export default function Calendar({ form, today, pickedDate, setPickedDate, ...pr
 
     return (
         <div {...props} className={`w-full ${props.className ?? ''}`}>
-            <div className="w-full mb-1 grid grid-cols-[minmax(0,_1fr)_5fr_minmax(0,_1fr)]">
+            <div className={`w-full ${!viewedDate.month ?
+                'mb-4' :
+                'mb-1'} flex justify-between rounded-ms text-dark bg-light-blue dark:bg-dark-blue transition-colors`}>
                 <IconButton
                     icon={LuChevronLeft}
-                    variant='secondary'
-                    spacing='compact'
+                    variant='primary'
+                    size={!viewedDate.month ?
+                        'lg' :
+                        'md'}
                     shape='square'
-                    className=""
+                    className='rounded-r-none'
                     onClick={clickHandler.prevButton} />
                 <div className="w-full flex justify-center items-center">
                     <TextButton
                         label={`${viewedDate.year}`}
-                        variant='secondary'
+                        variant='primary'
                         size={!viewedDate.month ?
                             'lg' :
                             'md'}
@@ -89,32 +87,39 @@ export default function Calendar({ form, today, pickedDate, setPickedDate, ...pr
                             'font-semibold'}
                         onClick={() => setViewedDate((prev) => ({
                             year: prev.year,
-                            month: undefined,
+                            month: null,
+                            date: null,
+                            day: null,
                         }))} />
                     {!(!viewedDate.month) &&
                         <>
                             <span className="mx-1">/</span>
                             <TextButton
                                 label={`${viewedDate.month}`}
-                                variant='secondary'
+                                variant='primary'
                                 className='font-semibold pointer-events-none' />
                         </>}
                 </div>
                 <IconButton
                     icon={LuChevronRight}
-                    variant='secondary'
-                    spacing='compact'
+                    variant='primary'
+                    size={!viewedDate.month ?
+                        'lg' :
+                        'md'}
                     shape='square'
+                    className='rounded-l-none'
                     onClick={clickHandler.nextButton} />
             </div>
             <div className="w-full">
                 {!viewedDate.month ?
                     <YearlyCalendar
+                        holidays={holidays}
                         viewedDate={viewedDate}
                         pickedDate={pickedDate}
                         setViewedDate={setViewedDate}
                         setPickedDate={setPickedDate} /> :
                     <MonthlyCalendar
+                        holidays={holidays}
                         month={viewedDate.month}
                         viewedDate={viewedDate}
                         pickedDate={pickedDate}
@@ -124,7 +129,7 @@ export default function Calendar({ form, today, pickedDate, setPickedDate, ...pr
     );
 }
 
-const MonthlyCalendar = ({ month, viewedDate, pickedDate, setPickedDate }: MonthlyCalendarProps) => {
+const MonthlyCalendar = ({ holidays, month, viewedDate, pickedDate, setPickedDate }: MonthlyCalendarProps) => {
     const theNumberOfWeeksInMonth = useMemo(() =>
         getTheNumberOfWeeksInMonth(viewedDate.year, viewedDate.month ?? month), [viewedDate, month]);
     const firstDayOfTheWeek = useMemo(() =>
@@ -137,9 +142,9 @@ const MonthlyCalendar = ({ month, viewedDate, pickedDate, setPickedDate }: Month
             viewedDate.year, MONTHS[MONTHS.indexOf(viewedDate.month ?? month) - 1]), [viewedDate, month]);
 
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col gap-1">
             {Array.from({ length: theNumberOfWeeksInMonth }, (_, index) => index).map((weeklyIndex) =>
-                <div key={weeklyIndex} className="w-full grid grid-cols-7 justify-items-center">
+                <div key={weeklyIndex} className="w-full grid grid-cols-7 justify-items-center gap-1">
                     {Array.from({ length: 7 }, (_, index) => {
                         const dailyIndex = (weeklyIndex * 7 + index) - firstDayOfTheWeek;
 
@@ -154,29 +159,51 @@ const MonthlyCalendar = ({ month, viewedDate, pickedDate, setPickedDate }: Month
                     }).map((date, index) => {
                         const dailyIndex = (weeklyIndex * 7 + index) - firstDayOfTheWeek;
                         const isDisabled = dailyIndex < 0 || dailyIndex >= datesInThisMonth;
-                        const isSelected = 0 <= dailyIndex &&
-                            dailyIndex < datesInThisMonth &&
-                            viewedDate.year === pickedDate.year &&
-                            (viewedDate.month ?? month) === pickedDate.month &&
-                            date === pickedDate.date;
+                        const isSelected = (0 <= dailyIndex) &&
+                            (dailyIndex < datesInThisMonth) &&
+                            (viewedDate.year === pickedDate.year) &&
+                            ((viewedDate.month ?? month) === pickedDate.month) &&
+                            (date === pickedDate.date);
+                        const isHoliday =
+                            dailyIndex < 0 ?
+                                !(!holidays.find((holiday) =>
+                                    (holiday.year === (viewedDate.month === 1 ?
+                                        viewedDate.year - 1 :
+                                        viewedDate.year)) &&
+                                    (holiday.month === MONTHS[MONTHS.indexOf(viewedDate.month ?? month) - 1]) &&
+                                    (holiday.date === date))) :
+                                dailyIndex >= datesInThisMonth ?
+                                    !(!holidays.find((holiday) =>
+                                        (holiday.year === (viewedDate.month === 12 ?
+                                            viewedDate.year + 1 :
+                                            viewedDate.year)) &&
+                                        (holiday.month === MONTHS[MONTHS.indexOf(viewedDate.month ?? month) + 1]) &&
+                                        (holiday.date === date))) :
+                                    !(!holidays.find((holiday) =>
+                                        (holiday.year === viewedDate.year) &&
+                                        (holiday.month === (viewedDate.month ?? month)) &&
+                                        (holiday.date === date)));
 
                         return (
                             <TextButton
                                 key={dailyIndex}
                                 isDisabled={isDisabled}
-                                isSelected={isSelected}
-                                label={`${date}`}
+                                isHoverable={!isSelected}
+                                label={(!viewedDate.month && isDisabled) ?
+                                    '' :
+                                    `${date}`}
                                 variant={isSelected ?
                                     'primary' :
                                     'secondary'}
                                 size='sm'
-                                className={`${isDisabled ?
+                                spacing='compact'
+                                className={`aspect-square py-1.5 ${isDisabled ?
                                     'hover:!bg-transparent' :
-                                    ''} ${index === 0 ?
+                                    ''} ${index === 0 || isHoliday ?
                                         'text-light-red dark:text-dark-red' :
                                         index === 6 ?
                                             'text-light-blue dark:text-dark-blue' :
-                                            ''} justify-center transition-none`}
+                                            ''} transition-none`}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setPickedDate((prev) => ({
@@ -195,24 +222,24 @@ const MonthlyCalendar = ({ month, viewedDate, pickedDate, setPickedDate }: Month
     );
 };
 
-const YearlyCalendar = ({ viewedDate, pickedDate, setViewedDate, setPickedDate }: YearlyCalendarProps) => {
+const YearlyCalendar = ({ holidays, viewedDate, pickedDate, setViewedDate, setPickedDate }: YearlyCalendarProps) => {
     return (
         <div className="w-full flex flex-wrap gap-4">
             {MONTHS.map((month) =>
-                <div
-                    key={month}
-                    className="p-2 mx-auto rounded-ms border border-transparent hover:border-light-tertiary dark:border-dark-tertiary shadow-md shadow-transparent hover:shadow-light-tertiary dark:hover:shadow-dark-tertiary cursor-pointer"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setViewedDate((prev) => ({
-                            ...prev,
-                            month: month,
-                        }));
-                    }}>
-                    <p className="mb-1 text-center font-semibold">
-                        {month}
-                    </p>
+                <div key={month} className="p-2 mx-auto">
+                    <TextButton
+                        label={`${month}`}
+                        variant='secondary'
+                        className='w-full mb-1 font-semibold'
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setViewedDate((prev) => ({
+                                ...prev,
+                                month: month,
+                            }));
+                        }} />
                     <MonthlyCalendar
+                        holidays={holidays}
                         month={month}
                         viewedDate={viewedDate}
                         pickedDate={pickedDate}

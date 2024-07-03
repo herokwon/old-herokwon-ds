@@ -17,7 +17,9 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
     const tagRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
-        if (!isRemovable || !tagRef.current || !tagRef.current.lastElementChild) return;
+        if (!isRemovable ||
+            !tagRef.current ||
+            !tagRef.current.lastElementChild) return;
         const removeButton = tagRef.current.lastElementChild as HTMLElement;
 
         removeButton.onmouseenter = () =>
