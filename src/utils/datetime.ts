@@ -35,7 +35,6 @@ export const getDateItem = (date: Date): DateItem => ({
     year: date.getFullYear(),
     month: MONTHS[date.getMonth()],
     date: date.getDate(),
-    day: date.getDay(),
 });
 
 export const getTheNumberOfWeeksInMonth = (year: number, month: Months): number => {
