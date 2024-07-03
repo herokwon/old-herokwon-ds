@@ -1,6 +1,6 @@
 {
   "name": "herokwon-ds",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": false,
   "author": {
     "name": "HeroKwon",
@@ -31,7 +31,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "@herokwon:registry": "https://npm.pkg.github.com"
   },
   "license": "MIT",
   "files": [
