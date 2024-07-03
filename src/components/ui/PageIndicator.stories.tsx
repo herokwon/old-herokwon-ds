@@ -1,7 +1,12 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 import PageIndicator from "./PageIndicator";
+
+type PageIndicatorProps = {
+    defaultSelectedPage?: number;
+} & React.ComponentPropsWithoutRef<typeof PageIndicator>;
 
 const meta = {
     title: 'Components/PageIndicator',
@@ -9,19 +14,31 @@ const meta = {
     component: PageIndicator,
     args: {
         totalPage: 3,
-        defaultSelectedPage: 1,
         size: 'md',
     },
 } satisfies Meta<typeof PageIndicator>;
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof PageIndicator>;
+
+const PageIndicatorRender = ({ defaultSelectedPage, ...props }: PageIndicatorProps) => {
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+    return (
+        <PageIndicator
+            {...props}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex} />
+    );
+};
 
 export const Default: Story = {
     args: {
         prev: LuChevronLeft,
         next: LuChevronRight,
     },
+    render: ({ ...props }) =>
+        <PageIndicatorRender {...props} />,
 };
 
 export const TextButton: Story = {
@@ -29,4 +46,6 @@ export const TextButton: Story = {
         prev: 'Prev',
         next: 'Next',
     },
+    render: ({ ...props }) =>
+        <PageIndicatorRender {...props} />,
 };
