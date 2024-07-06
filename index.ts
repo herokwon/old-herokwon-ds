@@ -23,6 +23,7 @@ export { default as Breadcrumbs } from "./src/components/ui/Breadcrumbs";
 export { default as Calendar } from "./src/components/ui/Calendar";
 export { default as Dropdown } from "./src/components/ui/Dropdown";
 export { default as Empty } from "./src/components/ui/Empty";
+export { default as Heading } from "./src/components/ui/Heading";
 export { default as IconButton } from "./src/components/ui/IconButton";
 export { default as InlineMessage } from "./src/components/ui/InlineMessage";
 export { default as Modal } from "./src/components/ui/Modal";
