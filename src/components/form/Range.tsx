@@ -4,7 +4,7 @@ import type { AbsolutePositionY, AlignmentX, InputProps } from "../../types";
 import { useInput } from "../../hooks";
 import InputMessage from "./InputMessage";
 
-interface RangeProps extends Omit<InputProps, 'label'> {
+interface RangeProps extends Omit<InputProps, 'label' | 'value' | 'defaultValue'> {
     isShowingLabel?: boolean;
     labelDirection?: Exclude<AlignmentX, 'center'> | AbsolutePositionY;
     labelPrefix?: string;
@@ -12,23 +12,20 @@ interface RangeProps extends Omit<InputProps, 'label'> {
     min?: number;
     max?: number;
     step?: number;
-    defaultValue?: number;
+    selectedValue: number;
+    setSelectedValue: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ isShowingLabel = false, labelDirection = 'left', labelPrefix, labelSuffix, helperMessage, errorMessage, ...props }, ref) {
-    const { isDisabled = false, min = 0, max = 100, step = 1, ...restProps } = props;
-    const rangeDefaultValue = (restProps.defaultValue ?? restProps.value)?.toString();
+const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ labelDirection = 'left', labelPrefix, labelSuffix, helperMessage, errorMessage, selectedValue, setSelectedValue, ...props }, ref) {
+    const { isShowingLabel = false, isDisabled = false, min = 0, max = 100, step = 1, ...restProps } = props;
 
-    const [rangeValue, setRangeValue] = useState<number>(isNaN(Number(rangeDefaultValue)) ?
-        0 :
-        Number(rangeDefaultValue));
     const { hasError, hasMessage, onChangeInput } = useInput({
         isDisabled: isDisabled,
         helperMessage: helperMessage,
         errorMessage: errorMessage,
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
             const value = Number(e.currentTarget.value);
-            !isNaN(value) && setRangeValue(value);
+            !isNaN(value) && setSelectedValue(value);
 
             const isDarkMode = document.body.className.includes('dark');
             const percent = (value / max) * 100;
@@ -56,7 +53,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ isShowin
                     min={min}
                     max={max}
                     step={step}
-                    value={rangeValue}
+                    value={selectedValue}
                     onChange={onChangeInput}
                     className={`w-full ${restProps.className ?? ''}`} />
                 {isShowingLabel &&
@@ -67,7 +64,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ isShowin
                             labelDirection.includes('right') ?
                                 'text-right' :
                                 'text-center'}`}>
-                        {`${labelPrefix ?? ''}${rangeValue}${labelSuffix ?? ''}`}
+                        {`${labelPrefix ?? ''}${selectedValue}${labelSuffix ?? ''}`}
                     </p>}
             </label>
             {hasMessage &&

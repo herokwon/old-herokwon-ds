@@ -59,13 +59,13 @@ const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEv
 
     useEffect(() => {
         if (!isOpen) return;
-        const handleClick = (e: Event) =>
+        const onClickHandle = (e: Event) =>
             isOpen &&
             !dropdownRef.current?.contains(e.target as Node | null) &&
             setIsOpen(false);
 
-        document.addEventListener('click', handleClick);
-        return () => document.removeEventListener('click', handleClick);
+        document.addEventListener('click', onClickHandle);
+        return () => document.removeEventListener('click', onClickHandle);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
 
@@ -93,7 +93,7 @@ const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEv
                 className={`dropdown-trigger ${isDisabled ?
                     'disabled' :
                     ''}`}>
-                {typeof triggerItem !== 'string' || triggerItem.length === 0 ?
+                {(typeof triggerItem !== 'string' || triggerItem.length === 0) ?
                     triggerItem :
                     <TextButton
                         label={triggerItem}
@@ -152,6 +152,7 @@ const FlatItems = ({ selectingInput, isOpen, items, setIsOpen, setItems }: Dropd
                 {items.map((flatItem) =>
                     <li
                         key={flatItem.id}
+                        id={flatItem.id}
                         data-input={selectingInput}
                         className={`dropdown-item ${flatItem.isDisabled ?
                             'disabled' :
@@ -159,26 +160,56 @@ const FlatItems = ({ selectingInput, isOpen, items, setIsOpen, setItems }: Dropd
                                 'selected' :
                                 ''}`}
                         onClick={() => !flatItem.isDisabled &&
+                            selectingInput.includes('text') &&
                             setItems((prevFlatItems) =>
                                 prevFlatItems.map((prevFlatItem) => ({
                                     ...prevFlatItem,
-                                    isSelected: (selectingInput === 'text' || selectingInput === 'radio') ?
+                                    isSelected: (selectingInput === 'text') ?
                                         prevFlatItem.id === flatItem.id :
                                         prevFlatItem.id === flatItem.id ?
                                             !prevFlatItem.isSelected :
                                             prevFlatItem.isSelected
                                 }))
                             )}>
-                        <p className="dropdown-item-heading">
-                            {flatItem.heading}
-                        </p>
-                        {flatItem.description &&
-                            <p className="dropdown-item-description">
-                                {flatItem.description}
-                            </p>}
+                        {selectingInput === 'radio' ?
+                            <Radio
+                                id={flatItem.id}
+                                isDisabled={flatItem.isDisabled}
+                                isSelected={flatItem.isSelected}
+                                heading={flatItem.heading}
+                                description={flatItem.description}
+                                onChange={() => setItems((prevFlatItems) =>
+                                    prevFlatItems.map((prevFlatItem) => ({
+                                        ...prevFlatItem,
+                                        isSelected: (prevFlatItem.id === flatItem.id),
+                                    }))
+                                )} /> :
+                            selectingInput === 'checkbox' ?
+                                <Checkbox
+                                    id={flatItem.id}
+                                    isDisabled={flatItem.isDisabled}
+                                    isSelected={flatItem.isSelected}
+                                    heading={flatItem.heading}
+                                    description={flatItem.description}
+                                    onChange={() => setItems((prevFlatItems) =>
+                                        prevFlatItems.map((prevFlatItem) => ({
+                                            ...prevFlatItem,
+                                            isSelected: (prevFlatItem.id === flatItem.id) ?
+                                                !prevFlatItem.isSelected :
+                                                prevFlatItem.isSelected,
+                                        }))
+                                    )} /> :
+                                <div className="w-full">
+                                    <p className="dropdown-item-heading">
+                                        {flatItem.heading}
+                                    </p>
+                                    {flatItem.description &&
+                                        <p className="dropdown-item-description">
+                                            {flatItem.description}
+                                        </p>}
+                                </div>}
                     </li>)}
             </ul>
-
     );
 };
 
@@ -238,12 +269,13 @@ const GroupItems = ({ isOpen, items, setIsOpen, setItems }: DropdownItemsProps<D
                                         'selected' :
                                         ''}`}
                                 onClick={() => !item.isDisabled &&
+                                    groupItem.selectingInput.includes('text') &&
                                     setItems((prevGroupItems) =>
                                         prevGroupItems.map((prevGroupItem) => ({
                                             ...prevGroupItem,
                                             items: prevGroupItem.items.map((prevItem) => ({
                                                 ...prevItem,
-                                                isSelected: (groupItem.selectingInput === 'text' || groupItem.selectingInput === 'radio') ?
+                                                isSelected: (groupItem.selectingInput === 'text') ?
                                                     (prevGroupItem.id === groupItem.id ?
                                                         prevItem.id === item.id :
                                                         prevItem.isSelected) :
@@ -253,31 +285,43 @@ const GroupItems = ({ isOpen, items, setIsOpen, setItems }: DropdownItemsProps<D
                                             }))
                                         }))
                                     )}>
-                                <div className="w-full">
-                                    {groupItem.selectingInput === 'radio' ?
-                                        <Radio
-                                            id={item.id}
-                                            isDisabled={item.isDisabled}
-                                            isSelected={item.isSelected}
-                                            heading={item.heading}
-                                            description={item.description} /> :
-                                        groupItem.selectingInput === 'checkbox' ?
-                                            <Checkbox
-                                                id={item.id}
-                                                isDisabled={item.isDisabled}
-                                                isSelected={item.isSelected}
-                                                heading={item.heading}
-                                                description={item.description} /> :
-                                            <>
-                                                <p className="dropdown-item-heading">
-                                                    {item.heading}
-                                                </p>
-                                                {item.description &&
-                                                    <p className="dropdown-item-description">
-                                                        {item.description}
-                                                    </p>}
-                                            </>}
-                                </div>
+                                {groupItem.selectingInput === 'radio' ?
+                                    <Radio
+                                        {...item}
+                                        onChange={() => setItems((prevGroupItems) =>
+                                            prevGroupItems.map((prevGroupItem) => ({
+                                                ...prevGroupItem,
+                                                items: prevGroupItem.items.map((prevItem) => ({
+                                                    ...prevItem,
+                                                    isSelected: (prevGroupItem.id === groupItem.id) ?
+                                                        prevItem.id === item.id :
+                                                        prevItem.isSelected
+                                                }))
+                                            }))
+                                        )} /> :
+                                    groupItem.selectingInput === 'checkbox' ?
+                                        <Checkbox
+                                            {...item}
+                                            onChange={() => setItems((prevGroupItems) =>
+                                                prevGroupItems.map((prevGroupItem) => ({
+                                                    ...prevGroupItem,
+                                                    items: prevGroupItem.items.map((prevItem) => ({
+                                                        ...prevItem,
+                                                        isSelected: (prevItem.id === item.id ?
+                                                            !prevItem.isSelected :
+                                                            prevItem.isSelected)
+                                                    }))
+                                                }))
+                                            )} /> :
+                                        <div className="w-full">
+                                            <p className="dropdown-item-heading">
+                                                {item.heading}
+                                            </p>
+                                            {item.description &&
+                                                <p className="dropdown-item-description">
+                                                    {item.description}
+                                                </p>}
+                                        </div>}
                             </li>)}
                     </ul>
                 </div>)

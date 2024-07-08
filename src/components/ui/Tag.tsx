@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { LuHash, LuX } from "react-icons/lu";
 
-import type { ElementBaseSize, ElementSpacing } from "../../types";
+import type { ContentWithIcon, ElementBaseSize, ElementSpacing } from "../../types";
 import TextButton from "./TextButton";
 
-interface TagProps extends Omit<React.ComponentPropsWithoutRef<typeof TextButton>, 'isHoverable' | 'size' | 'spacing'> {
+interface TagProps extends Omit<React.ComponentPropsWithoutRef<typeof TextButton>, 'isHoverable' | 'size' | 'spacing' | 'iconAfter'> {
     isRemovable?: boolean;
     size?: Exclude<ElementBaseSize, 'lg'>;
     spacing?: Exclude<ElementSpacing, 'default'>;
+    iconAfter?: Partial<ContentWithIcon['iconAfter']>;
 };
 
 export default function Tag({ isRemovable = false, ...props }: TagProps) {
@@ -36,12 +37,19 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
             size={size}
             spacing={spacing}
             iconBefore={iconBefore}
-            iconAfter={isRemovable ?
+            iconAfter={!isRemovable ?
+                iconAfter :
                 {
-                    content: LuX,
-                    onClick: () => setIsRemoved(true),
-                } :
-                iconAfter}
+                    content: iconAfter?.content ?? LuX,
+                    onClick: (e) => {
+                        setIsRemoved(true);
+                        iconAfter?.onClick && iconAfter.onClick(e);
+                    },
+                    onMouseEnter: () => isRemovable &&
+                        tagRef.current?.classList.add('removable'),
+                    onMouseLeave: () => isRemovable &&
+                        tagRef.current?.classList.remove('removable'),
+                }}
             tabIndex={!restProps.href ?
                 -1 :
                 undefined}

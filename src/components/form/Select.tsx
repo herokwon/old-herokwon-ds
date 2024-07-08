@@ -5,11 +5,12 @@ import type { ContentWithId, InputProps, SelectingInput } from "../../types";
 import Dropdown from "../ui/Dropdown";
 import TextField from "./TextField";
 import IconButton from "../ui/IconButton";
+import Tag from "../ui/Tag";
 
 interface SelectProps extends InputProps {
     selectingInput: SelectingInput;
     items: ContentWithId[];
-    setItems: React.Dispatch<React.SetStateAction<SelectProps['items']>>;
+    setItems: React.Dispatch<React.SetStateAction<ContentWithId[]>>;
 };
 
 export default function Select({ selectingInput, items, setItems, ...props }: SelectProps) {
@@ -18,33 +19,55 @@ export default function Select({ selectingInput, items, setItems, ...props }: Se
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const selectedItems = useMemo(() =>
         items.filter((item) =>
-            item.isSelected).map((item) =>
-                item.heading), [items]);
+            item.isSelected), [items]);
 
     return (
         <Dropdown
+            isDisabled={isDisabled}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            className='last:*:min-w-full'
+            className='w-full last:*:min-w-full'
             triggerItem={
-                <div className="relative">
-                    <TextField
-                        {...restProps}
-                        readOnly
-                        value={selectedItems}
-                        className='px-3' />
+                <TextField
+                    {...restProps}
+                    readOnly
+                    autoFocus={isOpen}
+                    hidden={selectedItems.length > 0}
+                    placeholder={selectedItems.length > 0 ?
+                        '' :
+                        restProps.placeholder}
+                    className='px-3'>
                     {selectedItems.length > 0 &&
-                        <IconButton
-                            icon={LuX}
-                            spacing='compact'
-                            className='mx-0.5 absolute top-1/2 right-0 -translate-y-1/2 z-[1]'
-                            onClick={() => setItems((prevItems) =>
-                                prevItems.map((prevItem) => ({
-                                    ...prevItem,
-                                    isSelected: false,
-                                }))
-                            )} />}
-                </div>}>
+                        <div className="w-full py-[0.3125rem] flex items-center">
+                            <div className="w-full px-2 flex flex-wrap gap-1">
+                                {selectedItems.map((selectedItem) =>
+                                    <Tag
+                                        key={selectedItem.id}
+                                        label={selectedItem.heading}
+                                        isRemovable={selectingInput === 'multi-text' || selectingInput === 'checkbox'}
+                                        iconAfter={{
+                                            onClick: () => setItems((prevItems) =>
+                                                prevItems.map((prevItem) => ({
+                                                    ...prevItem,
+                                                    isSelected: (prevItem.id === selectedItem.id) ?
+                                                        false :
+                                                        prevItem.isSelected,
+                                                })))
+                                        }} />)}
+                            </div>
+                            {selectedItems.length > 0 &&
+                                <IconButton
+                                    icon={LuX}
+                                    spacing='compact'
+                                    className='mx-0.5'
+                                    onClick={() => setItems((prevItems) =>
+                                        prevItems.map((prevItem) => ({
+                                            ...prevItem,
+                                            isSelected: false,
+                                        }))
+                                    )} />}
+                        </div>}
+                </TextField>}>
             <Dropdown.FlatItems
                 selectingInput={selectingInput}
                 isOpen={isOpen}

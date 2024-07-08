@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
+import type { ContentWithId } from "../../types";
 import Select from "./Select";
 
 const meta = {
@@ -15,8 +16,8 @@ export default meta;
 
 type Story = StoryObj<typeof Select>;
 
-const SelectRender = ({ ...props }: Omit<React.ComponentProps<typeof Select>, 'items' | 'setItems'>) => {
-    const [items, setItems] = useState<React.ComponentProps<typeof Select>['items']>([
+const SelectRender = ({ ...props }: Omit<React.ComponentPropsWithoutRef<typeof Select>, 'items' | 'setItems'>) => {
+    const [items, setItems] = useState<ContentWithId[]>([
         ...Array.from({ length: 10 }, (_, i) => ({
             isDisabled: false,
             isSelected: false,
@@ -30,10 +31,12 @@ const SelectRender = ({ ...props }: Omit<React.ComponentProps<typeof Select>, 'i
     ]);
 
     return (
-        <Select
-            {...props}
-            items={items}
-            setItems={setItems} />
+        <div className="w-300">
+            <Select
+                {...props}
+                items={items}
+                setItems={setItems} />
+        </div>
     );
 };
 
