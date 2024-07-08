@@ -48,11 +48,3 @@ export const SubItems: Story = {
         subItems: dummySubItems,
     },
 };
-
-export const DependentSubItems: Story = {
-    args: {
-        heading: 'Checkbox Item',
-        isDependent: true,
-        subItems: dummySubItems,
-    },
-};

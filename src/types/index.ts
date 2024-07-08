@@ -63,12 +63,12 @@ export interface ContentWithId extends Omit<ElementStates, 'isLoading'> {
 };
 
 export interface ContentWithIcon {
-    iconBefore?: EventHandler<keyof SVGSVGElementEventMap> & {
-        content: IconType;
+    iconBefore?: React.DOMAttributes<SVGElement> & {
+        content?: IconType;
         size?: ElementExtendedSize;
     };
-    iconAfter?: EventHandler<keyof SVGSVGElementEventMap> & {
-        content: IconType;
+    iconAfter?: React.DOMAttributes<SVGElement> & {
+        content?: IconType;
         size?: ElementExtendedSize;
     };
 };

@@ -10,7 +10,7 @@ interface RadioProps extends ContentWithId, Omit<InputProps, 'id' | 'size' | 'la
     subGroupItem?: React.ComponentProps<typeof RadioGroup>;
 };
 
-const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size = 'md', heading, description, subGroupItem, ...props }, ref) {
+const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ children, id, size = 'md', heading, description, subGroupItem, ...props }, ref) {
     const { isDisabled = false, isSelected = false, groupErrorMessage, ...restProps } = props;
 
     const [isChecked, setIsChecked] = useState<boolean>(isSelected);
@@ -51,7 +51,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size
                         id={id}
                         hidden
                         type='radio'
-                        defaultChecked={isSelected}
+                        checked={isChecked}
                         onChange={onChangeInput} />
                 </span>
                 <div className="w-full">
@@ -72,6 +72,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ id, size
                         </p>}
                 </div>
             </label>
+            {children}
             {subGroupItem &&
                 subGroupItem.items.length > 0 &&
                 <RadioGroup

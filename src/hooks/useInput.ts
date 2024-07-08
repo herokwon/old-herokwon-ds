@@ -46,6 +46,10 @@ const useInput = ({ isDisabled, label, helperMessage, errorMessage, autoFocus, m
     };
 
     useEffect(() => {
+        setIsFocused(autoFocus ?? false);
+    }, [autoFocus]);
+
+    useEffect(() => {
         hasError &&
             onFocusInput();
     }, [hasError]);

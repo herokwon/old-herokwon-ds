@@ -15,7 +15,7 @@ interface TextFieldProps extends InputProps<TextInput> {
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField({ type = 'text', label, fieldIcon, ...props }, ref) {
-    const { isDisabled = false, helperMessage, errorMessage, ...restProps } = props;
+    const { children, isDisabled = false, helperMessage, errorMessage, ...restProps } = props;
 
     const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
     const FieldIcon = useMemo(() =>
@@ -77,6 +77,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextFiel
                                 ''}
                             onClick={() => setIsHidden((prev) => !prev)} />
                     </div>}
+                {children}
             </InputWrapper>
             {hasMessage &&
                 <InputMessage
