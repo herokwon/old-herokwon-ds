@@ -50,8 +50,8 @@ const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(function TextB
                                                 'text-base'} outline-none transition-[background-color] ${restProps.className ?? ''}`}>
                 {BeforeIcon &&
                     <BeforeIcon
+                        {...Object.fromEntries(Object.entries(iconBefore ?? {}).filter((prop) => prop[0] !== 'content'))}
                         size={ICON_SIZE[iconBefore?.size ?? size]}
-                        onClick={iconBefore?.onClick}
                         className={spacing === 'default' ?
                             'mr-1.5' :
                             'mr-1'} />}
@@ -60,8 +60,8 @@ const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(function TextB
                 </p>
                 {AfterIcon &&
                     <AfterIcon
+                        {...Object.fromEntries(Object.entries(iconAfter ?? {}).filter((prop) => prop[0] !== 'content'))}
                         size={ICON_SIZE[iconAfter?.size ?? size]}
-                        onClick={iconAfter?.onClick}
                         className={spacing === 'default' ?
                             'ml-1.5' :
                             'ml-1'} />}

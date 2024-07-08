@@ -1,3 +1,7 @@
+.dropdown-trigger {
+  @apply cursor-pointer;
+}
+
 .dropdown-items-container {
   @apply w-max max-w-[80vw] p-2 transition-all absolute z-10;
 
