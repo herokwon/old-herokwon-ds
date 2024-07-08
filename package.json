@@ -1,6 +1,6 @@
 {
   "name": "herokwon-ds",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "private": false,
   "author": {
     "name": "HeroKwon",
@@ -15,23 +15,20 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/herokwon/herokwon-ds/issues",
-    "email": "contact@herokwon.dev"
+    "email": "contact@herokwon.dev",
+    "url": "https://github.com/herokwon/herokwon-ds/issues"
   },
   "keywords": [
+    "design-system",
     "react",
     "nextjs",
     "tailwindcss",
-    "design-system"
+    "storybook"
   ],
-  "description": "This is simple design system by herokwon",
+  "description": "This is simple design system by HeroKwon.",
   "repository": {
     "type": "git",
     "url": "https://github.com/herokwon/herokwon-ds.git"
-  },
-  "publishConfig": {
-    "access": "public",
-    "@herokwon:registry": "https://npm.pkg.github.com"
   },
   "license": "MIT",
   "files": [
