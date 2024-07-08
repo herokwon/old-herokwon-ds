@@ -13,7 +13,7 @@ interface SplitButtonProps extends Omit<ButtonProps, 'spacing' | 'href'> {
     variant?: Exclude<ElementBaseVariant, 'secondary'>;
     spacing?: Exclude<ElementSpacing, 'none'>;
     items: SplitButtonItem[];
-    setItems: React.Dispatch<React.SetStateAction<SplitButtonProps['items']>>;
+    setItems: React.Dispatch<React.SetStateAction<SplitButtonItem[]>>;
 };
 
 const SplitButton = forwardRef<HTMLButtonElement, SplitButtonProps>(function SplitButton({ defaultLabel, variant = 'default', size = 'md', spacing = 'default', items, setItems, ...props }, ref) {
