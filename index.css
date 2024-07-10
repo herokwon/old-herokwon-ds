@@ -7,36 +7,34 @@
 @tailwind utilities;
 
 @layer base {
-  h1 {
-    @apply text-[1.6rem] font-extrabold;
-  }
+  :is(h1, h2, h3, h4, h5, h6) {
+    &:is(h1) {
+      @apply text-[1.8rem] font-extrabold;
+    }
 
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-bold;
-  }
+    &:not(h1) {
+      @apply font-bold;
 
-  h2 {
-    @apply text-[1.48rem];
-  }
+      &:is(h2) {
+        @apply text-[1.64rem];
+      }
 
-  h3 {
-    @apply text-[1.36rem];
-  }
+      &:is(h3) {
+        @apply text-[1.48rem];
+      }
 
-  h4 {
-    @apply text-[1.24rem];
-  }
+      &:is(h4) {
+        @apply text-[1.32rem];
+      }
 
-  h5 {
-    @apply text-[1.12rem];
-  }
+      &:is(h5) {
+        @apply text-[1.16rem];
+      }
 
-  h6 {
-    @apply text-base;
+      &:is(h6) {
+        @apply text-[1rem];
+      }
+    }
   }
 
   button:disabled {
@@ -116,10 +114,6 @@
 @layer components {
   .disabled {
     @apply !cursor-not-allowed *:!pointer-events-none !opacity-off;
-  }
-
-  .linkable {
-    @apply hover:text-light-blue dark:hover:text-dark-blue hover:underline underline-offset-2 cursor-pointer;
   }
 }
 

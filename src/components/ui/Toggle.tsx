@@ -20,8 +20,7 @@ const TOGGLE_SIZES: { [size in ElementExtendedSize]: number } = {
 };
 
 export default function Toggle({ size = 'md', isActive, setIsActive, activeIcon, inactiveIcon, ...props }: ToggleProps) {
-    const { stopPropagation = false, preventDefault = false, isDisabled = false, ...restProps } = props;
-
+    const { isDisabled = false, ...restProps } = props;
     const InactiveIcon = useMemo(() =>
         inactiveIcon ?? null, [inactiveIcon]);
     const ActiveIcon = useMemo(() =>
@@ -31,16 +30,8 @@ export default function Toggle({ size = 'md', isActive, setIsActive, activeIcon,
         <button
             {...restProps}
             disabled={isDisabled}
-            onClick={(e) => {
-                stopPropagation &&
-                    e.stopPropagation();
-                preventDefault &&
-                    e.preventDefault();
-                !isDisabled &&
-                    setIsActive((prev) => !prev);
-                restProps.onClick &&
-                    restProps.onClick(e);
-            }}
+            onClick={() => !isDisabled &&
+                setIsActive((prev) => !prev)}
             className={`aspect-[2/1] flex items-center rounded-full text-xs ${isActive ?
                 'bg-light-blue hover:bg-dark-blue dark:bg-dark-blue dark:hover:bg-light-blue' :
                 'bg-light-secondary dark:bg-dark-secondary'} transition-all relative ${restProps.className ?? ''}`}
