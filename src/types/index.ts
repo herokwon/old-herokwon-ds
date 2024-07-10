@@ -7,7 +7,6 @@ import {
     ELEMENT_EXTENDED_SIZES,
     ELEMENT_EXTENDED_VARIANTS,
     ELEMENT_SPACINGS,
-    ELEMENT_TYPES,
     FEEDBACK_VARIANTS
 } from "../data/constant";
 
@@ -17,8 +16,6 @@ export type ElementSpacing = typeof ELEMENT_SPACINGS[number];
 export type ElementBaseVariant = typeof ELEMENT_BASE_VARIANTS[number];
 export type ElementExtendedVariant = typeof ELEMENT_EXTENDED_VARIANTS[number];
 export type ElementDirection = typeof ELEMENT_DIRECTIONS[number];
-
-export type ElementType = typeof ELEMENT_TYPES[number];
 
 export interface ElementStates {
     isDisabled?: boolean;
@@ -41,14 +38,14 @@ export type PolymorphicRef<T extends React.ElementType> =
     React.ComponentPropsWithRef<T>["ref"];
 
 export type PolymorphicElementPropsWithoutRef<
-    T extends ElementType,
+    T extends React.ElementType,
     Props = {}
 > = AsProp<T> &
     Props &
     React.ComponentPropsWithoutRef<T>;
 
 export type PolymorphicElementPropsWithRef<
-    T extends ElementType,
+    T extends React.ElementType,
     Props = {}
 > = PolymorphicElementPropsWithoutRef<T, Props> & {
     ref?: PolymorphicRef<T>;
