@@ -42,9 +42,7 @@ type DropdownItemsProps<T extends DropdownFlatItem | DropdownGroupItem> =
     DropdownItemList<T> &
     Partial<Pick<DropdownProps, 'isOpen' | 'setIsOpen'>>;
 
-const EMPTY_MESSAGE = '선택 가능한 데이터가 없습니다.';
-
-const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEvent = 'click', triggerItem, emptyMessage = EMPTY_MESSAGE, ...props }: DropdownProps) => {
+const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEvent = 'click', triggerItem, emptyMessage, ...props }: DropdownProps) => {
     const { isDisabled = false, isLoading = false, isOpen, setIsOpen, ...restProps } = props;
 
     const [maxHeight, setMaxHeight] = useState<number>(0);
@@ -114,7 +112,7 @@ const Dropdown = ({ children, size = 'md', position = 'bottom-center', triggerEv
             <div className={`dropdown-items-container ${isOpen ?
                 'open' :
                 ''} to-${position}`}>
-                <div className={`dropdown-items-inner ${Children.count(children) > 1 ?
+                <div className={`dropdown-items-inner ${(Children.count(children) > 1) ?
                     'flex' :
                     ''} ${isLoading ?
                         '' :
@@ -165,8 +163,8 @@ const FlatItems = ({ selectingInput, isOpen, items, setIsOpen, setItems }: Dropd
                                 prevFlatItems.map((prevFlatItem) => ({
                                     ...prevFlatItem,
                                     isSelected: (selectingInput === 'text') ?
-                                        prevFlatItem.id === flatItem.id :
-                                        prevFlatItem.id === flatItem.id ?
+                                        (prevFlatItem.id === flatItem.id) :
+                                        (prevFlatItem.id === flatItem.id) ?
                                             !prevFlatItem.isSelected :
                                             prevFlatItem.isSelected
                                 }))
@@ -248,7 +246,7 @@ const GroupItems = ({ isOpen, items, setIsOpen, setItems }: DropdownItemsProps<D
                                         ...prevGroupItem,
                                         items: prevGroupItem.items.map((prevItem) => ({
                                             ...prevItem,
-                                            isSelected: prevGroupItem.id !== groupItem.id ?
+                                            isSelected: (prevGroupItem.id !== groupItem.id) ?
                                                 prevItem.isSelected :
                                                 !prevGroupItem.items.reduce((acc, prevItem) =>
                                                     acc && (prevItem.isSelected ?? false), true)
@@ -276,10 +274,10 @@ const GroupItems = ({ isOpen, items, setIsOpen, setItems }: DropdownItemsProps<D
                                             items: prevGroupItem.items.map((prevItem) => ({
                                                 ...prevItem,
                                                 isSelected: (groupItem.selectingInput === 'text') ?
-                                                    (prevGroupItem.id === groupItem.id ?
+                                                    ((prevGroupItem.id === groupItem.id) ?
                                                         prevItem.id === item.id :
                                                         prevItem.isSelected) :
-                                                    (prevItem.id === item.id ?
+                                                    ((prevItem.id === item.id) ?
                                                         !prevItem.isSelected :
                                                         prevItem.isSelected)
                                             }))
