@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Linkable: Story = {
     args: {
-        content: 'Heading 1',
+        children: 'Heading 1',
         href: {
             to: '/#',
             replace: false,
@@ -26,41 +26,41 @@ export const Linkable: Story = {
 
 export const Heading1: Story = {
     args: {
-        content: 'Heading 1',
+        children: 'Heading 1',
     },
 };
 
 export const Heading2: Story = {
     args: {
         as: 'h2',
-        content: 'Heading 2',
+        children: 'Heading 2',
     },
 };
 
 export const Heading3: Story = {
     args: {
         as: 'h3',
-        content: 'Heading 3',
+        children: 'Heading 3',
     },
 };
 
 export const Heading4: Story = {
     args: {
         as: 'h4',
-        content: 'Heading 4',
+        children: 'Heading 4',
     },
 };
 
 export const Heading5: Story = {
     args: {
         as: 'h5',
-        content: 'Heading 5',
+        children: 'Heading 5',
     },
 };
 
 export const Heading6: Story = {
     args: {
         as: 'h6',
-        content: 'Heading 6',
+        children: 'Heading 6',
     },
 };
