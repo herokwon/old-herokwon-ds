@@ -17,7 +17,7 @@ interface SplitButtonProps extends Omit<ButtonProps, 'spacing' | 'href'> {
 };
 
 const SplitButton = forwardRef<HTMLButtonElement, SplitButtonProps>(function SplitButton({ defaultLabel, variant = 'default', size = 'md', spacing = 'default', items, setItems, ...props }, ref) {
-    const { isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
+    const { stopPropagation = false, preventDefault = false, isDisabled = false, isSelected = false, isLoading = false, ...restProps } = props;
 
     const [isOpen, setIsOpen] = useState<boolean>(isSelected);
     const selectedItem = useMemo(() =>
@@ -32,8 +32,8 @@ const SplitButton = forwardRef<HTMLButtonElement, SplitButtonProps>(function Spl
                 <div className="h-full flex" onClick={(e) => e.stopPropagation()}>
                     <TextButton
                         {...restProps}
-                        ref={ref}
                         label={selectedItem?.heading ?? defaultLabel ?? ''}
+                        ref={ref}
                         variant={variant}
                         size={size}
                         spacing={spacing}
