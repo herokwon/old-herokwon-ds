@@ -1,23 +1,46 @@
-@import "./src/styles/base.css";
-
-@import "./src/styles/ui/button.css";
-@import "./src/styles/ui/dropdown.css";
-@import "./src/styles/ui/feedback.css";
+@import './src/styles/ui/button.css';
+@import './src/styles/ui/dropdown.css';
+@import './src/styles/ui/feedback.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+@keyframes modal-open {
+  from {
+    transform: translateY(0.25rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modal-close {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(0.25rem);
+    opacity: 0;
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @layer components {
   .disabled {
-    @apply !cursor-not-allowed *:!pointer-events-none !opacity-off;
+    @apply !cursor-not-allowed !opacity-off *:!pointer-events-none;
   }
 
   .linkable {
-    @apply hover:text-light-blue dark:hover:text-dark-blue hover:underline underline-offset-2 cursor-pointer;
+    @apply cursor-pointer underline-offset-2 hover:text-light-blue hover:underline dark:hover:text-dark-blue;
   }
 }
 

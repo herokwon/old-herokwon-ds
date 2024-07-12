@@ -3,10 +3,10 @@
 }
 
 .dropdown-items-container {
-  @apply w-max max-w-[80vw] p-2 transition-all absolute z-10;
+  @apply absolute z-10 w-max max-w-[80vw] p-2 transition-all;
 
   &:not(.open) {
-    @apply opacity-0 pointer-events-none;
+    @apply pointer-events-none opacity-0;
   }
 
   &:not(.tooltip) & {
@@ -14,7 +14,7 @@
   }
 
   &:is(.to-top-left, .to-top-center, .to-top-right) {
-    @apply px-0 bottom-full;
+    @apply bottom-full px-0;
 
     &:not(.open) {
       @apply -translate-y-[0.125rem];
@@ -22,7 +22,7 @@
   }
 
   &:is(.to-bottom-left, .to-bottom-center, .to-bottom-right) {
-    @apply px-0 top-full;
+    @apply top-full px-0;
 
     &:not(.open) {
       @apply translate-y-[0.125rem];
@@ -30,7 +30,7 @@
   }
 
   &:is(.to-left-top, .to-left-middle, .to-left-bottom) {
-    @apply py-0 right-full;
+    @apply right-full py-0;
 
     &:not(.open) {
       @apply -translate-x-[0.125rem];
@@ -38,7 +38,7 @@
   }
 
   &:is(.to-right-top, .to-right-middle, .to-right-bottom) {
-    @apply py-0 left-full;
+    @apply left-full py-0;
 
     &:not(.open) {
       @apply translate-x-[0.125rem];
@@ -72,10 +72,10 @@
   }
 
   & .dropdown-items-inner {
-    @apply p-2 rounded-ms border border-light-tertiary dark:border-dark-tertiary bg-light-primary dark:bg-dark-secondary shadow-primary-light dark:shadow-primary-dark overflow-y-auto relative;
+    @apply relative overflow-y-auto rounded-ms border border-light-tertiary bg-light-primary p-2 shadow-primary-light dark:border-dark-tertiary dark:bg-dark-secondary dark:shadow-primary-dark;
 
     & .dropdown-items-label {
-      @apply mx-2 py-2 flex justify-between items-center border-b border-light-tertiary dark:border-dark-tertiary;
+      @apply mx-2 flex items-center justify-between border-b border-light-tertiary py-2 dark:border-dark-tertiary;
 
       & p {
         @apply text-sm font-bold opacity-normal;
@@ -83,7 +83,7 @@
     }
 
     & .dropdown-items-list--flat {
-      @apply w-full flex flex-col gap-y-1 overflow-y-auto;
+      @apply flex w-full flex-col gap-y-1 overflow-y-auto;
 
       & {
         -ms-overflow-style: none;
@@ -94,7 +94,7 @@
     }
 
     & .dropdown-items-list--group {
-      @apply w-full p-2 flex flex-col gap-y-1 overflow-y-auto;
+      @apply flex w-full flex-col gap-y-1 overflow-y-auto p-2;
 
       & {
         -ms-overflow-style: none;
@@ -105,15 +105,15 @@
     }
 
     & .dropdown-item {
-      @apply w-full px-2 py-1 rounded-ms transition-colors;
+      @apply w-full rounded-ms px-2 py-1 transition-colors;
 
       &:not(.disabled) {
-        @apply hover:bg-light-secondary dark:hover:bg-dark-tertiary cursor-pointer;
+        @apply cursor-pointer hover:bg-light-secondary dark:hover:bg-dark-tertiary;
 
         &.selected {
           &[data-input="text"],
           &[data-input="multi-text"] {
-            @apply !text-dark bg-light-blue dark:bg-dark-blue;
+            @apply bg-light-blue !text-dark dark:bg-dark-blue;
           }
 
           &[data-input="radio"],
@@ -125,11 +125,11 @@
     }
 
     & .dropdown-item-heading {
-      @apply w-full text-sm font-semibold whitespace-pre;
+      @apply w-full whitespace-pre text-sm font-semibold;
     }
 
     & .dropdown-item-description {
-      @apply w-full text-xs whitespace-pre opacity-off;
+      @apply w-full whitespace-pre text-xs opacity-off;
     }
   }
 }
