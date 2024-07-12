@@ -3,6 +3,9 @@ import "./index.css";
 // configs
 export { default as tailwindExtendConfig } from "./src/configs";
 
+// common components
+export { default as LoadableElement } from "./src/components/LoadableElement";
+
 // form components
 export { default as Checkbox } from "./src/components/form/Checkbox";
 export { default as DatePicker } from "./src/components/form/DatePicker";
@@ -31,6 +34,7 @@ export { default as PageHeader } from "./src/components/ui/PageHeader";
 export { default as PageIndicator } from "./src/components/ui/PageIndicator";
 export { default as Pagination } from "./src/components/ui/Pagination";
 export { default as SectionMessage } from "./src/components/ui/SectionMessage";
+export { default as Spinner } from "./src/components/ui/Spinner";
 export { default as SplitButton } from "./src/components/ui/SplitButton";
 export { default as Tabs } from "./src/components/ui/Tabs";
 export { default as Tag } from "./src/components/ui/Tag";

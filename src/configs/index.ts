@@ -17,6 +17,9 @@ const customColor: { [key: string]: string } = {
 const tailwindExtendConfig = {
     width: customWidth,
     height: customHeight,
+    colors: {
+        ...customColor,
+    },
     textColor: {
         ...customTextColor,
         ...customColor,
