@@ -1,72 +1,71 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
-import RadioGroup from "./RadioGroup";
+import RadioGroup from './RadioGroup';
 
 const meta = {
-    title: 'Components/RadioGroup',
-    tags: ['autodocs'],
-    component: RadioGroup,
-    args: {
+  title: 'Components/RadioGroup',
+  tags: ['autodocs'],
+  component: RadioGroup,
+  args: {
+    isDisabled: false,
+    direction: 'vertical',
+    size: 'md',
+    items: Array.from({ length: 3 }, (_, i) => ({
+      isDisabled: false,
+      isSelected: i === 0,
+      id: crypto.randomUUID(),
+      heading: `Radio Item ${i + 1}`,
+      description:
+        i < 1 ? `This is a description for Radio Item ${i + 1}` : undefined,
+      subGroupItem: {
         isDisabled: false,
         direction: 'vertical',
         size: 'md',
-        items: Array.from({ length: 3 }, (_, i) => ({
-            isDisabled: false,
-            isSelected: i === 0,
-            id: crypto.randomUUID(),
-            heading: `Radio Item ${i + 1}`,
-            description: i < 1 ?
-                `This is a description for Radio Item ${i + 1}` :
-                undefined,
-            subGroupItem: {
-                isDisabled: false,
-                direction: 'vertical',
-                size: 'md',
-                items: Array.from({ length: 2 }, (_, j) => ({
-                    isDisabled: false,
-                    isSelected: false,
-                    id: crypto.randomUUID(),
-                    heading: `Radio SubItem ${j + 1}`,
-                })),
-            },
+        items: Array.from({ length: 2 }, (_, j) => ({
+          isDisabled: false,
+          isSelected: false,
+          id: crypto.randomUUID(),
+          heading: `Radio SubItem ${j + 1}`,
         })),
-    },
+      },
+    })),
+  },
 } satisfies Meta<typeof RadioGroup>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Vertical: Story = {
-    args: {
-        direction: 'vertical',
-    },
+  args: {
+    direction: 'vertical',
+  },
 };
 
 export const Horizontal: Story = {
-    args: {
-        direction: 'horizontal',
-    },
+  args: {
+    direction: 'horizontal',
+  },
 };
 
 export const ErrorMessage: Story = {
-    args: {
-        groupErrorMessage: 'Error!',
-        items: meta.args.items.map((dummyItem) => ({
-            ...dummyItem,
-            isSelected: false,
-            subGroupItem: undefined,
-        })),
-    },
+  args: {
+    groupErrorMessage: 'Error!',
+    items: meta.args.items.map(dummyItem => ({
+      ...dummyItem,
+      isSelected: false,
+      subGroupItem: undefined,
+    })),
+  },
 };
 
 export const SubGroupItemErrorMessage: Story = {
-    args: {
-        items: meta.args.items.map((dummyItem) => ({
-            ...dummyItem,
-            subGroupItem: {
-                ...dummyItem.subGroupItem,
-                groupErrorMessage: 'Error!',
-            },
-        })),
-    },
+  args: {
+    items: meta.args.items.map(dummyItem => ({
+      ...dummyItem,
+      subGroupItem: {
+        ...dummyItem.subGroupItem,
+        groupErrorMessage: 'Error!',
+      },
+    })),
+  },
 };

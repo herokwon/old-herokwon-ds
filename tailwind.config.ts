@@ -1,10 +1,9 @@
-import type { Config } from "tailwindcss/types/config";
-import tailwindExtendConfig from "./src/configs";
+import type { Config } from 'tailwindcss/types/config';
+
+import tailwindExtendConfig from './src/configs';
 
 const config: Config = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   darkMode: 'class',
   theme: {
     extend: tailwindExtendConfig,

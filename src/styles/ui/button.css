@@ -6,7 +6,7 @@
     .button-danger
   ) {
   &:not(.hoverable):is(.removable) {
-    @apply text-light-red dark:text-dark-red hover:underline underline-offset-2 decoration-light-red dark:decoration-dark-red;
+    @apply text-light-red decoration-light-red underline-offset-2 hover:underline dark:text-dark-red dark:decoration-dark-red;
   }
 }
 
@@ -18,7 +18,7 @@
     .button-danger--no-spacing
   ) {
   &:not(:disabled) {
-    @apply hover:underline underline-offset-2;
+    @apply underline-offset-2 hover:underline;
 
     &.selected {
       @apply underline;
@@ -26,34 +26,34 @@
   }
 
   &:not(.hoverable):is(.linkable) {
-    @apply hover:text-light-blue dark:hover:text-dark-blue hover:underline underline-offset-2 decoration-light-blue dark:decoration-dark-blue;
+    @apply decoration-light-blue underline-offset-2 hover:text-light-blue hover:underline dark:decoration-dark-blue dark:hover:text-dark-blue;
   }
 
   &:not(.hoverable):is(.removable) {
-    @apply text-light-red dark:text-dark-red hover:underline underline-offset-2 decoration-light-red dark:decoration-dark-red;
+    @apply text-light-red decoration-light-red underline-offset-2 hover:underline dark:text-dark-red dark:decoration-dark-red;
   }
 
   &:is(.button-primary--no-spacing) {
-    @apply hover:text-light-blue dark:hover:text-dark-blue decoration-light-blue dark:decoration-dark-blue;
+    @apply decoration-light-blue hover:text-light-blue dark:decoration-dark-blue dark:hover:text-dark-blue;
 
     &.selected {
-      @apply text-light-blue dark:text-dark-blue decoration-light-blue dark:decoration-dark-blue;
+      @apply text-light-blue decoration-light-blue dark:text-dark-blue dark:decoration-dark-blue;
     }
   }
 
   &:is(.button-warning--no-spacing) {
-    @apply hover:text-light-yellow dark:hover:text-dark-yellow decoration-light-yellow dark:decoration-dark-yellow;
+    @apply decoration-light-yellow hover:text-light-yellow dark:decoration-dark-yellow dark:hover:text-dark-yellow;
 
     &.selected {
-      @apply text-light-yellow dark:text-dark-yellow decoration-light-yellow dark:decoration-dark-yellow;
+      @apply text-light-yellow decoration-light-yellow dark:text-dark-yellow dark:decoration-dark-yellow;
     }
   }
 
   &:is(.button-danger--no-spacing) {
-    @apply hover:text-light-red dark:hover:text-dark-red decoration-light-red dark:decoration-dark-red;
+    @apply decoration-light-red hover:text-light-red dark:decoration-dark-red dark:hover:text-dark-red;
 
     &.selected {
-      @apply text-light-red dark:text-dark-red decoration-light-red dark:decoration-dark-red;
+      @apply text-light-red decoration-light-red dark:text-dark-red dark:decoration-dark-red;
     }
   }
 }
@@ -71,7 +71,7 @@
 }
 
 .button-primary {
-  @apply !text-dark bg-light-blue dark:bg-dark-blue;
+  @apply bg-light-blue !text-dark dark:bg-dark-blue;
 
   &:not(:disabled):is(.hoverable) {
     @apply bg-light-blue hover:bg-dark-blue dark:bg-dark-blue dark:hover:bg-light-blue;
@@ -95,7 +95,7 @@
 }
 
 .button-warning {
-  @apply !text-light bg-light-yellow dark:bg-dark-yellow;
+  @apply bg-light-yellow !text-light dark:bg-dark-yellow;
 
   &:not(:disabled):is(.hoverable) {
     @apply bg-light-yellow hover:bg-dark-yellow dark:bg-dark-yellow dark:hover:bg-light-yellow;
@@ -107,7 +107,7 @@
 }
 
 .button-danger {
-  @apply !text-dark bg-light-red dark:bg-dark-red;
+  @apply bg-light-red !text-dark dark:bg-dark-red;
 
   &:not(:disabled):is(.hoverable) {
     @apply bg-light-red hover:bg-dark-red dark:bg-dark-red dark:hover:bg-light-red;
