@@ -44,10 +44,6 @@ const config = [
             find: '@public',
             replacement: path.resolve(__dirname, 'public'),
           },
-          {
-            find: '@',
-            replacement: path.resolve(__dirname, 'src'),
-          },
         ],
       }),
       babel({
@@ -87,7 +83,7 @@ const config = [
       terser(),
       typescript({
         tsconfig: './tsconfig.json',
-        outputToFilesystem: true,
+        outputToFilesystem: false,
         compilerOptions: {
           declaration: true,
           declarationDir: 'dist',
