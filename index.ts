@@ -1,9 +1,10 @@
 import './index.css';
 
 // configs
-export { default as tailwindExtendConfig } from './src/configs';
+export * from './src/configs';
 
 // common components
+export { default as LinkableElement } from './src/components/LinkableElement';
 export { default as LoadableElement } from './src/components/LoadableElement';
 
 // form components

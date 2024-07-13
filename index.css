@@ -43,6 +43,3 @@
     @apply cursor-pointer underline-offset-2 hover:text-light-blue hover:underline dark:hover:text-dark-blue;
   }
 }
-
-@layer utilities {
-}
