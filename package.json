@@ -1,6 +1,6 @@
 {
   "name": "herokwon-ds",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "private": false,
   "author": {
     "name": "HeroKwon",
@@ -41,6 +41,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "rollup -c",
+    "build-publish": "rollup -c && npm publish --access=public",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
@@ -83,6 +84,8 @@
     "postcss": "^8",
     "postcss-import": "^16.1.0",
     "postcss-nesting": "^12.1.5",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^8.2.1",

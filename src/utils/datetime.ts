@@ -1,48 +1,57 @@
-import type { DateItem, Months } from "../types";
-import { MONTHS } from "../data/constant";
+import type { DateItem, Months } from '../types';
+import { MONTHS } from '../data/constant';
 
 export const getDateHandler = {
-    headInMonth: (dayOfTheWeek: number): number =>
-        (7 - dayOfTheWeek) % 7 + 1,
-    tailInMonth: (dayOfTheWeek: number): number =>
-        7 * Math.floor((7 - dayOfTheWeek) / 7) + dayOfTheWeek,
-    month: (year: number, month: Months): 28 | 29 | 30 | 31 => {
-        switch (true) {
-            case (month < 8 && month !== 2):
-                return month % 2 === 0 ?
-                    30 :
-                    31;
-            case month >= 8:
-                return month % 2 === 0 ?
-                    31 :
-                    30;
-            default:
-                return year % 4 === 0 ?
-                    29 :
-                    28;
-        }
-    },
+  headInMonth: (dayOfTheWeek: number): number => ((7 - dayOfTheWeek) % 7) + 1,
+  tailInMonth: (dayOfTheWeek: number): number =>
+    7 * Math.floor((7 - dayOfTheWeek) / 7) + dayOfTheWeek,
+  month: (year: number, month: Months): 28 | 29 | 30 | 31 => {
+    switch (true) {
+      case month < 8 && month !== 2:
+        return month % 2 === 0 ? 30 : 31;
+      case month >= 8:
+        return month % 2 === 0 ? 31 : 30;
+      default:
+        return year % 4 === 0 ? 29 : 28;
+    }
+  },
 };
 
 export const getDayHandler = {
-    firstDateInMonth: (year: number, month: Months) =>
-        new Date(`${year}-${month.toString().padStart(2, '0')}-01`).getDay(),
-    lastDateInMonth: (year: number, month: Months, totalDatesOfMonth: ReturnType<typeof getDateHandler.month>) =>
-        new Date(`${year}-${month.toString().padStart(2, '0')}-${totalDatesOfMonth}`).getDay(),
+  firstDateInMonth: (year: number, month: Months) =>
+    new Date(`${year}-${month.toString().padStart(2, '0')}-01`).getDay(),
+  lastDateInMonth: (
+    year: number,
+    month: Months,
+    totalDatesOfMonth: ReturnType<typeof getDateHandler.month>,
+  ) =>
+    new Date(
+      `${year}-${month.toString().padStart(2, '0')}-${totalDatesOfMonth}`,
+    ).getDay(),
 };
 
 export const getDateItem = (date: Date): DateItem => ({
-    year: date.getFullYear(),
-    month: MONTHS[date.getMonth()],
-    date: date.getDate(),
+  year: date.getFullYear(),
+  month: MONTHS[date.getMonth()],
+  date: date.getDate(),
 });
 
-export const getTheNumberOfWeeksInMonth = (year: number, month: Months): number => {
-    const totalDatesOfMonth = getDateHandler.month(year, month);
-    const firstDayOfTheWeek = getDayHandler.firstDateInMonth(year, month);
-    const lastDayOfTheWeek = getDayHandler.lastDateInMonth(year, month, totalDatesOfMonth);
+export const getTheNumberOfWeeksInMonth = (
+  year: number,
+  month: Months,
+): number => {
+  const totalDatesOfMonth = getDateHandler.month(year, month);
+  const firstDayOfTheWeek = getDayHandler.firstDateInMonth(year, month);
+  const lastDayOfTheWeek = getDayHandler.lastDateInMonth(
+    year,
+    month,
+    totalDatesOfMonth,
+  );
 
-    return (totalDatesOfMonth - (7 - firstDayOfTheWeek) - (lastDayOfTheWeek + 1)) / 7 + 2;
+  return (
+    (totalDatesOfMonth - (7 - firstDayOfTheWeek) - (lastDayOfTheWeek + 1)) / 7 +
+    2
+  );
 };
 
 // export const getWeekNumberInMonth = (item: Date | DateItem): DateItem['week'] => {

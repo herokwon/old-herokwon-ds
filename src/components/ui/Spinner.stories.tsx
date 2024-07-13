@@ -1,16 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Breadcrumbs from './Breadcrumbs';
+import Spinner from './Spinner';
 
 const meta = {
-  title: 'Components/Breadcrumbs',
+  title: 'Components/Spinner',
   tags: ['autodocs'],
-  component: Breadcrumbs,
+  component: Spinner,
   args: {
-    path: 'components/ui/breadcrumb',
     size: 'md',
   },
-} satisfies Meta<typeof Breadcrumbs>;
+} satisfies Meta<typeof Spinner>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
