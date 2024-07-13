@@ -14,7 +14,7 @@ const customColor: { [key: string]: string } = {
   'dark-yellow': '#EAB308',
 };
 
-const tailwindExtendConfig = {
+export const tailwindExtendTheme = {
   width: customWidth,
   height: customHeight,
   colors: {
@@ -46,4 +46,4 @@ const tailwindExtendConfig = {
   opacity: customOpacity,
 };
 
-export default tailwindExtendConfig;
+export { default as tailwindCustomPlugin } from './plugin';

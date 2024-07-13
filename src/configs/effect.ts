@@ -4,9 +4,6 @@ export const customBoxShadow: { [key: string]: string } = {
 };
 
 export const customOpacity: { [key: string]: string } = {
-  ...Object.fromEntries([
-    ...Array.from({ length: 101 }, (_, i) => [i, i * 0.01]),
-  ]),
   bold: '0.87',
   normal: '0.6',
   off: '0.38',
