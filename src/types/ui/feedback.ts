@@ -1,9 +1,16 @@
-import type { ContentWithId, EventHandler } from '..';
+import type { ContentWithId } from '..';
+import { FEEDBACK_VARIANTS } from '../../data/constant';
 import TextButton from '../../components/ui/TextButton';
 
-export type FeedbackAction = EventHandler<'click'> &
-  Pick<ContentWithId, 'id' | 'isDisabled'> &
+export type FeedbackVariant = (typeof FEEDBACK_VARIANTS)[number];
+export type FeedbackAction = Pick<ContentWithId, 'id'> &
   Pick<
     React.ComponentPropsWithoutRef<typeof TextButton>,
-    'label' | 'variant' | 'href' | 'iconBefore' | 'iconAfter'
+    | 'isDisabled'
+    | 'label'
+    | 'variant'
+    | 'href'
+    | 'iconBefore'
+    | 'iconAfter'
+    | 'onClick'
   >;
