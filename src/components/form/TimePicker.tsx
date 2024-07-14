@@ -7,7 +7,7 @@ import DatetimeField from './DatetimeField';
 
 interface TimePickerProps
   extends Omit<
-    React.ComponentPropsWithoutRef<typeof Dropdown>,
+    React.ComponentPropsWithoutRef<typeof Dropdown.Wrapper>,
     'children' | 'isOpen' | 'setIsOpen'
   > {
   min?: TimeItem;
@@ -82,7 +82,7 @@ export default function TimePicker({
   }, [selectedHourItem, selectedMinuteItem]);
 
   return (
-    <Dropdown
+    <Dropdown.Wrapper
       {...restProps}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
@@ -98,16 +98,18 @@ export default function TimePicker({
         />
       }
     >
-      <Dropdown.FlatItems
-        selectingInput="text"
-        items={hourItems}
-        setItems={setHourItems}
-      />
-      <Dropdown.FlatItems
-        selectingInput="text"
-        items={minuteItems}
-        setItems={setMinuteItems}
-      />
-    </Dropdown>
+      <Dropdown.Container>
+        <Dropdown.FlatItems
+          selectingInput="text"
+          items={hourItems}
+          setItems={setHourItems}
+        />
+        <Dropdown.FlatItems
+          selectingInput="text"
+          items={minuteItems}
+          setItems={setMinuteItems}
+        />
+      </Dropdown.Container>
+    </Dropdown.Wrapper>
   );
 }

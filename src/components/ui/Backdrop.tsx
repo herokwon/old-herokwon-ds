@@ -1,13 +1,11 @@
 interface BackdropProps extends React.ComponentPropsWithoutRef<'section'> {
   isActive: boolean;
   triggerItem?: React.ReactNode;
-  onClickBackdrop?: React.MouseEventHandler<HTMLElement>;
 }
 
 export default function Backdrop({
   children,
   triggerItem,
-  onClickBackdrop,
   ...props
 }: BackdropProps) {
   const { isActive, ...restProps } = props;

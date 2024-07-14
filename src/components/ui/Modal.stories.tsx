@@ -9,6 +9,9 @@ const meta = {
   title: 'Components/Modal',
   tags: ['autodocs'],
   component: Modal.Container,
+  args: {
+    id: crypto.randomUUID(),
+  },
 } satisfies Meta<typeof Modal.Container>;
 export default meta;
 
@@ -43,8 +46,5 @@ const ModalRender = ({
 };
 
 export const Default: Story = {
-  args: {
-    id: crypto.randomUUID(),
-  },
   render: ({ ...props }) => <ModalRender {...props} />,
 };
