@@ -4,12 +4,17 @@ import type { Meta, StoryObj } from '@storybook/react';
 import type { DropdownFlatItem, DropdownGroupItem } from '../../types';
 import Dropdown from './Dropdown';
 
+type DropdownRenderProps = Omit<
+  React.ComponentProps<typeof Dropdown.Wrapper>,
+  'children' | 'setIsOpen'
+> &
+  Pick<DropdownGroupItem, 'selectingInput'>;
+
 const meta = {
   title: 'Components/Dropdown',
   tags: ['autodocs'],
-  component: Dropdown,
+  component: Dropdown.Wrapper,
   args: {
-    children: [],
     size: 'md',
     position: 'bottom-center',
     triggerEvent: 'click',
@@ -17,17 +22,13 @@ const meta = {
     isLoading: false,
     isOpen: false,
   },
-} satisfies Meta<typeof Dropdown>;
+} satisfies Meta<typeof Dropdown.Wrapper>;
 export default meta;
 
-type Story = StoryObj<typeof Dropdown>;
+type Story = StoryObj<typeof Dropdown.Wrapper>;
 
 const DropdownRender = {
-  empty: ({
-    selectingInput,
-    ...props
-  }: Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'setIsOpen'> &
-    Pick<DropdownGroupItem, 'selectingInput'>) => {
+  empty: ({ selectingInput, ...props }: DropdownRenderProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
     const [items, setItems] = useState<DropdownFlatItem[]>([]);
 
@@ -36,20 +37,18 @@ const DropdownRender = {
     }, [props.isOpen]);
 
     return (
-      <Dropdown {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Dropdown.FlatItems
-          selectingInput={selectingInput}
-          items={items}
-          setItems={setItems}
-        />
-      </Dropdown>
+      <Dropdown.Wrapper {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Dropdown.Container>
+          <Dropdown.FlatItems
+            selectingInput={selectingInput}
+            items={items}
+            setItems={setItems}
+          />
+        </Dropdown.Container>
+      </Dropdown.Wrapper>
     );
   },
-  flatItems: ({
-    selectingInput,
-    ...props
-  }: Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'setIsOpen'> &
-    Pick<DropdownGroupItem, 'selectingInput'>) => {
+  flatItems: ({ selectingInput, ...props }: DropdownRenderProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
     const [items, setItems] = useState<DropdownFlatItem[]>([
       ...Array.from({ length: 10 }, (_, i) => ({
@@ -65,20 +64,18 @@ const DropdownRender = {
     }, [props.isOpen]);
 
     return (
-      <Dropdown {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Dropdown.FlatItems
-          selectingInput={selectingInput}
-          items={items}
-          setItems={setItems}
-        />
-      </Dropdown>
+      <Dropdown.Wrapper {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Dropdown.Container>
+          <Dropdown.FlatItems
+            selectingInput={selectingInput}
+            items={items}
+            setItems={setItems}
+          />
+        </Dropdown.Container>
+      </Dropdown.Wrapper>
     );
   },
-  groupItems: ({
-    selectingInput,
-    ...props
-  }: Omit<React.ComponentProps<typeof Dropdown>, 'children' | 'setIsOpen'> &
-    Pick<DropdownGroupItem, 'selectingInput'>) => {
+  groupItems: ({ selectingInput, ...props }: DropdownRenderProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
     const [items, setItems] = useState<DropdownGroupItem[]>([
       ...Array.from({ length: 5 }, (_, i) => ({
@@ -103,9 +100,11 @@ const DropdownRender = {
     }, [props.isOpen]);
 
     return (
-      <Dropdown {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Dropdown.GroupItems items={items} setItems={setItems} />
-      </Dropdown>
+      <Dropdown.Wrapper {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Dropdown.Container>
+          <Dropdown.GroupItems items={items} setItems={setItems} />
+        </Dropdown.Container>
+      </Dropdown.Wrapper>
     );
   },
 };

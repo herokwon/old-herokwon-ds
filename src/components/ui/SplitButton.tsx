@@ -72,7 +72,7 @@ export default function SplitButton({
                 ? 'disabled'
                 : variant === 'primary'
                   ? 'bg-dark-blue dark:bg-light-blue'
-                  : 'bg-light-tertiary dark:bg-dark-secondary'
+                  : 'bg-light-tertiary dark:bg-dark-tertiary'
             } transition-all`}
           />
           <IconButton
@@ -90,11 +90,13 @@ export default function SplitButton({
         </div>
       }
     >
-      <Dropdown.FlatItems
-        selectingInput="text"
-        items={items}
-        setItems={setItems}
-      />
+      <Dropdown.Container>
+        <Dropdown.FlatItems
+          selectingInput="text"
+          items={items}
+          setItems={setItems}
+        />
+      </Dropdown.Container>
     </Dropdown.Wrapper>
   );
 }

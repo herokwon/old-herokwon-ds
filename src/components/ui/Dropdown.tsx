@@ -22,15 +22,18 @@ import Checkbox from '../form/Checkbox';
 import Radio from '../form/Radio';
 import Empty from './Empty';
 
-type DropdownChildren = React.ReactElement<{
-  isOpen?: boolean;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-}>;
+type DropdownContainerChildren = React.ReactElement<
+  Partial<Pick<DropdownWrapperProps, 'isOpen' | 'setIsOpen'>>
+>;
 
-interface DropdownProps
+interface DropdownWrapperProps
   extends Omit<ElementStates, 'isSelected'>,
     React.ComponentPropsWithoutRef<'div'> {
-  children: DropdownChildren | DropdownChildren[];
+  children: React.ReactElement<
+    Partial<Pick<DropdownWrapperProps, 'isOpen' | 'setIsOpen' | 'position'>> & {
+      maxHeight?: number;
+    }
+  >;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   size?: ElementBaseSize;
@@ -40,10 +43,19 @@ interface DropdownProps
   emptyMessage?: string;
 }
 
-type DropdownItemsProps<T extends DropdownFlatItem | DropdownGroupItem> =
-  DropdownItemList<T> & Partial<Pick<DropdownProps, 'isOpen' | 'setIsOpen'>>;
+type DropdownContainerProps = Partial<
+  Pick<DropdownWrapperProps, 'isOpen' | 'setIsOpen' | 'position'>
+> &
+  React.ComponentPropsWithoutRef<'div'> & {
+    children: DropdownContainerChildren | DropdownContainerChildren[];
+    maxHeight?: number;
+  };
 
-const Dropdown = ({
+type DropdownItemsProps<T extends DropdownFlatItem | DropdownGroupItem> =
+  DropdownItemList<T> &
+    Partial<Pick<DropdownWrapperProps, 'isOpen' | 'setIsOpen'>>;
+
+const DropdownWrapper = ({
   children,
   size = 'md',
   position = 'bottom-center',
@@ -51,7 +63,7 @@ const Dropdown = ({
   triggerItem,
   emptyMessage,
   ...props
-}: DropdownProps) => {
+}: DropdownWrapperProps) => {
   const {
     isDisabled = false,
     isLoading = false,
@@ -129,33 +141,55 @@ const Dropdown = ({
           />
         )}
       </div>
+      {Children.map(children, child => {
+        if (!isValidElement(child)) return child;
+        return cloneElement(child as React.ReactElement, {
+          isOpen: isOpen,
+          setIsOpen,
+          position,
+          maxHeight,
+        });
+      })}
+    </div>
+  );
+};
+
+const DropdownContainer = ({
+  children,
+  position = 'bottom-center',
+  maxHeight = 0,
+  isOpen,
+  setIsOpen,
+  ...props
+}: DropdownContainerProps) => {
+  return (
+    <div
+      {...props}
+      className={`dropdown-items-container ${
+        isOpen ? 'open' : ''
+      } to-${position} ${props.className ?? ''}`}
+    >
       <div
-        className={`dropdown-items-container ${
-          isOpen ? 'open' : ''
-        } to-${position}`}
+        className={`dropdown-items-inner ${
+          Children.count(children) > 1 ? 'flex' : ''
+        }`}
+        style={{
+          maxHeight: `${maxHeight}px`,
+        }}
       >
-        <div
-          className={`dropdown-items-inner ${
-            Children.count(children) > 1 ? 'flex' : ''
-          } ${isLoading ? '' : ''}`}
-          style={{
-            maxHeight: `${maxHeight}px`,
-          }}
-        >
-          {Children.map(children, child => {
-            if (!isValidElement(child)) return child;
-            return cloneElement(child as React.ReactElement, {
-              isOpen: isOpen,
-              setIsOpen,
-            });
-          })}
-        </div>
+        {Children.map(children, child => {
+          if (!isValidElement(child)) return child;
+          return cloneElement(child as React.ReactElement, {
+            isOpen: isOpen,
+            setIsOpen,
+          });
+        })}
       </div>
     </div>
   );
 };
 
-const FlatItems = ({
+const DropdownFlatItems = ({
   selectingInput,
   isOpen,
   items,
@@ -255,7 +289,7 @@ const FlatItems = ({
   );
 };
 
-const GroupItems = ({
+const DropdownGroupItems = ({
   isOpen,
   items,
   setIsOpen,
@@ -400,7 +434,11 @@ const GroupItems = ({
   );
 };
 
-Dropdown.FlatItems = FlatItems;
-Dropdown.GroupItems = GroupItems;
+const Dropdown = {
+  Wrapper: DropdownWrapper,
+  Container: DropdownContainer,
+  FlatItems: DropdownFlatItems,
+  GroupItems: DropdownGroupItems,
+};
 
 export default Dropdown;

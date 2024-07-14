@@ -9,7 +9,7 @@
     @apply pointer-events-none opacity-0;
   }
 
-  &:not(.tooltip) & {
+  &:not(.tooltip) {
     @apply min-w-full;
   }
 
@@ -111,13 +111,13 @@
         @apply cursor-pointer hover:bg-light-secondary dark:hover:bg-dark-tertiary;
 
         &.selected {
-          &[data-input="text"],
-          &[data-input="multi-text"] {
+          &[data-input='text'],
+          &[data-input='multi-text'] {
             @apply bg-light-blue !text-dark dark:bg-dark-blue;
           }
 
-          &[data-input="radio"],
-          &[data-input="checkbox"] {
+          &[data-input='radio'],
+          &[data-input='checkbox'] {
             @apply bg-light-secondary dark:bg-dark-tertiary;
           }
         }

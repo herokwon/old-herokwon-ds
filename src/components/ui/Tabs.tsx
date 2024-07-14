@@ -1,5 +1,3 @@
-import { forwardRef } from 'react';
-
 import type { AlignmentX, ElementBaseSize } from '../../types';
 import TextButton from './TextButton';
 
@@ -17,19 +15,16 @@ interface TabsProps extends React.ComponentPropsWithoutRef<'div'> {
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
-  {
-    size = 'sm',
-    alignX = 'left',
-    tabItems,
-    selectedIndex,
-    setSelectedIndex,
-    ...props
-  },
-  ref,
-) {
+export default function Tabs({
+  size = 'sm',
+  alignX = 'left',
+  tabItems,
+  selectedIndex,
+  setSelectedIndex,
+  ...props
+}: TabsProps) {
   return (
-    <div {...props} ref={ref} className={`w-full ${props.className ?? ''}`}>
+    <div {...props} className={`w-full ${props.className ?? ''}`}>
       <div
         className={`flex w-full ${
           alignX === 'left'
@@ -63,6 +58,4 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
       </div>
     </div>
   );
-});
-
-export default Tabs;
+}

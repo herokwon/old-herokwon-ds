@@ -34,7 +34,7 @@ export default function Select({
   );
 
   return (
-    <Dropdown
+    <Dropdown.Wrapper
       isDisabled={isDisabled}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
@@ -94,13 +94,15 @@ export default function Select({
         </TextField>
       }
     >
-      <Dropdown.FlatItems
-        selectingInput={selectingInput}
-        isOpen={isOpen}
-        items={items}
-        setIsOpen={setIsOpen}
-        setItems={setItems}
-      />
-    </Dropdown>
+      <Dropdown.Container>
+        <Dropdown.FlatItems
+          selectingInput={selectingInput}
+          isOpen={isOpen}
+          items={items}
+          setIsOpen={setIsOpen}
+          setItems={setItems}
+        />
+      </Dropdown.Container>
+    </Dropdown.Wrapper>
   );
 }
