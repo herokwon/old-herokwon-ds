@@ -42,10 +42,10 @@ export default plugin(function ({ addBase, addVariant }) {
 
     // dialog
     'dialog[open]': {
-      animation: 'modal-open 0.25s forwards',
+      animation: 'modal-open 0.15s forwards',
     },
     'dialog.close': {
-      animation: 'modal-close 0.25s forwards',
+      animation: 'modal-close 0.15s forwards',
     },
 
     // input
