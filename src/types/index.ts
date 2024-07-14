@@ -7,41 +7,46 @@ import {
   ELEMENT_EXTENDED_SIZES,
   ELEMENT_EXTENDED_VARIANTS,
   ELEMENT_SPACINGS,
-  FEEDBACK_VARIANTS,
 } from '../data/constant';
+import React from 'react';
 
+// common element types
 export type ElementBaseSize = (typeof ELEMENT_BASE_SIZES)[number];
 export type ElementExtendedSize = (typeof ELEMENT_EXTENDED_SIZES)[number];
 export type ElementSpacing = (typeof ELEMENT_SPACINGS)[number];
 export type ElementBaseVariant = (typeof ELEMENT_BASE_VARIANTS)[number];
 export type ElementExtendedVariant = (typeof ELEMENT_EXTENDED_VARIANTS)[number];
 export type ElementDirection = (typeof ELEMENT_DIRECTIONS)[number];
-
 export interface ElementStates {
   isDisabled?: boolean;
   isSelected?: boolean;
   isLoading?: boolean;
 }
-
 export interface ElementWithHref {
   href?: {
     to: string;
     replace?: boolean;
   };
 }
+type EventHandler<T extends Element> = Omit<
+  React.DOMAttributes<T>,
+  'children' | 'dangerouslySetInnerHTML'
+>;
+export type ElementEventHandler<
+  T extends Element,
+  K extends keyof EventHandler<T> = never,
+> = [K] extends [never] ? EventHandler<T> : Pick<EventHandler<T>, K>;
 
+// polymorphic element types
 type AsProp<T extends React.ElementType> = {
   as?: T;
 };
-
 export type PolymorphicRef<T extends React.ElementType> =
   React.ComponentPropsWithRef<T>['ref'];
-
 export type PolymorphicElementPropsWithoutRef<
   T extends React.ElementType,
   Props = {},
 > = AsProp<T> & Props & React.ComponentPropsWithoutRef<T>;
-
 export type PolymorphicElementPropsWithRef<
   T extends React.ElementType,
   Props = {},
@@ -49,37 +54,30 @@ export type PolymorphicElementPropsWithRef<
   ref?: PolymorphicRef<T>;
 };
 
-export type FeedbackVariant = (typeof FEEDBACK_VARIANTS)[number];
-
+// content element types
 export interface ContentWithId extends Omit<ElementStates, 'isLoading'> {
   id: string;
   heading: string;
   description?: string;
 }
-
 export interface ContentWithIcon {
-  iconBefore?: React.DOMAttributes<SVGElement> & {
+  iconBefore?: React.ComponentPropsWithoutRef<'svg'> & {
     content?: IconType;
     size?: ElementExtendedSize;
   };
-  iconAfter?: React.DOMAttributes<SVGElement> & {
+  iconAfter?: ElementEventHandler<SVGElement> & {
     content?: IconType;
     size?: ElementExtendedSize;
   };
 }
-
-export type EventHandler<T extends string> = {
-  [H in `on${Capitalize<T>}`]?: (event: React.BaseSyntheticEvent) => void;
-};
-
 export interface ItemsWithHeading {
   id: string;
   heading: string;
   items: (ContentWithId & ContentWithIcon)[];
 }
 
-export * from './datetime';
-export * from './position';
+export * from './common/datetime';
+export * from './common/position';
 
 export * from './form/input';
 

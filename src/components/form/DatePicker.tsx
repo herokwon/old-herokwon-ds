@@ -8,7 +8,7 @@ import DatetimeField from './DatetimeField';
 
 type DatePickerProps = Pick<ElementStates, 'isDisabled'> &
   Omit<
-    React.ComponentProps<typeof Dropdown>,
+    React.ComponentProps<typeof Dropdown.Wrapper>,
     'children' | 'isOpen' | 'setIsOpen'
   > &
   Pick<
@@ -36,7 +36,7 @@ export default function DatePicker({
   }, [pickedDate]);
 
   return (
-    <Dropdown
+    <Dropdown.Wrapper
       {...props}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
@@ -48,12 +48,14 @@ export default function DatePicker({
         />
       }
     >
-      <Calendar
-        form="monthly"
-        today={today}
-        pickedDate={pickedDate}
-        setPickedDate={setPickedDate}
-      />
-    </Dropdown>
+      <Dropdown.Container>
+        <Calendar
+          form="monthly"
+          today={today}
+          pickedDate={pickedDate}
+          setPickedDate={setPickedDate}
+        />
+      </Dropdown.Container>
+    </Dropdown.Wrapper>
   );
 }

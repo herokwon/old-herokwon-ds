@@ -1,9 +1,12 @@
 import { useRouter } from 'next/navigation';
 
-import type { ElementWithHref, PolymorphicElementPropsWithRef } from '../types';
+import type {
+  ElementWithHref,
+  PolymorphicElementPropsWithoutRef,
+} from '../types';
 
 type LinkableElementProps<T extends React.ElementType> =
-  PolymorphicElementPropsWithRef<T, ElementWithHref>;
+  PolymorphicElementPropsWithoutRef<T, ElementWithHref>;
 
 export default function LinkableElement<T extends React.ElementType = 'div'>({
   children,

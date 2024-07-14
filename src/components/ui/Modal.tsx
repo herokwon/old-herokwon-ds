@@ -1,4 +1,10 @@
-import { Children, cloneElement, forwardRef, isValidElement } from 'react';
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useState,
+} from 'react';
 import { LuX } from 'react-icons/lu';
 
 import IconButton from './IconButton';
@@ -23,7 +29,11 @@ interface ModalContainerProps extends React.ComponentPropsWithoutRef<'dialog'> {
   setIsActive?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Wrapper = ({ children, triggerItem, ...props }: ModalWrapperProps) => {
+const ModalWrapper = ({
+  children,
+  triggerItem,
+  ...props
+}: ModalWrapperProps) => {
   const { isActive = false, setIsActive, ...restProps } = props;
 
   return (
@@ -40,42 +50,49 @@ const Wrapper = ({ children, triggerItem, ...props }: ModalWrapperProps) => {
   );
 };
 
-const Container = forwardRef<HTMLDialogElement, ModalContainerProps>(
-  function Modal({ children, id, ...props }, ref) {
-    const { isActive = false, setIsActive, ...restProps } = props;
+const ModalContainer = ({ children, id, ...props }: ModalContainerProps) => {
+  const { isActive = false, setIsActive, ...restProps } = props;
 
-    const closeModal = () => {
-      const modal = document.getElementById(id) as HTMLDialogElement | null;
-      if (!modal?.open || !setIsActive) return;
-      modal.onanimationend = () => setIsActive && setIsActive(false);
-      modal.classList.add('close');
-    };
+  const [isOpen, setIsOpen] = useState<boolean>(isActive);
+  const closeModal = () => {
+    const modal = document.getElementById(id) as HTMLDialogElement | null;
+    if (!modal?.open) return;
+    modal.onanimationend = () => setIsOpen(false);
+    modal.classList.add('close');
+  };
 
-    return (
-      <Backdrop isActive={isActive} onClickBackdrop={closeModal}>
-        <dialog
-          {...restProps}
-          ref={ref}
-          id={id}
-          open={isActive}
-          className={`min-w-[300px] rounded-ms border border-light-tertiary bg-light-primary px-4 py-3 text-light shadow-primary-light dark:border-dark-tertiary dark:bg-dark-secondary dark:text-dark dark:shadow-primary-dark ${restProps.className ?? ''}`}
-        >
-          <IconButton
-            icon={LuX}
-            spacing="none"
-            className="ml-auto mr-0"
-            onClick={closeModal}
-          />
-          <div className="p-1">{children}</div>
-        </dialog>
-      </Backdrop>
-    );
-  },
-);
+  useEffect(() => {
+    !isOpen && setIsActive && setIsActive(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
-const Modal = {
-  Wrapper,
-  Container,
+  useEffect(() => {
+    isActive ? setIsOpen(true) : closeModal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive]);
+
+  return (
+    <Backdrop isActive={isOpen} onClick={closeModal}>
+      <dialog
+        {...restProps}
+        id={id}
+        open={isOpen}
+        className={`min-w-[300px] rounded-ms border border-light-tertiary bg-light-primary px-4 py-3 text-light shadow-primary-light dark:border-dark-tertiary dark:bg-dark-secondary dark:text-dark dark:shadow-primary-dark ${restProps.className ?? ''}`}
+      >
+        <IconButton
+          icon={LuX}
+          spacing="none"
+          className="ml-auto mr-0"
+          onClick={closeModal}
+        />
+        <div className="p-1">{children}</div>
+      </dialog>
+    </Backdrop>
+  );
 };
 
+const Modal = {
+  Wrapper: ModalWrapper,
+  Container: ModalContainer,
+};
 export default Modal;
