@@ -1,4 +1,4 @@
-import type { PolymorphicElementPropsWithRef } from '../types';
+import type { PolymorphicElementPropsWithoutRef } from '../types';
 import Backdrop from './ui/Backdrop';
 import Spinner from './ui/Spinner';
 
@@ -10,7 +10,7 @@ type _LoadableElementProps = Pick<
 };
 
 type LoadableElementProps<T extends React.ElementType> =
-  PolymorphicElementPropsWithRef<T, _LoadableElementProps>;
+  PolymorphicElementPropsWithoutRef<T, _LoadableElementProps>;
 
 export default function LoadableElement<T extends React.ElementType = 'div'>({
   children,
