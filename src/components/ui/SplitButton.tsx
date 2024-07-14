@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 
 import type {
@@ -6,13 +6,14 @@ import type {
   DropdownFlatItem,
   ElementBaseVariant,
   ElementSpacing,
-  EventHandler,
+  ElementEventHandler,
 } from '../../types';
 import TextButton from './TextButton';
 import IconButton from './IconButton';
 import Dropdown from './Dropdown';
 
-type SplitButtonItem = DropdownFlatItem & EventHandler<'click'>;
+type SplitButtonItem = DropdownFlatItem &
+  ElementEventHandler<HTMLButtonElement, 'onClick'>;
 
 interface SplitButtonProps extends Omit<ButtonProps, 'spacing' | 'href'> {
   defaultLabel?: string;
@@ -22,86 +23,78 @@ interface SplitButtonProps extends Omit<ButtonProps, 'spacing' | 'href'> {
   setItems: React.Dispatch<React.SetStateAction<SplitButtonItem[]>>;
 }
 
-const SplitButton = forwardRef<HTMLButtonElement, SplitButtonProps>(
-  function SplitButton(
-    {
-      defaultLabel,
-      variant = 'default',
-      size = 'md',
-      spacing = 'default',
-      items,
-      setItems,
-      ...props
-    },
-    ref,
-  ) {
-    const {
-      stopPropagation = false,
-      preventDefault = false,
-      isDisabled = false,
-      isSelected = false,
-      isLoading = false,
-      ...restProps
-    } = props;
+export default function SplitButton({
+  defaultLabel,
+  variant = 'default',
+  size = 'md',
+  spacing = 'default',
+  items,
+  setItems,
+  ...props
+}: SplitButtonProps) {
+  const {
+    stopPropagation = false,
+    preventDefault = false,
+    isDisabled = false,
+    isSelected = false,
+    isLoading = false,
+    ...restProps
+  } = props;
 
-    const [isOpen, setIsOpen] = useState<boolean>(isSelected);
-    const selectedItem = useMemo(
-      () => items.find(item => item.isSelected) ?? null,
-      [items],
-    );
+  const [isOpen, setIsOpen] = useState<boolean>(isSelected);
+  const selectedItem = useMemo(
+    () => items.find(item => item.isSelected) ?? null,
+    [items],
+  );
 
-    return (
-      <Dropdown
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        triggerItem={
-          <div className="flex h-full" onClick={e => e.stopPropagation()}>
-            <TextButton
-              {...restProps}
-              label={selectedItem?.heading ?? defaultLabel ?? ''}
-              ref={ref}
-              variant={variant}
-              size={size}
-              spacing={spacing}
-              isDisabled={isDisabled}
-              isSelected={isOpen}
-              isLoading={isLoading}
-              title={selectedItem?.description}
-              className="rounded-r-none"
-              onClick={selectedItem?.onClick}
-            />
-            <div
-              className={`min-h-full w-1 ${
-                isDisabled
-                  ? 'disabled'
-                  : variant === 'primary'
-                    ? 'bg-dark-blue dark:bg-light-blue'
-                    : 'bg-light-tertiary dark:bg-dark-secondary'
-              } transition-all`}
-            />
-            <IconButton
-              icon={FaChevronDown}
-              variant={variant}
-              size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
-              spacing={spacing}
-              shape="square"
-              isDisabled={isDisabled}
-              className={`rounded-l-none ${
-                isOpen ? 'first:*:rotate-180' : ''
-              } first:*:transition-all`}
-              onClick={() => !isDisabled && setIsOpen(prev => !prev)}
-            />
-          </div>
-        }
-      >
-        <Dropdown.FlatItems
-          selectingInput="text"
-          items={items}
-          setItems={setItems}
-        />
-      </Dropdown>
-    );
-  },
-);
-
-export default SplitButton;
+  return (
+    <Dropdown.Wrapper
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      triggerItem={
+        <div className="flex h-full" onClick={e => e.stopPropagation()}>
+          <TextButton
+            {...restProps}
+            isDisabled={isDisabled}
+            isSelected={isOpen}
+            isLoading={isLoading}
+            label={selectedItem?.heading ?? defaultLabel ?? ''}
+            variant={variant}
+            size={size}
+            spacing={spacing}
+            title={selectedItem?.description}
+            className="rounded-r-none"
+            onClick={selectedItem?.onClick}
+          />
+          <div
+            className={`min-h-full w-1 ${
+              isDisabled
+                ? 'disabled'
+                : variant === 'primary'
+                  ? 'bg-dark-blue dark:bg-light-blue'
+                  : 'bg-light-tertiary dark:bg-dark-secondary'
+            } transition-all`}
+          />
+          <IconButton
+            isDisabled={isDisabled}
+            icon={FaChevronDown}
+            variant={variant}
+            size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
+            spacing={spacing}
+            shape="square"
+            className={`rounded-l-none ${
+              isOpen ? 'first:*:rotate-180' : ''
+            } first:*:transition-all`}
+            onClick={() => setIsOpen(prev => !prev)}
+          />
+        </div>
+      }
+    >
+      <Dropdown.FlatItems
+        selectingInput="text"
+        items={items}
+        setItems={setItems}
+      />
+    </Dropdown.Wrapper>
+  );
+}

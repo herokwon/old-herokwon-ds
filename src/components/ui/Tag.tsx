@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { LuHash, LuX } from 'react-icons/lu';
 
 import type {
@@ -29,23 +29,10 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
   } = props;
 
   const [isRemoved, setIsRemoved] = useState<boolean>(false);
-  const tagRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!isRemovable || !tagRef.current || !tagRef.current.lastElementChild)
-      return;
-    const removeButton = tagRef.current.lastElementChild as HTMLElement;
-
-    removeButton.onmouseenter = () =>
-      tagRef.current?.classList.add('removable');
-    removeButton.onmouseleave = () =>
-      tagRef.current?.classList.remove('removable');
-  }, [isRemovable]);
 
   return (
     <TextButton
       {...restProps}
-      ref={tagRef}
       isHoverable={false}
       size={size}
       spacing={spacing}
@@ -59,10 +46,12 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
                 setIsRemoved(true);
                 iconAfter?.onClick && iconAfter.onClick(e);
               },
-              onMouseEnter: () =>
-                isRemovable && tagRef.current?.classList.add('removable'),
-              onMouseLeave: () =>
-                isRemovable && tagRef.current?.classList.remove('removable'),
+              onMouseEnter: e =>
+                isRemovable &&
+                e.currentTarget.parentElement?.classList.add('removable'),
+              onMouseLeave: e =>
+                isRemovable &&
+                e.currentTarget.parentElement?.classList.remove('removable'),
             }
       }
       tabIndex={!restProps.href ? -1 : undefined}
