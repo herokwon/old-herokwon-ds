@@ -9,11 +9,11 @@ const meta = {
   tags: ['autodocs'],
   component: TextButton,
   args: {
-    size: 'md',
-    spacing: 'default',
     isDisabled: false,
     isSelected: false,
     isLoading: false,
+    size: 'md',
+    spacing: 'default',
     onClick: fn(),
   },
 } satisfies Meta<typeof TextButton>;
@@ -90,5 +90,12 @@ export const Disabled: Story = {
   args: {
     label: 'Disabled',
     isDisabled: true,
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    label: 'Loading',
+    isLoading: true,
   },
 };

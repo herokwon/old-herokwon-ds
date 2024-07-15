@@ -10,6 +10,7 @@ const meta = {
   component: Select,
   args: {
     isDisabled: false,
+    isLoading: false,
   },
 } satisfies Meta<typeof Select>;
 export default meta;
