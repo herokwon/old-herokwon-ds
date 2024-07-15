@@ -1,19 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FaCalendarDays } from 'react-icons/fa6';
 
-import type { ElementStates } from '../../types';
 import Dropdown from '../ui/Dropdown';
 import Calendar from '../ui/Calendar';
 import DatetimeField from './DatetimeField';
 
-type DatePickerProps = Pick<ElementStates, 'isDisabled'> &
-  Omit<
-    React.ComponentProps<typeof Dropdown.Wrapper>,
-    'children' | 'isOpen' | 'setIsOpen'
-  > &
+type DatePickerProps = Pick<
+  React.ComponentPropsWithoutRef<typeof Dropdown.Container>,
+  'isLoading'
+> &
   Pick<
-    React.ComponentProps<typeof Calendar>,
+    React.ComponentPropsWithoutRef<typeof Calendar>,
     'today' | 'pickedDate' | 'setPickedDate'
+  > &
+  Omit<
+    React.ComponentPropsWithoutRef<typeof Dropdown.Wrapper>,
+    'children' | 'isOpen' | 'setIsOpen'
   >;
 
 export default function DatePicker({
@@ -22,13 +24,15 @@ export default function DatePicker({
   setPickedDate,
   ...props
 }: DatePickerProps) {
+  const { isDisabled = false, isLoading = false, ...restProps } = props;
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pickedDateValue = useMemo(
     () =>
-      props.isDisabled
+      isDisabled
         ? ''
         : `${pickedDate.year}-${pickedDate.month.toString().padStart(2, '0')}-${pickedDate.date.toString().padStart(2, '0')}`,
-    [props.isDisabled, pickedDate],
+    [isDisabled, pickedDate],
   );
 
   useEffect(() => {
@@ -37,7 +41,7 @@ export default function DatePicker({
 
   return (
     <Dropdown.Wrapper
-      {...props}
+      {...restProps}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       triggerItem={
@@ -48,7 +52,7 @@ export default function DatePicker({
         />
       }
     >
-      <Dropdown.Container>
+      <Dropdown.Container isLoading={isLoading}>
         <Calendar
           form="monthly"
           today={today}

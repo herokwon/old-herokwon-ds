@@ -2,14 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { FaClock } from 'react-icons/fa6';
 
 import type { DropdownFlatItem, TimeItem } from '../../types';
+import { useScrollIntoView } from '../../hooks';
 import Dropdown from '../ui/Dropdown';
 import DatetimeField from './DatetimeField';
 
 interface TimePickerProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof Dropdown.Wrapper>,
-    'children' | 'isOpen' | 'setIsOpen'
-  > {
+  extends Pick<
+      React.ComponentPropsWithoutRef<typeof Dropdown.Container>,
+      'isLoading'
+    >,
+    Omit<
+      React.ComponentPropsWithoutRef<typeof Dropdown.Wrapper>,
+      'children' | 'isOpen' | 'setIsOpen'
+    > {
   min?: TimeItem;
   max?: TimeItem;
   pickedTime: TimeItem;
@@ -22,6 +27,8 @@ export default function TimePicker({
   ...props
 }: TimePickerProps) {
   const {
+    isDisabled = false,
+    isLoading = false,
     min = {
       hour: 0,
       minute: 0,
@@ -58,20 +65,20 @@ export default function TimePicker({
     () => minuteItems.find(minuteItem => minuteItem.isSelected) ?? null,
     [minuteItems],
   );
+  const hourItemScrollIntoView = useScrollIntoView({
+    targetId: selectedHourItem?.id ?? '',
+  });
+  const minuteItemScrollIntoView = useScrollIntoView({
+    targetId: selectedMinuteItem?.id ?? '',
+  });
 
   useEffect(() => {
-    document.getElementById(selectedHourItem?.id ?? '')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    });
-  }, [selectedHourItem]);
+    hourItemScrollIntoView.callback();
+  }, [isLoading, isOpen, hourItemScrollIntoView]);
 
   useEffect(() => {
-    document.getElementById(selectedMinuteItem?.id ?? '')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    });
-  }, [selectedMinuteItem]);
+    minuteItemScrollIntoView.callback();
+  }, [isLoading, isOpen, minuteItemScrollIntoView]);
 
   useEffect(() => {
     setPickedTime({
@@ -84,6 +91,7 @@ export default function TimePicker({
   return (
     <Dropdown.Wrapper
       {...restProps}
+      isDisabled={isDisabled}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       className="*:*:first:*:last:*:text-center"
@@ -98,7 +106,7 @@ export default function TimePicker({
         />
       }
     >
-      <Dropdown.Container>
+      <Dropdown.Container isLoading={isLoading}>
         <Dropdown.FlatItems
           selectingInput="text"
           items={hourItems}

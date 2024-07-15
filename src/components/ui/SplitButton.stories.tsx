@@ -9,12 +9,12 @@ const meta = {
   tags: ['autodocs'],
   component: SplitButton,
   args: {
-    defaultLabel: 'Default label',
-    size: 'md',
-    spacing: 'default',
     isDisabled: false,
     isSelected: false,
     isLoading: false,
+    defaultLabel: 'Default label',
+    size: 'md',
+    spacing: 'default',
   },
 } satisfies Meta<typeof SplitButton>;
 export default meta;
@@ -60,6 +60,13 @@ export const Primary: Story = {
 export const Disabled: Story = {
   args: {
     isDisabled: true,
+  },
+  render: ({ ...props }) => <SplitButtonRender {...props} />,
+};
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
   },
   render: ({ ...props }) => <SplitButtonRender {...props} />,
 };

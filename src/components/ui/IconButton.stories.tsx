@@ -9,13 +9,13 @@ const meta = {
   tags: ['autodocs'],
   component: IconButton,
   args: {
+    isDisabled: false,
+    isSelected: false,
+    isLoading: false,
     icon: LuMousePointer2,
     size: 'md',
     spacing: 'default',
     shape: 'circle',
-    isDisabled: false,
-    isSelected: false,
-    isLoading: false,
     onClick: fn(),
   },
 } satisfies Meta<typeof IconButton>;
@@ -44,5 +44,11 @@ export const Secondary: Story = {
 export const Disabled: Story = {
   args: {
     isDisabled: true,
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
   },
 };
