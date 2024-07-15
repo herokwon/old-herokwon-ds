@@ -5,7 +5,7 @@ import Dropdown from './Dropdown';
 interface TooltipProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof Dropdown.Wrapper>,
-    'children' | 'isOpen' | 'setIsOpen'
+    'children' | 'isDisabled' | 'isOpen' | 'setIsOpen'
   > {
   content: string;
 }

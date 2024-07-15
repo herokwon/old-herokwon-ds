@@ -8,8 +8,6 @@ const meta = {
   tags: ['autodocs'],
   component: Tooltip,
   args: {
-    isDisabled: false,
-    isLoading: false,
     position: 'bottom-center',
     size: 'md',
   },
