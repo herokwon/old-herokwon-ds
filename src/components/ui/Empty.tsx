@@ -14,7 +14,7 @@ export default function Empty({ imgData, message, ...props }: EmptyProps) {
   return (
     <div
       {...props}
-      className={`flex items-center justify-center p-10 ${!imgData ? '' : 'relative'} ${props.className ?? ''}`}
+      className={`m-12 flex items-center justify-center ${!imgData ? '' : 'relative'} ${props.className ?? ''}`}
     >
       <Image
         {...imgData}
@@ -24,7 +24,9 @@ export default function Empty({ imgData, message, ...props }: EmptyProps) {
         height={imgData?.height ?? (hasImgSrc ? undefined : 128)}
         priority
         placeholder={imgData?.placeholder ?? (hasImgSrc ? 'empty' : 'blur')}
-        className={`aspect-auto opacity-normal dark:opacity-off ${imgData?.className ?? ''}`}
+        className={`${
+          hasImgSrc ? 'object-center' : ''
+        } opacity-normal dark:opacity-off ${imgData?.className ?? ''}`}
         alt="empty-image"
       />
       {message && message.length > 0 && (
