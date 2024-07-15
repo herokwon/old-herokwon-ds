@@ -8,26 +8,25 @@ const meta = {
   tags: ['autodocs'],
   component: Tooltip,
   args: {
-    position: 'bottom-center',
+    hasTail: true,
     size: 'md',
+    position: 'bottom-center',
+    triggerItem: <TextButton label="Hover on Button" />,
   },
 } satisfies Meta<typeof Tooltip>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Click: Story = {
+export const Default: Story = {
   args: {
-    triggerEvent: 'click',
-    triggerItem: <TextButton label="Click on Button" />,
-    content: 'This is a click tooltip',
+    content: 'This is a tooltip with tail',
   },
 };
 
-export const Hover: Story = {
+export const WithoutTail: Story = {
   args: {
-    triggerEvent: 'mouseenter',
-    triggerItem: <TextButton label="Hover on Button" />,
-    content: 'This is a hover tooltip',
+    hasTail: false,
+    content: 'This is a tooltip without tail',
   },
 };
