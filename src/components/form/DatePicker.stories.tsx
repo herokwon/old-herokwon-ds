@@ -43,3 +43,10 @@ export const Disabled: Story = {
   },
   render: ({ ...props }) => <DatePickerRender {...props} />,
 };
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
+  render: ({ ...props }) => <DatePickerRender {...props} />,
+};

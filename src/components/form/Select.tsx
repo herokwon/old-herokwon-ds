@@ -1,13 +1,18 @@
 import { useMemo, useState } from 'react';
 import { LuX } from 'react-icons/lu';
 
-import type { ContentWithId, InputProps, SelectingInput } from '../../types';
+import type {
+  ContentWithId,
+  ElementStates,
+  InputProps,
+  SelectingInput,
+} from '../../types';
 import Dropdown from '../ui/Dropdown';
 import TextField from './TextField';
 import IconButton from '../ui/IconButton';
 import Tag from '../ui/Tag';
 
-interface SelectProps extends InputProps {
+interface SelectProps extends Pick<ElementStates, 'isLoading'>, InputProps {
   selectingInput: SelectingInput;
   items: ContentWithId[];
   setItems: React.Dispatch<React.SetStateAction<ContentWithId[]>>;
@@ -21,6 +26,7 @@ export default function Select({
 }: SelectProps) {
   const {
     isDisabled = false,
+    isLoading = false,
     label,
     helperMessage,
     errorMessage,
@@ -94,7 +100,7 @@ export default function Select({
         </TextField>
       }
     >
-      <Dropdown.Container>
+      <Dropdown.Container isLoading={isLoading}>
         <Dropdown.FlatItems
           selectingInput={selectingInput}
           isOpen={isOpen}

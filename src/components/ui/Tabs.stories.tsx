@@ -8,6 +8,8 @@ const meta = {
   tags: ['autodocs'],
   component: Tabs,
   args: {
+    isDisabled: false,
+    isLoading: false,
     size: 'sm',
     alignX: 'left',
     className: 'min-w-[300px]',

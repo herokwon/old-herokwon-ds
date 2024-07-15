@@ -57,7 +57,6 @@ export default function SplitButton({
             {...restProps}
             isDisabled={isDisabled}
             isSelected={isOpen}
-            isLoading={isLoading}
             label={selectedItem?.heading ?? defaultLabel ?? ''}
             variant={variant}
             size={size}
@@ -82,7 +81,7 @@ export default function SplitButton({
             size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
             spacing={spacing}
             shape="square"
-            className={`rounded-l-none ${
+            className={`h-full rounded-l-none ${
               isOpen ? 'first:*:rotate-180' : ''
             } first:*:transition-all`}
             onClick={() => setIsOpen(prev => !prev)}
@@ -90,7 +89,7 @@ export default function SplitButton({
         </div>
       }
     >
-      <Dropdown.Container>
+      <Dropdown.Container isLoading={isLoading}>
         <Dropdown.FlatItems
           selectingInput="text"
           items={items}

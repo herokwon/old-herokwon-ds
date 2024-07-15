@@ -19,7 +19,6 @@ const meta = {
     position: 'bottom-center',
     triggerEvent: 'click',
     isDisabled: false,
-    isLoading: false,
     isOpen: false,
   },
 } satisfies Meta<typeof Dropdown.Wrapper>;
@@ -49,6 +48,7 @@ const DropdownRender = {
     );
   },
   flatItems: ({ selectingInput, ...props }: DropdownRenderProps) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
     const [items, setItems] = useState<DropdownFlatItem[]>([
       ...Array.from({ length: 10 }, (_, i) => ({
@@ -63,9 +63,19 @@ const DropdownRender = {
       setIsOpen(props.isOpen);
     }, [props.isOpen]);
 
+    useEffect(() => {
+      if (!isOpen) return;
+
+      setIsLoading(true);
+      const delay = setTimeout(() => {
+        setIsLoading(false);
+        clearTimeout(delay);
+      }, 500);
+    }, [isOpen]);
+
     return (
       <Dropdown.Wrapper {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Dropdown.Container>
+        <Dropdown.Container isLoading={isLoading}>
           <Dropdown.FlatItems
             selectingInput={selectingInput}
             items={items}
@@ -76,6 +86,7 @@ const DropdownRender = {
     );
   },
   groupItems: ({ selectingInput, ...props }: DropdownRenderProps) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
     const [items, setItems] = useState<DropdownGroupItem[]>([
       ...Array.from({ length: 5 }, (_, i) => ({
@@ -99,9 +110,19 @@ const DropdownRender = {
       setIsOpen(props.isOpen);
     }, [props.isOpen]);
 
+    useEffect(() => {
+      if (!isOpen) return;
+
+      setIsLoading(true);
+      const delay = setTimeout(() => {
+        setIsLoading(false);
+        clearTimeout(delay);
+      }, 500);
+    }, [isOpen]);
+
     return (
       <Dropdown.Wrapper {...props} isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Dropdown.Container>
+        <Dropdown.Container isLoading={isLoading}>
           <Dropdown.GroupItems items={items} setItems={setItems} />
         </Dropdown.Container>
       </Dropdown.Wrapper>

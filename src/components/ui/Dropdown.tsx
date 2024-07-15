@@ -17,6 +17,7 @@ import type {
   ElementBaseSize,
   ElementStates,
 } from '../../types';
+import LoadableElement from '../LoadableElement';
 import TextButton from './TextButton';
 import Checkbox from '../form/Checkbox';
 import Radio from '../form/Radio';
@@ -27,7 +28,7 @@ type DropdownContainerChildren = React.ReactElement<
 >;
 
 interface DropdownWrapperProps
-  extends Omit<ElementStates, 'isSelected'>,
+  extends Pick<ElementStates, 'isDisabled'>,
     React.ComponentPropsWithoutRef<'div'> {
   children: React.ReactElement<
     Partial<Pick<DropdownWrapperProps, 'isOpen' | 'setIsOpen' | 'position'>> & {
@@ -40,12 +41,10 @@ interface DropdownWrapperProps
   position?: AbsolutePosition;
   triggerEvent?: Extract<keyof HTMLElementEventMap, 'click' | 'mouseenter'>;
   triggerItem?: string | React.ReactElement;
-  emptyMessage?: string;
 }
 
-type DropdownContainerProps = Partial<
-  Pick<DropdownWrapperProps, 'isOpen' | 'setIsOpen' | 'position'>
-> &
+type DropdownContainerProps = Pick<ElementStates, 'isLoading'> &
+  Partial<Pick<DropdownWrapperProps, 'isOpen' | 'setIsOpen' | 'position'>> &
   React.ComponentPropsWithoutRef<'div'> & {
     children: DropdownContainerChildren | DropdownContainerChildren[];
     maxHeight?: number;
@@ -61,16 +60,9 @@ const DropdownWrapper = ({
   position = 'bottom-center',
   triggerEvent = 'click',
   triggerItem,
-  emptyMessage,
   ...props
 }: DropdownWrapperProps) => {
-  const {
-    isDisabled = false,
-    isLoading = false,
-    isOpen,
-    setIsOpen,
-    ...restProps
-  } = props;
+  const { isDisabled = false, isOpen, setIsOpen, ...restProps } = props;
 
   const [maxHeight, setMaxHeight] = useState<number>(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -156,6 +148,7 @@ const DropdownWrapper = ({
 
 const DropdownContainer = ({
   children,
+  isLoading = false,
   position = 'bottom-center',
   maxHeight = 0,
   isOpen,
@@ -169,7 +162,8 @@ const DropdownContainer = ({
         isOpen ? 'open' : ''
       } to-${position} ${props.className ?? ''}`}
     >
-      <div
+      <LoadableElement
+        isActive={isLoading}
         className={`dropdown-items-inner ${
           Children.count(children) > 1 ? 'flex' : ''
         }`}
@@ -184,7 +178,7 @@ const DropdownContainer = ({
             setIsOpen,
           });
         })}
-      </div>
+      </LoadableElement>
     </div>
   );
 };
@@ -307,6 +301,7 @@ const DropdownGroupItems = ({
 
   useEffect(() => {
     if (!isOpen || !setIsOpen) return;
+
     inputsOfGroupItems.length === 1 &&
       inputsOfGroupItems[0] === 'text' &&
       setIsOpen(false);
