@@ -6,17 +6,14 @@ import Calendar from '../ui/Calendar';
 import DatetimeField from './DatetimeField';
 
 type DatePickerProps = Pick<
-  React.ComponentPropsWithoutRef<typeof Dropdown.Container>,
-  'isLoading'
+  React.ComponentPropsWithoutRef<typeof DatetimeField>,
+  'isDisabled'
 > &
   Pick<
     React.ComponentPropsWithoutRef<typeof Calendar>,
     'today' | 'pickedDate' | 'setPickedDate'
   > &
-  Omit<
-    React.ComponentPropsWithoutRef<typeof Dropdown.Wrapper>,
-    'children' | 'isOpen' | 'setIsOpen'
-  >;
+  React.ComponentPropsWithoutRef<typeof Dropdown>;
 
 export default function DatePicker({
   today,
@@ -40,11 +37,11 @@ export default function DatePicker({
   }, [pickedDate]);
 
   return (
-    <Dropdown.Wrapper
+    <Dropdown
       {...restProps}
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      triggerItem={
+      onClose={() => setIsOpen(false)}
+      trigger={
         <DatetimeField
           readOnly
           value={pickedDateValue}
@@ -52,14 +49,12 @@ export default function DatePicker({
         />
       }
     >
-      <Dropdown.Container isLoading={isLoading}>
-        <Calendar
-          form="monthly"
-          today={today}
-          pickedDate={pickedDate}
-          setPickedDate={setPickedDate}
-        />
-      </Dropdown.Container>
-    </Dropdown.Wrapper>
+      <Calendar
+        form="monthly"
+        today={today}
+        pickedDate={pickedDate}
+        setPickedDate={setPickedDate}
+      />
+    </Dropdown>
   );
 }

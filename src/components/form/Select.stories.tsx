@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import type { ContentWithId } from '../../types';
 import Select from './Select';
 
 const meta = {
@@ -11,43 +9,25 @@ const meta = {
   args: {
     isDisabled: false,
     isLoading: false,
+    shouldWrapItems: false,
+    className: 'w-[300px]',
+    options: Array.from({ length: 10 }, (_, i) => ({
+      id: crypto.randomUUID(),
+      label: `Select Item ${i + 1}`,
+      description:
+        i < 5 ? undefined : `This is a description for Select Item ${i + 1}`,
+    })),
   },
 } satisfies Meta<typeof Select>;
 export default meta;
 
-type Story = StoryObj<typeof Select>;
-
-const SelectRender = ({
-  ...props
-}: Omit<
-  React.ComponentPropsWithoutRef<typeof Select>,
-  'items' | 'setItems'
->) => {
-  const [items, setItems] = useState<ContentWithId[]>([
-    ...Array.from({ length: 10 }, (_, i) => ({
-      isDisabled: false,
-      isSelected: false,
-      isLoading: false,
-      id: crypto.randomUUID(),
-      heading: `item ${i + 1}`,
-      description:
-        i < 5 ? undefined : `This is a description for item ${i + 1}`,
-    })),
-  ]);
-
-  return (
-    <div className="w-300">
-      <Select {...props} items={items} setItems={setItems} />
-    </div>
-  );
-};
+type Story = StoryObj<typeof meta>;
 
 export const Text: Story = {
   args: {
     selectingInput: 'text',
     placeholder: 'Select item..',
   },
-  render: ({ ...props }) => <SelectRender {...props} />,
 };
 
 export const MultiText: Story = {
@@ -55,7 +35,6 @@ export const MultiText: Story = {
     selectingInput: 'multi-text',
     placeholder: 'Select items..',
   },
-  render: ({ ...props }) => <SelectRender {...props} />,
 };
 
 export const Radio: Story = {
@@ -63,7 +42,6 @@ export const Radio: Story = {
     selectingInput: 'radio',
     placeholder: 'Select item..',
   },
-  render: ({ ...props }) => <SelectRender {...props} />,
 };
 
 export const Checkbox: Story = {
@@ -71,5 +49,4 @@ export const Checkbox: Story = {
     selectingInput: 'checkbox',
     placeholder: 'Select items..',
   },
-  render: ({ ...props }) => <SelectRender {...props} />,
 };
