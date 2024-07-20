@@ -43,7 +43,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
   const { hasError, hasMessage, onChangeInput } = useInput({
     isDisabled: disabled,
     errorMessage: errorMessage,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange: e => {
       uncontrolled
         ? setChecked(e.currentTarget.checked)
         : onChange?.(e.currentTarget.checked);

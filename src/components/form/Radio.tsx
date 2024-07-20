@@ -38,7 +38,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
   const status = useStatus();
   const disabled = group?.isDisabled || status?.isDisabled || isDisabled;
   const checked = status?.isSelected || isChecked || group?.selectedId === id;
-  const { hasError, onChangeInput } = useInput<HTMLInputElement>({
+  const { hasError, onChangeInput } = useInput({
     isDisabled: disabled,
     onChange: e => {
       restProps.onChange?.(e.currentTarget.checked);
