@@ -8,23 +8,32 @@ interface EmptyProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 export default function Empty({ imgData, message, ...props }: EmptyProps) {
+  const hasImgSrc =
+    imgData?.src !== undefined && imgData.src.toString().length > 0;
+
   return (
     <div
       {...props}
-      className={`p-10 ${!imgData ? '' : 'relative'} ${props.className ?? ''}`}
+      className={`m-12 flex items-center justify-center ${!imgData ? '' : 'relative'} ${props.className ?? ''}`}
     >
       <Image
         {...imgData}
         src={imgData?.src ?? EmptyImage}
-        width={imgData?.width ?? 128}
-        height={imgData?.height ?? 128}
+        fill={hasImgSrc}
+        width={imgData?.width ?? (hasImgSrc ? undefined : 128)}
+        height={imgData?.height ?? (hasImgSrc ? undefined : 128)}
         priority
-        className={`aspect-auto opacity-normal dark:opacity-off ${imgData?.className ?? ''}`}
+        placeholder={imgData?.placeholder ?? (hasImgSrc ? 'empty' : 'blur')}
+        className={`${
+          hasImgSrc ? 'object-center' : ''
+        } opacity-normal dark:opacity-off ${imgData?.className ?? ''}`}
         alt="empty-image"
       />
-      <p className="mt-1 w-full text-center font-medium opacity-normal">
-        {message}
-      </p>
+      {message && message.length > 0 && (
+        <p className="mt-1 w-full text-center font-medium opacity-normal">
+          {message}
+        </p>
+      )}
     </div>
   );
 }

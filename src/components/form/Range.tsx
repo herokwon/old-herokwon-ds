@@ -1,11 +1,17 @@
 import { forwardRef, useMemo } from 'react';
 
-import type { AbsolutePositionY, AlignmentX, InputProps } from '../../types';
+import type {
+  AbsolutePositionY,
+  AlignmentX,
+  ElementStatus,
+  InputProps,
+} from '../../types';
 import { useInput } from '../../hooks';
 import InputMessage from './InputMessage';
 
 interface RangeProps
-  extends Omit<InputProps, 'label' | 'value' | 'defaultValue'> {
+  extends Pick<ElementStatus, 'isDisabled'>,
+    Omit<InputProps, 'label' | 'value' | 'defaultValue'> {
   isShowingLabel?: boolean;
   labelDirection?: Exclude<AlignmentX, 'center'> | AbsolutePositionY;
   labelPrefix?: string;

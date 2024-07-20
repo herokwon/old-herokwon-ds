@@ -1,11 +1,11 @@
 interface BackdropProps extends React.ComponentPropsWithoutRef<'section'> {
   isActive: boolean;
-  triggerItem?: React.ReactNode;
+  trigger?: React.ReactNode;
 }
 
 export default function Backdrop({
   children,
-  triggerItem,
+  trigger,
   ...props
 }: BackdropProps) {
   const { isActive, ...restProps } = props;
@@ -15,7 +15,7 @@ export default function Backdrop({
       {isActive && (
         <section
           {...restProps}
-          className="fixed bottom-0 left-0 right-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-light-primary/bold dark:bg-dark-primary/bold"
+          className={`fixed bottom-0 left-0 right-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-light-primary/bold dark:bg-dark-primary/bold ${restProps.className ?? ''}`}
           onClick={e => {
             !e.currentTarget.firstElementChild?.contains(
               e.target as Node | null,
@@ -27,7 +27,7 @@ export default function Backdrop({
           {children}
         </section>
       )}
-      {triggerItem}
+      {trigger}
     </>
   );
 }

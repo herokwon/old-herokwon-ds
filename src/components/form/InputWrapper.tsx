@@ -19,7 +19,7 @@ export default function InputWrapper({
             ? 'border-light-red dark:border-dark-red'
             : 'border-light-blue dark:border-dark-blue'
           : 'border-light-tertiary dark:border-dark-tertiary'
-      } overflow-hidden bg-light-primary transition-all dark:bg-dark-secondary ${props.className ?? ''}`}
+      } cursor-pointer overflow-hidden bg-light-primary transition-all dark:bg-dark-secondary ${props.className ?? ''}`}
     >
       {children}
     </div>

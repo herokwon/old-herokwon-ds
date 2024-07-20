@@ -4,6 +4,7 @@ import './index.css';
 export * from './src/configs';
 
 // common components
+export { default as Box } from './src/components/Box';
 export { default as LinkableElement } from './src/components/LinkableElement';
 export { default as LoadableElement } from './src/components/LoadableElement';
 

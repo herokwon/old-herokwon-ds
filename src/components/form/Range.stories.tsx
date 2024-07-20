@@ -8,6 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: Range,
   args: {
+    isDisabled: false,
     isShowingLabel: false,
     labelDirection: 'left',
     min: 0,

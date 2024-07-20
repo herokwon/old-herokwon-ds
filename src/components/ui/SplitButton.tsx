@@ -3,24 +3,30 @@ import { FaChevronDown } from 'react-icons/fa6';
 
 import type {
   ButtonProps,
-  DropdownFlatItem,
   ElementBaseVariant,
   ElementSpacing,
   ElementEventHandler,
+  FloatingItem,
+  ElementStatus,
+  ElementWithHref,
 } from '../../types';
 import TextButton from './TextButton';
 import IconButton from './IconButton';
 import Dropdown from './Dropdown';
 
-type SplitButtonItem = DropdownFlatItem &
-  ElementEventHandler<HTMLButtonElement, 'onClick'>;
+type SplitButtonItem = FloatingItem<
+  Pick<ElementStatus, 'isDisabled'> &
+    ElementEventHandler<HTMLElement, 'onClick'>
+>;
 
-interface SplitButtonProps extends Omit<ButtonProps, 'spacing' | 'href'> {
+interface SplitButtonProps
+  extends ElementStatus,
+    ElementWithHref,
+    Omit<ButtonProps, 'spacing'> {
   defaultLabel?: string;
   variant?: Exclude<ElementBaseVariant, 'secondary'>;
   spacing?: Exclude<ElementSpacing, 'none'>;
   items: SplitButtonItem[];
-  setItems: React.Dispatch<React.SetStateAction<SplitButtonItem[]>>;
 }
 
 export default function SplitButton({
@@ -29,36 +35,38 @@ export default function SplitButton({
   size = 'md',
   spacing = 'default',
   items,
-  setItems,
   ...props
 }: SplitButtonProps) {
   const {
-    stopPropagation = false,
-    preventDefault = false,
     isDisabled = false,
     isSelected = false,
     isLoading = false,
+    stopPropagation = false,
+    preventDefault = false,
     ...restProps
   } = props;
 
   const [isOpen, setIsOpen] = useState<boolean>(isSelected);
+  const [selectedId, setSelectedId] = useState<string>(
+    items.length === 0 ? '' : items[0].id,
+  );
   const selectedItem = useMemo(
-    () => items.find(item => item.isSelected) ?? null,
-    [items],
+    () => items.find(item => item.id === selectedId) ?? null,
+    [items, selectedId],
   );
 
   return (
-    <Dropdown.Wrapper
+    <Dropdown
+      isLoading={isLoading}
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      triggerItem={
+      onClose={() => setIsOpen(false)}
+      trigger={
         <div className="flex h-full" onClick={e => e.stopPropagation()}>
           <TextButton
             {...restProps}
             isDisabled={isDisabled}
             isSelected={isOpen}
-            isLoading={isLoading}
-            label={selectedItem?.heading ?? defaultLabel ?? ''}
+            label={selectedItem?.children ?? defaultLabel}
             variant={variant}
             size={size}
             spacing={spacing}
@@ -82,7 +90,7 @@ export default function SplitButton({
             size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
             spacing={spacing}
             shape="square"
-            className={`rounded-l-none ${
+            className={`h-full rounded-l-none ${
               isOpen ? 'first:*:rotate-180' : ''
             } first:*:transition-all`}
             onClick={() => setIsOpen(prev => !prev)}
@@ -90,13 +98,31 @@ export default function SplitButton({
         </div>
       }
     >
-      <Dropdown.Container>
-        <Dropdown.FlatItems
-          selectingInput="text"
-          items={items}
-          setItems={setItems}
-        />
-      </Dropdown.Container>
-    </Dropdown.Wrapper>
+      <Dropdown.TextGroup>
+        {items.map(
+          ({
+            children,
+            isDisabled,
+            id,
+            description,
+            elemBefore,
+            elemAfter,
+          }) => (
+            <Dropdown.Text
+              key={id}
+              isDisabled={isDisabled}
+              isSelected={selectedId === id}
+              id={id}
+              description={description}
+              elemBefore={elemBefore}
+              elemAfter={elemAfter}
+              onClick={() => setSelectedId(id)}
+            >
+              {children}
+            </Dropdown.Text>
+          ),
+        )}
+      </Dropdown.TextGroup>
+    </Dropdown>
   );
 }

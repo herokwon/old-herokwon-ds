@@ -5,7 +5,7 @@ const customVariants = {
   'slider-track': ['&::-webkit-slider-runnable-track', '&::-moz-range-track'],
 };
 
-export default plugin(function ({ addBase, addVariant }) {
+export default plugin(function ({ addBase, addVariant, addUtilities }) {
   addBase({
     // heading
     h1: {
@@ -37,6 +37,8 @@ export default plugin(function ({ addBase, addVariant }) {
     'button:disabled': {
       cursor: 'not-allowed',
       opacity: '0.38',
+    },
+    'button:disabled > *': {
       pointerEvents: 'none',
     },
 
@@ -101,5 +103,14 @@ export default plugin(function ({ addBase, addVariant }) {
 
   Object.entries(customVariants).forEach(([name, definition]) => {
     addVariant(name, definition);
+  });
+
+  addUtilities({
+    '.scrollbar-hide': {
+      '-ms-overflow-style': 'none',
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+    },
   });
 });

@@ -9,6 +9,7 @@ const meta = {
   args: {
     variant: 'default',
     size: 'md',
+    className: 'max-w-[300px]',
   },
 } satisfies Meta<typeof InlineMessage>;
 export default meta;
@@ -16,6 +17,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: {
+    message: 'This is a default inline message',
+  },
+};
+
+export const Heading: Story = {
   args: {
     heading: 'Heading',
     message: 'This is a default inline message with heading',

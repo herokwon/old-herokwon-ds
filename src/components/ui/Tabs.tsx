@@ -1,4 +1,5 @@
-import type { AlignmentX, ElementBaseSize } from '../../types';
+import type { AlignmentX, ElementBaseSize, ElementStatus } from '../../types';
+import LoadableElement from '../LoadableElement';
 import TextButton from './TextButton';
 
 interface TabItem {
@@ -7,7 +8,9 @@ interface TabItem {
   content: React.ReactNode;
 }
 
-interface TabsProps extends React.ComponentPropsWithoutRef<'div'> {
+interface TabsProps
+  extends Omit<ElementStatus, 'isSelected'>,
+    React.ComponentPropsWithoutRef<'div'> {
   size?: ElementBaseSize;
   alignX?: AlignmentX;
   tabItems: TabItem[];
@@ -23,8 +26,10 @@ export default function Tabs({
   setSelectedIndex,
   ...props
 }: TabsProps) {
+  const { isDisabled = false, isLoading = false, ...restProps } = props;
+
   return (
-    <div {...props} className={`w-full ${props.className ?? ''}`}>
+    <div {...restProps} className={`w-full ${restProps.className ?? ''}`}>
       <div
         className={`flex w-full ${
           alignX === 'left'
@@ -53,9 +58,13 @@ export default function Tabs({
           />
         ))}
       </div>
-      <div className="my-4 w-full">
+      <LoadableElement
+        as="div"
+        isActive={isLoading}
+        className={`${isDisabled ? 'disabled' : ''} my-4 w-full`}
+      >
         {tabItems.find(tabItem => tabItem.index === selectedIndex)?.content}
-      </div>
+      </LoadableElement>
     </div>
   );
 }

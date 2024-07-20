@@ -8,6 +8,10 @@ const meta = {
   title: 'Components/TimePicker',
   tags: ['autodocs'],
   component: TimePicker,
+  args: {
+    isDisabled: false,
+    isLoading: false,
+  },
 } satisfies Meta<typeof TimePicker>;
 export default meta;
 
@@ -41,6 +45,13 @@ export const Default: Story = {
 export const Disabled: Story = {
   args: {
     isDisabled: true,
+  },
+  render: ({ ...props }) => <TimePickerRender {...props} />,
+};
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
   },
   render: ({ ...props }) => <TimePickerRender {...props} />,
 };

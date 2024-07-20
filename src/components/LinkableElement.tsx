@@ -4,23 +4,23 @@ import type {
   ElementWithHref,
   PolymorphicElementPropsWithoutRef,
 } from '../types';
+import Box from './Box';
 
 type LinkableElementProps<T extends React.ElementType> =
   PolymorphicElementPropsWithoutRef<T, ElementWithHref>;
 
-export default function LinkableElement<T extends React.ElementType = 'div'>({
+export default function LinkableElement<T extends React.ElementType>({
   children,
   as,
   href,
   ...props
 }: LinkableElementProps<T>) {
-  const Element = as || 'div';
-
   const { push, replace } = useRouter();
 
   return (
-    <Element
+    <Box
       {...props}
+      as={as || 'div'}
       className={`${href ? 'linkable' : ''} ${props.className ?? ''}`}
       onClick={e => {
         props.onClick && props.onClick(e);
@@ -28,6 +28,6 @@ export default function LinkableElement<T extends React.ElementType = 'div'>({
       }}
     >
       {children}
-    </Element>
+    </Box>
   );
 }

@@ -22,7 +22,7 @@ export default function InputHeader({
         !label && maxLength ? 'justify-end' : 'justify-between'
       } items-center`}
     >
-      {label && label.length > 0 && (
+      {label && (
         <label
           htmlFor={id}
           className={`flex w-full items-center text-xs font-semibold ${

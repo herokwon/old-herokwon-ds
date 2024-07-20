@@ -1,20 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FaCalendarDays } from 'react-icons/fa6';
 
-import type { ElementStates } from '../../types';
 import Dropdown from '../ui/Dropdown';
 import Calendar from '../ui/Calendar';
 import DatetimeField from './DatetimeField';
 
-type DatePickerProps = Pick<ElementStates, 'isDisabled'> &
-  Omit<
-    React.ComponentProps<typeof Dropdown.Wrapper>,
-    'children' | 'isOpen' | 'setIsOpen'
-  > &
+type DatePickerProps = Pick<
+  React.ComponentPropsWithoutRef<typeof DatetimeField>,
+  'isDisabled'
+> &
   Pick<
-    React.ComponentProps<typeof Calendar>,
+    React.ComponentPropsWithoutRef<typeof Calendar>,
     'today' | 'pickedDate' | 'setPickedDate'
-  >;
+  > &
+  React.ComponentPropsWithoutRef<typeof Dropdown>;
 
 export default function DatePicker({
   today,
@@ -22,13 +21,15 @@ export default function DatePicker({
   setPickedDate,
   ...props
 }: DatePickerProps) {
+  const { isDisabled = false, isLoading = false, ...restProps } = props;
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pickedDateValue = useMemo(
     () =>
-      props.isDisabled
+      isDisabled
         ? ''
         : `${pickedDate.year}-${pickedDate.month.toString().padStart(2, '0')}-${pickedDate.date.toString().padStart(2, '0')}`,
-    [props.isDisabled, pickedDate],
+    [isDisabled, pickedDate],
   );
 
   useEffect(() => {
@@ -36,11 +37,11 @@ export default function DatePicker({
   }, [pickedDate]);
 
   return (
-    <Dropdown.Wrapper
-      {...props}
+    <Dropdown
+      {...restProps}
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      triggerItem={
+      onClose={() => setIsOpen(false)}
+      trigger={
         <DatetimeField
           readOnly
           value={pickedDateValue}
@@ -48,14 +49,12 @@ export default function DatePicker({
         />
       }
     >
-      <Dropdown.Container>
-        <Calendar
-          form="monthly"
-          today={today}
-          pickedDate={pickedDate}
-          setPickedDate={setPickedDate}
-        />
-      </Dropdown.Container>
-    </Dropdown.Wrapper>
+      <Calendar
+        form="monthly"
+        today={today}
+        pickedDate={pickedDate}
+        setPickedDate={setPickedDate}
+      />
+    </Dropdown>
   );
 }

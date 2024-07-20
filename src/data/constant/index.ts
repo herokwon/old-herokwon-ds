@@ -1,11 +1,11 @@
 import type { IconType } from 'react-icons';
 import {
   FaCircleCheck,
-  FaCircleExclamation,
   FaCircleInfo,
   FaCommentDots,
   FaTriangleExclamation,
 } from 'react-icons/fa6';
+import { BsFillExclamationDiamondFill } from 'react-icons/bs';
 
 import type { ElementExtendedSize, FeedbackVariant, Months } from '../../types';
 
@@ -90,5 +90,5 @@ export const FEEDBACK_ICONS: { [variant in FeedbackVariant]: IconType } = {
   success: FaCircleCheck,
   info: FaCircleInfo,
   warning: FaTriangleExclamation,
-  danger: FaCircleExclamation,
+  danger: BsFillExclamationDiamondFill,
 };

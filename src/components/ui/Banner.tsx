@@ -1,12 +1,15 @@
 import InlineMessage from './InlineMessage';
 
-type BannerProps = Omit<
-  React.ComponentPropsWithoutRef<typeof InlineMessage>,
-  'heading'
->;
+interface BannerProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof InlineMessage>,
+    'heading' | 'message'
+  > {
+  children: React.ReactNode;
+}
 
 export default function Banner({
-  message,
+  children,
   variant = 'default',
   size = 'md',
   ...props
@@ -14,10 +17,10 @@ export default function Banner({
   return (
     <InlineMessage
       {...props}
-      message={message}
+      message={children}
       variant={variant}
       size={size}
-      className="banner rounded-ms px-3 py-1.5"
+      className="banner rounded-ms px-3 py-2"
     />
   );
 }

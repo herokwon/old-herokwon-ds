@@ -1,67 +1,56 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import Dropdown from './Dropdown';
+import type { Children } from '../../types';
+import Popup from './Popup';
 
 interface TooltipProps
   extends Omit<
-    React.ComponentPropsWithoutRef<typeof Dropdown.Wrapper>,
-    'children' | 'isOpen' | 'setIsOpen'
+    React.ComponentPropsWithoutRef<typeof Popup>,
+    'isOpen' | 'trigger' | 'onClose' | 'content'
   > {
-  content: string;
+  content: Children;
 }
 
 export default function Tooltip({
+  children,
   position = 'bottom-center',
-  size = 'md',
   content,
   ...props
 }: TooltipProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [activeContent, setActiveContent] = useState<string>(content);
-
-  useEffect(() => {
-    setActiveContent(content);
-  }, [content]);
 
   return (
-    <Dropdown.Wrapper
+    <Popup
       {...props}
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
       position={position}
-      className={`only:*:last:*:border-0 only:*:last:*:bg-light-secondary only:*:last:*:shadow-md only:*:last:*:dark:bg-dark-secondary ${props.className ?? ''}`}
+      trigger={children}
+      onClose={() => setIsOpen(false)}
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+      className={`only:*:last:*:border-0 only:*:last:*:bg-dark-tertiary only:*:last:*:text-dark only:*:last:*:shadow-md only:*:last:*:after:absolute only:*:last:*:after:border-[0.5rem] only:*:last:*:after:border-transparent ${
+        position.startsWith('top')
+          ? 'only:*:last:*:after:bottom-0 only:*:last:*:after:border-b-0 only:*:last:*:after:border-t-dark-tertiary'
+          : position.startsWith('bottom')
+            ? 'only:*:last:*:after:top-0 only:*:last:*:after:border-t-0 only:*:last:*:after:border-b-dark-tertiary'
+            : position.startsWith('left')
+              ? 'only:*:last:*:after:right-0 only:*:last:*:after:border-r-0 only:*:last:*:after:border-l-dark-tertiary'
+              : 'only:*:last:*:after:left-0 only:*:last:*:after:border-l-0 only:*:last:*:after:border-r-dark-tertiary'
+      } ${
+        position.endsWith('top')
+          ? 'only:*:last:*:after:top-0 only:*:last:*:after:translate-y-3/4 only:*:last:*:after:border-t-0'
+          : position.endsWith('bottom')
+            ? 'only:*:last:*:after:bottom-0 only:*:last:*:after:-translate-y-3/4 only:*:last:*:after:border-b-0'
+            : position.endsWith('left')
+              ? 'only:*:last:*:after:left-0 only:*:last:*:after:translate-x-3/4 only:*:last:*:after:border-l-0'
+              : position.endsWith('right')
+                ? 'only:*:last:*:after:right-0 only:*:last:*:after:-translate-x-3/4 only:*:last:*:after:border-r-0'
+                : position.endsWith('middle')
+                  ? 'only:*:last:*:after:top-1/2 only:*:last:*:after:-translate-y-1/2 only:*:last:*:after:border-y-[calc((0.5rem/3)*2)]'
+                  : 'only:*:last:*:after:left-1/2 only:*:last:*:after:-translate-x-1/2 only:*:last:*:after:border-x-[calc((0.5rem/3)*2)]'
+      } ${props.className ?? ''}`}
     >
-      <Dropdown.Container
-        className={`after:absolute after:border-[0.5rem] after:border-transparent ${
-          position.startsWith('top')
-            ? 'after:bottom-0 after:border-b-0 after:border-t-light-secondary after:dark:border-t-dark-secondary'
-            : position.startsWith('bottom')
-              ? 'after:top-0 after:border-t-0 after:border-b-light-secondary after:dark:border-b-dark-secondary'
-              : position.startsWith('left')
-                ? 'after:right-0 after:border-r-0 after:border-l-light-secondary after:dark:border-l-dark-secondary'
-                : 'after:left-0 after:border-l-0 after:border-r-light-secondary after:dark:border-r-dark-secondary'
-        } ${
-          position.endsWith('top')
-            ? 'after:top-0 after:translate-y-3/4 after:border-y-[calc(0.5rem/2)]'
-            : position.endsWith('bottom')
-              ? 'after:bottom-0 after:-translate-y-3/4 after:border-y-[calc(0.5rem/2)]'
-              : position.endsWith('left')
-                ? 'after:left-0 after:translate-x-3/4 after:border-x-[calc(0.5rem/2)]'
-                : position.endsWith('right')
-                  ? 'after:right-0 after:-translate-x-3/4 after:border-x-[calc(0.5rem/2)]'
-                  : position.endsWith('middle')
-                    ? 'after:top-1/2 after:-translate-y-1/2 after:border-y-[calc(0.5rem/2)]'
-                    : 'after:left-1/2 after:-translate-x-1/2 after:border-x-[calc(0.5rem/2)]'
-        }`}
-      >
-        <p
-          className={`px-1 ${
-            size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
-          } whitespace-pre`}
-        >
-          {activeContent}
-        </p>
-      </Dropdown.Container>
-    </Dropdown.Wrapper>
+      {content}
+    </Popup>
   );
 }

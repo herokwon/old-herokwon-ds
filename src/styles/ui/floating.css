@@ -1,0 +1,63 @@
+.floating-container {
+  &:not(.open) {
+    @apply pointer-events-none opacity-0;
+  }
+
+  &:is(.to-top-left, .to-top-center, .to-top-right) {
+    @apply bottom-full px-0;
+
+    &:not(.open) {
+      @apply -translate-y-[0.125rem];
+    }
+  }
+
+  &:is(.to-bottom-left, .to-bottom-center, .to-bottom-right) {
+    @apply top-full px-0;
+
+    &:not(.open) {
+      @apply translate-y-[0.125rem];
+    }
+  }
+
+  &:is(.to-left-top, .to-left-middle, .to-left-bottom) {
+    @apply right-full py-0;
+
+    &:not(.open) {
+      @apply -translate-x-[0.125rem];
+    }
+  }
+
+  &:is(.to-right-top, .to-right-middle, .to-right-bottom) {
+    @apply left-full py-0;
+
+    &:not(.open) {
+      @apply translate-x-[0.125rem];
+    }
+  }
+
+  /* 세부 위치 설정 ------------------------------ */
+
+  &:is(.to-top-left, .to-bottom-left) {
+    @apply left-0;
+  }
+
+  &:is(.to-top-center, .to-bottom-center) {
+    @apply left-1/2 -translate-x-1/2;
+  }
+
+  &:is(.to-top-right, .to-bottom-right) {
+    @apply right-0;
+  }
+
+  &:is(.to-left-top, .to-right-top) {
+    @apply top-0;
+  }
+
+  &:is(.to-left-middle, .to-right-middle) {
+    @apply top-1/2 -translate-y-1/2;
+  }
+
+  &:is(.to-left-bottom, .to-right-bottom) {
+    @apply bottom-0;
+  }
+}
