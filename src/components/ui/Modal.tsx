@@ -1,70 +1,34 @@
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  useEffect,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LuX } from 'react-icons/lu';
 
 import IconButton from './IconButton';
 import Backdrop from './Backdrop';
 
-type ModalWrapperChildren = React.ReactElement<{
+interface ModalProps extends React.ComponentPropsWithoutRef<'dialog'> {
+  children: React.ReactNode;
   isActive?: boolean;
-  setIsActive?: React.Dispatch<React.SetStateAction<boolean>>;
-}>;
-
-interface ModalWrapperProps
-  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
-  children: ModalWrapperChildren | ModalWrapperChildren[];
-  triggerItem?: React.ReactElement;
-  isActive: boolean;
-  setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  trigger?: React.ReactNode;
+  onClose?: () => void;
 }
 
-interface ModalContainerProps extends React.ComponentPropsWithoutRef<'dialog'> {
-  id: string;
-  isActive?: boolean;
-  setIsActive?: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ModalWrapper = ({
+export default function Modal({
   children,
-  triggerItem,
+  trigger,
+  onClose,
   ...props
-}: ModalWrapperProps) => {
-  const { isActive = false, setIsActive, ...restProps } = props;
-
-  return (
-    <div {...restProps}>
-      {triggerItem}
-      {Children.map(children, child => {
-        if (!isValidElement(child)) return child;
-        return cloneElement(child as React.ReactElement, {
-          isActive: isActive,
-          setIsActive: setIsActive,
-        });
-      })}
-    </div>
-  );
-};
-
-const ModalContainer = ({ children, id, ...props }: ModalContainerProps) => {
-  const { isActive = false, setIsActive, ...restProps } = props;
-
+}: ModalProps) {
+  const { isActive = false, ...restProps } = props;
   const [isOpen, setIsOpen] = useState<boolean>(isActive);
-  const closeModal = () => {
-    const modal = document.getElementById(id) as HTMLDialogElement | null;
-    if (!modal?.open) return;
-    modal.onanimationend = () => setIsOpen(false);
-    modal.classList.add('close');
-  };
+  const modalRef = useRef<HTMLDialogElement>(null);
 
-  useEffect(() => {
-    !isOpen && setIsActive && setIsActive(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  const closeModal = () => {
+    if (!modalRef.current?.open) return;
+    modalRef.current.onanimationend = () => {
+      setIsOpen(false);
+      isActive && onClose && onClose();
+    };
+    modalRef.current.classList.add('close');
+  };
 
   useEffect(() => {
     isActive ? setIsOpen(true) : closeModal();
@@ -72,12 +36,12 @@ const ModalContainer = ({ children, id, ...props }: ModalContainerProps) => {
   }, [isActive]);
 
   return (
-    <Backdrop isActive={isOpen} onClick={closeModal}>
+    <Backdrop isActive={isOpen} trigger={trigger}>
       <dialog
         {...restProps}
-        id={id}
+        ref={modalRef}
         open={isOpen}
-        className={`min-w-[300px] rounded-ms border border-light-tertiary bg-light-primary px-4 py-3 text-light shadow-primary-light dark:border-dark-tertiary dark:bg-dark-secondary dark:text-dark dark:shadow-primary-dark ${restProps.className ?? ''}`}
+        className={`min-w-[300px] rounded-ms border border-light-tertiary bg-light-primary px-4 py-3 text-light shadow-primary-light shadow-light-tertiary dark:border-dark-tertiary dark:bg-dark-secondary dark:text-dark dark:shadow-primary-dark ${restProps.className ?? ''}`}
       >
         <IconButton
           icon={LuX}
@@ -89,10 +53,4 @@ const ModalContainer = ({ children, id, ...props }: ModalContainerProps) => {
       </dialog>
     </Backdrop>
   );
-};
-
-const Modal = {
-  Wrapper: ModalWrapper,
-  Container: ModalContainer,
-};
-export default Modal;
+}

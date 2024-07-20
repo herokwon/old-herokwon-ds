@@ -19,10 +19,10 @@ type Story = StoryObj<typeof meta>;
 const BackdropRender = ({
   ...props
 }: React.ComponentPropsWithoutRef<typeof Backdrop>) => {
-  const [isActive, setIsActive] = useState<boolean>(props.isActive ?? false);
+  const [isActive, setIsActive] = useState<boolean>(props.isActive || false);
 
   useEffect(() => {
-    setIsActive(props.isActive ?? false);
+    setIsActive(props.isActive || false);
   }, [props.isActive]);
 
   return (
