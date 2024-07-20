@@ -4,13 +4,19 @@ import type {
   ButtonProps,
   ContentWithIcon,
   ElementExtendedVariant,
+  ElementStatus,
+  ElementWithHref,
 } from '../../types';
 import { ICON_SIZE } from '../../data/constant';
 import LoadableElement from '../LoadableElement';
 import LinkableElement from '../LinkableElement';
 
-interface TextButtonProps extends ButtonProps, ContentWithIcon {
-  label: string;
+interface TextButtonProps
+  extends ElementStatus,
+    ElementWithHref,
+    ContentWithIcon,
+    ButtonProps {
+  label: React.ReactNode;
   variant?: ElementExtendedVariant;
   isHoverable?: boolean;
 }
@@ -75,7 +81,7 @@ export default function TextButton({
             className={spacing === 'default' ? 'mr-1.5' : 'mr-1'}
           />
         )}
-        <p>{label}</p>
+        {label}
         {AfterIcon && (
           <AfterIcon
             {...Object.fromEntries(

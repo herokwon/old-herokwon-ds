@@ -1,14 +1,16 @@
 import { forwardRef, useMemo } from 'react';
 import type { IconType } from 'react-icons';
 
-import type { DatetimeInput, InputProps } from '../../types';
+import type { DatetimeInput, ElementStatus, InputProps } from '../../types';
 import { ICON_SIZE } from '../../data/constant';
 import { useInput } from '../../hooks';
 import InputHeader from './InputHeader';
 import InputWrapper from './InputWrapper';
 import InputMessage from './InputMessage';
 
-interface DatetimeFieldProps extends InputProps {
+interface DatetimeFieldProps
+  extends Pick<ElementStatus, 'isDisabled'>,
+    InputProps {
   type?: DatetimeInput;
   fieldIcon?: IconType;
 }
@@ -19,6 +21,14 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
     ref,
   ) {
     const { isDisabled = false, ...restProps } = props;
+    const inputEventHandlerProps = Object.fromEntries(
+      Object.entries(restProps).filter(prop => prop[0].includes('on')),
+    );
+    const inputNotEventHandlerProps = Object.fromEntries(
+      Object.entries(restProps).filter(
+        prop => !(prop[0] in inputEventHandlerProps),
+      ),
+    );
 
     const FieldIcon = useMemo(() => fieldIcon ?? null, [fieldIcon]);
     const {
@@ -55,11 +65,16 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
             currentInputLength={currentInputLength}
           />
         )}
-        <InputWrapper isFocused={isFocused} hasError={hasError}>
+        <InputWrapper
+          {...inputEventHandlerProps}
+          isFocused={isFocused}
+          hasError={hasError}
+        >
           <input
-            {...restProps}
+            {...inputNotEventHandlerProps}
             ref={ref}
             type={type}
+            disabled={isDisabled}
             onFocus={onFocusInput}
             onBlur={onBlurInput}
             onChange={onChangeInput}

@@ -1,4 +1,4 @@
-import type { AlignmentX, ElementBaseSize, ElementStates } from '../../types';
+import type { AlignmentX, ElementBaseSize, ElementStatus } from '../../types';
 import LoadableElement from '../LoadableElement';
 import TextButton from './TextButton';
 
@@ -9,7 +9,7 @@ interface TabItem {
 }
 
 interface TabsProps
-  extends Pick<ElementStates, 'isDisabled' | 'isLoading'>,
+  extends Omit<ElementStatus, 'isSelected'>,
     React.ComponentPropsWithoutRef<'div'> {
   size?: ElementBaseSize;
   alignX?: AlignmentX;
@@ -59,6 +59,7 @@ export default function Tabs({
         ))}
       </div>
       <LoadableElement
+        as="div"
         isActive={isLoading}
         className={`${isDisabled ? 'disabled' : ''} my-4 w-full`}
       >

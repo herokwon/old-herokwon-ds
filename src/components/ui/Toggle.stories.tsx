@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Toggle>;
 const ToggleRender = ({
   ...props
 }: React.ComponentPropsWithoutRef<typeof Toggle>) => {
-  const [isActive, setIsActive] = useState<boolean>(props.isActive ?? false);
+  const [isActive, setIsActive] = useState<boolean>(props.isActive || false);
 
   useEffect(() => {
     setIsActive(props.isActive);
