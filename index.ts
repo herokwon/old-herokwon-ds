@@ -3,9 +3,6 @@ import './index.css';
 // configs
 export * from './src/configs';
 
-// hooks
-export { useScrollIntoView } from './src/hooks';
-
 // common components
 export { default as Box } from './src/components/Box';
 export { default as LinkableElement } from './src/components/LinkableElement';
