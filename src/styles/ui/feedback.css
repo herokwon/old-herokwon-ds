@@ -26,12 +26,12 @@
   &:is(.banner) {
     @apply bg-light-green !text-dark dark:bg-dark-green;
 
-    & > :first-child {
+    & svg {
       @apply !text-dark;
     }
   }
 
-  &:not(.banner) > :first-child {
+  &:not(.banner) svg {
     @apply text-light-green dark:text-dark-green;
   }
 }
@@ -40,12 +40,12 @@
   &:is(.banner) {
     @apply bg-light-blue !text-dark dark:bg-dark-blue;
 
-    & > :first-child {
+    & svg {
       @apply !text-dark;
     }
   }
 
-  &:not(.banner) > :first-child {
+  &:not(.banner) svg {
     @apply text-light-blue dark:text-dark-blue;
   }
 }
@@ -54,12 +54,12 @@
   &:is(.banner) {
     @apply bg-light-yellow !text-light dark:bg-dark-yellow;
 
-    & > :first-child {
+    & svg {
       @apply !text-light;
     }
   }
 
-  &:not(.banner) > :first-child {
+  &:not(.banner) svg {
     @apply text-light-yellow dark:text-dark-yellow;
   }
 }
@@ -68,32 +68,52 @@
   &:is(.banner) {
     @apply bg-light-red !text-dark dark:bg-dark-red;
 
-    & > :first-child {
+    & svg {
       @apply !text-dark;
     }
   }
 
-  &:not(.banner) > :first-child {
+  &:not(.banner) svg {
     @apply text-light-red dark:text-dark-red;
   }
 }
 
 .section-message--default {
   @apply border-light-tertiary bg-light-secondary dark:border-dark-tertiary dark:bg-dark-secondary;
+
+  & svg {
+    @apply text-light dark:text-dark;
+  }
 }
 
 .section-message--success {
   @apply border-light-green bg-feedback-light-green dark:border-dark-green dark:bg-feedback-dark-green;
+
+  & svg {
+    @apply text-light-green dark:text-dark-green;
+  }
 }
 
 .section-message--info {
   @apply border-light-blue bg-feedback-light-blue dark:border-dark-blue dark:bg-feedback-dark-blue;
+
+  & svg {
+    @apply text-light-blue dark:text-dark-blue;
+  }
 }
 
 .section-message--warning {
   @apply border-light-yellow bg-feedback-light-yellow dark:border-dark-yellow dark:bg-feedback-dark-yellow;
+
+  & svg {
+    @apply text-light-yellow dark:text-dark-yellow;
+  }
 }
 
 .section-message--danger {
   @apply border-light-red bg-feedback-light-red dark:border-dark-red dark:bg-feedback-dark-red;
+
+  & svg {
+    @apply text-light-red dark:text-dark-red;
+  }
 }

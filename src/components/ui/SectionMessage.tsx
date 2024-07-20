@@ -2,12 +2,15 @@ import { useMemo, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 
 import type { FeedbackAction } from '../../types';
+import { FEEDBACK_ICONS } from '../../data/constant';
 import InlineMessage from './InlineMessage';
 import TextButton from './TextButton';
 import IconButton from './IconButton';
+import Heading from './Heading';
 
-type SectionMessageProps = React.ComponentPropsWithoutRef<
-  typeof InlineMessage
+type SectionMessageProps = Omit<
+  React.ComponentPropsWithoutRef<typeof InlineMessage>,
+  'message'
 > & {
   actions?: FeedbackAction[];
 } & (
@@ -21,13 +24,14 @@ type SectionMessageProps = React.ComponentPropsWithoutRef<
   );
 
 export default function SectionMessage({
-  heading,
-  message,
+  children,
+  heading = '',
   variant = 'default',
   size = 'md',
   actions = [],
   ...props
 }: SectionMessageProps) {
+  const FeedbackIcon = useMemo(() => FEEDBACK_ICONS[variant], [variant]);
   const [isHidden, setIsHidden] = useState<boolean>(
     !!props.isHidable && !!props.defaultHidden,
   );
@@ -43,54 +47,76 @@ export default function SectionMessage({
 
   return (
     <section
-      className={`section-message--${variant} w-full rounded-ms border px-4 py-3 shadow-md shadow-light-secondary dark:shadow-dark-secondary ${
+      {...restProps}
+      className={`section-message--${variant} group flex w-full max-w-[300px] items-start rounded-ms px-4 py-3 ${
         !!props.isHidable ? 'cursor-pointer' : ''
       } ${props.className ?? ''}`}
-      onClick={() => setIsHidden(prev => !prev)}
+      onClick={() => props.isHidable && setIsHidden(prev => !prev)}
     >
-      <div
-        className={`flex w-full ${isHidden ? 'items-center' : 'items-start'}`}
+      <span
+        className={`w-max ${
+          size === 'lg'
+            ? 'my-1'
+            : size === 'sm'
+              ? 'my-[0.125rem]'
+              : 'my-[0.1875rem]'
+        } mr-4`}
       >
-        <InlineMessage
-          {...restProps}
-          heading={heading}
-          message={message}
-          variant={variant}
-          size={size}
-          className={`${
-            !heading ? '' : size === 'sm' ? 'first:*:mr-2.5' : 'first:*:mr-3'
-          } ${isHidden ? 'last:*:line-clamp-1' : ''}`}
-        >
-          {actions.length > 0 && (
-            <div className="flex w-full items-center justify-end gap-x-1 pb-1 pt-4">
-              {actions.map(action => (
-                <TextButton
-                  {...action}
-                  key={action.id}
-                  size={size === 'lg' ? 'md' : 'sm'}
-                  onClick={e => {
-                    e.stopPropagation();
-                    action.onClick && action.onClick(e);
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </InlineMessage>
-        {props.isHidable && (
-          <IconButton
-            icon={FaChevronDown}
-            variant="secondary"
-            size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
-            spacing="none"
-            className={`${size === 'sm' ? 'ml-1.5' : 'ml-2'} ${
-              isHidden
-                ? 'opacity-off hover:opacity-normal'
-                : 'rotate-180 opacity-normal'
-            } transition-all`}
-          />
+        <FeedbackIcon
+          className={`${size === 'lg' ? 'w-xl' : size === 'sm' ? 'w-base' : 'w-lg'} !aspect-square h-max`}
+        />
+      </span>
+      <div
+        className={`my-auto w-full break-all ${
+          size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
+        } ${isHidden ? 'line-clamp-2' : ''}`}
+      >
+        {heading.length > 0 && (
+          <Heading
+            as="h2"
+            className={`block w-full ${
+              size === 'lg'
+                ? 'text-lg'
+                : size === 'sm'
+                  ? 'text-sm'
+                  : 'text-base'
+            }`}
+          >
+            {heading}
+          </Heading>
+        )}
+        <span className={heading.length > 0 ? 'opacity-normal' : ''}>
+          {children}
+        </span>
+        {actions.length > 0 && (
+          <div className="flex w-full items-center justify-end gap-x-1 pb-1 pt-4">
+            {actions.map(action => (
+              <TextButton
+                {...action}
+                key={action.id}
+                size={size === 'lg' ? 'md' : 'sm'}
+                onClick={e => {
+                  e.stopPropagation();
+                  action.onClick && action.onClick(e);
+                }}
+              />
+            ))}
+          </div>
         )}
       </div>
+      {props.isHidable && (
+        <IconButton
+          icon={FaChevronDown}
+          variant="secondary"
+          size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
+          spacing="none"
+          className={`ml-2 ${
+            isHidden
+              ? 'opacity-off group-hover:opacity-normal'
+              : 'rotate-180 opacity-normal'
+          } transition-all`}
+        />
+      )}
     </section>
   );
 }
