@@ -17,7 +17,7 @@ export type ElementSpacing = (typeof ELEMENT_SPACINGS)[number];
 export type ElementBaseVariant = (typeof ELEMENT_BASE_VARIANTS)[number];
 export type ElementExtendedVariant = (typeof ELEMENT_EXTENDED_VARIANTS)[number];
 export type ElementDirection = (typeof ELEMENT_DIRECTIONS)[number];
-export interface ElementStates {
+export interface ElementStatus {
   isDisabled?: boolean;
   isSelected?: boolean;
   isLoading?: boolean;
@@ -44,9 +44,11 @@ type AsProp<T extends React.ElementType> = {
 export type PolymorphicRef<T extends React.ElementType> =
   React.ComponentPropsWithRef<T>['ref'];
 export type PolymorphicElementPropsWithoutRef<
-  T extends React.ElementType,
+  T extends React.ElementType = 'div',
   Props = {},
-> = AsProp<T> & Props & React.ComponentPropsWithoutRef<T>;
+> = React.PropsWithChildren<
+  AsProp<T> & Props & React.ComponentPropsWithoutRef<T>
+>;
 export type PolymorphicElementPropsWithRef<
   T extends React.ElementType,
   Props = {},
@@ -55,13 +57,19 @@ export type PolymorphicElementPropsWithRef<
 };
 
 // content element types
-export interface ContentWithId extends Omit<ElementStates, 'isLoading'> {
-  id: string;
-  heading: string;
+export type Children = Exclude<React.ReactNode, null | undefined>;
+export type PropsWithChildren<Props = {}> = Props & {
+  children: Children;
+};
+export interface BaseContent {
+  children: Children;
   description?: string;
 }
+export interface ContentWithId extends BaseContent {
+  id: string;
+}
 export interface ContentWithIcon {
-  iconBefore?: React.ComponentPropsWithoutRef<'svg'> & {
+  iconBefore?: ElementEventHandler<SVGElement> & {
     content?: IconType;
     size?: ElementExtendedSize;
   };
@@ -69,6 +77,10 @@ export interface ContentWithIcon {
     content?: IconType;
     size?: ElementExtendedSize;
   };
+}
+export interface ContentWithElement {
+  elemBefore?: Children;
+  elemAfter?: Children;
 }
 export interface ItemsWithHeading {
   id: string;
@@ -82,5 +94,5 @@ export * from './common/position';
 export * from './form/input';
 
 export * from './ui/button';
-export * from './ui/dropdown';
 export * from './ui/feedback';
+export * from './ui/floating';
