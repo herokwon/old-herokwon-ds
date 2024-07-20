@@ -9,25 +9,15 @@ const meta = {
   component: Tooltip,
   args: {
     position: 'bottom-center',
-    size: 'md',
+    children: <TextButton label="Hover on Button" />,
   },
 } satisfies Meta<typeof Tooltip>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Click: Story = {
+export const Default: Story = {
   args: {
-    triggerEvent: 'click',
-    triggerItem: <TextButton label="Click on Button" />,
-    content: 'This is a click tooltip',
-  },
-};
-
-export const Hover: Story = {
-  args: {
-    triggerEvent: 'mouseenter',
-    triggerItem: <TextButton label="Hover on Button" />,
-    content: 'This is a hover tooltip',
+    content: 'This is a tooltip',
   },
 };

@@ -1,11 +1,18 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef } from 'react';
 
-import type { ContentWithId, ElementBaseSize, InputProps } from '../../types';
+import type {
+  ContentWithId,
+  ElementBaseSize,
+  ElementStatus,
+  InputProps,
+} from '../../types';
+import { useRadio, useStatus } from '../../contexts';
 import { useInput } from '../../hooks';
-import RadioGroup from './RadioGroup';
 
 interface RadioProps
-  extends ContentWithId,
+  extends Pick<ElementStatus, 'isDisabled'>,
+    Omit<ContentWithId, 'children'>,
+    Required<Pick<InputProps, 'label'>>,
     Omit<
       InputProps,
       | 'id'
@@ -15,110 +22,95 @@ interface RadioProps
       | 'errorMessage'
       | 'checked'
       | 'defaultChecked'
+      | 'onChange'
     > {
+  isChecked?: boolean;
   size?: ElementBaseSize;
-  groupErrorMessage?: InputProps['errorMessage'];
-  subGroupItem?: React.ComponentProps<typeof RadioGroup>;
+  onChange?: (checked: boolean) => void;
 }
 
 const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
-  { children, id, size = 'md', heading, description, subGroupItem, ...props },
+  { id, size = 'md', label, description, ...props },
   ref,
 ) {
-  const {
-    isDisabled = false,
-    isSelected = false,
-    groupErrorMessage,
-    ...restProps
-  } = props;
-
-  const [isChecked, setIsChecked] = useState<boolean>(isSelected);
+  const { isDisabled = false, isChecked, ...restProps } = props;
+  const group = useRadio();
+  const status = useStatus();
+  const disabled = group?.isDisabled || status?.isDisabled || isDisabled;
+  const checked = status?.isSelected || isChecked || group?.selectedId === id;
   const { hasError, onChangeInput } = useInput({
-    isDisabled: isDisabled,
-    errorMessage: groupErrorMessage,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-      restProps.onChange && restProps.onChange(e);
-      setIsChecked(e.currentTarget.checked);
+    isDisabled: disabled,
+    onChange: e => {
+      restProps.onChange?.(e.currentTarget.checked);
+      group?.onChange(e.currentTarget.id);
     },
   });
 
-  useEffect(() => {
-    setIsChecked(isSelected);
-  }, [isSelected]);
-
   return (
-    <div className="w-full">
-      <label
-        htmlFor={id}
-        className={`${
-          isDisabled ? 'disabled' : 'group cursor-pointer'
-        } flex w-full`}
-      >
-        <span
-          className={`w-max ${
-            size === 'lg' ? 'h-xl' : size === 'sm' ? 'h-xs' : 'h-base'
-          } my-0.5 mr-1.5 flex aspect-square items-center justify-center rounded-full border-[0.1rem] ${
-            isDisabled
-              ? ''
-              : isChecked
-                ? 'border-light-blue dark:border-dark-blue'
-                : hasError
+    <label
+      htmlFor={id}
+      className={`${
+        disabled ? 'disabled' : 'group cursor-pointer'
+      } flex w-full`}
+    >
+      <input
+        {...restProps}
+        type="radio"
+        ref={ref}
+        id={id}
+        hidden
+        disabled={disabled}
+        checked={checked}
+        onChange={onChangeInput}
+      />
+      <span
+        className={`w-max ${
+          size === 'lg' ? 'h-xl' : size === 'sm' ? 'h-xs' : 'h-base'
+        } my-0.5 mr-1.5 flex aspect-square items-center justify-center rounded-full border-[0.1rem] ${
+          checked
+            ? 'border-light-blue dark:border-dark-blue'
+            : `${
+                hasError
                   ? 'border-light-red dark:border-dark-red'
-                  : 'border-light-tertiary group-hover:border-light-blue dark:border-dark-tertiary dark:group-hover:border-dark-blue'
-          } relative transition-colors after:aspect-square after:h-4/5 after:w-4/5 after:rounded-full after:bg-light-blue after:content-[""] after:dark:bg-dark-blue ${
-            isChecked ? '' : 'after:opacity-0'
-          } after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transition-opacity`}
+                  : 'group-hover:border-light-blue dark:group-hover:border-dark-blue'
+              } border-light-tertiary after:opacity-0 dark:border-dark-tertiary`
+        } relative transition-colors after:absolute after:left-1/2 after:top-1/2 after:aspect-square after:h-4/5 after:w-4/5 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-light-blue after:transition-opacity after:content-[""] after:dark:bg-dark-blue`}
+      />
+      {!description ? (
+        <p
+          className={`block w-full ${
+            size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
+          } whitespace-pre`}
         >
-          <input
-            {...restProps}
-            ref={ref}
-            id={id}
-            hidden
-            type="radio"
-            checked={isChecked}
-            onChange={onChangeInput}
-          />
-        </span>
+          {label}
+        </p>
+      ) : (
         <div className="w-full">
           <p
-            className={`${
+            className={`block w-full ${
               size === 'lg'
                 ? 'text-base'
                 : size === 'sm'
                   ? 'text-xs'
                   : 'text-sm'
-            } whitespace-pre font-semibold`}
+            } whitespace-pre`}
           >
-            {heading}
+            {label}
           </p>
-          {description && (
-            <p
-              className={`${
-                size === 'lg'
-                  ? 'text-sm'
-                  : size === 'sm'
-                    ? 'text-[0.625rem] leading-[0.75rem]'
-                    : 'text-xs'
-              } whitespace-pre opacity-normal`}
-            >
-              {description}
-            </p>
-          )}
+          <p
+            className={`${
+              size === 'lg'
+                ? 'text-sm'
+                : size === 'sm'
+                  ? 'text-[0.625rem] leading-[0.75rem]'
+                  : 'text-xs'
+            } whitespace-pre opacity-off`}
+          >
+            {description}
+          </p>
         </div>
-      </label>
-      {children}
-      {subGroupItem && subGroupItem.items.length > 0 && (
-        <RadioGroup
-          {...subGroupItem}
-          isDisabled={!isChecked}
-          size={size === 'lg' ? 'md' : 'sm'}
-          items={subGroupItem.items}
-          className={`${
-            size === 'lg' ? 'pl-6' : size === 'sm' ? 'pl-4' : 'pl-5'
-          } py-2`}
-        />
       )}
-    </div>
+    </label>
   );
 });
 

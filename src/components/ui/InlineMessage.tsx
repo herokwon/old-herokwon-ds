@@ -11,8 +11,7 @@ interface InlineMessageProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 export default function InlineMessage({
-  children,
-  heading,
+  heading = '',
   message,
   variant = 'default',
   size = 'md',
@@ -23,42 +22,41 @@ export default function InlineMessage({
   return (
     <div
       {...props}
-      className={`inline-message--${variant} flex w-full ${
-        size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-      } bg-transparent ${props.className ?? ''}`}
+      className={`inline-message--${variant} flex w-full bg-transparent ${props.className ?? ''}`}
     >
-      <div
+      <span
         className={`h-full w-max ${
-          heading
-            ? size === 'lg'
-              ? 'my-[0.3125rem]'
-              : size === 'sm'
-                ? 'my-[0.1875rem]'
-                : 'my-1'
-            : size === 'lg'
-              ? 'my-1'
-              : size === 'sm'
-                ? 'my-[0.125rem]'
-                : 'my-[0.1875rem]'
+          size === 'lg'
+            ? 'my-1'
+            : size === 'sm'
+              ? 'my-[0.125rem]'
+              : 'my-[0.1875rem]'
         } ${size === 'sm' ? 'mr-1.5' : 'mr-2'}`}
       >
         <FeedbackIcon
-          className={size === 'lg' ? 'h-lg' : size === 'sm' ? 'h-sm' : 'h-base'}
+          className={size === 'lg' ? 'h-base' : size === 'sm' ? 'h-xs' : 'h-sm'}
         />
-      </div>
-      <div className="flex w-full flex-col justify-center">
-        {heading && (
-          <p className="w-full whitespace-pre font-semibold">{heading}</p>
+      </span>
+      <p
+        className={`w-full ${
+          size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
+        } break-all`}
+      >
+        {heading.length > 0 && (
+          <strong
+            className={`${size === 'sm' ? 'mr-1.5' : 'mr-2'} whitespace-nowrap`}
+          >
+            {heading}
+          </strong>
         )}
-        <p
-          className={`w-full ${
-            size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
-          } ${heading ? 'opacity-normal' : ''} whitespace-pre`}
-        >
-          {message}
-        </p>
-        {children}
-      </div>
+        {typeof message === 'string' ? (
+          <span className={heading.length > 0 ? 'opacity-normal' : ''}>
+            {message}
+          </span>
+        ) : (
+          message
+        )}
+      </p>
     </div>
   );
 }

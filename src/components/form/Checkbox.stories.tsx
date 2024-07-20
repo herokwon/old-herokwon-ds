@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Checkbox from './Checkbox';
@@ -7,6 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: Checkbox,
   args: {
+    isDisabled: false,
     id: crypto.randomUUID(),
     size: 'md',
   },
@@ -15,38 +17,72 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const dummySubItems: React.ComponentPropsWithoutRef<
-  typeof Checkbox
->['subItems'] = [
-  ...Array.from({ length: 3 }, (_, i) => ({
-    id: crypto.randomUUID(),
-    heading: `Checkbox SubItem ${i + 1}`,
-  })),
-];
-
-export const Default: Story = {
+export const Default: StoryObj<typeof Checkbox> = {
   args: {
-    heading: 'Default Checkbox Item',
+    isChecked: false,
+    label: 'Default Checkbox Item (Controlled + Uncontrolled)',
+  },
+  render: ({ ...props }) => {
+    const [isChecked, setIsChecked] = useState<boolean>(
+      props.isChecked || false,
+    );
+
+    useEffect(() => {
+      setIsChecked(props.isChecked || false);
+    }, [props.isChecked]);
+
+    return (
+      <Checkbox
+        {...props}
+        isChecked={isChecked}
+        onChange={checked => setIsChecked(checked)}
+      />
+    );
+  },
+};
+
+export const Uncontrolled: Story = {
+  args: {
+    defaultChecked: true,
+    label: 'Uncontrolled Checkbox Item',
   },
 };
 
 export const Disabled: Story = {
   args: {
     isDisabled: true,
-    heading: 'Disabled Checkbox Item',
+    label: 'Disabled Checkbox Item',
+  },
+};
+
+export const Detail: Story = {
+  args: {
+    label: 'Detail Checkbox Item',
+    description: 'This is a description.',
   },
 };
 
 export const ErrorMessage: Story = {
   args: {
-    heading: 'Error Checkbox Item',
-    errorMessage: 'Error!',
+    isChecked: false,
+    label: 'Error Checkbox Item',
   },
-};
+  render: ({ ...props }) => {
+    const [isChecked, setIsChecked] = useState<boolean>(
+      props.isChecked || false,
+    );
 
-export const SubItems: Story = {
-  args: {
-    heading: 'Checkbox Item',
-    subItems: dummySubItems,
+    useEffect(() => {
+      setIsChecked(props.isChecked || false);
+    }, [props.isChecked]);
+
+    return (
+      <Checkbox
+        {...props}
+        isChecked={isChecked}
+        onChange={checked => setIsChecked(checked)}
+        errorMessage={isChecked ? undefined : 'Error!'}
+      />
+    );
   },
 };

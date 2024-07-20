@@ -1,26 +1,23 @@
 import { useState } from 'react';
 import { LuHash, LuX } from 'react-icons/lu';
 
-import type {
-  ContentWithIcon,
-  ElementBaseSize,
-  ElementSpacing,
-} from '../../types';
+import type { ElementBaseSize, ElementSpacing } from '../../types';
 import TextButton from './TextButton';
 
 interface TagProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TextButton>,
-    'isHoverable' | 'size' | 'spacing' | 'iconAfter'
+    'isHoverable' | 'label' | 'size' | 'spacing'
   > {
+  children: React.ComponentPropsWithoutRef<typeof TextButton>['label'];
   isRemovable?: boolean;
   size?: Exclude<ElementBaseSize, 'lg'>;
   spacing?: Exclude<ElementSpacing, 'default'>;
-  iconAfter?: Partial<ContentWithIcon['iconAfter']>;
 }
 
 export default function Tag({ isRemovable = false, ...props }: TagProps) {
   const {
+    children,
     size = 'sm',
     spacing = 'compact',
     iconBefore = { content: LuHash },
@@ -34,6 +31,7 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
     <TextButton
       {...restProps}
       isHoverable={false}
+      label={children}
       size={size}
       spacing={spacing}
       iconBefore={iconBefore}
@@ -61,7 +59,7 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
           : !restProps.href
             ? '!cursor-default'
             : ''
-      }`}
+      } ${restProps.className ?? ''}`}
     />
   );
 }

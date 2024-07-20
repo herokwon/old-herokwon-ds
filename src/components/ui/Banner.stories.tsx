@@ -18,45 +18,43 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    message: 'This is a default banner message',
+    children: 'This is a default banner message',
   },
 };
 
-export const InnerLink: Story = {
-  args: {
-    message: (
-      <>
-        {`This is a default banner message with `}
-        <Link href="/#">link</Link>
-      </>
-    ),
-  },
+export const InnerLink: StoryObj<typeof Banner> = {
+  render: ({ ...props }) => (
+    <Banner {...props} variant="info">
+      This is a default banner message with&nbsp;
+      <Link href="/#">link</Link>
+    </Banner>
+  ),
 };
 
 export const Success: Story = {
   args: {
-    message: 'This is a success banner message',
+    children: 'This is a success banner message',
     variant: 'success',
   },
 };
 
 export const Info: Story = {
   args: {
-    message: 'This is an info banner message',
+    children: 'This is an info banner message',
     variant: 'info',
   },
 };
 
 export const Warning: Story = {
   args: {
-    message: 'This is a warning banner message',
+    children: 'This is a warning banner message',
     variant: 'warning',
   },
 };
 
 export const Danger: Story = {
   args: {
-    message: 'This is a danger banner message',
+    children: 'This is a danger banner message',
     variant: 'danger',
   },
 };

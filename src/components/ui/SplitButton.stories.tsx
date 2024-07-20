@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
@@ -13,60 +12,42 @@ const meta = {
     isSelected: false,
     isLoading: false,
     defaultLabel: 'Default label',
+    variant: 'default',
     size: 'md',
     spacing: 'default',
+    items: Array.from({ length: 3 }, (_, i) => ({
+      isDisabled: i === 2,
+      children: `Split Button Item ${i + 1}`,
+      id: crypto.randomUUID(),
+      description: `This is a description for Split Button Item ${i + 1}`,
+      onClick: fn(),
+    })),
   },
 } satisfies Meta<typeof SplitButton>;
 export default meta;
 
-type Story = StoryObj<typeof SplitButton>;
-
-const SplitButtonRender = ({
-  ...props
-}: Omit<
-  React.ComponentPropsWithoutRef<typeof SplitButton>,
-  'items' | 'setItems'
->) => {
-  const [items, setItems] = useState<
-    React.ComponentPropsWithoutRef<typeof SplitButton>['items']
-  >([
-    ...Array.from({ length: 3 }, (_, i) => ({
-      id: crypto.randomUUID(),
-      heading: `Item ${i + 1}`,
-      description: `This is optional description for item ${i + 1}.`,
-      isDisabled: i === 2,
-      isSelected: false,
-      onClick: fn(),
-    })),
-  ]);
-
-  return <SplitButton {...props} items={items} setItems={setItems} />;
-};
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     variant: 'default',
   },
-  render: ({ ...props }) => <SplitButtonRender {...props} />,
 };
 
 export const Primary: Story = {
   args: {
     variant: 'primary',
   },
-  render: ({ ...props }) => <SplitButtonRender {...props} />,
 };
 
 export const Disabled: Story = {
   args: {
     isDisabled: true,
   },
-  render: ({ ...props }) => <SplitButtonRender {...props} />,
 };
 
 export const Loading: Story = {
   args: {
     isLoading: true,
   },
-  render: ({ ...props }) => <SplitButtonRender {...props} />,
 };

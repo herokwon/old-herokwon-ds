@@ -2,7 +2,7 @@ import { forwardRef, useMemo, useState } from 'react';
 import type { IconType } from 'react-icons';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
-import type { InputProps, TextInput } from '../../types';
+import type { ElementStatus, InputProps, TextInput } from '../../types';
 import { ICON_SIZE } from '../../data/constant';
 import { useInput } from '../../hooks';
 import InputHeader from './InputHeader';
@@ -10,14 +10,19 @@ import InputWrapper from './InputWrapper';
 import InputMessage from './InputMessage';
 import IconButton from '../ui/IconButton';
 
-interface TextFieldProps extends InputProps<TextInput> {
+interface TextFieldProps
+  extends React.PropsWithChildren<
+    Pick<ElementStatus, 'isDisabled'> & InputProps<TextInput>
+  > {
   fieldIcon?: IconType;
 }
 
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  function TextField({ type = 'text', label, fieldIcon, ...props }, ref) {
+  function TextField(
+    { children, type = 'text', label, fieldIcon, ...props },
+    ref,
+  ) {
     const {
-      children,
       isDisabled = false,
       helperMessage,
       errorMessage,

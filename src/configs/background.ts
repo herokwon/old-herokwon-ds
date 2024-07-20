@@ -15,6 +15,6 @@ export const customBgColor: { [key: string]: string } = {
   'light-tertiary': '#cbd5e1',
   'dark-primary': '#121212',
   'dark-secondary': '#1e293b',
-  'dark-tertiary': '#475569',
+  'dark-tertiary': '#334155',
   ...customBgFeedbackColor,
 };

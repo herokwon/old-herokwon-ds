@@ -1,32 +1,31 @@
-import type { InputProps } from '../../types';
+import type { ElementStatus, InputProps } from '../../types';
 import { useInput } from '../../hooks';
 import InputHeader from './InputHeader';
 import InputMessage from './InputMessage';
 
-type TextareaProps = Pick<
-  InputProps,
-  'isDisabled' | 'label' | 'helperMessage' | 'errorMessage'
-> &
+type TextareaProps = Pick<ElementStatus, 'isDisabled'> &
+  Pick<InputProps, 'label' | 'helperMessage' | 'errorMessage'> &
   React.ComponentPropsWithoutRef<'textarea'>;
 
 export default function Textarea({
-  isDisabled = false,
   label,
   helperMessage,
   errorMessage,
   ...props
 }: TextareaProps) {
+  const { isDisabled = false, ...restProps } = props;
+
   const { hasHeader, hasError, hasMessage, currentInputLength, onChangeInput } =
-    useInput({
+    useInput<HTMLTextAreaElement>({
       isDisabled: isDisabled,
       label: label,
       helperMessage: helperMessage,
       errorMessage: errorMessage,
-      autoFocus: props.autoFocus,
-      maxLength: props.maxLength,
-      defaultValue: props.defaultValue,
-      value: props.value,
-      onChange: props.onChange,
+      autoFocus: restProps.autoFocus,
+      maxLength: restProps.maxLength,
+      defaultValue: restProps.defaultValue,
+      value: restProps.value,
+      onChange: restProps.onChange,
     });
 
   return (
@@ -36,21 +35,21 @@ export default function Textarea({
       {hasHeader && (
         <InputHeader
           label={label}
-          id={props.id}
-          required={props.required}
-          maxLength={props.maxLength}
+          id={restProps.id}
+          required={restProps.required}
+          maxLength={restProps.maxLength}
           currentInputLength={currentInputLength}
         />
       )}
       <textarea
-        {...props}
-        autoFocus={hasError ? true : props?.autoFocus}
+        {...restProps}
+        autoFocus={hasError ? true : restProps?.autoFocus}
         onChange={onChangeInput}
         className={`w-full rounded-ms border border-light-tertiary px-2.5 py-1.5 dark:border-dark-tertiary ${
           hasError
             ? 'focus:border-light-red dark:focus:border-dark-red'
             : 'focus:border-light-blue dark:focus:border-dark-blue'
-        } bg-light-primary text-sm outline-none transition-all dark:bg-dark-secondary ${props.className ?? ''}`}
+        } bg-light-primary text-sm outline-none transition-all dark:bg-dark-secondary ${restProps.className ?? ''}`}
       />
       {hasMessage && (
         <InputMessage

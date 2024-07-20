@@ -5,12 +5,17 @@ import type {
   ButtonProps,
   ElementBaseVariant,
   ElementExtendedSize,
+  ElementStatus,
+  ElementWithHref,
 } from '../../types';
 import { ICON_SIZE } from '../../data/constant';
 import LoadableElement from '../LoadableElement';
 import LinkableElement from '../LinkableElement';
 
-interface IconButtonProps extends Omit<ButtonProps, 'size'> {
+interface IconButtonProps
+  extends ElementStatus,
+    ElementWithHref,
+    Omit<ButtonProps, 'size'> {
   icon: IconType;
   variant?: ElementBaseVariant;
   size?: ElementExtendedSize;

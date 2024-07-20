@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
 import type { IconType } from 'react-icons';
 
-import type { ButtonProps, ElementExtendedSize } from '../../types';
+import type {
+  ButtonProps,
+  ElementExtendedSize,
+  ElementStatus,
+} from '../../types';
 
 interface ToggleProps
-  extends Omit<
-    ButtonProps,
-    'isSelected' | 'isLoading' | 'size' | 'spacing' | 'href'
-  > {
+  extends Pick<ElementStatus, 'isDisabled'>,
+    Omit<ButtonProps, 'size' | 'spacing'> {
   size?: ElementExtendedSize;
   isActive: boolean;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,6 +1,6 @@
 @import './src/styles/ui/button.css';
-@import './src/styles/ui/dropdown.css';
 @import './src/styles/ui/feedback.css';
+@import './src/styles/ui/floating.css';
 
 @tailwind base;
 @tailwind components;

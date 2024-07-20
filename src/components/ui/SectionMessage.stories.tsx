@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    message: 'This is a default section message',
+    children: 'This is a default section message',
   },
 };
 
@@ -29,14 +29,14 @@ export const Hidable: Story = {
     isHidable: true,
     defaultHidden: false,
     heading: 'Heading',
-    message: 'This is a hidable section message with heading',
+    children: 'This is a hidable section message with heading',
   },
 };
 
 export const Actions: Story = {
   args: {
     heading: 'Heading',
-    message: 'This is a section message with actions',
+    children: 'This is a section message with actions',
     actions: Array.from({ length: 2 }, (_, i) => ({
       isDisabled: false,
       id: crypto.randomUUID(),
@@ -49,28 +49,28 @@ export const Actions: Story = {
 
 export const Success: Story = {
   args: {
-    message: 'This is a success section message',
+    children: 'This is a success section message',
     variant: 'success',
   },
 };
 
 export const Info: Story = {
   args: {
-    message: 'This is an info section message',
+    children: 'This is an info section message',
     variant: 'info',
   },
 };
 
 export const Warning: Story = {
   args: {
-    message: 'This is a warning section message',
+    children: 'This is a warning section message',
     variant: 'warning',
   },
 };
 
 export const Danger: Story = {
   args: {
-    message: 'This is a danger section message',
+    children: 'This is a danger section message',
     variant: 'danger',
   },
 };
