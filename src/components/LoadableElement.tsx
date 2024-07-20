@@ -10,22 +10,24 @@ type _LoadableElementProps = Pick<
   isActive: boolean;
 };
 
-type LoadableElementProps<T extends React.ElementType> =
+type LoadableElementProps<T extends React.ElementType = 'div'> =
   PolymorphicElementPropsWithoutRef<T, _LoadableElementProps>;
 
-export default function LoadableElement<T extends React.ElementType>({
+export default function LoadableElement<T extends React.ElementType = 'div'>({
   children,
   isActive,
   as,
   size = 'md',
   ...props
 }: LoadableElementProps<T>) {
-  return (
+  return !isActive && !as ? (
+    children
+  ) : (
     <Box
       {...props}
       as={as || 'div'}
-      className={`${
-        isActive ? 'relative first:*:pointer-events-none' : ''
+      className={`relative w-full ${
+        isActive ? 'first:*:pointer-events-none' : ''
       } ${props.className ?? ''}`}
     >
       {children}
