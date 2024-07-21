@@ -11,6 +11,7 @@ const meta = {
   tags: ['autodocs'],
   component: Popup,
   args: {
+    isLoading: false,
     isOpen: false,
     position: 'bottom-center',
   },

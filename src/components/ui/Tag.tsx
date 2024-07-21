@@ -24,7 +24,6 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
     iconAfter,
     ...restProps
   } = props;
-
   const [isRemoved, setIsRemoved] = useState<boolean>(false);
 
   return (

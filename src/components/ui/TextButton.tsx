@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import type {
   ButtonProps,
   ContentWithIcon,
@@ -32,17 +30,26 @@ export default function TextButton({
   ...props
 }: TextButtonProps) {
   const {
-    isHoverable = !href,
-    stopPropagation = false,
-    preventDefault = false,
     isDisabled = false,
     isSelected = false,
     isLoading = false,
+    isHoverable = !href,
+    stopPropagation = false,
+    preventDefault = false,
     ...restProps
   } = props;
-
-  const BeforeIcon = useMemo(() => iconBefore?.content ?? null, [iconBefore]);
-  const AfterIcon = useMemo(() => iconAfter?.content ?? null, [iconAfter]);
+  const BeforeIcon = iconBefore?.content ?? null;
+  const AfterIcon = iconAfter?.content ?? null;
+  const iconBeforeProps = Object.fromEntries(
+    Object.entries(iconBefore ?? {}).filter(
+      prop => prop[0] !== 'content' && prop[0] !== 'size',
+    ),
+  );
+  const iconAfterProps = Object.fromEntries(
+    Object.entries(iconAfter ?? {}).filter(
+      prop => prop[0] !== 'content' && prop[0] !== 'size',
+    ),
+  );
 
   return (
     <LoadableElement isActive={isLoading}>
@@ -72,11 +79,7 @@ export default function TextButton({
       >
         {BeforeIcon && (
           <BeforeIcon
-            {...Object.fromEntries(
-              Object.entries(iconBefore ?? {}).filter(
-                prop => prop[0] !== 'content',
-              ),
-            )}
+            {...iconBeforeProps}
             size={ICON_SIZE[iconBefore?.size ?? size]}
             className={spacing === 'default' ? 'mr-1.5' : 'mr-1'}
           />
@@ -84,11 +87,7 @@ export default function TextButton({
         {label}
         {AfterIcon && (
           <AfterIcon
-            {...Object.fromEntries(
-              Object.entries(iconAfter ?? {}).filter(
-                prop => prop[0] !== 'content',
-              ),
-            )}
+            {...iconAfterProps}
             size={ICON_SIZE[iconAfter?.size ?? size]}
             className={spacing === 'default' ? 'ml-1.5' : 'ml-1'}
           />

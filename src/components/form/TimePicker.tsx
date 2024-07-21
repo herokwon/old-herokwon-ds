@@ -38,16 +38,11 @@ export default function TimePicker({
     },
     ...restProps
   } = props;
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const hourItems = useMemo(
-    () =>
-      Array.from({ length: max.hour - min.hour + 1 }, (_, i) => ({
-        id: crypto.randomUUID(),
-        content: min.hour + i,
-      })),
-    [min.hour, max.hour],
-  );
+  const hourItems = Array.from({ length: max.hour - min.hour + 1 }, (_, i) => ({
+    id: crypto.randomUUID(),
+    content: min.hour + i,
+  }));
   const minuteItems = useMemo(
     () =>
       Array.from(
@@ -99,8 +94,11 @@ export default function TimePicker({
       {...restProps}
       isLoading={isLoading}
       isOpen={isOpen}
+      direction="horizontal"
       onClose={() => setIsOpen(false)}
-      className="only:*:last:*:flex only:*:last:*:space-y-0"
+      className={
+        isLoading ? 'first:*:only:*:last:*:px-2' : 'only:*:last:*:px-2'
+      }
       trigger={
         <DatetimeField
           type="time"
@@ -114,7 +112,7 @@ export default function TimePicker({
         />
       }
     >
-      <Dropdown.TextGroup className="px-1 text-center scrollbar-hide">
+      <Dropdown.TextGroup className="text-center scrollbar-hide">
         {hourItems.map(({ id, content }) => (
           <Dropdown.Text
             key={id}
@@ -132,7 +130,7 @@ export default function TimePicker({
           </Dropdown.Text>
         ))}
       </Dropdown.TextGroup>
-      <Dropdown.TextGroup className="px-1 text-center scrollbar-hide">
+      <Dropdown.TextGroup className="text-center scrollbar-hide">
         {minuteItems.map(({ id, content }) => (
           <Dropdown.Text
             key={id}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 
 import type { FeedbackAction } from '../../types';
@@ -31,18 +31,12 @@ export default function SectionMessage({
   actions = [],
   ...props
 }: SectionMessageProps) {
-  const FeedbackIcon = useMemo(() => FEEDBACK_ICONS[variant], [variant]);
+  const FeedbackIcon = FEEDBACK_ICONS[variant];
+  const restProps = Object.entries(props).filter(
+    prop => prop[0] !== 'isHidable' && prop[0] !== 'defaultHidden',
+  );
   const [isHidden, setIsHidden] = useState<boolean>(
     !!props.isHidable && !!props.defaultHidden,
-  );
-
-  const restProps = useMemo(
-    () => ({
-      ...Object.entries(props).filter(
-        prop => prop[0] !== 'isHidable' && prop[0] !== 'defaultHidden',
-      ),
-    }),
-    [props],
   );
 
   return (

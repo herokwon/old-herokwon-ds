@@ -29,7 +29,7 @@ const BackdropRender = ({
     <Backdrop
       isActive={isActive}
       onClick={() => setIsActive(false)}
-      triggerItem={
+      trigger={
         <TextButton
           label="Click on Button"
           variant="primary"

@@ -45,7 +45,6 @@ export default function SplitButton({
     preventDefault = false,
     ...restProps
   } = props;
-
   const [isOpen, setIsOpen] = useState<boolean>(isSelected);
   const [selectedId, setSelectedId] = useState<string>(
     items.length === 0 ? '' : items[0].id,
