@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import type { IconType } from 'react-icons';
 
 import type {
@@ -41,8 +40,7 @@ export default function IconButton({
     isLoading = false,
     ...restProps
   } = props;
-
-  const Icon = useMemo(() => icon, [icon]);
+  const Icon = icon;
 
   return (
     <LoadableElement isActive={isLoading}>

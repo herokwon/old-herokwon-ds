@@ -50,7 +50,6 @@ export default function Select({
     shouldWrapItems = false,
     ...restProps
   } = props;
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedIds, setSelectedIds] = useState<string[]>(
     defaultSelectedId.length === 0 ? [] : [defaultSelectedId],

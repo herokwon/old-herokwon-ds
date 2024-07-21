@@ -1,12 +1,13 @@
-import type { Children, ElementStatus } from '../../types';
-import LoadableElement from '../LoadableElement';
+import type { Children, ElementDirection, ElementStatus } from '../../types';
 import Popup from './Popup';
-import Empty from './Empty';
 import ListItem from './ListItem';
 import Checkbox from '../form/Checkbox';
 
-type DropdownProps = Pick<ElementStatus, 'isLoading'> &
-  React.ComponentPropsWithoutRef<typeof Popup>;
+interface DropdownProps
+  extends Pick<ElementStatus, 'isLoading'>,
+    React.ComponentPropsWithoutRef<typeof Popup> {
+  direction?: ElementDirection;
+}
 
 interface DropdownItemGroupProps extends React.ComponentPropsWithoutRef<'ul'> {
   heading?: Children;
@@ -15,6 +16,7 @@ interface DropdownItemGroupProps extends React.ComponentPropsWithoutRef<'ul'> {
 const Dropdown = ({
   children,
   position = 'bottom-center',
+  direction = 'vertical',
   trigger,
   onClose,
   ...props
@@ -24,14 +26,20 @@ const Dropdown = ({
   return (
     <Popup
       {...restProps}
+      isLoading={isLoading}
       isOpen={isOpen}
       position={position}
-      onClose={onClose}
       trigger={trigger}
+      onClose={onClose}
+      className={`${
+        direction === 'vertical'
+          ? ''
+          : isLoading
+            ? 'first:*:only:*:last:*:flex-row *:first:*:only:*:last:*:overflow-y-auto first:*:only:*:last:*:overflow-y-visible'
+            : 'only:*:last:*:flex-row *:only:*:last:*:overflow-y-auto only:*:last:*:overflow-y-visible'
+      } ${restProps.className ?? ''}`}
     >
-      <LoadableElement isActive={isLoading}>
-        {children ?? (!isLoading && <Empty />)}
-      </LoadableElement>
+      {children}
     </Popup>
   );
 };
@@ -42,14 +50,11 @@ const DropdownItemGroup = ({
   ...props
 }: DropdownItemGroupProps) => {
   return !heading ? (
-    <ul
-      {...props}
-      className={`w-full space-y-1 overflow-y-auto ${props.className ?? ''}`}
-    >
+    <ul {...props} className={`w-full space-y-1 ${props.className ?? ''}`}>
       {children}
     </ul>
   ) : (
-    <div className="w-full space-y-2 overflow-y-auto py-2">
+    <div className="w-full space-y-2 py-2">
       <strong className="block w-full whitespace-pre px-[calc(0.75rem+2px)] text-sm font-[900] opacity-bold">
         {heading}
       </strong>

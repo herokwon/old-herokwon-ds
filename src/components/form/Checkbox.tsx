@@ -34,7 +34,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
     defaultChecked = false,
     ...restProps
   } = props;
-
   const status = useStatus();
   const uncontrolled =
     status?.isSelected === undefined && isChecked === undefined;

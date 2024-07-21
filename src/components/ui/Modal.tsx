@@ -21,7 +21,7 @@ export default function Modal({
   const [isOpen, setIsOpen] = useState<boolean>(isActive);
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     if (!modalRef.current?.open) return;
     modalRef.current.onanimationend = () => {
       setIsOpen(false);

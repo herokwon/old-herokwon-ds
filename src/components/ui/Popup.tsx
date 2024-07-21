@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
-import type { AbsolutePosition } from '../../types';
+import type { AbsolutePosition, ElementStatus } from '../../types';
+import LoadableElement from '../LoadableElement';
+import Empty from './Empty';
 
-interface PopupProps extends React.ComponentPropsWithoutRef<'div'> {
+interface PopupProps
+  extends Pick<ElementStatus, 'isLoading'>,
+    React.ComponentPropsWithoutRef<'div'> {
   isOpen: boolean;
   position?: AbsolutePosition;
   trigger: React.ReactNode;
@@ -16,9 +20,9 @@ export default function Popup({
   onClose,
   ...props
 }: PopupProps) {
-  const { isOpen, ...restProps } = props;
-  const popupRef = useRef<HTMLDivElement>(null);
+  const { isLoading = false, isOpen, ...restProps } = props;
   const [maxHeight, setMaxHeight] = useState<number>(0);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateFloatingInnerMaxHeight = () => {
@@ -35,8 +39,8 @@ export default function Popup({
             (document.body.clientHeight - floatingContainerRect.bottom);
       setMaxHeight(floatingContainerMaxHeight - 16);
     };
-    updateFloatingInnerMaxHeight();
 
+    updateFloatingInnerMaxHeight();
     window.addEventListener('resize', updateFloatingInnerMaxHeight);
     return () =>
       window.addEventListener('resize', updateFloatingInnerMaxHeight);
@@ -66,14 +70,16 @@ export default function Popup({
           isOpen ? 'open' : ''
         } to-${position} absolute z-10 w-max max-w-[80vw] p-2 transition-all will-change-transform`}
       >
-        <div
-          className={`space-y-1 rounded-ms border border-light-tertiary bg-light-primary ${typeof children === 'string' ? 'px-2 py-1 text-sm' : 'py-2'} shadow-primary-light shadow-light-tertiary dark:border-dark-tertiary dark:bg-dark-secondary dark:shadow-primary-dark`}
-          style={{
-            maxHeight: `${maxHeight}px`,
-          }}
-        >
-          {children}
-        </div>
+        <LoadableElement isActive={isLoading}>
+          <div
+            className={`flex flex-col gap-1 overflow-y-auto rounded-ms border border-light-tertiary bg-light-primary ${typeof children === 'string' ? 'px-2 py-1 text-sm' : 'py-2'} shadow-primary-light shadow-light-tertiary dark:border-dark-tertiary dark:bg-dark-secondary dark:shadow-primary-dark`}
+            style={{
+              maxHeight: `${maxHeight}px`,
+            }}
+          >
+            {children ?? (!isLoading && <Empty />)}
+          </div>
+        </LoadableElement>
       </div>
     </div>
   );

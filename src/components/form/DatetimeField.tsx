@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef } from 'react';
 import type { IconType } from 'react-icons';
 
 import type { DatetimeInput, ElementStatus, InputProps } from '../../types';
@@ -21,6 +21,7 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
     ref,
   ) {
     const { isDisabled = false, ...restProps } = props;
+    const FieldIcon = fieldIcon ?? null;
     const inputEventHandlerProps = Object.fromEntries(
       Object.entries(restProps).filter(prop => prop[0].includes('on')),
     );
@@ -29,8 +30,6 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
         prop => !(prop[0] in inputEventHandlerProps),
       ),
     );
-
-    const FieldIcon = useMemo(() => fieldIcon ?? null, [fieldIcon]);
     const {
       hasHeader,
       hasError,

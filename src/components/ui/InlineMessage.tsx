@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import type { ElementBaseSize, FeedbackVariant } from '../../types';
 import { FEEDBACK_ICONS } from '../../data/constant';
 
@@ -17,7 +15,7 @@ export default function InlineMessage({
   size = 'md',
   ...props
 }: InlineMessageProps) {
-  const FeedbackIcon = useMemo(() => FEEDBACK_ICONS[variant], [variant]);
+  const FeedbackIcon = FEEDBACK_ICONS[variant];
 
   return (
     <div

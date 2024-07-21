@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import type { ElementBaseSize, ElementBaseVariant } from '../../types';
 
 type BadgeFixedVariant = Exclude<ElementBaseVariant, 'secondary'>;
@@ -28,15 +26,10 @@ export default function Badge({
   const isFixedVariant =
     props.variant === 'default' || props.variant === 'primary';
   const maxValue = isFixedVariant ? props.maxValue ?? null : null;
-  const restProps = useMemo(
-    () => ({
-      ...Object.fromEntries(
-        Object.entries(props).filter(
-          prop => prop[0] !== 'variant' && prop[0] !== 'maxValue',
-        ),
-      ),
-    }),
-    [props],
+  const restProps = Object.fromEntries(
+    Object.entries(props).filter(
+      prop => prop[0] !== 'variant' && prop[0] !== 'maxValue',
+    ),
   );
 
   const renderBadgeValue = (value: number, maxValue: number | null): string => {

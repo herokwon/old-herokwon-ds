@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import type { IconType } from 'react-icons';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
@@ -28,9 +28,8 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       errorMessage,
       ...restProps
     } = props;
-
+    const FieldIcon = fieldIcon ?? null;
     const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
-    const FieldIcon = useMemo(() => fieldIcon ?? null, [fieldIcon]);
     const {
       hasHeader,
       hasError,
