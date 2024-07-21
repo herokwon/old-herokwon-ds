@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import type { IconType } from 'react-icons';
 
 import type {
@@ -34,14 +33,13 @@ export default function Toggle({
   ...props
 }: ToggleProps) {
   const {
+    isDisabled = false,
     stopPropagation = false,
     preventDefault = false,
-    isDisabled = false,
     ...restProps
   } = props;
-
-  const InactiveIcon = useMemo(() => inactiveIcon ?? null, [inactiveIcon]);
-  const ActiveIcon = useMemo(() => activeIcon ?? null, [activeIcon]);
+  const InactiveIcon = inactiveIcon ?? null;
+  const ActiveIcon = activeIcon ?? null;
 
   return (
     <button
