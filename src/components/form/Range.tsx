@@ -44,7 +44,14 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
     step = 1,
     ...restProps
   } = props;
-
+  const percent = useMemo(
+    () => (min === max ? 0 : ((selectedValue - min) / (max - min)) * 100),
+    [selectedValue, min, max],
+  );
+  const rangeLabel = useMemo(
+    () => `${labelPrefix ?? ''}${selectedValue}${labelSuffix ?? ''}`,
+    [labelPrefix, labelSuffix, selectedValue],
+  );
   const { hasError, hasMessage, onChangeInput } = useInput({
     isDisabled: isDisabled,
     helperMessage: helperMessage,
@@ -54,14 +61,6 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
       !isNaN(value) && setSelectedValue(value);
     },
   });
-  const percent = useMemo(
-    () => (min === max ? 0 : ((selectedValue - min) / (max - min)) * 100),
-    [selectedValue, min, max],
-  );
-  const rangeLabel = useMemo(
-    () => `${labelPrefix ?? ''}${selectedValue}${labelSuffix ?? ''}`,
-    [labelPrefix, labelSuffix, selectedValue],
-  );
 
   return (
     <div className="w-full">

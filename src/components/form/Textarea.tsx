@@ -14,7 +14,6 @@ export default function Textarea({
   ...props
 }: TextareaProps) {
   const { isDisabled = false, ...restProps } = props;
-
   const { hasHeader, hasError, hasMessage, currentInputLength, onChangeInput } =
     useInput<HTMLTextAreaElement>({
       isDisabled: isDisabled,
