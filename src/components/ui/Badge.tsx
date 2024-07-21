@@ -59,7 +59,7 @@ export default function Badge({
           : size === 'sm'
             ? 'text-[0.625rem] leading-[0.75]'
             : 'text-xs'
-      } font-medium ${props.className ?? ''}`}
+      } font-medium ${restProps.className ?? ''}`}
     >
       {renderBadgeValue(value, maxValue)}
     </span>
