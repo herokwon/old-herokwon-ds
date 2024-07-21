@@ -9,9 +9,9 @@ import type {
   SelectingInput,
 } from '../../types';
 import Dropdown from '../ui/Dropdown';
-import TextField from './TextField';
 import IconButton from '../ui/IconButton';
 import Tag from '../ui/Tag';
+import TextField from './TextField';
 import Box from '../Box';
 
 interface SelectProps
@@ -56,8 +56,13 @@ export default function Select({
   );
 
   useEffect(() => {
-    (selectingInput === 'text' || selectingInput === 'radio') &&
-      setIsOpen(false);
+    if (
+      selectingInput !== 'text' &&
+      selectingInput !== 'radio' &&
+      selectedIds.length > 0
+    )
+      return;
+    setIsOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedIds]);
 
@@ -66,18 +71,20 @@ export default function Select({
       {...restProps}
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      className={`w-full last:*:min-w-full only:*:last:*:overflow-y-auto ${restProps.className ?? ''}`}
+      className={`min-w-full last:*:min-w-full only:*:last:*:overflow-y-auto ${restProps.className ?? ''}`}
       trigger={
         <TextField
           readOnly
           autoFocus={isOpen}
-          hidden={selectedIds.length > 0}
           placeholder={selectedIds.length > 0 ? '' : placeholder}
           onClick={() => setIsOpen(prev => !prev)}
-          className="px-3"
+          className={selectedIds.length > 0 ? 'w-0 px-0' : 'px-3'}
         >
           {selectedIds.length > 0 && (
-            <div className="flex w-full items-center py-[0.3125rem]">
+            <div
+              className="flex w-full items-center py-[0.3125rem]"
+              onClick={() => setIsOpen(prev => !prev)}
+            >
               <div
                 className={`flex w-full max-w-full gap-1 px-2 ${shouldWrapItems ? 'flex-wrap' : 'overflow-x-auto scrollbar-hide'}`}
                 onWheel={e => {
@@ -97,10 +104,12 @@ export default function Select({
                       selectingInput === 'checkbox'
                     }
                     iconAfter={{
-                      onClick: () =>
+                      onClick: e => {
+                        e.stopPropagation();
                         setSelectedIds(prev =>
                           prev.filter(value => value !== selectedId),
-                        ),
+                        );
+                      },
                     }}
                   >
                     {options.find(option => option.id === selectedId)?.label}
