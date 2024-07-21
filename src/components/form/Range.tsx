@@ -25,6 +25,9 @@ interface RangeProps
 
 const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
   {
+    min = 0,
+    max = 100,
+    step = 1,
     labelDirection = 'left',
     labelPrefix,
     labelSuffix,
@@ -36,14 +39,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
   },
   ref,
 ) {
-  const {
-    isShowingLabel = false,
-    isDisabled = false,
-    min = 0,
-    max = 100,
-    step = 1,
-    ...restProps
-  } = props;
+  const { isDisabled = false, isShowingLabel = false, ...restProps } = props;
   const percent = useMemo(
     () => (min === max ? 0 : ((selectedValue - min) / (max - min)) * 100),
     [selectedValue, min, max],
@@ -56,7 +52,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
     isDisabled: isDisabled,
     helperMessage: helperMessage,
     errorMessage: errorMessage,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange: e => {
       const value = Number(e.currentTarget.value);
       !isNaN(value) && setSelectedValue(value);
     },

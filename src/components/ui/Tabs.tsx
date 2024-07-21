@@ -59,7 +59,6 @@ export default function Tabs({
         ))}
       </div>
       <LoadableElement
-        as="div"
         isActive={isLoading}
         className={`${isDisabled ? 'disabled' : ''} my-4 w-full`}
       >
