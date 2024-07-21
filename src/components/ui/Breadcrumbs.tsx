@@ -2,16 +2,20 @@ import Link from 'next/link';
 
 import type { ElementBaseSize } from '../../types';
 
-interface BreadcrumbsProps {
+interface BreadcrumbsProps extends React.ComponentPropsWithoutRef<'nav'> {
   path: string;
   size?: ElementBaseSize;
 }
 
-export default function Breadcrumbs({ path, size = 'md' }: BreadcrumbsProps) {
+export default function Breadcrumbs({
+  path,
+  size = 'md',
+  ...props
+}: BreadcrumbsProps) {
   const paths = !path.includes('/') ? [] : path.split('/');
 
   return (
-    <nav className="w-full">
+    <nav {...props} className={`w-full ${props.className ?? ''}`}>
       <ol
         className={`flex w-full items-center ${
           size === 'lg' ? 'tex-base' : size === 'sm' ? 'text-xs' : 'text-sm'
