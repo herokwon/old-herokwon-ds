@@ -17,11 +17,13 @@ export default function Tooltip({
   content,
   ...props
 }: TooltipProps) {
+  const { isLoading = false, ...restProps } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <Popup
-      {...props}
+      {...restProps}
+      isLoading={isLoading}
       isOpen={isOpen}
       position={position}
       trigger={children}
@@ -48,7 +50,7 @@ export default function Tooltip({
                 : position.endsWith('middle')
                   ? 'only:*:last:*:after:top-1/2 only:*:last:*:after:-translate-y-1/2 only:*:last:*:after:border-y-[calc((0.5rem/3)*2)]'
                   : 'only:*:last:*:after:left-1/2 only:*:last:*:after:-translate-x-1/2 only:*:last:*:after:border-x-[calc((0.5rem/3)*2)]'
-      } ${props.className ?? ''}`}
+      } ${restProps.className ?? ''}`}
     >
       {content}
     </Popup>
