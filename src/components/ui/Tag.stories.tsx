@@ -8,7 +8,6 @@ const meta = {
   component: Tag,
   args: {
     isDisabled: false,
-    isSelected: false,
     isLoading: false,
     isRemovable: false,
     variant: 'default',
