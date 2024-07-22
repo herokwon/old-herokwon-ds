@@ -10,6 +10,7 @@ import type {
 } from '../../types';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
+import TagGroup from '../ui/TagGroup';
 import Tag from '../ui/Tag';
 import TextField from './TextField';
 import Box from '../Box';
@@ -78,15 +79,19 @@ export default function Select({
           autoFocus={isOpen}
           placeholder={selectedIds.length > 0 ? '' : placeholder}
           onClick={() => setIsOpen(prev => !prev)}
-          className={selectedIds.length > 0 ? 'w-0 px-0' : 'px-3'}
+          className={selectedIds.length > 0 ? '!w-0 !px-0' : 'px-3'}
         >
           {selectedIds.length > 0 && (
             <div
-              className="flex w-full items-center py-[0.3125rem]"
+              className="flex w-full items-center gap-x-2 px-2 py-[0.3125rem]"
               onClick={() => setIsOpen(prev => !prev)}
             >
-              <div
-                className={`flex w-full max-w-full gap-1 px-2 ${shouldWrapItems ? 'flex-wrap' : 'overflow-x-auto scrollbar-hide'}`}
+              <TagGroup
+                className={`${
+                  shouldWrapItems
+                    ? ''
+                    : 'flex-nowrap !overflow-x-auto scrollbar-hide'
+                }`}
                 onWheel={e => {
                   if (e.deltaY === 0) return;
                   e.currentTarget.scrollTo({
@@ -115,12 +120,11 @@ export default function Select({
                     {options.find(option => option.id === selectedId)?.label}
                   </Tag>
                 ))}
-              </div>
+              </TagGroup>
               {selectedIds.length > 0 && (
                 <IconButton
                   icon={LuX}
                   spacing="compact"
-                  className="mx-0.5"
                   onClick={() => setSelectedIds([])}
                 />
               )}

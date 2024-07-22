@@ -6,7 +6,7 @@
     .button-danger
   ) {
   &:not(.hoverable):is(.removable) {
-    @apply text-light-red decoration-light-red underline-offset-2 hover:underline dark:text-dark-red dark:decoration-dark-red;
+    @apply !bg-feedback-light-red !text-feedback-light-red dark:!bg-feedback-dark-red dark:!text-feedback-dark-red;
   }
 }
 
@@ -26,11 +26,11 @@
   }
 
   &:not(.hoverable):is(.linkable) {
-    @apply decoration-light-blue underline-offset-2 hover:text-light-blue hover:underline dark:decoration-dark-blue dark:hover:text-dark-blue;
+    @apply decoration-light-blue hover:text-light-blue hover:underline dark:decoration-dark-blue dark:hover:text-dark-blue;
   }
 
   &:not(.hoverable):is(.removable) {
-    @apply text-light-red decoration-light-red underline-offset-2 hover:underline dark:text-dark-red dark:decoration-dark-red;
+    @apply text-light-red decoration-light-red hover:underline dark:text-dark-red dark:decoration-dark-red;
   }
 
   &:is(.button-primary--no-spacing) {
