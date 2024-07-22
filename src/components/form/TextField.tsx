@@ -19,15 +19,18 @@ interface TextFieldProps
 
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   function TextField(
-    { children, type = 'text', label, fieldIcon, ...props },
-    ref,
-  ) {
-    const {
-      isDisabled = false,
+    {
+      children,
+      type = 'text',
+      label,
+      fieldIcon,
       helperMessage,
       errorMessage,
-      ...restProps
-    } = props;
+      ...props
+    },
+    ref,
+  ) {
+    const { isDisabled = false, ...restProps } = props;
     const FieldIcon = fieldIcon ?? null;
     const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
     const {
@@ -44,11 +47,11 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       label: label,
       helperMessage: helperMessage,
       errorMessage: errorMessage,
-      autoFocus: props.autoFocus,
-      maxLength: props.maxLength,
-      defaultValue: props.defaultValue,
-      value: props.value,
-      onChange: props.onChange,
+      autoFocus: restProps.autoFocus,
+      maxLength: restProps.maxLength,
+      defaultValue: restProps.defaultValue,
+      value: restProps.value,
+      onChange: restProps.onChange,
     });
 
     return (
@@ -58,9 +61,9 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         {hasHeader && (
           <InputHeader
             label={label}
-            id={props.id}
-            required={props.required}
-            maxLength={props.maxLength}
+            id={restProps.id}
+            required={restProps.required}
+            maxLength={restProps.maxLength}
             currentInputLength={currentInputLength}
           />
         )}
@@ -73,6 +76,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               <div className="mr-1 h-[1rem] w-1 bg-light-secondary dark:bg-dark-tertiary" />
             </>
           )}
+          {children}
           <input
             {...restProps}
             ref={ref}
@@ -94,7 +98,6 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               />
             </div>
           )}
-          {children}
         </InputWrapper>
         {hasMessage && (
           <InputMessage

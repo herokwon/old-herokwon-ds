@@ -23,10 +23,8 @@ export default function Heading<T extends HeadingElement = 'h1'>({
   const Element = as || 'h1';
 
   return (
-    <Element {...props}>
-      <LinkableElement as="p" href={href}>
-        {children}
-      </LinkableElement>
-    </Element>
+    <LinkableElement {...props} as={Element} href={href}>
+      {children}
+    </LinkableElement>
   );
 }

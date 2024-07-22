@@ -7,7 +7,7 @@ import TextButton from './TextButton';
 interface TagProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TextButton>,
-    'isHoverable' | 'label' | 'size' | 'spacing'
+    'isSelected' | 'isHoverable' | 'label' | 'size' | 'spacing'
   > {
   children: React.ComponentPropsWithoutRef<typeof TextButton>['label'];
   isRemovable?: boolean;
@@ -15,15 +15,15 @@ interface TagProps
   spacing?: Exclude<ElementSpacing, 'default'>;
 }
 
-export default function Tag({ isRemovable = false, ...props }: TagProps) {
-  const {
-    children,
-    size = 'sm',
-    spacing = 'compact',
-    iconBefore = { content: LuHash },
-    iconAfter,
-    ...restProps
-  } = props;
+export default function Tag({
+  children,
+  size = 'sm',
+  spacing = 'compact',
+  iconBefore = { content: LuHash },
+  iconAfter,
+  ...props
+}: TagProps) {
+  const { isRemovable = false, ...restProps } = props;
   const [isRemoved, setIsRemoved] = useState<boolean>(false);
 
   return (
@@ -54,11 +54,11 @@ export default function Tag({ isRemovable = false, ...props }: TagProps) {
       tabIndex={!restProps.href ? -1 : undefined}
       className={`${isRemoved ? 'hidden' : ''} ${
         isRemovable
-          ? '!cursor-default last:*:cursor-pointer'
+          ? 'cursor-default last:*:cursor-pointer'
           : !restProps.href
-            ? '!cursor-default'
+            ? 'cursor-default'
             : ''
-      } ${restProps.className ?? ''}`}
+      } !transition-none ${restProps.className ?? ''}`}
     />
   );
 }

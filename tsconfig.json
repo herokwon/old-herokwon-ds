@@ -15,10 +15,7 @@
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@public/*": ["./public/*"]
-    }
+    ]
   },
   "include": [
     "src/custom.d.ts",

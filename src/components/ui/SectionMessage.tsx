@@ -32,8 +32,10 @@ export default function SectionMessage({
   ...props
 }: SectionMessageProps) {
   const FeedbackIcon = FEEDBACK_ICONS[variant];
-  const restProps = Object.entries(props).filter(
-    prop => prop[0] !== 'isHidable' && prop[0] !== 'defaultHidden',
+  const restProps = Object.fromEntries(
+    Object.entries(props).filter(
+      prop => prop[0] !== 'isHidable' && prop[0] !== 'defaultHidden',
+    ),
   );
   const [isHidden, setIsHidden] = useState<boolean>(
     !!props.isHidable && !!props.defaultHidden,
@@ -44,7 +46,7 @@ export default function SectionMessage({
       {...restProps}
       className={`section-message--${variant} group flex w-full max-w-[300px] items-start rounded-ms px-4 py-3 ${
         !!props.isHidable ? 'cursor-pointer' : ''
-      } ${props.className ?? ''}`}
+      } ${restProps.className ?? ''}`}
       onClick={() => props.isHidable && setIsHidden(prev => !prev)}
     >
       <span
