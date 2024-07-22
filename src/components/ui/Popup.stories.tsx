@@ -5,6 +5,7 @@ import { FaArrowRight } from 'react-icons/fa6';
 import Popup from './Popup';
 import TextButton from './TextButton';
 import ListItem from './ListItem';
+import EmptyData from './EmptyData';
 
 const meta = {
   title: 'Components/Popup',
@@ -35,6 +36,7 @@ const PopupRender = ({
       {...props}
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
+      className="only:*:last:*:overflow-visible"
       trigger={
         <TextButton
           label="Click on Button"
@@ -59,6 +61,14 @@ export const Default: Story = {
   ),
 };
 
+export const Empty: Story = {
+  render: ({ ...props }) => (
+    <PopupRender {...props}>
+      <EmptyData />
+    </PopupRender>
+  ),
+};
+
 export const Nested: StoryObj<typeof Popup> = {
   render: ({ ...props }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -71,6 +81,7 @@ export const Nested: StoryObj<typeof Popup> = {
               key={i}
               isOpen={isOpen}
               position="right-top"
+              onClose={() => setIsOpen(false)}
               trigger={
                 <ListItem.Text
                   key={i}
@@ -81,7 +92,6 @@ export const Nested: StoryObj<typeof Popup> = {
                   {`Popup Item ${i + 1}`}
                 </ListItem.Text>
               }
-              onClose={() => setIsOpen(false)}
             >
               {Array.from({ length: 3 }, (_, j) => (
                 <ListItem.Text key={j} id={crypto.randomUUID()}>
