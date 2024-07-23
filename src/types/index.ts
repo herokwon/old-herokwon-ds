@@ -17,6 +17,7 @@ export type ElementSpacing = (typeof ELEMENT_SPACINGS)[number];
 export type ElementBaseVariant = (typeof ELEMENT_BASE_VARIANTS)[number];
 export type ElementExtendedVariant = (typeof ELEMENT_EXTENDED_VARIANTS)[number];
 export type ElementDirection = (typeof ELEMENT_DIRECTIONS)[number];
+export type ElementBorderShape = 'circle' | 'square';
 export interface ElementStatus {
   isDisabled?: boolean;
   isSelected?: boolean;

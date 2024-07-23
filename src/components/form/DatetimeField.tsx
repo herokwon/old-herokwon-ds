@@ -68,6 +68,7 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
           {...inputEventHandlerProps}
           isFocused={isFocused}
           hasError={hasError}
+          onFocusInput={onFocusInput}
         >
           <input
             {...inputNotEventHandlerProps}
@@ -81,7 +82,7 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
           />
           {FieldIcon && (
             <>
-              <div className="mr-1 h-[1rem] w-1 bg-light-secondary dark:bg-dark-tertiary" />
+              <div className="h-[1rem] w-1 bg-light-secondary dark:bg-dark-tertiary" />
               <div
                 className={`aspect-square h-[2rem] w-max p-2 ${
                   isFocused ? 'opacity-bold' : 'opacity-normal'

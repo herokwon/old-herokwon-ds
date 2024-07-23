@@ -54,7 +54,7 @@ export default function Toggle({
       className={`flex aspect-[2/1] items-center rounded-full text-xs ${
         isActive
           ? 'bg-light-blue hover:bg-dark-blue dark:bg-dark-blue dark:hover:bg-light-blue'
-          : 'bg-light-secondary dark:bg-dark-secondary'
+          : 'bg-light-secondary hover:bg-light-tertiary dark:bg-dark-secondary dark:hover:bg-dark-tertiary'
       } relative transition-all ${restProps.className ?? ''}`}
       style={{
         width: `${TOGGLE_SIZES[size]}rem`,

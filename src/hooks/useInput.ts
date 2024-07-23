@@ -24,8 +24,8 @@ type InputHookReturn<T extends InputElement> = {
   hasMessage: boolean;
   isFocused: boolean;
   currentInputLength: number;
-  onFocusInput: (e: React.FocusEvent<T>) => void;
-  onBlurInput: (e: React.FocusEvent<T>) => void;
+  onFocusInput: () => void;
+  onBlurInput: () => void;
   onChangeInput: (e: React.ChangeEvent<T>) => void;
 };
 

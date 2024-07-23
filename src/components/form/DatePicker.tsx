@@ -42,6 +42,7 @@ export default function DatePicker({
       trigger={
         <DatetimeField
           readOnly
+          autoFocus={isOpen}
           isDisabled={isDisabled}
           value={pickedDateValue}
           onClick={() => setIsOpen(prev => !prev)}

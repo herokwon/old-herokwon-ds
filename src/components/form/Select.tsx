@@ -57,6 +57,17 @@ export default function Select({
   );
 
   useEffect(() => {
+    const targetId = selectedIds.at(-1) ?? '';
+    if (targetId.length === 0) return;
+
+    document.body
+      .querySelector(`.selected-items > button[data-id="${targetId}"]`)
+      ?.scrollIntoView({
+        block: 'end',
+      });
+  }, [selectedIds]);
+
+  useEffect(() => {
     if (
       selectingInput !== 'text' &&
       selectingInput !== 'radio' &&
@@ -87,7 +98,7 @@ export default function Select({
               onClick={() => setIsOpen(prev => !prev)}
             >
               <TagGroup
-                className={`${
+                className={`selected-items ${
                   shouldWrapItems
                     ? ''
                     : 'flex-nowrap !overflow-x-auto scrollbar-hide'
@@ -103,6 +114,7 @@ export default function Select({
                 {selectedIds.map(selectedId => (
                   <Tag
                     key={selectedId}
+                    data-id={selectedId}
                     className="whitespace-nowrap"
                     isRemovable={
                       selectingInput === 'multi-text' ||

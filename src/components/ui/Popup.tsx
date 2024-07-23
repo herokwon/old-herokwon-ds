@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { AbsolutePosition, ElementStatus } from '../../types';
 import LoadableElement from '../LoadableElement';
-import Empty from './Empty';
+import EmptyData from './EmptyData';
 
 interface PopupProps
   extends Pick<ElementStatus, 'isLoading'>,
@@ -77,7 +77,7 @@ export default function Popup({
               maxHeight: `${maxHeight}px`,
             }}
           >
-            {children ?? (!isLoading && <Empty />)}
+            {children ?? (!isLoading && <EmptyData />)}
           </div>
         </LoadableElement>
       </div>

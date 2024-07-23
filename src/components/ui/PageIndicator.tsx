@@ -1,15 +1,12 @@
-import type { IconType } from 'react-icons';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
-import type { ElementBaseSize } from '../../types';
-import TextButton from './TextButton';
+import type { ElementBaseSize, ElementBorderShape } from '../../types';
 import IconButton from './IconButton';
 
 interface PageIndicatorProps extends React.ComponentPropsWithoutRef<'div'> {
   totalPage: number;
   size?: ElementBaseSize;
-  prev?: string | IconType;
-  next?: string | IconType;
+  shape?: ElementBorderShape;
   selectedIndex: number;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -23,15 +20,14 @@ const IndicatorRadiusSize: { [size in ElementBaseSize]: number } = {
 export default function PageIndicator({
   totalPage,
   size = 'md',
-  prev,
-  next,
+  shape = 'circle',
   selectedIndex,
   setSelectedIndex,
   ...props
 }: PageIndicatorProps) {
   const onClickHandler = {
-    prevButton: () => setSelectedIndex(prev => Math.max(0, prev - 1)),
-    nextButton: () =>
+    prevButton: (): void => setSelectedIndex(prev => Math.max(0, prev - 1)),
+    nextButton: (): void =>
       setSelectedIndex(prev => Math.min(prev + 1, totalPage - 1)),
   };
 
@@ -40,26 +36,15 @@ export default function PageIndicator({
       {...props}
       className={`flex w-full items-center ${props.className ?? ''}`}
     >
-      {typeof prev === 'string' ? (
-        <TextButton
-          isDisabled={selectedIndex === 0}
-          label={prev}
-          size={size}
-          variant="secondary"
-          spacing="compact"
-          onClick={onClickHandler.prevButton}
-        />
-      ) : (
-        <IconButton
-          isDisabled={selectedIndex === 0}
-          icon={prev ?? LuChevronLeft}
-          size={size}
-          variant="secondary"
-          spacing="compact"
-          shape="square"
-          onClick={onClickHandler.prevButton}
-        />
-      )}
+      <IconButton
+        isDisabled={selectedIndex === 0}
+        icon={LuChevronLeft}
+        size={size}
+        shape={shape}
+        variant="secondary"
+        spacing="compact"
+        onClick={onClickHandler.prevButton}
+      />
       <div className="flex w-full items-center justify-center gap-x-2 px-4">
         {Array.from({ length: totalPage }, (_, i) => i).map((_, index) => (
           <svg
@@ -85,26 +70,15 @@ export default function PageIndicator({
           </svg>
         ))}
       </div>
-      {typeof next === 'string' ? (
-        <TextButton
-          isDisabled={selectedIndex === totalPage - 1}
-          label={next}
-          size={size}
-          variant="secondary"
-          spacing="compact"
-          onClick={onClickHandler.nextButton}
-        />
-      ) : (
-        <IconButton
-          isDisabled={selectedIndex === totalPage - 1}
-          icon={next ?? LuChevronRight}
-          size={size}
-          variant="secondary"
-          spacing="compact"
-          shape="square"
-          onClick={onClickHandler.nextButton}
-        />
-      )}
+      <IconButton
+        isDisabled={selectedIndex === totalPage - 1}
+        icon={LuChevronRight}
+        size={size}
+        shape={shape}
+        variant="secondary"
+        spacing="compact"
+        onClick={onClickHandler.nextButton}
+      />
     </div>
   );
 }
