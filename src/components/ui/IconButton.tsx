@@ -3,6 +3,7 @@ import type { IconType } from 'react-icons';
 import type {
   ButtonProps,
   ElementBaseVariant,
+  ElementBorderShape,
   ElementExtendedSize,
   ElementStatus,
   ElementWithHref,
@@ -18,7 +19,7 @@ interface IconButtonProps
   icon: IconType;
   variant?: ElementBaseVariant;
   size?: ElementExtendedSize;
-  shape?: 'square' | 'circle';
+  shape?: ElementBorderShape;
   isHoverable?: boolean;
 }
 

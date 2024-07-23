@@ -15,6 +15,7 @@ const meta = {
   args: {
     totalPage: 3,
     size: 'md',
+    shape: 'circle',
   },
 } satisfies Meta<typeof PageIndicator>;
 export default meta;
@@ -37,17 +38,12 @@ const PageIndicatorRender = ({
 };
 
 export const Default: Story = {
-  args: {
-    prev: LuChevronLeft,
-    next: LuChevronRight,
-  },
   render: ({ ...props }) => <PageIndicatorRender {...props} />,
 };
 
-export const TextButton: Story = {
+export const SquareBorder: Story = {
   args: {
-    prev: 'Prev',
-    next: 'Next',
+    shape: 'square',
   },
   render: ({ ...props }) => <PageIndicatorRender {...props} />,
 };

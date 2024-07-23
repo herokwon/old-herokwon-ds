@@ -1,6 +1,7 @@
 import type {
   ButtonProps,
   ContentWithIcon,
+  ElementBorderShape,
   ElementExtendedVariant,
   ElementStatus,
   ElementWithHref,
@@ -14,15 +15,17 @@ interface TextButtonProps
     ElementWithHref,
     ContentWithIcon,
     ButtonProps {
+  isHoverable?: boolean;
   label: React.ReactNode;
   variant?: ElementExtendedVariant;
-  isHoverable?: boolean;
+  shape?: ElementBorderShape;
 }
 
 export default function TextButton({
   label,
   variant = 'default',
   size = 'md',
+  shape = 'square',
   spacing = 'default',
   href,
   iconBefore,
@@ -73,7 +76,9 @@ export default function TextButton({
             : spacing === 'compact'
               ? 'px-1.5 py-0.5'
               : 'p-0'
-        } flex items-center justify-center rounded-ms ${
+        } flex items-center justify-center ${
+          shape === 'circle' ? 'rounded-full' : 'rounded-ms'
+        } ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
         } outline-none transition-[background-color] ${restProps.className ?? ''}`}
       >

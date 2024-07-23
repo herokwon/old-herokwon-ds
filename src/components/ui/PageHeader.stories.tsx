@@ -8,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: PageHeader,
   args: {
-    content: 'Page Header',
+    children: 'Page Header',
   },
 } satisfies Meta<typeof PageHeader>;
 export default meta;
