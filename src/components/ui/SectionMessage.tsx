@@ -56,7 +56,7 @@ export default function SectionMessage({
             : size === 'sm'
               ? 'my-[0.125rem]'
               : 'my-[0.1875rem]'
-        } mr-4`}
+        } mr-3`}
       >
         <FeedbackIcon
           className={`${size === 'lg' ? 'w-xl' : size === 'sm' ? 'w-base' : 'w-lg'} !aspect-square h-max`}

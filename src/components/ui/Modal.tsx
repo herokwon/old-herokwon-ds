@@ -43,13 +43,16 @@ export default function Modal({
         open={isOpen}
         className={`min-w-[300px] rounded-ms border border-light-tertiary bg-light-primary px-4 py-3 text-light shadow-primary-light shadow-light-tertiary dark:border-dark-tertiary dark:bg-dark-secondary dark:text-dark dark:shadow-primary-dark ${restProps.className ?? ''}`}
       >
-        <IconButton
-          icon={LuX}
-          spacing="none"
-          className="ml-auto mr-0"
-          onClick={closeModal}
-        />
-        <div className="p-1">{children}</div>
+        <section className="w-full">
+          <IconButton
+            icon={LuX}
+            spacing="none"
+            shape="square"
+            className="ml-auto mr-0 hover:!bg-light-secondary dark:hover:!bg-dark-tertiary"
+            onClick={closeModal}
+          />
+          <div className="p-1">{children}</div>
+        </section>
       </dialog>
     </Backdrop>
   );

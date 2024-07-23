@@ -12,8 +12,10 @@ const meta = {
   tags: ['autodocs'],
   component: Pagination,
   args: {
+    totalPage: 100,
     pagePerIndex: 5,
     size: 'md',
+    shape: 'square',
   },
 } satisfies Meta<typeof Pagination>;
 export default meta;
@@ -38,8 +40,12 @@ const PaginationRender = ({
 };
 
 export const Default: Story = {
+  render: ({ ...props }) => <PaginationRender {...props} />,
+};
+
+export const CircleBorder: Story = {
   args: {
-    totalPage: 100,
+    shape: 'circle',
   },
   render: ({ ...props }) => <PaginationRender {...props} />,
 };

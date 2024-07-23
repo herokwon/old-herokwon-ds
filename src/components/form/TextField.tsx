@@ -67,7 +67,11 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             currentInputLength={currentInputLength}
           />
         )}
-        <InputWrapper isFocused={isFocused} hasError={hasError}>
+        <InputWrapper
+          isFocused={isFocused}
+          hasError={hasError}
+          onFocusInput={onFocusInput}
+        >
           {FieldIcon && (
             <>
               <div className="aspect-square h-[2rem] w-max p-2 opacity-bold">
@@ -81,6 +85,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             {...restProps}
             ref={ref}
             type={type !== 'password' ? type : isHidden ? 'password' : 'text'}
+            disabled={isDisabled}
             onFocus={onFocusInput}
             onBlur={onBlurInput}
             onChange={onChangeInput}

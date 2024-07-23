@@ -6,7 +6,7 @@ import {
   LuChevronRight,
 } from 'react-icons/lu';
 
-import type { ElementBaseSize } from '../../types';
+import type { ElementBaseSize, ElementBorderShape } from '../../types';
 import IconButton from './IconButton';
 import TextButton from './TextButton';
 
@@ -14,6 +14,7 @@ interface PaginationProps extends React.ComponentPropsWithoutRef<'div'> {
   totalPage: number;
   pagePerIndex?: number;
   size?: ElementBaseSize;
+  shape?: ElementBorderShape;
   selectedIndex: number;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -22,6 +23,7 @@ export default function Pagination({
   totalPage,
   pagePerIndex = 5,
   size = 'md',
+  shape = 'square',
   selectedIndex,
   setSelectedIndex,
   ...props
@@ -52,14 +54,14 @@ export default function Pagination({
         isDisabled={viewedIndex === 0}
         icon={LuChevronFirst}
         size={size}
-        shape="square"
+        shape={shape}
         onClick={onClickHandler.firstButton}
       />
       <IconButton
         isDisabled={viewedIndex === 0}
         icon={LuChevronLeft}
         size={size}
-        shape="square"
+        shape={shape}
         onClick={onClickHandler.prevButton}
       />
       <div className="grid h-full w-full grid-flow-col items-center gap-x-1">
@@ -81,6 +83,7 @@ export default function Pagination({
               label={`${pageIndex + 1}`}
               variant={pageIndex === selectedIndex ? 'primary' : 'secondary'}
               size={size}
+              shape={shape}
               isSelected={pageIndex === selectedIndex}
               onClick={() => setSelectedIndex(pageIndex)}
               className={`${
@@ -101,14 +104,14 @@ export default function Pagination({
         isDisabled={viewedIndex === Math.floor((totalPage - 1) / pagePerIndex)}
         icon={LuChevronRight}
         size={size}
-        shape="square"
+        shape={shape}
         onClick={onClickHandler.nextButton}
       />
       <IconButton
         isDisabled={viewedIndex === Math.floor((totalPage - 1) / pagePerIndex)}
         icon={LuChevronLast}
         size={size}
-        shape="square"
+        shape={shape}
         onClick={onClickHandler.lastButton}
       />
     </div>
