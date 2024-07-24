@@ -53,12 +53,13 @@ export default function Tabs({
             } relative font-semibold transition-colors after:h-2 after:w-full after:rounded-full after:content-[""] ${
               tabItem.index === selectedIndex
                 ? 'after:bg-light-blue after:dark:bg-dark-blue'
-                : 'after:bg-transparent hover:after:bg-black/off dark:hover:after:bg-white/off'
+                : 'after:bg-transparent hover:after:bg-black/normal dark:hover:after:bg-white/normal'
             } after:absolute after:left-0 after:top-full after:z-[1] after:transition-colors`}
           />
         ))}
       </div>
       <LoadableElement
+        as="div"
         isActive={isLoading}
         className={`${isDisabled ? 'disabled' : ''} my-4 w-full`}
       >
