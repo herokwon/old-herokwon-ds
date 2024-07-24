@@ -42,13 +42,6 @@ export const Removable: Story = {
   },
 };
 
-export const Primary: Story = {
-  args: {
-    children: 'Primary Tag',
-    variant: 'primary',
-  },
-};
-
 export const Secondary: Story = {
   args: {
     children: 'Secondary Tag',

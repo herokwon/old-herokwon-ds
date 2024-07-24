@@ -15,7 +15,6 @@ interface TextButtonProps
     ElementWithHref,
     ContentWithIcon,
     ButtonProps {
-  isHoverable?: boolean;
   label: React.ReactNode;
   variant?: ElementExtendedVariant;
   shape?: ElementBorderShape;
@@ -36,7 +35,6 @@ export default function TextButton({
     isDisabled = false,
     isSelected = false,
     isLoading = false,
-    isHoverable = !href,
     stopPropagation = false,
     preventDefault = false,
     ...restProps
@@ -69,7 +67,9 @@ export default function TextButton({
         className={`button-${
           spacing === 'none' ? `${variant}--no-spacing` : variant
         } ${isSelected ? 'selected' : ''} ${
-          isHoverable ? 'hoverable' : href ? 'linkable' : ''
+          spacing !== 'none' && href
+            ? 'decoration-transparent hover:text-current hover:no-underline'
+            : ''
         } ${
           spacing === 'default'
             ? 'px-2.5 py-1'
@@ -80,7 +80,7 @@ export default function TextButton({
           shape === 'circle' ? 'rounded-full' : 'rounded-ms'
         } ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-        } outline-none transition-[background-color] ${restProps.className ?? ''}`}
+        } outline-none transition-colors ${restProps.className ?? ''}`}
       >
         {BeforeIcon && (
           <BeforeIcon

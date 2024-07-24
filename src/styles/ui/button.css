@@ -5,7 +5,7 @@
     .button-warning,
     .button-danger
   ) {
-  &:not(.hoverable):is(.removable) {
+  &.removable:has(> :last-child:hover) {
     @apply !bg-feedback-light-red !text-feedback-light-red dark:!bg-feedback-dark-red dark:!text-feedback-dark-red;
   }
 }
@@ -25,11 +25,7 @@
     }
   }
 
-  &:not(.hoverable):is(.linkable) {
-    @apply decoration-light-blue hover:text-light-blue hover:underline dark:decoration-dark-blue dark:hover:text-dark-blue;
-  }
-
-  &:not(.hoverable):is(.removable) {
+  &.removable {
     @apply text-light-red decoration-light-red hover:underline dark:text-dark-red dark:decoration-dark-red;
   }
 
@@ -61,7 +57,7 @@
 .button-default {
   @apply bg-light-secondary dark:bg-dark-secondary;
 
-  &:not(:disabled):is(.hoverable) {
+  &:not(:disabled):not(.removable) {
     @apply hover:bg-light-tertiary dark:hover:bg-dark-tertiary;
 
     &.selected {
@@ -73,7 +69,7 @@
 .button-primary {
   @apply bg-light-blue !text-dark dark:bg-dark-blue;
 
-  &:not(:disabled):is(.hoverable) {
+  &:not(:disabled):not(.removable) {
     @apply bg-light-blue hover:bg-dark-blue dark:bg-dark-blue dark:hover:bg-light-blue;
 
     &.selected {
@@ -85,7 +81,7 @@
 .button-secondary {
   @apply bg-transparent;
 
-  &:not(:disabled):is(.hoverable) {
+  &:not(:disabled):not(.removable) {
     @apply hover:bg-light-secondary dark:hover:bg-dark-secondary;
 
     &.selected {
@@ -97,7 +93,7 @@
 .button-warning {
   @apply bg-light-yellow !text-light dark:bg-dark-yellow;
 
-  &:not(:disabled):is(.hoverable) {
+  &:not(:disabled):not(.removable) {
     @apply bg-light-yellow hover:bg-dark-yellow dark:bg-dark-yellow dark:hover:bg-light-yellow;
 
     &.selected {
@@ -109,7 +105,7 @@
 .button-danger {
   @apply bg-light-red !text-dark dark:bg-dark-red;
 
-  &:not(:disabled):is(.hoverable) {
+  &:not(:disabled):not(.removable) {
     @apply bg-light-red hover:bg-dark-red dark:bg-dark-red dark:hover:bg-light-red;
 
     &.selected {
