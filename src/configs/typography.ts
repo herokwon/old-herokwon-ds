@@ -7,6 +7,6 @@ export const customTextFeedbackColor: { [key: string]: string } = {
 
 export const customTextColor: { [key: string]: string } = {
   light: '#000000',
-  dark: '#ffffff',
+  dark: '#FFFFFF',
   ...customTextFeedbackColor,
 };
