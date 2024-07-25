@@ -60,9 +60,8 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
 
   return (
     <div className="w-full">
-      <label
-        htmlFor={restProps.id}
-        className={`${isDisabled ? 'disabled' : 'cursor-pointer'} group relative flex w-full ${
+      <div
+        className={`flex w-full ${
           labelDirection.includes('top')
             ? 'flex-col-reverse justify-center'
             : labelDirection.includes('bottom')
@@ -72,23 +71,28 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
                 : 'flex-row items-center'
         } gap-x-3 gap-y-1.5`}
       >
-        <div
-          className="absolute left-0 top-1/2 -z-10 h-full -translate-y-1/2 rounded-full bg-light-blue group-hover:bg-dark-blue dark:bg-dark-blue dark:group-hover:bg-light-blue"
-          style={{
-            width: `${percent}%`,
-          }}
-        />
-        <input
-          {...restProps}
-          ref={ref}
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={selectedValue}
-          onChange={onChangeInput}
-          className={`w-full border-light-blue bg-transparent group-hover:border-dark-blue slider-thumb:bg-light-blue group-hover:slider-thumb:bg-dark-blue dark:border-dark-blue dark:group-hover:border-light-blue dark:slider-thumb:bg-dark-blue dark:slider-thumb:group-hover:bg-light-blue ${restProps.className ?? ''}`}
-        />
+        <label
+          htmlFor={restProps.id}
+          className={`${isDisabled ? 'disabled' : 'cursor-pointer'} group relative flex items-center justify-center`}
+        >
+          <div
+            className="absolute left-0 top-0 -z-10 h-4 rounded-full bg-light-blue group-hover:bg-dark-blue dark:bg-dark-blue dark:group-hover:bg-light-blue"
+            style={{
+              width: `${percent}%`,
+            }}
+          />
+          <input
+            {...restProps}
+            ref={ref}
+            type="range"
+            min={min}
+            max={max}
+            step={step}
+            value={selectedValue}
+            onChange={onChangeInput}
+            className={`m-auto w-full border-light-blue bg-transparent group-hover:border-dark-blue slider-thumb:bg-light-blue group-hover:slider-thumb:bg-dark-blue dark:border-dark-blue dark:group-hover:border-light-blue dark:slider-thumb:bg-dark-blue dark:slider-thumb:group-hover:bg-light-blue ${restProps.className ?? ''}`}
+          />
+        </label>
         {isShowingLabel && (
           <p
             className={`whitespace-nowrap text-sm ${
@@ -104,7 +108,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
             {rangeLabel}
           </p>
         )}
-      </label>
+      </div>
       {hasMessage && (
         <InputMessage
           hasError={hasError}

@@ -67,10 +67,6 @@ export default function TextButton({
         className={`button-${
           spacing === 'none' ? `${variant}--no-spacing` : variant
         } ${isSelected ? 'selected' : ''} ${
-          spacing !== 'none' && href
-            ? 'decoration-transparent hover:text-current hover:no-underline'
-            : ''
-        } ${
           spacing === 'default'
             ? 'px-2.5 py-1'
             : spacing === 'compact'

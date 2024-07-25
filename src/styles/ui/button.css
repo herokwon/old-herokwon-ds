@@ -5,9 +5,17 @@
     .button-warning,
     .button-danger
   ) {
+  &.linkable {
+    @apply text-current decoration-transparent hover:no-underline;
+  }
+
   &.removable:has(> :last-child:hover) {
     @apply !bg-feedback-light-red !text-feedback-light-red dark:!bg-feedback-dark-red dark:!text-feedback-dark-red;
   }
+}
+
+:is(.button-default, .button-secondary) {
+  @apply hover:!text-current;
 }
 
 :is(

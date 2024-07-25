@@ -34,6 +34,15 @@
   }
 }
 
+@keyframes progress {
+  from {
+    transform: translateX(-200%);
+  }
+  to {
+    transform: translateX(600%);
+  }
+}
+
 @layer components {
   .disabled {
     @apply !cursor-not-allowed !opacity-off *:!pointer-events-none;
