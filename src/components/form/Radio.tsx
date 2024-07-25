@@ -21,7 +21,6 @@ interface RadioProps
       | 'helperMessage'
       | 'errorMessage'
       | 'checked'
-      | 'defaultChecked'
       | 'onChange'
     > {
   isChecked?: boolean;
@@ -33,11 +32,20 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
   { id, size = 'md', label, description, ...props },
   ref,
 ) {
-  const { isDisabled = false, isChecked, ...restProps } = props;
+  const {
+    isDisabled = false,
+    isChecked,
+    defaultChecked = false,
+    ...restProps
+  } = props;
   const group = useRadio();
   const status = useStatus();
   const disabled = group?.isDisabled || status?.isDisabled || isDisabled;
-  const checked = status?.isSelected || isChecked || group?.selectedId === id;
+  const checked =
+    group?.selectedId === id ||
+    status?.isSelected ||
+    isChecked ||
+    defaultChecked;
   const { hasError, onChangeInput } = useInput({
     isDisabled: disabled,
     onChange: e => {
