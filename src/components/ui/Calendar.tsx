@@ -254,7 +254,6 @@ const MonthlyCalendar = ({
                 <TextButton
                   key={dailyIndex}
                   isDisabled={isDisabled}
-                  isHoverable={!isSelected}
                   label={!viewedDate.month && isDisabled ? '' : `${date}`}
                   variant={isSelected ? 'primary' : 'secondary'}
                   size="sm"
