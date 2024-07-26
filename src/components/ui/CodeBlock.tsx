@@ -1,73 +1,84 @@
 import { Fragment, useEffect } from 'react';
 import { LuCopy } from 'react-icons/lu';
-import { highlightAll } from 'prismjs';
-import 'prismjs/themes/prism-okaidia.css';
+import * as Prism from 'prismjs';
+import 'prismjs/themes/prism-okaidia.min.css';
 
-import type { Children } from '../../types';
+import '../../data/prism';
+import { CODE_LANGUAGES } from '../../data/constant';
 import Box from '../Box';
 import IconButton from './IconButton';
 
+type CodeLanguages = (typeof CODE_LANGUAGES)[number];
+
 interface CodeBlockProps
-  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'content' | 'onCopy'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onCopy'> {
   isDuplicable?: boolean;
-  showLanguageLabel?: boolean;
   showLineNumbers?: boolean;
-  language?: string;
-  content: Children;
+  language?: CodeLanguages;
+  code: string;
+  label?: string;
   firstLineNumber?: number;
   highlights?: number[];
-  onCopy?: React.ClipboardEventHandler<HTMLButtonElement>;
+  onCopy?: () => void;
+  onCopyError?: (error: unknown) => void;
 }
 
-export default function CodeBlock({
+const CodeBlock = ({
   children,
   language,
-  content,
+  code,
+  label = language?.toUpperCase() ?? '',
   firstLineNumber = 1,
   highlights = [],
   onCopy,
+  onCopyError,
   ...props
-}: CodeBlockProps) {
-  const {
-    isDuplicable = true,
-    showLanguageLabel = true,
-    showLineNumbers = true,
-    ...restProps
-  } = props;
-  const lineNumbers = content.toString().match(/\n/g)?.length ?? 0;
+}: CodeBlockProps) => {
+  const { isDuplicable = true, showLineNumbers = true, ...restProps } = props;
+  const hasHeaderBar = label || isDuplicable;
+  const lineNumbers = code.match(/\n/g)?.length ?? 0;
 
   useEffect(() => {
-    highlightAll();
-  }, []);
+    import(`prismjs/components/prism-${language}`)
+      .then(() => Prism.highlightAll())
+      .catch((error: unknown) => console.error(error));
+  }, [language]);
 
   return (
-    <Box as={showLanguageLabel || isDuplicable ? 'div' : Fragment}>
-      <div
-        className={`flex w-full items-end ${
-          !showLanguageLabel && isDuplicable ? 'justify-end' : 'justify-between'
-        } py-0.5`}
-      >
-        {showLanguageLabel && (
-          <p className="py-0.5 text-sm font-semibold">
-            {language?.toUpperCase()}
-          </p>
-        )}
-        {isDuplicable && (
-          <IconButton
-            icon={LuCopy}
-            variant="secondary"
-            spacing="compact"
-            shape="square"
-            onCopy={onCopy}
-          />
-        )}
-      </div>
+    <Box as={hasHeaderBar ? 'div' : Fragment}>
+      {hasHeaderBar && (
+        <div
+          className={`flex h-36 w-full items-center rounded-t-ms bg-dark-tertiary ${
+            !label && isDuplicable ? 'justify-end' : 'justify-between'
+          } px-1 py-1`}
+        >
+          {label.length > 0 && (
+            <p className="p-0.5 text-sm font-semibold">{label}</p>
+          )}
+          {isDuplicable && (
+            <IconButton
+              icon={LuCopy}
+              variant="secondary"
+              spacing="compact"
+              shape="square"
+              onClick={async () => {
+                await navigator.clipboard
+                  .writeText(code)
+                  .then(() => onCopy?.())
+                  .catch((error: unknown) => onCopyError?.(error));
+              }}
+            />
+          )}
+        </div>
+      )}
       <div
         {...restProps}
         className={`relative w-full overflow-auto ${restProps.className ?? ''}`}
       >
         <pre
-          className="flex h-full !bg-dark-secondary"
+          className={`flex h-full ${
+            hasHeaderBar ? '!rounded-t-none' : ''
+          } !bg-dark-secondary`}
           style={{ padding: 0, margin: 0 }}
         >
           <div
@@ -97,9 +108,11 @@ export default function CodeBlock({
               );
             })}
           </div>
-          <code className={`language-${language} p-4`}>{content}</code>
+          <code className={`language-${language} p-4`}>{code}</code>
         </pre>
       </div>
     </Box>
   );
-}
+};
+
+export default CodeBlock;

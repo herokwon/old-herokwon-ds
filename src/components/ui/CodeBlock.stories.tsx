@@ -1,27 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import CodeBlock from './CodeBlock';
+import { CODE_LANGUAGES } from '../../data/constant';
 
 const meta = {
   title: 'Components/CodeBlock',
   tags: ['autodocs'],
   component: CodeBlock,
   args: {
-    showLanguageLabel: false,
-    showLineNumbers: false,
     isDuplicable: false,
+    showLineNumbers: false,
+    language: 'tsx',
     className: 'max-w-[600px]',
-    language: 'jsx',
-    content: `import CodeBlock from "./CodeBlock";
+    code: `import CodeBlock from "./CodeBlock";
     
-export default function CodeBlockExample({ children }: { children: React.ReactNode }) {
+export default function CodeBlockExample({ code }: { code: React.ReactNode }) {
     return (
         <CodeBlock language="tsx">
-            {children}
+            {code}
         </CodeBlock>
     );
 }
 `,
+  },
+  argTypes: {
+    language: {
+      control: 'select',
+      options: [...CODE_LANGUAGES].sort(),
+    },
   },
 } satisfies Meta<typeof CodeBlock>;
 export default meta;
@@ -40,9 +46,9 @@ export const Highlight: Story = {
   },
 };
 
-export const LanguageLabel: Story = {
+export const Label: Story = {
   args: {
-    showLanguageLabel: true,
+    label: 'example.tsx',
   },
 };
 
