@@ -43,6 +43,15 @@
   }
 }
 
+@keyframes toast-progress {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 @layer components {
   .disabled {
     @apply !cursor-not-allowed !opacity-off *:!pointer-events-none;
