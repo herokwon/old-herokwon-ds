@@ -97,3 +97,4 @@ export * from './form/input';
 export * from './ui/button';
 export * from './ui/feedback';
 export * from './ui/floating';
+export * from './ui/toast';
