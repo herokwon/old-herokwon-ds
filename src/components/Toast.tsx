@@ -13,8 +13,7 @@ class Toast {
   private messages: Map<ToastMessagePosition, ToastMessageType[]>;
 
   constructor() {
-    const container = document.getElementById('toast-root');
-    this.root = !container ? null : createRoot(container);
+    this.root = null;
     this.messages = new Map(
       TOAST_MESSAGES_POSITIONS.map(position => [position, []]),
     );
@@ -24,6 +23,11 @@ class Toast {
     const id = crypto.randomUUID();
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
+
+    if (!this.root) {
+      const container = document.getElementById('toast-root');
+      this.root = !container ? null : createRoot(container);
+    }
 
     this.messages.get(position)?.push({
       id,
@@ -41,13 +45,17 @@ class Toast {
         />
       )),
     );
-    this.autoCloseMessage(id, { position, duration });
   }
 
   error(message: string, config?: ToastMessageConfig) {
     const id = crypto.randomUUID();
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
+
+    if (!this.root) {
+      const container = document.getElementById('toast-root');
+      this.root = !container ? null : createRoot(container);
+    }
 
     this.messages.get(position)?.push({
       id,
@@ -65,13 +73,17 @@ class Toast {
         />
       )),
     );
-    this.autoCloseMessage(id, { position, duration });
   }
 
   warning(message: string, config?: ToastMessageConfig) {
     const id = crypto.randomUUID();
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
+
+    if (!this.root) {
+      const container = document.getElementById('toast-root');
+      this.root = !container ? null : createRoot(container);
+    }
 
     this.messages.get(position)?.push({
       id,
@@ -89,13 +101,17 @@ class Toast {
         />
       )),
     );
-    this.autoCloseMessage(id, { position, duration });
   }
 
   info(message: string, config?: ToastMessageConfig) {
     const id = crypto.randomUUID();
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
+
+    if (!this.root) {
+      const container = document.getElementById('toast-root');
+      this.root = !container ? null : createRoot(container);
+    }
 
     this.messages.get(position)?.push({
       id,
@@ -113,7 +129,6 @@ class Toast {
         />
       )),
     );
-    this.autoCloseMessage(id, { position, duration });
   }
 
   closeMessage(
@@ -134,23 +149,6 @@ class Toast {
           closeMessage={this.closeMessage.bind(this)}
         />
       )),
-    );
-  }
-
-  autoCloseMessage(
-    idToDelete: string,
-    {
-      position,
-      duration,
-    }: ToastMessageConfig & Required<Pick<ToastMessageConfig, 'duration'>>,
-  ) {
-    const autoClose = setTimeout(
-      () => {
-        this.closeMessage(idToDelete, { position });
-        clearTimeout(autoClose);
-      },
-      duration,
-      this,
     );
   }
 }
