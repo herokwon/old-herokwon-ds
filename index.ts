@@ -7,6 +7,7 @@ export * from './src/configs';
 export { default as Box } from './src/components/Box';
 export { default as LinkableElement } from './src/components/LinkableElement';
 export { default as LoadableElement } from './src/components/LoadableElement';
+export { default as toast } from './src/components/Toast';
 
 // form components
 export { default as Checkbox } from './src/components/form/Checkbox';
