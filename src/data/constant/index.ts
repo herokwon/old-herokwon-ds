@@ -93,6 +93,15 @@ export const FEEDBACK_ICONS: { [variant in FeedbackVariant]: IconType } = {
   danger: BsFillExclamationDiamondFill,
 };
 
+export const TOAST_MESSAGES_POSITIONS = [
+  'top-left',
+  'top-center',
+  'top-right',
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
+] as const;
+
 export const CODE_LANGUAGES = [
   // starts_with_a
   'abap',

@@ -7,6 +7,7 @@ export * from './src/configs';
 export { default as Box } from './src/components/Box';
 export { default as LinkableElement } from './src/components/LinkableElement';
 export { default as LoadableElement } from './src/components/LoadableElement';
+export { default as toast } from './src/components/Toast';
 
 // form components
 export { default as Checkbox } from './src/components/form/Checkbox';
@@ -39,6 +40,7 @@ export { default as PageHeader } from './src/components/ui/PageHeader';
 export { default as PageIndicator } from './src/components/ui/PageIndicator';
 export { default as Pagination } from './src/components/ui/Pagination';
 export { default as Popup } from './src/components/ui/Popup';
+export { default as ProgressBar } from './src/components/ui/ProgressBar';
 export { default as SectionMessage } from './src/components/ui/SectionMessage';
 export { default as Spinner } from './src/components/ui/Spinner';
 export { default as SplitButton } from './src/components/ui/SplitButton';
