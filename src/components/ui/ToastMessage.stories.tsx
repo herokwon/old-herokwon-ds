@@ -1,25 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import type { ToastMessageVariant } from '../../types';
+import type {
+  ToastMessageConfig,
+  ToastMessage as ToastMessageType,
+} from '../../types';
 import ToastMessage from './ToastMessage';
 
 const meta = {
   title: 'Components/ToastMessage',
   tags: ['autodocs'],
   component: ToastMessage,
+  args: {
+    position: 'top-center',
+  },
 } satisfies Meta<typeof ToastMessage>;
 export default meta;
 
 type Story = StoryObj<typeof ToastMessage>;
 
 const ToastMessageRender = ({
+  position,
   variant,
   message,
-}: {
-  variant: ToastMessageVariant;
-  message: string;
-}) => {
+}: Pick<ToastMessageConfig, 'position'> &
+  Pick<ToastMessageType, 'variant' | 'message'>) => {
   const [messages, setMessages] = useState<
     React.ComponentPropsWithoutRef<typeof ToastMessage>['messages']
   >([
@@ -31,16 +36,9 @@ const ToastMessageRender = ({
     },
   ]);
 
-  useEffect(() => {
-    const autoClose = setTimeout(() => {
-      setMessages([]);
-      clearTimeout(autoClose);
-    }, 4000);
-  }, []);
-
   return (
     <ToastMessage
-      position="top-center"
+      position={position}
       messages={messages}
       closeMessage={() => setMessages([])}
     />
@@ -48,25 +46,41 @@ const ToastMessageRender = ({
 };
 
 export const Success: Story = {
-  render: () => (
-    <ToastMessageRender variant="success" message="This is a success message" />
+  render: ({ position }) => (
+    <ToastMessageRender
+      position={position}
+      variant="success"
+      message="This is a success message"
+    />
   ),
 };
 
 export const Error: Story = {
-  render: () => (
-    <ToastMessageRender variant="danger" message="This is an error message" />
+  render: ({ position }) => (
+    <ToastMessageRender
+      position={position}
+      variant="danger"
+      message="This is an error message"
+    />
   ),
 };
 
 export const Warning: Story = {
-  render: () => (
-    <ToastMessageRender variant="warning" message="This is a warning message" />
+  render: ({ position }) => (
+    <ToastMessageRender
+      position={position}
+      variant="warning"
+      message="This is a warning message"
+    />
   ),
 };
 
 export const Info: Story = {
-  render: () => (
-    <ToastMessageRender variant="info" message="This is an info message" />
+  render: ({ position }) => (
+    <ToastMessageRender
+      position={position}
+      variant="info"
+      message="This is an info message"
+    />
   ),
 };
