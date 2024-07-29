@@ -1,3 +1,4 @@
+@import './src/styles/animation.css';
 @import './src/styles/ui/button.css';
 @import './src/styles/ui/feedback.css';
 @import './src/styles/ui/floating.css';
@@ -5,34 +6,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@keyframes modal-open {
-  from {
-    transform: translateY(0.25rem);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes modal-close {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(0.25rem);
-    opacity: 0;
-  }
-}
-
-@keyframes spinner {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 @layer components {
   .disabled {

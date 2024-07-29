@@ -20,6 +20,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Default Radio Item',
+    defaultChecked: true,
   },
 };
 
@@ -27,5 +28,6 @@ export const Disabled: Story = {
   args: {
     isDisabled: true,
     label: 'Disabled Radio Item',
+    defaultChecked: false,
   },
 };

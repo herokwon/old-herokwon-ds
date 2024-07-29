@@ -24,7 +24,6 @@ export const RadioProvider = ({
   const [selectedId, setSelectedId] = useState<string>(defaultSelectedId);
 
   const onChange = (id: string) => {
-    console.log(id);
     setSelectedId(id);
   };
 

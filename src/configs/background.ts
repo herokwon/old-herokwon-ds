@@ -10,11 +10,11 @@ export const customBgFeedbackColor: { [key: string]: string } = {
 };
 
 export const customBgColor: { [key: string]: string } = {
-  'light-primary': '#ffffff',
-  'light-secondary': '#e2e8f0',
-  'light-tertiary': '#cbd5e1',
+  'light-primary': '#FFFFFF',
+  'light-secondary': '#E2E8F0',
+  'light-tertiary': '#CBD5E1',
   'dark-primary': '#121212',
-  'dark-secondary': '#1e293b',
+  'dark-secondary': '#1E293B',
   'dark-tertiary': '#334155',
   ...customBgFeedbackColor,
 };
