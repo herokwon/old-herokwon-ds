@@ -40,6 +40,7 @@ export { default as PageHeader } from './src/components/ui/PageHeader';
 export { default as PageIndicator } from './src/components/ui/PageIndicator';
 export { default as Pagination } from './src/components/ui/Pagination';
 export { default as Popup } from './src/components/ui/Popup';
+export { default as ProgressBar } from './src/components/ui/ProgressBar';
 export { default as SectionMessage } from './src/components/ui/SectionMessage';
 export { default as Spinner } from './src/components/ui/Spinner';
 export { default as SplitButton } from './src/components/ui/SplitButton';
