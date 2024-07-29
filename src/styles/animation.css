@@ -1,0 +1,97 @@
+@keyframes modal-open {
+  from {
+    transform: translateY(0.25rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modal-close {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(0.25rem);
+    opacity: 0;
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: translateX(-200%);
+  }
+  to {
+    transform: translateX(600%);
+  }
+}
+
+@keyframes toast-progress {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes show-up-left {
+  from {
+    transform: translateX(-200%);
+    pointer-events: none;
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+@keyframes show-up-right {
+  from {
+    transform: translateX(200%);
+    pointer-events: none;
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+@keyframes show-up-top {
+  from {
+    transform: translateY(-200%);
+    pointer-events: none;
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+@keyframes show-up-bottom {
+  from {
+    transform: translateY(200%);
+    pointer-events: none;
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
