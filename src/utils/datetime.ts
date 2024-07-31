@@ -6,7 +6,7 @@ export const getDateHandler = {
   tailInMonth: (dayOfTheWeek: number): number =>
     7 * Math.floor((7 - dayOfTheWeek) / 7) + dayOfTheWeek,
   month: (year: number, month: Months): number =>
-    new Date(month === 12 ? year + 1 : year, MONTHS[month], 0).getDate(),
+    new Date(month === 12 ? year + 1 : year, month, 0).getDate(),
 };
 
 export const getDayHandler = {
