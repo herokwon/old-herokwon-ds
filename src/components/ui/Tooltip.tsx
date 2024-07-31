@@ -40,13 +40,13 @@ export default function Tooltip({
               : 'only:*:last:*:after:left-0 only:*:last:*:after:border-l-0 only:*:last:*:after:border-r-dark-tertiary'
       } ${
         position.endsWith('top')
-          ? 'only:*:last:*:after:top-0 only:*:last:*:after:translate-y-3/4 only:*:last:*:after:border-t-0'
+          ? 'only:*:last:*:after:top-0 only:*:last:*:after:translate-y-3/4 only:*:last:*:after:border-y-[calc(0.5rem/2)]'
           : position.endsWith('bottom')
-            ? 'only:*:last:*:after:bottom-0 only:*:last:*:after:-translate-y-3/4 only:*:last:*:after:border-b-0'
+            ? 'only:*:last:*:after:bottom-0 only:*:last:*:after:-translate-y-3/4 only:*:last:*:after:border-y-[calc(0.5rem/2)]'
             : position.endsWith('left')
-              ? 'only:*:last:*:after:left-0 only:*:last:*:after:translate-x-3/4 only:*:last:*:after:border-l-0'
+              ? 'only:*:last:*:after:left-0 only:*:last:*:after:translate-x-3/4 only:*:last:*:after:border-x-[calc(0.5rem/2)]'
               : position.endsWith('right')
-                ? 'only:*:last:*:after:right-0 only:*:last:*:after:-translate-x-3/4 only:*:last:*:after:border-r-0'
+                ? 'only:*:last:*:after:right-0 only:*:last:*:after:-translate-x-3/4 only:*:last:*:after:border-x-[calc(0.5rem/2)]'
                 : position.endsWith('middle')
                   ? 'only:*:last:*:after:top-1/2 only:*:last:*:after:-translate-y-1/2 only:*:last:*:after:border-y-[calc((0.5rem/3)*2)]'
                   : 'only:*:last:*:after:left-1/2 only:*:last:*:after:-translate-x-1/2 only:*:last:*:after:border-x-[calc((0.5rem/3)*2)]'
