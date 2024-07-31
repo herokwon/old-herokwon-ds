@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FaCheck } from 'react-icons/fa6';
-import { LuX } from 'react-icons/lu';
+import { FaCheck, FaXmark } from 'react-icons/fa6';
 
 import ButtonGroup from './ButtonGroup';
 import TextButton from './TextButton';
@@ -34,7 +33,7 @@ export const IconButtonGroup: Story = {
     children: (
       <>
         <IconButton icon={FaCheck} variant="primary" />
-        <IconButton icon={LuX} />
+        <IconButton icon={FaXmark} />
       </>
     ),
   },

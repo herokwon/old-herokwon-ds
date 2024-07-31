@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { LuX } from 'react-icons/lu';
+import { FaXmark } from 'react-icons/fa6';
 
 import type { ToastMessage, ToastMessageConfig } from '../../types';
 import { FEEDBACK_ICONS } from '../../data/constant';
@@ -87,7 +87,7 @@ const ToastMessageContainer = ({
         <FeedbackIcon className="h-sm" />
       </span>
       <p
-        className={`whitespace-pre text-sm font-medium ${
+        className={`whitespace-pre text-sm font-semibold ${
           variant === 'success'
             ? 'text-feedback-light-green dark:text-feedback-dark-green'
             : variant === 'danger'
@@ -100,7 +100,7 @@ const ToastMessageContainer = ({
         {message}
       </p>
       <IconButton
-        icon={LuX}
+        icon={FaXmark}
         size="sm"
         spacing="none"
         className="ml-2"
