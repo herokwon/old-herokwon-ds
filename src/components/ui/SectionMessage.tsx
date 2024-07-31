@@ -3,10 +3,10 @@ import { FaChevronDown } from 'react-icons/fa6';
 
 import type { FeedbackAction } from '../../types';
 import { FEEDBACK_ICONS } from '../../data/constant';
-import InlineMessage from './InlineMessage';
+import Heading from './Heading';
 import TextButton from './TextButton';
 import IconButton from './IconButton';
-import Heading from './Heading';
+import InlineMessage from './InlineMessage';
 
 type SectionMessageProps = Omit<
   React.ComponentPropsWithoutRef<typeof InlineMessage>,
@@ -65,7 +65,7 @@ export default function SectionMessage({
       <div
         className={`my-auto w-full break-all ${
           size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
-        } ${isHidden ? 'line-clamp-2' : ''}`}
+        } ${isHidden ? 'line-clamp-1' : ''}`}
       >
         {heading.length > 0 && (
           <Heading

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FaCheck, FaX } from 'react-icons/fa6';
+import { FaCheck, FaXmark } from 'react-icons/fa6';
 
 import Toggle from './Toggle';
 
@@ -37,7 +37,7 @@ export const Default: Story = {
 export const Icon: Story = {
   args: {
     activeIcon: FaCheck,
-    inactiveIcon: FaX,
+    inactiveIcon: FaXmark,
   },
   render: ({ ...props }) => <ToggleRender {...props} />,
 };

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { LuX } from 'react-icons/lu';
+import { FaXmark } from 'react-icons/fa6';
 
 import IconButton from './IconButton';
 import Backdrop from './Backdrop';
@@ -25,7 +25,7 @@ export default function Modal({
     if (!modalRef.current?.open) return;
     modalRef.current.onanimationend = () => {
       setIsOpen(false);
-      isActive && onClose && onClose();
+      isActive && onClose?.();
     };
     modalRef.current.classList.add('close');
   };
@@ -45,7 +45,7 @@ export default function Modal({
       >
         <section className="w-full">
           <IconButton
-            icon={LuX}
+            icon={FaXmark}
             spacing="none"
             shape="square"
             className="ml-auto mr-0 hover:!bg-light-secondary dark:hover:!bg-dark-tertiary"

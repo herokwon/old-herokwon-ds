@@ -61,7 +61,7 @@ const useInput = <T extends InputElement = HTMLInputElement>({
   const onBlurInput = () => setIsFocused(false);
   const onChangeInput = (e: React.ChangeEvent<T>) => {
     if (isDisabled) return;
-    onChange && onChange(e);
+    onChange?.(e);
     maxLength &&
       maxLength > 0 &&
       setCurrentInputLength(e.currentTarget.value.length);

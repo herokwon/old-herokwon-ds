@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LuX } from 'react-icons/lu';
+import { FaXmark } from 'react-icons/fa6';
 
 import type {
   Children,
@@ -135,7 +135,7 @@ export default function Select({
               </TagGroup>
               {selectedIds.length > 0 && (
                 <IconButton
-                  icon={LuX}
+                  icon={FaXmark}
                   spacing="compact"
                   onClick={() => setSelectedIds([])}
                 />

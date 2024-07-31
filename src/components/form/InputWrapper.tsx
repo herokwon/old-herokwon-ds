@@ -20,13 +20,13 @@ export default function InputWrapper({
       {...props}
       onClick={e => {
         onFocusInput();
-        props.onClick && props.onClick(e);
+        props.onClick?.(e);
       }}
       className={`flex w-full items-center rounded-ms border ${
         isFocused
           ? hasError
-            ? 'border-light-red dark:border-dark-red'
-            : 'border-light-blue dark:border-dark-blue'
+            ? 'border-light-red last:*:caret-light-red dark:border-dark-red dark:last:*:caret-dark-red'
+            : 'border-light-blue last:*:caret-light-blue dark:border-dark-blue dark:last:*:caret-dark-blue'
           : 'border-light-tertiary dark:border-dark-tertiary'
       } cursor-pointer overflow-hidden bg-light-primary transition-all dark:bg-dark-secondary ${props.className ?? ''}`}
     >

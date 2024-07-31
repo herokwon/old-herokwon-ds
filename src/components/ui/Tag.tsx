@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LuX } from 'react-icons/lu';
+import { FaXmark } from 'react-icons/fa6';
 
 import type {
   ElementBaseSize,
@@ -42,10 +42,10 @@ export default function Tag({
         !isRemovable
           ? iconAfter
           : {
-              content: iconAfter?.content ?? LuX,
+              content: iconAfter?.content ?? FaXmark,
               onClick: e => {
                 setIsRemoved(true);
-                iconAfter?.onClick && iconAfter.onClick(e);
+                iconAfter?.onClick?.(e);
               },
             }
       }

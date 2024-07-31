@@ -7,7 +7,7 @@ const meta = {
   tags: ['autodocs'],
   component: Breadcrumbs,
   args: {
-    path: 'components/ui/breadcrumb',
+    pathname: 'components/ui/breadcrumb',
     size: 'md',
   },
 } satisfies Meta<typeof Breadcrumbs>;

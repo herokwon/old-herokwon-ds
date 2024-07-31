@@ -46,8 +46,8 @@ export default function Textarea({
         onChange={onChangeInput}
         className={`w-full rounded-ms border border-light-tertiary px-2.5 py-1.5 dark:border-dark-tertiary ${
           hasError
-            ? 'focus:border-light-red dark:focus:border-dark-red'
-            : 'focus:border-light-blue dark:focus:border-dark-blue'
+            ? 'caret-light-red focus:border-light-red dark:caret-dark-red dark:focus:border-dark-red'
+            : 'caret-light-blue focus:border-light-blue dark:caret-dark-blue dark:focus:border-dark-blue'
         } bg-light-primary text-sm outline-none transition-all dark:bg-dark-secondary ${restProps.className ?? ''}`}
       />
       {hasMessage && (

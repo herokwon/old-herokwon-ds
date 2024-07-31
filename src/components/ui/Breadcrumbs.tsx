@@ -3,16 +3,16 @@ import Link from 'next/link';
 import type { ElementBaseSize } from '../../types';
 
 interface BreadcrumbsProps extends React.ComponentPropsWithoutRef<'nav'> {
-  path: string;
+  pathname: string;
   size?: ElementBaseSize;
 }
 
 export default function Breadcrumbs({
-  path,
+  pathname,
   size = 'md',
   ...props
 }: BreadcrumbsProps) {
-  const paths = !path.includes('/') ? [] : path.split('/');
+  const paths = !pathname.includes('/') ? [] : pathname.split('/');
 
   return (
     <nav {...props} className={`w-full ${props.className ?? ''}`}>
@@ -33,7 +33,11 @@ export default function Breadcrumbs({
             <Link
               href={paths.slice(0, index + 1).join('/')}
               title={paths.slice(0, index + 1).join('/')}
-              className="px-1 underline-offset-2 opacity-off hover:underline hover:opacity-bold"
+              className={`px-1 opacity-off ${
+                paths.at(-1) === path
+                  ? 'pointer-events-none'
+                  : 'underline-offset-2 hover:underline hover:opacity-bold'
+              }`}
             >
               {path}
             </Link>
