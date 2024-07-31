@@ -19,7 +19,7 @@ export const Default: Story = {};
 
 export const WithBreadcrumbs: Story = {
   args: {
-    breadcrumbs: <Breadcrumbs path="components/ui/pageheader" />,
+    breadcrumbs: <Breadcrumbs pathname="components/ui/pageheader" />,
   },
 };
 

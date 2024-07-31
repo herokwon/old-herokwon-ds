@@ -5,16 +5,8 @@ export const getDateHandler = {
   headInMonth: (dayOfTheWeek: number): number => ((7 - dayOfTheWeek) % 7) + 1,
   tailInMonth: (dayOfTheWeek: number): number =>
     7 * Math.floor((7 - dayOfTheWeek) / 7) + dayOfTheWeek,
-  month: (year: number, month: Months): 28 | 29 | 30 | 31 => {
-    switch (true) {
-      case month < 8 && month !== 2:
-        return month % 2 === 0 ? 30 : 31;
-      case month >= 8:
-        return month % 2 === 0 ? 31 : 30;
-      default:
-        return year % 4 === 0 ? 29 : 28;
-    }
-  },
+  month: (year: number, month: Months): number =>
+    new Date(month === 12 ? year + 1 : year, month, 0).getDate(),
 };
 
 export const getDayHandler = {

@@ -13,7 +13,7 @@ export default function Spinner({ size = 'md', ...props }: SpinnerProps) {
     <LuLoader2
       {...props}
       size={ICON_SIZE[size]}
-      className={`animate-[spinner_1s_ease-in-out_infinite] text-light-blue dark:text-dark-blue ${props.className ?? ''}`}
+      className={`animate-spin text-light-blue dark:text-dark-blue ${props.className ?? ''}`}
     />
   );
 }
