@@ -253,18 +253,20 @@ const MonthlyCalendar = ({
                   key={dailyIndex}
                   isDisabled={isDisabled}
                   label={!viewedDate.month && isDisabled ? '' : `${date}`}
-                  variant={isSelected ? 'primary' : 'default'}
+                  variant={isSelected ? 'primary' : 'secondary'}
                   size="sm"
                   spacing="compact"
                   className={`aspect-square py-1.5 ${
-                    isSelected
-                      ? ''
-                      : '!bg-light-primary hover:!bg-light-secondary'
-                  } ${isDisabled ? 'hover:!bg-transparent' : ''} ${
+                    isDisabled
+                      ? 'pointer-events-none hover:!bg-transparent'
+                      : isSelected
+                        ? ''
+                        : 'dark:bg-dark-secondary dark:hover:!bg-dark-tertiary'
+                  } ${
                     index === 0 || isHoliday
-                      ? 'text-light-red dark:text-dark-red'
+                      ? '!text-light-red dark:!text-dark-red'
                       : index === 6
-                        ? 'text-light-blue dark:text-dark-blue'
+                        ? '!text-light-blue dark:!text-dark-blue'
                         : ''
                   } transition-none`}
                   onClick={e => {
@@ -293,12 +295,13 @@ const YearlyCalendar = ({
   setPickedDate,
 }: YearlyCalendarProps) => {
   return (
-    <div className="flex w-full flex-wrap content-end justify-center gap-4">
+    <div className="flex w-fit flex-wrap justify-around gap-4">
       {MONTHS.map(month => (
         <div key={month} className="p-2">
           <TextButton
             label={`${month}`}
-            className="mb-1 w-full font-semibold"
+            variant="secondary"
+            className="mb-1 w-full font-semibold dark:bg-dark-secondary dark:hover:!bg-dark-tertiary"
             onClick={e => {
               e.stopPropagation();
               setViewedDate(prev => ({
