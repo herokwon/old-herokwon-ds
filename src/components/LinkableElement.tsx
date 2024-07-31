@@ -23,7 +23,7 @@ export default function LinkableElement<T extends React.ElementType>({
       as={as || 'div'}
       className={`${href ? 'linkable' : ''} ${props.className ?? ''}`}
       onClick={e => {
-        props.onClick && props.onClick(e);
+        props.onClick?.(e);
         href && (href.replace ? replace(href.to) : push(href.to));
       }}
     >

@@ -49,7 +49,7 @@ export default function Toggle({
         stopPropagation && e.stopPropagation();
         preventDefault && e.preventDefault();
         !isDisabled && setIsActive(prev => !prev);
-        restProps.onClick && restProps.onClick(e);
+        restProps.onClick?.(e);
       }}
       className={`flex aspect-[2/1] items-center rounded-full text-xs ${
         isActive
@@ -62,7 +62,12 @@ export default function Toggle({
       }}
     >
       <span
-        className="absolute left-1/2 top-1/2 flex h-3/5 w-full -translate-x-1/2 -translate-y-1/2 items-center whitespace-nowrap transition-all"
+        className={`relative left-0 top-1/2 aspect-square h-full w-fit rounded-full bg-white transition-all will-change-transform ${
+          isActive ? 'translate-x-[calc((100%/3)*4)]' : ''
+        } z-10 -translate-y-1/2`}
+      />
+      <span
+        className="absolute left-1/2 top-1/2 flex h-3/4 w-full -translate-x-1/2 -translate-y-1/2 items-center whitespace-nowrap transition-all"
         style={{
           paddingLeft: `${(TOGGLE_SIZES[size] / 2) * 0.125}rem`,
           paddingRight: `${(TOGGLE_SIZES[size] / 2) * 0.125}rem`,
@@ -89,11 +94,6 @@ export default function Toggle({
           </span>
         )}
       </span>
-      <span
-        className={`relative left-0 top-1/2 aspect-square h-full w-fit rounded-full bg-white transition-all will-change-transform ${
-          isActive ? 'translate-x-[calc((100%/3)*4)]' : ''
-        } z-10 -translate-y-1/2`}
-      />
     </button>
   );
 }

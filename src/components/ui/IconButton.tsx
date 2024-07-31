@@ -53,7 +53,7 @@ export default function IconButton({
         onClick={e => {
           stopPropagation && e.stopPropagation();
           preventDefault && e.preventDefault();
-          restProps.onClick && restProps.onClick(e);
+          restProps.onClick?.(e);
         }}
         className={`button-${variant} ${isSelected ? 'selected' : ''} ${
           !isDisabled && isHoverable ? 'hoverable' : ''

@@ -62,7 +62,7 @@ export default function TextButton({
         onClick={e => {
           stopPropagation && e.stopPropagation();
           preventDefault && e.preventDefault();
-          restProps.onClick && restProps.onClick(e);
+          restProps.onClick?.(e);
         }}
         className={`button-${
           spacing === 'none' ? `${variant}--no-spacing` : variant
