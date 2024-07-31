@@ -131,25 +131,23 @@ export default function Calendar({
           onClick={clickHandler.nextButton}
         />
       </div>
-      <div className="w-full">
-        {!viewedDate.month ? (
-          <YearlyCalendar
-            holidays={holidays}
-            viewedDate={viewedDate}
-            pickedDate={pickedDate}
-            setViewedDate={setViewedDate}
-            setPickedDate={setPickedDate}
-          />
-        ) : (
-          <MonthlyCalendar
-            holidays={holidays}
-            month={viewedDate.month}
-            viewedDate={viewedDate}
-            pickedDate={pickedDate}
-            setPickedDate={setPickedDate}
-          />
-        )}
-      </div>
+      {!viewedDate.month ? (
+        <YearlyCalendar
+          holidays={holidays}
+          viewedDate={viewedDate}
+          pickedDate={pickedDate}
+          setViewedDate={setViewedDate}
+          setPickedDate={setPickedDate}
+        />
+      ) : (
+        <MonthlyCalendar
+          holidays={holidays}
+          month={viewedDate.month}
+          viewedDate={viewedDate}
+          pickedDate={pickedDate}
+          setPickedDate={setPickedDate}
+        />
+      )}
     </div>
   );
 }
@@ -255,12 +253,14 @@ const MonthlyCalendar = ({
                   key={dailyIndex}
                   isDisabled={isDisabled}
                   label={!viewedDate.month && isDisabled ? '' : `${date}`}
-                  variant={isSelected ? 'primary' : 'secondary'}
+                  variant={isSelected ? 'primary' : 'default'}
                   size="sm"
                   spacing="compact"
                   className={`aspect-square py-1.5 ${
-                    isDisabled ? 'hover:!bg-transparent' : ''
-                  } ${
+                    isSelected
+                      ? ''
+                      : '!bg-light-primary hover:!bg-light-secondary'
+                  } ${isDisabled ? 'hover:!bg-transparent' : ''} ${
                     index === 0 || isHoliday
                       ? 'text-light-red dark:text-dark-red'
                       : index === 6
@@ -274,9 +274,6 @@ const MonthlyCalendar = ({
                       month: viewedDate.month ?? month,
                       date: date,
                     }));
-                  }}
-                  style={{
-                    width: '100%',
                   }}
                 />
               );
@@ -296,12 +293,11 @@ const YearlyCalendar = ({
   setPickedDate,
 }: YearlyCalendarProps) => {
   return (
-    <div className="flex w-full flex-wrap gap-4">
+    <div className="flex w-full flex-wrap content-end justify-center gap-4">
       {MONTHS.map(month => (
-        <div key={month} className="mx-auto p-2">
+        <div key={month} className="p-2">
           <TextButton
             label={`${month}`}
-            variant="secondary"
             className="mb-1 w-full font-semibold"
             onClick={e => {
               e.stopPropagation();
