@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import PageIndicator from './PageIndicator';
 
