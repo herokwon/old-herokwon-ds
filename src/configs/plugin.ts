@@ -3,6 +3,7 @@ import plugin from 'tailwindcss/plugin';
 const customVariants = {
   'slider-thumb': ['&::-webkit-slider-thumb', '&::-moz-range-thumb'],
   'slider-track': ['&::-webkit-slider-runnable-track', '&::-moz-range-track'],
+  'not-open': ['&:not([open])'],
 };
 
 export default plugin(function ({ addBase, addVariant, addUtilities }) {
@@ -40,14 +41,6 @@ export default plugin(function ({ addBase, addVariant, addUtilities }) {
     },
     'button:disabled > *': {
       pointerEvents: 'none',
-    },
-
-    // dialog
-    'dialog[open]': {
-      animation: 'modal-open 0.15s forwards',
-    },
-    'dialog.close': {
-      animation: 'modal-close 0.15s forwards',
     },
 
     // input

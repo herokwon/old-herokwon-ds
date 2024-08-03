@@ -1,22 +1,18 @@
 @keyframes modal-open {
   from {
     transform: translateY(0.25rem);
-    opacity: 0;
   }
   to {
     transform: translateY(0);
-    opacity: 1;
   }
 }
 
 @keyframes modal-close {
   from {
     transform: translateY(0);
-    opacity: 1;
   }
   to {
     transform: translateY(0.25rem);
-    opacity: 0;
   }
 }
 
