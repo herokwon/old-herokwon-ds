@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import IconButton from './IconButton';
 import Backdrop from './Backdrop';
+import IconButton from './IconButton';
 
 interface ModalProps extends React.ComponentPropsWithoutRef<'dialog'> {
   children: React.ReactNode;
@@ -18,30 +18,23 @@ export default function Modal({
   ...props
 }: ModalProps) {
   const { isActive = false, ...restProps } = props;
-  const [isOpen, setIsOpen] = useState<boolean>(isActive);
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const closeModal = (): void => {
-    if (!modalRef.current?.open) return;
-    modalRef.current.onanimationend = () => {
-      setIsOpen(false);
-      isActive && onClose?.();
-    };
-    modalRef.current.classList.add('close');
-  };
-
   useEffect(() => {
-    isActive ? setIsOpen(true) : closeModal();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    isActive ? modalRef.current?.show() : modalRef.current?.close();
   }, [isActive]);
 
   return (
-    <Backdrop isActive={isOpen} trigger={trigger}>
+    <Backdrop
+      isActive={isActive}
+      trigger={trigger}
+      onClick={onClose}
+      className="flex items-center justify-center"
+    >
       <dialog
         {...restProps}
         ref={modalRef}
-        open={isOpen}
-        className={`min-w-[300px] rounded-ms border border-light-tertiary bg-light-primary px-4 py-3 text-light shadow-primary-light shadow-light-tertiary dark:border-dark-tertiary dark:bg-dark-secondary dark:text-dark dark:shadow-primary-dark ${restProps.className ?? ''}`}
+        className={`block min-w-[300px] animate-[modal-close_200ms_forwards] rounded-ms border border-light-tertiary bg-light-primary px-4 py-3 text-light shadow-primary-light shadow-light-tertiary transition-opacity duration-200 open:animate-[modal-open_200ms_forwards] not-open:pointer-events-none not-open:opacity-0 dark:border-dark-tertiary dark:bg-dark-secondary dark:text-dark dark:shadow-primary-dark ${restProps.className ?? ''}`}
       >
         <section className="w-full">
           <IconButton
@@ -49,7 +42,7 @@ export default function Modal({
             spacing="none"
             shape="square"
             className="ml-auto mr-0 hover:!bg-light-secondary dark:hover:!bg-dark-tertiary"
-            onClick={closeModal}
+            onClick={onClose}
           />
           <div className="p-1">{children}</div>
         </section>
