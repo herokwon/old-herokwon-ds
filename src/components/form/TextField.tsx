@@ -2,13 +2,17 @@ import { forwardRef, useState } from 'react';
 import type { IconType } from 'react-icons';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
-import type { ElementStatus, InputProps, TextInput } from '../../types';
-import { ICON_SIZE } from '../../data/constant';
+import type { InputProps, TextInput } from '../../types/form';
+
 import { useInput } from '../../hooks';
-import InputHeader from './InputHeader';
-import InputWrapper from './InputWrapper';
-import InputMessage from './InputMessage';
+
+import { ICON_SIZE } from '../../data/constant';
+
+import type { ElementStatus } from '../../types';
 import IconButton from '../ui/IconButton';
+import InputHeader from './InputHeader';
+import InputMessage from './InputMessage';
+import InputWrapper from './InputWrapper';
 
 interface TextFieldProps
   extends React.PropsWithChildren<

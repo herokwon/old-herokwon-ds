@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import CodeBlock from './CodeBlock';
 import { CODE_LANGUAGES } from '../../data/constant';
+
+import CodeBlock from './CodeBlock';
 
 const meta = {
   title: 'Components/CodeBlock',

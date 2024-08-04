@@ -1,6 +1,7 @@
 import { LuLoader2 } from 'react-icons/lu';
 
 import type { ElementExtendedSize } from '../../types';
+
 import { ICON_SIZE } from '../../data/constant';
 
 interface SpinnerProps

@@ -1,13 +1,16 @@
 import { forwardRef } from 'react';
 
+import type { InputProps } from '../../types/form';
+
+import { useRadio, useStatus } from '../../contexts';
+
+import { useInput } from '../../hooks';
+
 import type {
   ContentWithId,
   ElementBaseSize,
   ElementStatus,
-  InputProps,
 } from '../../types';
-import { useRadio, useStatus } from '../../contexts';
-import { useInput } from '../../hooks';
 
 interface RadioProps
   extends Pick<ElementStatus, 'isDisabled'>,

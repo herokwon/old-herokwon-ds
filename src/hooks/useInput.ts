@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import type { ElementStatus, InputElement, InputProps } from '../types';
+import type { ElementStatus } from '../types';
+
+import type { InputElement, InputProps } from '../types/form';
 
 type InputHookProps<T extends InputElement> = Pick<
   ElementStatus,

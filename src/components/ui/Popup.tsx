@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import type { AbsolutePosition, ElementStatus } from '../../types';
+
 import LoadableElement from '../LoadableElement';
 import EmptyData from './EmptyData';
 

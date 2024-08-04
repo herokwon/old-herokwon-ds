@@ -1,14 +1,17 @@
 import { forwardRef, useState } from 'react';
 import { FaCheck } from 'react-icons/fa6';
 
+import type { InputProps } from '../../types/form';
+
+import { useStatus } from '../../contexts';
+
+import { useInput } from '../../hooks';
+
 import type {
   ContentWithId,
   ElementBaseSize,
   ElementStatus,
-  InputProps,
 } from '../../types';
-import { useStatus } from '../../contexts';
-import { useInput } from '../../hooks';
 import InputMessage from './InputMessage';
 
 interface CheckboxProps

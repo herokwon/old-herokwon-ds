@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { FaCalendarDays } from 'react-icons/fa6';
 
 import type { ElementStatus } from '../../types';
-import Dropdown from '../ui/Dropdown';
 import Calendar from '../ui/Calendar';
+import Dropdown from '../ui/Dropdown';
 import DatetimeField from './DatetimeField';
 
 type DatePickerProps = Pick<ElementStatus, 'isDisabled'> &

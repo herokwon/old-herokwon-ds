@@ -1,4 +1,4 @@
-import { ALIGNMENTS_X, ALIGNMENTS_Y } from '../../data/constant';
+import { ALIGNMENTS_X, ALIGNMENTS_Y } from '../data/constant';
 
 export type AlignmentX = (typeof ALIGNMENTS_X)[number];
 export type AlignmentY = (typeof ALIGNMENTS_Y)[number];

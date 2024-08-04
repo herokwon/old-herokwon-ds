@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useEffect, useState } from 'react';
 
-import type {
-  ElementStatus,
-  FloatingItem,
-  FloatingItemGroup,
-} from '../../types';
+import type { ElementStatus } from '../../types';
+
+import type { FloatingItem, FloatingItemGroup } from '../../types/ui';
+
 import Dropdown from './Dropdown';
 import TextButton from './TextButton';
 

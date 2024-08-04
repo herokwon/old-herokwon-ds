@@ -1,12 +1,16 @@
 import { forwardRef } from 'react';
 import type { IconType } from 'react-icons';
 
-import type { DatetimeInput, ElementStatus, InputProps } from '../../types';
-import { ICON_SIZE } from '../../data/constant';
+import type { DatetimeInput, InputProps } from '../../types/form';
+
 import { useInput } from '../../hooks';
+
+import { ICON_SIZE } from '../../data/constant';
+
+import type { ElementStatus } from '../../types';
 import InputHeader from './InputHeader';
-import InputWrapper from './InputWrapper';
 import InputMessage from './InputMessage';
+import InputWrapper from './InputWrapper';
 
 interface DatetimeFieldProps
   extends Pick<ElementStatus, 'isDisabled'>,

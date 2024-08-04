@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 
-import type { FeedbackAction } from '../../types';
+import type { FeedbackAction } from '../../types/ui';
+
 import { FEEDBACK_ICONS } from '../../data/constant';
+
 import Heading from './Heading';
-import TextButton from './TextButton';
 import IconButton from './IconButton';
 import InlineMessage from './InlineMessage';
+import TextButton from './TextButton';
 
 type SectionMessageProps = Omit<
   React.ComponentPropsWithoutRef<typeof InlineMessage>,
