@@ -1,6 +1,7 @@
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import type { ElementBaseSize, ElementBorderShape } from '../../types';
+
 import IconButton from './IconButton';
 
 interface PageIndicatorProps extends React.ComponentPropsWithoutRef<'div'> {

@@ -2,17 +2,18 @@ import { useMemo, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 
 import type {
-  ButtonProps,
   ElementBaseVariant,
-  ElementSpacing,
   ElementEventHandler,
-  FloatingItem,
+  ElementSpacing,
   ElementStatus,
   ElementWithHref,
 } from '../../types';
-import TextButton from './TextButton';
-import IconButton from './IconButton';
+
+import type { ButtonProps, FloatingItem } from '../../types/ui';
+
 import Dropdown from './Dropdown';
+import IconButton from './IconButton';
+import TextButton from './TextButton';
 
 type SplitButtonItem = FloatingItem<
   Pick<ElementStatus, 'isDisabled'> &

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import type { Children } from '../../types';
+
 import Popup from './Popup';
 
 interface TooltipProps

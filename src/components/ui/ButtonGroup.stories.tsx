@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { FaCheck, FaXmark } from 'react-icons/fa6';
 
 import ButtonGroup from './ButtonGroup';
-import TextButton from './TextButton';
 import IconButton from './IconButton';
+import TextButton from './TextButton';
 
 const meta = {
   title: 'Components/ButtonGroup',

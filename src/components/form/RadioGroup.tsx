@@ -1,5 +1,8 @@
-import type { ElementStatus, InputProps, PropsWithChildren } from '../../types';
+import type { InputProps } from '../../types/form';
+
 import { RadioProvider } from '../../contexts';
+
+import type { ElementStatus, PropsWithChildren } from '../../types';
 
 type RadioGroupProps = PropsWithChildren<
   Pick<ElementStatus, 'isDisabled'> &

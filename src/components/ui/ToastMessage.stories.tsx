@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 
 import type {
   ToastMessageConfig,
   ToastMessage as ToastMessageType,
-} from '../../types';
+} from '../../types/ui';
+
 import ToastMessage from './ToastMessage';
 
 const meta = {

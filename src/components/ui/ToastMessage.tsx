@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import type { ToastMessage, ToastMessageConfig } from '../../types';
+import type { ToastMessage, ToastMessageConfig } from '../../types/ui';
+
 import { FEEDBACK_ICONS } from '../../data/constant';
+
 import IconButton from './IconButton';
 
 interface ToastMessageProps extends Pick<ToastMessageConfig, 'position'> {

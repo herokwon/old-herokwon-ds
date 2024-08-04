@@ -1,13 +1,15 @@
 import type { IconType } from 'react-icons';
+import { BsFillExclamationDiamondFill } from 'react-icons/bs';
 import {
   FaCircleCheck,
   FaCircleInfo,
   FaCommentDots,
   FaTriangleExclamation,
 } from 'react-icons/fa6';
-import { BsFillExclamationDiamondFill } from 'react-icons/bs';
 
-import type { ElementExtendedSize, FeedbackVariant, Months } from '../../types';
+import type { ElementExtendedSize, Months } from '../../types';
+
+import type { FeedbackVariant } from '../../types/ui';
 
 export const ELEMENT_BASE_SIZES = ['sm', 'md', 'lg'] as const;
 export const ELEMENT_EXTENDED_SIZES = [

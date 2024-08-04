@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useEffect, useState } from 'react';
 import { FaCheck, FaXmark } from 'react-icons/fa6';
 
 import Toggle from './Toggle';

@@ -1,5 +1,8 @@
-import type { ElementStatus, InputProps } from '../../types';
+import type { InputProps } from '../../types/form';
+
 import { useInput } from '../../hooks';
+
+import type { ElementStatus } from '../../types';
 import InputHeader from './InputHeader';
 import InputMessage from './InputMessage';
 

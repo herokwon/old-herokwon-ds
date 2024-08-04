@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useEffect, useState } from 'react';
 
 import Checkbox from './Checkbox';
 

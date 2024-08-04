@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PiTextTBold } from 'react-icons/pi';
 import { FaRegEnvelope } from 'react-icons/fa6';
 import { LuLock } from 'react-icons/lu';
+import { PiTextTBold } from 'react-icons/pi';
 
 import TextField from './TextField';
 

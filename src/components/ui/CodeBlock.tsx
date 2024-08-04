@@ -1,10 +1,11 @@
-import { Fragment, useEffect } from 'react';
-import { LuCopy } from 'react-icons/lu';
 import * as Prism from 'prismjs';
 import 'prismjs/themes/prism-okaidia.min.css';
+import { Fragment, useEffect } from 'react';
+import { LuCopy } from 'react-icons/lu';
 
-import '../../data/prism';
 import { CODE_LANGUAGES } from '../../data/constant';
+import '../../data/prism';
+
 import Box from '../Box';
 import IconButton from './IconButton';
 

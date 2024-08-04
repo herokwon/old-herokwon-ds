@@ -1,10 +1,8 @@
 import type { IconType } from 'react-icons';
 
-import type {
-  ButtonProps,
-  ElementExtendedSize,
-  ElementStatus,
-} from '../../types';
+import type { ElementExtendedSize, ElementStatus } from '../../types';
+
+import type { ButtonProps } from '../../types/ui';
 
 interface ToggleProps
   extends Pick<ElementStatus, 'isDisabled'>,
