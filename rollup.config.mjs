@@ -1,4 +1,3 @@
-import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import image from '@rollup/plugin-image';
@@ -10,13 +9,9 @@ import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import autoprefixer from 'autoprefixer';
 import cssimport from 'postcss-import';
-import path from 'path';
 import pkg from './package.json' assert { type: 'json' };
 import tailwindcss from 'tailwindcss';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const extensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx'];
 
 const config = [
@@ -38,14 +33,6 @@ const config = [
     ],
     external: [/@babel\/runtime/, 'react', 'react-dom'],
     plugins: [
-      alias({
-        entries: [
-          {
-            find: '@public',
-            replacement: path.resolve(__dirname, 'public'),
-          },
-        ],
-      }),
       babel({
         babelHelpers: 'runtime',
         presets: [
