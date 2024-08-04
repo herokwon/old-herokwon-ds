@@ -1,14 +1,17 @@
 import type {
-  ButtonProps,
   ContentWithIcon,
   ElementBorderShape,
   ElementExtendedVariant,
   ElementStatus,
   ElementWithHref,
 } from '../../types';
+
+import type { ButtonProps } from '../../types/ui';
+
 import { ICON_SIZE } from '../../data/constant';
-import LoadableElement from '../LoadableElement';
+
 import LinkableElement from '../LinkableElement';
+import LoadableElement from '../LoadableElement';
 
 interface TextButtonProps
   extends ElementStatus,

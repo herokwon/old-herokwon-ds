@@ -1,12 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 
-import type {
-  AbsolutePositionY,
-  AlignmentX,
-  ElementStatus,
-  InputProps,
-} from '../../types';
+import type { InputProps } from '../../types/form';
+
 import { useInput } from '../../hooks';
+
+import type { AbsolutePositionY, AlignmentX, ElementStatus } from '../../types';
 import InputMessage from './InputMessage';
 
 interface RangeProps

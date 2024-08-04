@@ -1,7 +1,7 @@
-import { customWidth, customHeight } from './size';
-import { customTextColor } from './typography';
-import { customBoxShadow, customOpacity } from './effect';
 import { customBgColor } from './background';
+import { customBoxShadow, customOpacity } from './effect';
+import { customHeight, customWidth } from './size';
+import { customTextColor } from './typography';
 
 const customColor: { [key: string]: string } = {
   'light-red': '#ef4444',

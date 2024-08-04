@@ -1,6 +1,7 @@
 import { FaStar } from 'react-icons/fa6';
 
-import type { InputProps } from '../../types';
+import type { InputProps } from '../../types/form';
+
 import { useInput } from '../../hooks';
 
 type InputHeaderProps = Pick<

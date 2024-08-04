@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useEffect, useState } from 'react';
 
+import Heading from './Heading';
 import Modal from './Modal';
 import TextButton from './TextButton';
-import Heading from './Heading';
 
 const meta = {
   title: 'Components/Modal',

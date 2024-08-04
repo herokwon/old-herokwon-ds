@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import type {
-  Children,
-  ElementStatus,
-  FloatingItem,
-  InputProps,
-  SelectingInput,
-} from '../../types';
+import type { InputProps, SelectingInput } from '../../types/form';
+import type { FloatingItem } from '../../types/ui';
+
+import type { Children, ElementStatus } from '../../types';
+import Box from '../Box';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
-import TagGroup from '../ui/TagGroup';
 import Tag from '../ui/Tag';
+import TagGroup from '../ui/TagGroup';
 import TextField from './TextField';
-import Box from '../Box';
 
 interface SelectProps
   extends Omit<ElementStatus, 'isSelected'>,

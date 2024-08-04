@@ -48,5 +48,6 @@ export { default as Tabs } from './src/components/ui/Tabs';
 export { default as Tag } from './src/components/ui/Tag';
 export { default as TagGroup } from './src/components/ui/TagGroup';
 export { default as TextButton } from './src/components/ui/TextButton';
+export { default as ToastMessage } from './src/components/ui/ToastMessage';
 export { default as Toggle } from './src/components/ui/Toggle';
 export { default as Tooltip } from './src/components/ui/Tooltip';

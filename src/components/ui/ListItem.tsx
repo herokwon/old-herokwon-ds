@@ -1,4 +1,7 @@
-import type { ElementBaseSize, ElementStatus, FloatingItem } from '../../types';
+import type { ElementBaseSize, ElementStatus } from '../../types';
+
+import type { FloatingItem } from '../../types/ui';
+
 import Box from '../Box';
 import Checkbox from '../form/Checkbox';
 import Radio from '../form/Radio';

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa6';
 
+import EmptyData from './EmptyData';
+import ListItem from './ListItem';
 import Popup from './Popup';
 import TextButton from './TextButton';
-import ListItem from './ListItem';
-import EmptyData from './EmptyData';
 
 const meta = {
   title: 'Components/Popup',

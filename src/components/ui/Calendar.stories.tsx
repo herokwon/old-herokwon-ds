@@ -1,8 +1,10 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 
 import type { DateItem } from '../../types';
+
 import { MONTHS } from '../../data/constant';
+
 import Calendar from './Calendar';
 
 const meta = {

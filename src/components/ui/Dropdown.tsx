@@ -1,7 +1,8 @@
 import type { Children, ElementDirection, ElementStatus } from '../../types';
-import Popup from './Popup';
-import ListItem from './ListItem';
+
 import Checkbox from '../form/Checkbox';
+import ListItem from './ListItem';
+import Popup from './Popup';
 
 interface DropdownProps
   extends Pick<ElementStatus, 'isLoading'>,

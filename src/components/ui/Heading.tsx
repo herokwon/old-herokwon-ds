@@ -2,6 +2,7 @@ import type {
   ElementWithHref,
   PolymorphicElementPropsWithoutRef,
 } from '../../types';
+
 import LinkableElement from '../LinkableElement';
 
 type HeadingElement = Extract<

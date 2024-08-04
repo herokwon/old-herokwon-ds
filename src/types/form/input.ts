@@ -1,4 +1,5 @@
-import type { Children, ContentWithId } from '..';
+import type { Children, ContentWithId } from '../../types';
+
 import {
   DATETIME_INPUTS,
   SELECTING_INPUTS,

@@ -1,4 +1,5 @@
 import type { PolymorphicElementPropsWithoutRef } from '../types';
+
 import Box from './Box';
 import Backdrop from './ui/Backdrop';
 import Spinner from './ui/Spinner';
@@ -33,7 +34,7 @@ export default function LoadableElement<T extends React.ElementType = 'div'>({
       {children}
       <Backdrop
         isActive={isActive}
-        className="absolute bottom-0 left-0 right-0 top-0 z-40 !h-full !w-full"
+        className="!absolute bottom-0 left-0 right-0 top-0 z-40 flex !h-full !w-full items-center justify-center"
       >
         <Spinner size={size} />
       </Backdrop>

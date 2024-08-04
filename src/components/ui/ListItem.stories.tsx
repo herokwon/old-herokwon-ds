@@ -1,7 +1,9 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 
-import type { FloatingItem, SelectingInput } from '../../types';
+import type { SelectingInput } from '../../types/form';
+import type { FloatingItem } from '../../types/ui';
+
 import ListItem from './ListItem';
 
 const meta = {
