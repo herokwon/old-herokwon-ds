@@ -1,4 +1,4 @@
-import { customBgColor } from './background';
+import { customBgColor, customBgFeedbackColor } from './background';
 import { customBoxShadow, customOpacity } from './effect';
 import { customHeight, customWidth } from './size';
 import { customTextColor } from './typography';
@@ -19,6 +19,11 @@ export const tailwindExtendTheme = {
   height: customHeight,
   colors: {
     ...customColor,
+    ...Object.fromEntries(
+      Object.entries(customBgColor).filter(
+        item => !(item[0] in customBgFeedbackColor),
+      ),
+    ),
   },
   textColor: {
     ...customTextColor,

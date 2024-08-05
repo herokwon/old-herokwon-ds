@@ -4,9 +4,16 @@ import EmptyImageImg from '../../assets/empty_image.png';
 
 type EmptyImageProps = Pick<
   React.ComponentPropsWithoutRef<typeof Image>,
-  'width' | 'height' | 'fill' | 'sizes' | 'loading' | 'unoptimized' | 'onLoad'
-> &
-  React.ComponentPropsWithoutRef<'div'>;
+  | 'width'
+  | 'height'
+  | 'fill'
+  | 'sizes'
+  | 'loading'
+  | 'unoptimized'
+  | 'onLoad'
+  | 'className'
+  | 'style'
+>;
 
 export default function EmptyImage({
   width,
@@ -16,8 +23,8 @@ export default function EmptyImage({
   loading,
   unoptimized = false,
   className,
+  style,
   onLoad,
-  ...props
 }: EmptyImageProps) {
   return (
     <Image
@@ -31,6 +38,7 @@ export default function EmptyImage({
       unoptimized={unoptimized}
       onLoad={onLoad}
       className={`m-12 object-cover object-center dark:opacity-normal ${className ?? ''}`}
+      style={style}
       alt="empty-image"
     />
   );

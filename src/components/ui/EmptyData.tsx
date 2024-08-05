@@ -4,9 +4,16 @@ import EmptyDataImg from '../../assets/empty_data.png';
 
 type EmptyDataProps = Pick<
   React.ComponentPropsWithoutRef<typeof Image>,
-  'width' | 'height' | 'fill' | 'sizes' | 'loading' | 'unoptimized' | 'onLoad'
-> &
-  React.ComponentPropsWithoutRef<'div'>;
+  | 'width'
+  | 'height'
+  | 'fill'
+  | 'sizes'
+  | 'loading'
+  | 'unoptimized'
+  | 'onLoad'
+  | 'className'
+  | 'style'
+>;
 
 export default function EmptyData({
   width,
@@ -16,8 +23,8 @@ export default function EmptyData({
   loading,
   unoptimized = false,
   className,
+  style,
   onLoad,
-  ...props
 }: EmptyDataProps) {
   return (
     <Image
@@ -31,6 +38,7 @@ export default function EmptyData({
       unoptimized={unoptimized}
       onLoad={onLoad}
       className={`object-cover object-center opacity-bold dark:opacity-normal ${className ?? ''}`}
+      style={style}
       alt="empty-data"
     />
   );

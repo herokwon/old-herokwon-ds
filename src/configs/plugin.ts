@@ -105,5 +105,26 @@ export default plugin(function ({ addBase, addVariant, addUtilities }) {
         display: 'none',
       },
     },
+    ...Object.fromEntries(
+      Array.from({ length: 10 }, (_, i) => [
+        `.bg-underline-${i + 1}`,
+        {
+          'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
+          'background-size': `0% ${i + 1}px`,
+          'background-repeat': 'no-repeat',
+          'background-position': '0 100%',
+          transition: 'background-size 150ms linear',
+          '&:hover': {
+            'background-size': `100% ${i + 1}px`,
+          },
+          '.group:hover &': {
+            'background-size': `100% ${i + 1}px`,
+          },
+          '.peer:hover ~ &': {
+            'background-size': `100% ${i + 1}px`,
+          },
+        },
+      ]),
+    ),
   });
 });
