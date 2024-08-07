@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FaCalendarDays } from 'react-icons/fa6';
 
 import type { ElementStatus } from '../../types';
+
 import Calendar from '../ui/Calendar';
 import Dropdown from '../ui/Dropdown';
 import DatetimeField from './DatetimeField';
@@ -55,7 +56,7 @@ export default function DatePicker({
         today={today}
         pickedDate={pickedDate}
         setPickedDate={setPickedDate}
-        className="p-4"
+        className="p-4 dark:*:*:last:*:bg-dark-secondary dark:hover:[&[data-selected='false']]:*:*:last:*:!bg-dark-tertiary"
       />
     </Dropdown>
   );

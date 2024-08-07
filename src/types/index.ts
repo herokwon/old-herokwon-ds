@@ -72,15 +72,18 @@ export interface ContentWithId extends BaseContent {
   id: string;
 }
 export interface ContentWithIcon {
-  iconBefore?: ElementEventHandler<SVGElement> & {
-    content?: IconType;
-    size?: ElementExtendedSize;
-  };
-  iconAfter?: ElementEventHandler<SVGElement> & {
-    content?: IconType;
-    size?: ElementExtendedSize;
-  };
+  iconBefore?: ElementEventHandler<SVGElement> &
+    Pick<React.ComponentPropsWithoutRef<'svg'>, 'className'> & {
+      content?: IconType;
+      size?: ElementExtendedSize;
+    };
+  iconAfter?: ElementEventHandler<SVGElement> &
+    Pick<React.ComponentPropsWithoutRef<'svg'>, 'className'> & {
+      content?: IconType;
+      size?: ElementExtendedSize;
+    };
 }
+
 export interface ContentWithElement {
   elemBefore?: Children;
   elemAfter?: Children;

@@ -12,7 +12,7 @@
     @apply !cursor-not-allowed !opacity-off *:!pointer-events-none;
   }
 
-  .linkable {
-    @apply cursor-pointer underline-offset-2 hover:text-light-blue hover:underline dark:hover:text-dark-blue;
+  :not(button).linkable {
+    @apply cursor-pointer from-light-blue to-light-blue bg-underline-1 hover:text-light-blue dark:from-dark-blue dark:to-dark-blue dark:hover:text-dark-blue;
   }
 }

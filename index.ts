@@ -44,6 +44,7 @@ export { default as ProgressBar } from './src/components/ui/ProgressBar';
 export { default as SectionMessage } from './src/components/ui/SectionMessage';
 export { default as Spinner } from './src/components/ui/Spinner';
 export { default as SplitButton } from './src/components/ui/SplitButton';
+export { default as Table } from './src/components/ui/Table';
 export { default as Tabs } from './src/components/ui/Tabs';
 export { default as Tag } from './src/components/ui/Tag';
 export { default as TagGroup } from './src/components/ui/TagGroup';
