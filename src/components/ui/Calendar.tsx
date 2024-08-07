@@ -35,6 +35,16 @@ interface YearlyCalendarProps extends Omit<MonthlyCalendarProps, 'month'> {
   setViewedDate: React.Dispatch<React.SetStateAction<ViewedDate>>;
 }
 
+const dayOfTheWeek: readonly string[] = [
+  'sun',
+  'mon',
+  'thu',
+  'wed',
+  'thur',
+  'fri',
+  'sat',
+];
+
 export default function Calendar({
   form,
   today,
@@ -85,20 +95,20 @@ export default function Calendar({
       <div
         className={`w-full ${
           !viewedDate.month ? 'mb-4' : 'mb-1'
-        } flex justify-between rounded-ms bg-light-blue text-dark transition-colors dark:bg-dark-blue`}
+        } flex justify-between rounded-ms`}
       >
         <IconButton
           icon={LuChevronLeft}
-          variant="primary"
+          variant="secondary"
           size={!viewedDate.month ? 'lg' : 'md'}
           shape="square"
-          className="rounded-r-none"
+          className="hover:bg-light-secondary dark:hover:bg-dark-tertiary"
           onClick={clickHandler.prevButton}
         />
         <div className="flex w-full items-center justify-center">
           <TextButton
             label={`${viewedDate.year}`}
-            variant="primary"
+            variant="secondary"
             size={!viewedDate.month ? 'lg' : 'md'}
             className={
               !viewedDate.month
@@ -119,7 +129,7 @@ export default function Calendar({
               <span className="mx-1">/</span>
               <TextButton
                 label={`${viewedDate.month}`}
-                variant="primary"
+                variant="secondary"
                 className="pointer-events-none font-semibold"
               />
             </>
@@ -127,10 +137,10 @@ export default function Calendar({
         </div>
         <IconButton
           icon={LuChevronRight}
-          variant="primary"
+          variant="secondary"
           size={!viewedDate.month ? 'lg' : 'md'}
           shape="square"
-          className="rounded-l-none"
+          className="hover:bg-light-secondary dark:hover:bg-dark-tertiary"
           onClick={clickHandler.nextButton}
         />
       </div>
@@ -190,6 +200,22 @@ const MonthlyCalendar = ({
 
   return (
     <div className="flex w-full flex-col gap-1">
+      <div className="grid w-full grid-cols-7 justify-items-center gap-1 py-1">
+        {dayOfTheWeek.map((value, index) => (
+          <span
+            key={`${value}-${index}`}
+            className={`text-xs font-semibold tracking-tighter opacity-bold ${
+              index === 0
+                ? 'text-light-red dark:text-dark-red'
+                : index === 6
+                  ? 'text-light-blue dark:text-dark-blue'
+                  : ''
+            }`}
+          >
+            {value.toUpperCase()}
+          </span>
+        ))}
+      </div>
       {Array.from({ length: theNumberOfWeeksInMonth }, (_, index) => index).map(
         weeklyIndex => (
           <div
@@ -254,6 +280,7 @@ const MonthlyCalendar = ({
               return (
                 <TextButton
                   key={dailyIndex}
+                  data-selected={isSelected}
                   isDisabled={isDisabled}
                   label={!viewedDate.month && isDisabled ? '' : `${date}`}
                   variant={isSelected ? 'primary' : 'secondary'}
@@ -262,16 +289,16 @@ const MonthlyCalendar = ({
                   className={`aspect-square py-1.5 ${
                     isDisabled
                       ? 'pointer-events-none hover:!bg-transparent'
-                      : isSelected
-                        ? ''
-                        : 'dark:bg-dark-secondary dark:hover:!bg-dark-tertiary'
+                      : ''
                   } ${
                     index === 0 || isHoliday
-                      ? '!text-light-red dark:!text-dark-red'
+                      ? '!text-light-red hover:!text-light-red dark:!text-dark-red dark:hover:!text-dark-red'
                       : index === 6
-                        ? '!text-light-blue dark:!text-dark-blue'
-                        : ''
-                  } transition-none`}
+                        ? '!text-light-blue hover:!text-light-blue dark:!text-dark-blue dark:hover:!text-dark-blue'
+                        : isSelected
+                          ? 'hover:!bg-dark-blue dark:hover:!bg-light-blue'
+                          : ''
+                  } !transition-none`}
                   onClick={e => {
                     e.stopPropagation();
                     setPickedDate(prev => ({
