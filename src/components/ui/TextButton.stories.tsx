@@ -14,6 +14,7 @@ const meta = {
     isLoading: false,
     size: 'md',
     spacing: 'default',
+    shape: 'square',
     onClick: fn(),
   },
 } satisfies Meta<typeof TextButton>;

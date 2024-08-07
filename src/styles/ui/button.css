@@ -5,10 +5,6 @@
     .button-warning,
     .button-danger
   ) {
-  &.linkable {
-    @apply text-current decoration-transparent hover:no-underline;
-  }
-
   &.removable:has(> :last-child:hover) {
     @apply !bg-feedback-light-red !text-feedback-light-red dark:!bg-feedback-dark-red dark:!text-feedback-dark-red;
   }
@@ -25,40 +21,61 @@
     .button-warning--no-spacing,
     .button-danger--no-spacing
   ) {
-  &:not(:disabled) {
-    @apply underline-offset-2 hover:underline;
+  @apply !rounded-none;
+
+  &.linkable {
+    @apply bg-underline-1;
 
     &.selected {
-      @apply underline;
+      @apply active;
     }
   }
 
   &.removable {
-    @apply text-light-red decoration-light-red hover:underline dark:text-dark-red dark:decoration-dark-red;
+    @apply from-light-red to-light-red text-light-red dark:from-dark-red dark:to-light-red dark:text-dark-red;
+  }
+}
+
+.button-default--no-spacing,
+.button-secondary--no-spacing {
+  &.linkable {
+    @apply from-black to-black dark:from-white dark:to-white;
+  }
+}
+
+.button-primary--no-spacing {
+  @apply hover:text-light-blue dark:hover:text-dark-blue;
+
+  &.linkable {
+    @apply from-light-blue to-light-blue dark:from-dark-blue dark:to-dark-blue;
   }
 
-  &:is(.button-primary--no-spacing) {
-    @apply decoration-light-blue hover:text-light-blue dark:decoration-dark-blue dark:hover:text-dark-blue;
+  &.selected {
+    @apply text-light-blue dark:text-dark-blue;
+  }
+}
 
-    &.selected {
-      @apply text-light-blue decoration-light-blue dark:text-dark-blue dark:decoration-dark-blue;
-    }
+.button-warning--no-spacing {
+  @apply hover:text-light-yellow dark:hover:text-dark-yellow;
+
+  &.linkable {
+    @apply from-light-yellow to-light-yellow dark:from-dark-yellow dark:to-dark-yellow;
   }
 
-  &:is(.button-warning--no-spacing) {
-    @apply decoration-light-yellow hover:text-light-yellow dark:decoration-dark-yellow dark:hover:text-dark-yellow;
+  &.selected {
+    @apply text-light-yellow dark:text-dark-yellow;
+  }
+}
 
-    &.selected {
-      @apply text-light-yellow decoration-light-yellow dark:text-dark-yellow dark:decoration-dark-yellow;
-    }
+.button-danger--no-spacing {
+  @apply hover:text-light-red dark:hover:text-dark-red;
+
+  &.linkable {
+    @apply from-light-red to-light-red dark:from-dark-red dark:to-dark-red;
   }
 
-  &:is(.button-danger--no-spacing) {
-    @apply decoration-light-red hover:text-light-red dark:decoration-dark-red dark:hover:text-dark-red;
-
-    &.selected {
-      @apply text-light-red decoration-light-red dark:text-dark-red dark:decoration-dark-red;
-    }
+  &.selected {
+    @apply text-light-red dark:text-dark-red;
   }
 }
 
