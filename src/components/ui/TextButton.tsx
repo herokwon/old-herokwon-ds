@@ -79,13 +79,19 @@ export default function TextButton({
           shape === 'circle' ? 'rounded-full' : 'rounded-ms'
         } ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-        } outline-none transition-colors ${restProps.className ?? ''}`}
+        } outline-none !transition-[background-size,_color] ${restProps.className ?? ''}`}
       >
         {BeforeIcon && (
           <BeforeIcon
             {...iconBeforeProps}
             size={ICON_SIZE[iconBefore?.size ?? size]}
-            className={spacing === 'default' ? 'mr-1.5' : 'mr-1'}
+            className={`${
+              size === 'lg'
+                ? `${spacing === 'default' ? 'mr-2' : 'mr-1.5'}`
+                : size === 'sm'
+                  ? `${spacing === 'default' ? 'mr-1' : 'mr-0.5'}`
+                  : `${spacing === 'default' ? 'mr-1.5' : 'mr-1'}`
+            } ${iconBeforeProps.className ?? ''}`}
           />
         )}
         {label}
@@ -93,7 +99,13 @@ export default function TextButton({
           <AfterIcon
             {...iconAfterProps}
             size={ICON_SIZE[iconAfter?.size ?? size]}
-            className={spacing === 'default' ? 'ml-1.5' : 'ml-1'}
+            className={`${
+              size === 'lg'
+                ? `${spacing === 'default' ? 'mr-2' : 'mr-1.5'}`
+                : size === 'sm'
+                  ? `${spacing === 'default' ? 'mr-1' : 'mr-0.5'}`
+                  : `${spacing === 'default' ? 'mr-1.5' : 'mr-1'}`
+            } ${iconAfterProps.className ?? ''}`}
           />
         )}
       </LinkableElement>
