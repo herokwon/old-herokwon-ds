@@ -33,7 +33,7 @@ const CalendarRender = ({
       today={todayDateItem}
       pickedDate={pickedDate}
       setPickedDate={setPickedDate}
-      className="last:*:rounded-ms last:*:dark:bg-dark-secondary"
+      className="last:*:rounded-ms"
     />
   );
 };
