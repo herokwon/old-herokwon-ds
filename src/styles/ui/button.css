@@ -10,10 +10,6 @@
   }
 }
 
-:is(.button-default, .button-secondary) {
-  @apply hover:!text-current;
-}
-
 :is(
     .button-default--no-spacing,
     .button-primary--no-spacing,
@@ -21,16 +17,6 @@
     .button-warning--no-spacing,
     .button-danger--no-spacing
   ) {
-  @apply !rounded-none;
-
-  &.linkable {
-    @apply bg-underline-1;
-
-    &.selected {
-      @apply active;
-    }
-  }
-
   &.removable {
     @apply from-light-red to-light-red text-light-red dark:from-dark-red dark:to-light-red dark:text-dark-red;
   }

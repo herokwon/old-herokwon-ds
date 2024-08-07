@@ -13,6 +13,6 @@
   }
 
   :not(button).linkable {
-    @apply cursor-pointer from-light-blue to-light-blue bg-underline-1 hover:text-light-blue dark:from-dark-blue dark:to-dark-blue dark:hover:text-dark-blue;
+    @apply cursor-pointer from-light-blue to-light-blue bg-underline-[1px] hover:text-light-blue hover:active dark:from-dark-blue dark:to-dark-blue dark:hover:text-dark-blue;
   }
 }
