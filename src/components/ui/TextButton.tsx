@@ -68,18 +68,26 @@ export default function TextButton({
           restProps.onClick?.(e);
         }}
         className={`button-${
-          spacing === 'none' ? `${variant}--no-spacing` : variant
+          spacing === 'none'
+            ? `${variant}--no-spacing bg-underline-[1px]`
+            : variant
         } ${isSelected ? 'selected' : ''} ${
           spacing === 'default'
             ? 'px-2.5 py-1'
             : spacing === 'compact'
               ? 'px-1.5 py-0.5'
-              : 'p-0'
+              : isSelected
+                ? 'p-0 active'
+                : 'p-0'
         } flex items-center justify-center ${
-          shape === 'circle' ? 'rounded-full' : 'rounded-ms'
+          spacing === 'none'
+            ? ''
+            : shape === 'circle'
+              ? 'rounded-full'
+              : 'rounded-ms'
         } ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-        } outline-none !transition-[background-size,_color] ${restProps.className ?? ''}`}
+        } outline-none !transition-[background-size,_color,_background-color] ${restProps.className ?? ''}`}
       >
         {BeforeIcon && (
           <BeforeIcon

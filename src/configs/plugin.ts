@@ -6,7 +6,12 @@ const customVariants = {
   'not-open': ['&:not([open])'],
 };
 
-export default plugin(function ({ addBase, addVariant, addUtilities }) {
+export default plugin(function ({
+  addBase,
+  addVariant,
+  addUtilities,
+  matchUtilities,
+}) {
   addBase({
     // heading
     h1: {
@@ -133,6 +138,48 @@ export default plugin(function ({ addBase, addVariant, addUtilities }) {
     addVariant(name, definition);
   });
 
+  matchUtilities({
+    'bg-underline': value => ({
+      'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
+      'background-size': `0% ${value}`,
+      'background-repeat': 'no-repeat',
+      'background-position': '0 100%',
+      transition: 'background-size 150ms linear',
+      '&:hover': {
+        'background-size': `100% ${value}`,
+      },
+      '&.active': {
+        'background-size': `100% ${value}`,
+      },
+    }),
+    'group-bg-underline': value => ({
+      'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
+      'background-size': `0% ${value}`,
+      'background-repeat': 'no-repeat',
+      'background-position': '0 100%',
+      transition: 'background-size 150ms linear',
+      '.group:hover &': {
+        'background-size': `100% ${value}`,
+      },
+      '&.active': {
+        'background-size': `100% ${value}`,
+      },
+    }),
+    'peek-bg-underline': value => ({
+      'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
+      'background-size': `0% ${value}`,
+      'background-repeat': 'no-repeat',
+      'background-position': '0 100%',
+      transition: 'background-size 150ms linear',
+      '.peek:hover ~ &': {
+        'background-size': `100% ${value}`,
+      },
+      '&.active': {
+        'background-size': `100% ${value}`,
+      },
+    }),
+  });
+
   addUtilities({
     '.scrollbar-hide': {
       '-ms-overflow-style': 'none',
@@ -141,28 +188,97 @@ export default plugin(function ({ addBase, addVariant, addUtilities }) {
       },
     },
     ...Object.fromEntries(
-      Array.from({ length: 10 }, (_, i) => [
-        `.bg-underline-${i + 1}`,
-        {
-          'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
-          'background-size': `0% ${i + 1}px`,
-          'background-repeat': 'no-repeat',
-          'background-position': '0 100%',
-          transition: 'background-size 150ms linear',
-          '&:hover': {
-            'background-size': `100% ${i + 1}px`,
+      Array.from({ length: 30 }, (_, i) => {
+        const index =
+          i <= 12
+            ? i
+            : i <= 14
+              ? 12 + 2 * (i - 12)
+              : i <= 26
+                ? 16 + 4 * (i - 14)
+                : i <= 28
+                  ? 64 + 8 * (i - 28)
+                  : 96;
+
+        return [
+          `.bg-underline-${index}`,
+          {
+            'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
+            'background-size': `0% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            'background-repeat': 'no-repeat',
+            'background-position': '0 100%',
+            transition: 'background-size 150ms linear',
+            '&:hover': {
+              'background-size': `100% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            },
+            '&.active': {
+              'background-size': `100% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            },
           },
-          '.group:hover &': {
-            'background-size': `100% ${i + 1}px`,
+        ];
+      }),
+    ),
+    ...Object.fromEntries(
+      Array.from({ length: 30 }, (_, i) => {
+        const index =
+          i <= 12
+            ? i
+            : i <= 14
+              ? 12 + 2 * (i - 12)
+              : i <= 26
+                ? 16 + 4 * (i - 14)
+                : i <= 28
+                  ? 64 + 8 * (i - 28)
+                  : 96;
+
+        return [
+          `.group-bg-underline-${index}`,
+          {
+            'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
+            'background-size': `0% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            'background-repeat': 'no-repeat',
+            'background-position': '0 100%',
+            transition: 'background-size 150ms linear',
+            '.group:hover &': {
+              'background-size': `100% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            },
+            '&.active': {
+              'background-size': `100% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            },
           },
-          '.peer:hover ~ &': {
-            'background-size': `100% ${i + 1}px`,
+        ];
+      }),
+    ),
+    ...Object.fromEntries(
+      Array.from({ length: 30 }, (_, i) => {
+        const index =
+          i <= 12
+            ? i
+            : i <= 14
+              ? 12 + 2 * (i - 12)
+              : i <= 26
+                ? 16 + 4 * (i - 14)
+                : i <= 28
+                  ? 64 + 8 * (i - 28)
+                  : 96;
+
+        return [
+          `.peek-bg-underline-${index}`,
+          {
+            'background-image': `linear-gradient(to right, var(--tw-gradient-stops))`,
+            'background-size': `0% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            'background-repeat': 'no-repeat',
+            'background-position': '0 100%',
+            transition: 'background-size 150ms linear',
+            '.peek:hover ~ &': {
+              'background-size': `100% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            },
+            '&.active': {
+              'background-size': `100% ${index === 0 ? '0px' : `${index / 4}rem`}`,
+            },
           },
-          '&.active': {
-            'background-size': `100% ${i + 1}px`,
-          },
-        },
-      ]),
+        ];
+      }),
     ),
   });
 });
