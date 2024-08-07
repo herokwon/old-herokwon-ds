@@ -43,6 +43,41 @@ export default plugin(function ({ addBase, addVariant, addUtilities }) {
       pointerEvents: 'none',
     },
 
+    // table
+    'table, th, td': {
+      'border-bottom-width': '2px',
+      'border-color': '#E2E8F0',
+
+      '.dark table &': {
+        'border-color': '#334155',
+      },
+    },
+    table: {
+      width: '100%',
+      'border-collapse': 'collapse',
+      '&.align-left th, &.align-left td': {
+        'text-align': 'left',
+      },
+      '&.align-center th, &.align-center td': {
+        'text-align': 'center',
+      },
+      '&.align-right th, &.align-right td': {
+        'text-align': 'right',
+      },
+      '&.align-top th, &.align-top td': {
+        'vertical-align': 'top',
+      },
+      '&.align-middle th, &.align-middle td': {
+        'vertical-align': 'middle',
+      },
+      '&.align-bottom th, &.align-bottom td': {
+        'vertical-align': 'bottom',
+      },
+      '& th, & td': {
+        padding: '0.25rem 0.75rem',
+      },
+    },
+
     // input
     'input:autofill, input:autofill:hover, input:autofill:focus, input:autofill:active':
       {
@@ -121,6 +156,9 @@ export default plugin(function ({ addBase, addVariant, addUtilities }) {
             'background-size': `100% ${i + 1}px`,
           },
           '.peer:hover ~ &': {
+            'background-size': `100% ${i + 1}px`,
+          },
+          '&.active': {
             'background-size': `100% ${i + 1}px`,
           },
         },
