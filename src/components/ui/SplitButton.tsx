@@ -111,7 +111,7 @@ export default function SplitButton({
             <Dropdown.Text
               key={id}
               isDisabled={isDisabled}
-              isSelected={selectedId === id}
+              isSelected={id === selectedId}
               id={id}
               description={description}
               elemBefore={elemBefore}
