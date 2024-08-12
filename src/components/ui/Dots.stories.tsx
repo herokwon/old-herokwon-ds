@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { ICON_SIZE } from '../../data/constant';
 
-import Spinner from './Spinner';
+import Dots from './Dots';
 
 const meta = {
-  title: 'Components/Spinner',
+  title: 'Components/Dots',
   tags: ['autodocs'],
-  component: Spinner,
+  component: Dots,
   args: {
     size: 'md',
   },
@@ -17,7 +17,7 @@ const meta = {
       options: [...Object.keys(ICON_SIZE)],
     },
   },
-} satisfies Meta<typeof Spinner>;
+} satisfies Meta<typeof Dots>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
