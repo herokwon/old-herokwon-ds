@@ -28,6 +28,7 @@ export { default as Banner } from './src/components/ui/Banner';
 export { default as Breadcrumbs } from './src/components/ui/Breadcrumbs';
 export { default as ButtonGroup } from './src/components/ui/ButtonGroup';
 export { default as Calendar } from './src/components/ui/Calendar';
+export { default as Dots } from './src/components/ui/Dots';
 export { default as Dropdown } from './src/components/ui/Dropdown';
 export { default as EmptyData } from './src/components/ui/EmptyData';
 export { default as EmptyImage } from './src/components/ui/EmptyImage';

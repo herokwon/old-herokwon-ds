@@ -1,4 +1,4 @@
-import { LuLoader2 } from 'react-icons/lu';
+import { CgSpinner } from 'react-icons/cg';
 
 import type { ElementExtendedSize } from '../../types';
 
@@ -6,14 +6,14 @@ import { ICON_SIZE } from '../../data/constant';
 
 interface SpinnerProps
   extends Omit<React.ComponentPropsWithoutRef<'svg'>, 'children'> {
-  size?: ElementExtendedSize;
+  size?: ElementExtendedSize | number;
 }
 
 export default function Spinner({ size = 'md', ...props }: SpinnerProps) {
   return (
-    <LuLoader2
+    <CgSpinner
       {...props}
-      size={ICON_SIZE[size]}
+      size={typeof size === 'number' ? size : ICON_SIZE[size] * 2.5}
       className={`animate-spin text-light-blue dark:text-dark-blue ${props.className ?? ''}`}
     />
   );
