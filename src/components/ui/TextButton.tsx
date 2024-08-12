@@ -56,7 +56,7 @@ export default function TextButton({
   );
 
   return (
-    <LoadableElement isActive={isLoading}>
+    <LoadableElement isActive={isLoading} size="sm">
       <LinkableElement
         {...restProps}
         as="button"

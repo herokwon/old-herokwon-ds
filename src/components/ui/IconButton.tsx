@@ -47,7 +47,7 @@ export default function IconButton({
   const Icon = icon;
 
   return (
-    <LoadableElement isActive={isLoading}>
+    <LoadableElement isActive={isLoading} size="sm">
       <LinkableElement
         {...restProps}
         as="button"

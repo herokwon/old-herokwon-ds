@@ -90,7 +90,7 @@ export default function SplitButton({
             size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
             spacing={spacing}
             shape="square"
-            className={`h-full rounded-l-none ${
+            className={`rounded-l-none ${
               isOpen ? 'first:*:rotate-180' : ''
             } first:*:transition-all`}
             onClick={() => setIsOpen(prev => !prev)}
@@ -111,7 +111,7 @@ export default function SplitButton({
             <Dropdown.Text
               key={id}
               isDisabled={isDisabled}
-              isSelected={selectedId === id}
+              isSelected={id === selectedId}
               id={id}
               description={description}
               elemBefore={elemBefore}
