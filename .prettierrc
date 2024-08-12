@@ -6,7 +6,6 @@
     "types$",
     "types/(.*)$",
     "config$",
-    "contexts$",
     "hooks$",
     "utils$",
     "data/(.*)$",
