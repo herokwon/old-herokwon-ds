@@ -5,14 +5,23 @@ import type { ElementBaseSize } from '../../types';
 interface BreadcrumbsProps extends React.ComponentPropsWithoutRef<'nav'> {
   pathname: string;
   size?: ElementBaseSize;
+  customHeading?: {
+    [key: string]: string;
+  };
 }
 
 export default function Breadcrumbs({
   pathname,
   size = 'md',
+  customHeading = {},
   ...props
 }: BreadcrumbsProps) {
-  const paths = !pathname.includes('/') ? [] : pathname.split('/');
+  const paths =
+    !pathname.includes('/') || pathname.length === 0
+      ? []
+      : pathname
+          .slice(pathname.indexOf('/') + 1, pathname.lastIndexOf('/'))
+          .split('/');
 
   return (
     <nav {...props} className={`w-full ${props.className ?? ''}`}>
@@ -25,21 +34,17 @@ export default function Breadcrumbs({
           <li
             key={index}
             className={`${
-              index + 1 === paths.length
-                ? ''
-                : 'after:px-1 after:opacity-off after:content-["/"]'
+              paths.at(-1) !== path
+                ? 'after:px-1 after:opacity-off after:content-["/"]'
+                : ''
             }`}
           >
             <Link
               href={paths.slice(0, index + 1).join('/')}
               title={paths.slice(0, index + 1).join('/')}
-              className={`px-1 opacity-off ${
-                paths.at(-1) === path
-                  ? 'pointer-events-none'
-                  : 'underline-offset-2 hover:underline hover:opacity-bold'
-              }`}
+              className="px-1 underline-offset-2 opacity-off hover:underline hover:opacity-bold"
             >
-              {path}
+              {path in customHeading ? customHeading[path] : path}
             </Link>
           </li>
         ))}
