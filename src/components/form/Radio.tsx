@@ -1,16 +1,14 @@
 import { forwardRef } from 'react';
 
-import type { InputProps } from '../../types/form';
-
-import { useRadio, useStatus } from '../../contexts';
-
-import { useInput } from '../../hooks';
-
 import type {
   ContentWithId,
   ElementBaseSize,
   ElementStatus,
 } from '../../types';
+
+import type { InputProps } from '../../types/form';
+
+import { useInput } from '../../hooks';
 
 interface RadioProps
   extends Pick<ElementStatus, 'isDisabled'>,
@@ -35,25 +33,11 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
   { id, size = 'md', label, description, ...props },
   ref,
 ) {
-  const {
-    isDisabled = false,
-    isChecked,
-    defaultChecked = false,
-    ...restProps
-  } = props;
-  const group = useRadio();
-  const status = useStatus();
-  const disabled = group?.isDisabled || status?.isDisabled || isDisabled;
-  const checked =
-    group?.selectedId === id ||
-    status?.isSelected ||
-    isChecked ||
-    defaultChecked;
+  const { isDisabled = false, isChecked, ...restProps } = props;
   const { hasError, onChangeInput } = useInput({
-    isDisabled: disabled,
+    isDisabled: isDisabled,
     onChange: e => {
       restProps.onChange?.(e.currentTarget.checked);
-      group?.onChange(e.currentTarget.id);
     },
   });
 
@@ -61,7 +45,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
     <label
       htmlFor={id}
       className={`${
-        disabled ? 'disabled' : 'group cursor-pointer'
+        isDisabled ? 'disabled' : 'cursor-pointer group'
       } flex w-full`}
     >
       <input
@@ -70,15 +54,16 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
         ref={ref}
         id={id}
         hidden
-        disabled={disabled}
-        checked={checked}
+        disabled={isDisabled}
+        checked={isChecked}
+        className="peer"
         onChange={onChangeInput}
       />
       <span
         className={`w-max ${
           size === 'lg' ? 'h-xl' : size === 'sm' ? 'h-xs' : 'h-base'
         } my-0.5 mr-1.5 flex aspect-square items-center justify-center rounded-full border-[0.1rem] ${
-          checked
+          isChecked
             ? 'border-light-blue dark:border-dark-blue'
             : `${
                 hasError
