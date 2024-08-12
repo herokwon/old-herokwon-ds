@@ -1,17 +1,16 @@
 import { forwardRef, useState } from 'react';
 import { FaCheck } from 'react-icons/fa6';
 
-import type { InputProps } from '../../types/form';
-
-import { useStatus } from '../../contexts';
-
-import { useInput } from '../../hooks';
-
 import type {
   ContentWithId,
   ElementBaseSize,
   ElementStatus,
 } from '../../types';
+
+import type { InputProps } from '../../types/form';
+
+import { useInput } from '../../hooks';
+
 import InputMessage from './InputMessage';
 
 interface CheckboxProps
@@ -37,10 +36,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
     defaultChecked = false,
     ...restProps
   } = props;
-  const status = useStatus();
-  const uncontrolled =
-    status?.isSelected === undefined && isChecked === undefined;
-  const disabled = status?.isDisabled || isDisabled;
+  const uncontrolled = isChecked === undefined;
+  const disabled = isDisabled;
   const [checked, setChecked] = useState<boolean>(defaultChecked);
   const { hasError, hasMessage, onChangeInput } = useInput({
     isDisabled: disabled,
@@ -57,7 +54,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
       <label
         htmlFor={id}
         className={`${
-          disabled ? 'disabled' : 'group cursor-pointer'
+          disabled ? 'disabled' : 'cursor-pointer group'
         } flex w-full`}
       >
         <input
@@ -67,7 +64,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
           id={id}
           hidden
           disabled={disabled}
-          checked={uncontrolled ? checked : status?.isSelected || isChecked}
+          checked={uncontrolled ? checked : isChecked}
           onChange={onChangeInput}
         />
         <span
@@ -78,7 +75,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
           } border-[0.1rem] ${
             hasError ? 'border-light-red dark:border-dark-red' : ''
           } ${
-            status?.isSelected || isChecked || checked
+            isChecked || checked
               ? 'border-light-blue bg-light-blue dark:border-dark-blue dark:bg-dark-blue'
               : `${
                   hasError
@@ -89,7 +86,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
         >
           <FaCheck
             className={`h-full w-full ${
-              status?.isSelected || isChecked || checked
+              isChecked || checked
                 ? 'text-dark'
                 : 'text-dark dark:text-dark/normal dark:group-hover:text-dark'
             } transition-all`}
