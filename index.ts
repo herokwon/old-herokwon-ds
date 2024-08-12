@@ -28,6 +28,8 @@ export { default as Banner } from './src/components/ui/Banner';
 export { default as Breadcrumbs } from './src/components/ui/Breadcrumbs';
 export { default as ButtonGroup } from './src/components/ui/ButtonGroup';
 export { default as Calendar } from './src/components/ui/Calendar';
+export { default as Code } from './src/components/ui/Code';
+export { default as CodeBlock } from './src/components/ui/CodeBlock';
 export { default as Dots } from './src/components/ui/Dots';
 export { default as Dropdown } from './src/components/ui/Dropdown';
 export { default as EmptyData } from './src/components/ui/EmptyData';
