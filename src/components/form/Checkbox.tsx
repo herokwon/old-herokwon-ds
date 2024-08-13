@@ -65,6 +65,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
           hidden
           disabled={disabled}
           checked={uncontrolled ? checked : isChecked}
+          className="peer"
           onChange={onChangeInput}
         />
         <span
@@ -80,7 +81,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
               : `${
                   hasError
                     ? 'border-light-red dark:border-dark-red'
-                    : 'border-light-tertiary group-hover:border-light-blue dark:border-dark-tertiary dark:group-hover:border-dark-blue'
+                    : 'border-light-tertiary group-hover:peer-not-disabled:border-light-blue dark:border-dark-tertiary dark:group-hover:peer-not-disabled:border-dark-blue'
                 } bg-light-tertiary transition-colors dark:bg-dark-secondary`
           }`}
         >
