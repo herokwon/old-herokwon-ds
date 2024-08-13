@@ -4,14 +4,13 @@ import type { InputProps } from '../../types/form';
 
 type RadioGroupProps = PropsWithChildren<
   Pick<ElementStatus, 'isDisabled'> &
-    Pick<InputProps, 'label' | 'errorMessage'> &
+    Pick<InputProps, 'label'> &
     React.ComponentPropsWithoutRef<'fieldset'>
 >;
 
 export default function RadioGroup({
   children,
   label,
-  errorMessage,
   ...props
 }: RadioGroupProps) {
   const { isDisabled = false, ...restProps } = props;

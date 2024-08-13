@@ -4,6 +4,10 @@ const customVariants = {
   'slider-thumb': ['&::-webkit-slider-thumb', '&::-moz-range-thumb'],
   'slider-track': ['&::-webkit-slider-runnable-track', '&::-moz-range-track'],
   'not-open': ['&:not([open])'],
+  'not-disabled': ['&:not(:disabled)'],
+  'group-not-disabled': ['.group:not(:disabled) &'],
+  'peer-not-disabled': ['.peer:not(:disabled) ~ &'],
+  xs: '@media (min-width: 512px)',
 };
 
 export default plugin(function ({
@@ -60,24 +64,6 @@ export default plugin(function ({
     table: {
       width: '100%',
       'border-collapse': 'collapse',
-      '&.align-left th, &.align-left td': {
-        'text-align': 'left',
-      },
-      '&.align-center th, &.align-center td': {
-        'text-align': 'center',
-      },
-      '&.align-right th, &.align-right td': {
-        'text-align': 'right',
-      },
-      '&.align-top th, &.align-top td': {
-        'vertical-align': 'top',
-      },
-      '&.align-middle th, &.align-middle td': {
-        'vertical-align': 'middle',
-      },
-      '&.align-bottom th, &.align-bottom td': {
-        'vertical-align': 'bottom',
-      },
       '& th, & td': {
         padding: '0.25rem 0.75rem',
       },

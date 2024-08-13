@@ -22,6 +22,7 @@ interface RadioProps
       | 'helperMessage'
       | 'errorMessage'
       | 'checked'
+      | 'defaultChecked'
       | 'onChange'
     > {
   isChecked?: boolean;
@@ -33,7 +34,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
   { id, size = 'md', label, description, ...props },
   ref,
 ) {
-  const { isDisabled = false, isChecked, ...restProps } = props;
+  const { isDisabled = false, isChecked = false, ...restProps } = props;
   const { hasError, onChangeInput } = useInput({
     isDisabled: isDisabled,
     onChange: e => {
@@ -68,7 +69,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
             : `${
                 hasError
                   ? 'border-light-red dark:border-dark-red'
-                  : 'group-hover:border-light-blue dark:group-hover:border-dark-blue'
+                  : 'group-hover:peer-not-disabled:border-light-blue dark:group-hover:peer-not-disabled:border-dark-blue'
               } border-light-tertiary after:opacity-0 dark:border-dark-tertiary`
         } relative transition-colors after:absolute after:left-1/2 after:top-1/2 after:aspect-square after:h-4/5 after:w-4/5 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-light-blue after:transition-opacity after:content-[""] after:dark:bg-dark-blue`}
       />
