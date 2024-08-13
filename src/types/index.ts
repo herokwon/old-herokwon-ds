@@ -61,7 +61,7 @@ export type PolymorphicElementPropsWithRef<
 
 // content element types
 export type Children = Exclude<React.ReactNode, null | undefined>;
-export type PropsWithChildren<Props = {}> = Props & {
+export type PropsWithChildren<Props = {}> = Omit<Props, 'children'> & {
   children: Children;
 };
 export interface BaseContent {
