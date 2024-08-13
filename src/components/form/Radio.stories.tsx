@@ -8,6 +8,7 @@ const meta = {
   component: Radio,
   args: {
     isDisabled: false,
+    isChecked: false,
     id: crypto.randomUUID(),
     size: 'md',
     description: 'This is a description for Radio Item',
@@ -20,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Default Radio Item',
-    defaultChecked: true,
+    isChecked: true,
   },
 };
 
@@ -28,6 +29,5 @@ export const Disabled: Story = {
   args: {
     isDisabled: true,
     label: 'Disabled Radio Item',
-    defaultChecked: false,
   },
 };
