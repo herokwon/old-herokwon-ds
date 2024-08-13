@@ -23,8 +23,15 @@ const meta = {
   tags: ['autodocs'],
   component: Table,
   args: {
-    alignX: 'left',
-    alignY: 'middle',
+    layout: 'auto',
+    headerAlignment: {
+      x: 'center',
+      y: 'middle',
+    },
+    contentAlignment: {
+      x: 'center',
+      y: 'middle',
+    },
     data: [
       {
         id: crypto.randomUUID(),
@@ -57,7 +64,6 @@ export const Default: Story = {
 
 export const Tree: Story = {
   args: {
-    alignX: 'center',
     data: meta.args.data.map(item => ({
       ...item,
       name: {

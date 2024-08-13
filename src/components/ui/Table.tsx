@@ -1,16 +1,30 @@
 import type { AlignmentX, AlignmentY } from '../../types';
 
 type TableProps<Item extends object = object> = {
-  alignX?: AlignmentX;
-  alignY?: AlignmentY;
+  layout?: 'auto' | 'fixed';
+  headerAlignment?: {
+    x?: AlignmentX;
+    y?: AlignmentY;
+  };
+  contentAlignment?: {
+    x?: AlignmentX;
+    y?: AlignmentY;
+  };
   data: Item[];
   getKey: (item: Item) => React.Key;
   getCell: (item: Item) => React.ReactNode;
 };
 
 const Table = <Item extends object>({
-  alignX = 'left',
-  alignY = 'middle',
+  layout = 'auto',
+  headerAlignment = {
+    x: 'center',
+    y: 'middle',
+  },
+  contentAlignment = {
+    x: 'center',
+    y: 'middle',
+  },
   data,
   getKey,
   getCell,
@@ -36,8 +50,26 @@ const Table = <Item extends object>({
       );
 
   return (
-    <table className={`align-${alignX} align-${alignY}`}>
-      <thead>
+    <table
+      className={
+        layout === 'fixed' ? 'table-fixed break-all' : 'last:*:break-all'
+      }
+    >
+      <thead
+        className={`${
+          headerAlignment.x === 'left'
+            ? 'text-left'
+            : headerAlignment.x === 'right'
+              ? 'text-right'
+              : 'text-center'
+        } ${
+          headerAlignment.y === 'top'
+            ? 'align-top'
+            : headerAlignment.y === 'bottom'
+              ? 'align-bottom'
+              : 'align-middle'
+        }`}
+      >
         <tr>
           {headers.map((header, index) => (
             <TableHeader key={index} scope="col">
@@ -46,7 +78,21 @@ const Table = <Item extends object>({
           ))}
         </tr>
       </thead>
-      <tbody>
+      <tbody
+        className={`${
+          contentAlignment.x === 'left'
+            ? 'text-left'
+            : contentAlignment.x === 'right'
+              ? 'text-right'
+              : 'text-center'
+        } ${
+          contentAlignment.y === 'top'
+            ? 'align-top'
+            : contentAlignment.y === 'bottom'
+              ? 'align-bottom'
+              : 'align-middle'
+        }`}
+      >
         {data.map(item => {
           return <tr key={getKey(item)}>{getCell(item)}</tr>;
         })}
