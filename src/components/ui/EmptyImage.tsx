@@ -37,7 +37,7 @@ export default function EmptyImage({
       loading={loading}
       unoptimized={unoptimized}
       onLoad={onLoad}
-      className={`m-12 object-cover object-center dark:opacity-normal ${className ?? ''}`}
+      className={`object-cover object-center opacity-bold dark:opacity-normal ${className ?? ''}`}
       style={style}
       alt="empty-image"
     />
