@@ -45,6 +45,9 @@ const config = [
           ],
           '@babel/preset-typescript',
         ],
+        plugins: [
+          '@babel/plugin-transform-runtime',
+        ],
         extensions: extensions,
         include: ['src/**/*'],
         exclude: 'node_modules/**',
