@@ -1,0 +1,54 @@
+.token {
+  &:is(.comment, .prolog, .doctype, .cdata) {
+    @apply text-[#8292a2];
+  }
+
+  &.punctuation {
+    @apply text-[#f8f8f2];
+  }
+
+  &.namespace {
+    @apply opacity-70;
+  }
+
+  &:is(.property, .tag, .constant, .symbol, .deleted) {
+    @apply text-[#f92672];
+  }
+
+  &:is(.boolean, .number) {
+    @apply text-[#ae81ff];
+  }
+
+  &:is(.selector, .attr-name, .string, .char, .builtin, .inserted) {
+    @apply text-[#a6e22e];
+  }
+
+  &:is(.operator, .entity, .url, .variable) {
+    @apply text-[#f8f8f2];
+  }
+
+  .language-css &.string,
+  .style &.string {
+    @apply text-[#f8f8f2];
+  }
+
+  &:is(.atrule, .attr-value, .function, .class-name) {
+    @apply text-[#e6db74];
+  }
+
+  &.keyword {
+    @apply text-[#66d9ef];
+  }
+
+  &:is(.regex, .important) {
+    @apply text-[#fd971f];
+  }
+
+  &:is(.important, .bold) {
+    @apply font-bold;
+  }
+
+  &.entity {
+    @apply cursor-help;
+  }
+}
