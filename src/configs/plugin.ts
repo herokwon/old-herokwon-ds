@@ -1,12 +1,15 @@
 import plugin from 'tailwindcss/plugin';
 
-const customVariants = {
+const customVariants: { [key: string]: string | string[] } = {
   'slider-thumb': ['&::-webkit-slider-thumb', '&::-moz-range-thumb'],
   'slider-track': ['&::-webkit-slider-runnable-track', '&::-moz-range-track'],
   'not-open': ['&:not([open])'],
   'not-disabled': ['&:not(:disabled)'],
   'group-not-disabled': ['.group:not(:disabled) &'],
   'peer-not-disabled': ['.peer:not(:disabled) ~ &'],
+  scrollbar: ['&::-webkit-scrollbar'],
+  'scrollbar-thumb': ['&::-webkit-scrollbar-thumb'],
+  'scrollbar-track': ['&::-webkit-scrollbar-track'],
   xs: '@media (min-width: 512px)',
 };
 
@@ -14,6 +17,7 @@ export default plugin(function ({
   addBase,
   addVariant,
   addUtilities,
+  matchVariant,
   matchUtilities,
 }) {
   addBase({
@@ -118,7 +122,45 @@ export default plugin(function ({
       '-webkit-appearance': 'none',
       'border-radius': '9999px',
     },
+
+    // pre, code
+    'pre[class*="language-"], code[class*="language-"]': {
+      'text-shadow': '0 1px rgba(0, 0, 0, 0.3)',
+      'text-align': 'left',
+      'font-size': '1rem',
+      'line-height': '1.5',
+      'font-family':
+        'Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace',
+      'white-space': 'pre',
+      'word-spacing': 'normal',
+      'word-break': 'normal',
+      'word-wrap': 'normal',
+      color: '#f8f8f2',
+      'background-image': 'none',
+
+      '-moz-tab-size': '4',
+      '-o-tab-size': '4',
+      'tab-size': '4',
+
+      '-webkit-hyphens': 'none',
+      '-moz-hyphens': 'none',
+      '-ms-hyphens': 'none',
+      hyphens: 'none',
+    },
+
+    'pre[class*="language-"]': {
+      padding: '0',
+      margin: '0',
+    },
+
+    'code[class*="language-"]': {
+      padding: '0.5rem 1rem',
+      'background-color': '#1E293B',
+    },
   });
+
+  matchVariant('is', value => `&:is(${value})`);
+  matchVariant('not', value => `&:not(${value})`);
 
   Object.entries(customVariants).forEach(([name, definition]) => {
     addVariant(name, definition);
@@ -167,6 +209,44 @@ export default plugin(function ({
   });
 
   addUtilities({
+    '.x-scrollbar': {
+      'overflow-x': 'auto',
+      '&::-webkit-scrollbar': {
+        width: '100%',
+        height: '7px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        cursor: 'pointer',
+        'border-radius': '9999px',
+        'background-color': '#3B82F6',
+      },
+      '.dark &::-webkit-scrollbar-thumb': {
+        'background-color': '#2563EB',
+      },
+      '&::-webkit-scrollbar-track': {
+        cursor: 'pointer',
+        'background-color': 'transparent',
+      },
+    },
+    '.y-scrollbar': {
+      'overflow-y': 'auto',
+      '&::-webkit-scrollbar': {
+        width: '7px',
+        height: '100%',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        cursor: 'pointer',
+        'border-radius': '9999px',
+        'background-color': '#3B82F6',
+      },
+      '.dark &::-webkit-scrollbar-thumb': {
+        'background-color': '#2563EB',
+      },
+      '&::-webkit-scrollbar-track': {
+        cursor: 'pointer',
+        'background-color': 'transparent',
+      },
+    },
     '.scrollbar-hide': {
       '-ms-overflow-style': 'none',
       '&::-webkit-scrollbar': {

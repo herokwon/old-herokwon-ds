@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { FaChevronRight } from 'react-icons/fa6';
+import { LuChevronRight } from 'react-icons/lu';
 
 import Table from './Table';
 import TextButton from './TextButton';
@@ -82,8 +82,7 @@ export const Tree: Story = {
               label={dummyItem.name.content}
               variant="secondary"
               iconBefore={{
-                content: FaChevronRight,
-                size: 'xs',
+                content: LuChevronRight,
                 className: `${isActive ? 'rotate-90' : ''} transition-transform`,
               }}
               size="sm"
