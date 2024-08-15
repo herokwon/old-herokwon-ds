@@ -9,17 +9,20 @@ const meta = {
   tags: ['autodocs'],
   component: CodeBlock,
   args: {
-    isDuplicable: false,
-    showLineNumbers: false,
+    isDuplicable: true,
+    isHidable: false,
+    showLineNumbers: true,
     language: 'tsx',
     className: 'max-w-[600px]',
     code: `import CodeBlock from "./CodeBlock";
-    
-export default function CodeBlockExample({ code }: { code: React.ReactNode }) {
+
+interface CodeBlockProps {
+    code: string;
+};
+
+export default function CodeBlockExample({ code }: CodeBlockProps) {
     return (
-        <CodeBlock language="tsx">
-            {code}
-        </CodeBlock>
+        <CodeBlock language="tsx" code={code} />
     );
 }
 `,
@@ -35,27 +38,17 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    showLineNumbers: false,
-  },
-};
+export const Default: Story = {};
 
 export const Highlight: Story = {
   args: {
-    highlights: [5, 6, 7],
+    highlights: [9],
   },
 };
 
 export const Label: Story = {
   args: {
     label: 'example.tsx',
-  },
-};
-
-export const Dulicable: Story = {
-  args: {
-    isDuplicable: true,
   },
 };
 
@@ -69,6 +62,13 @@ export const FirstLineNumber: Story = {
   args: {
     showLineNumbers: true,
     firstLineNumber: 100,
-    highlights: [101, 102],
+    highlights: [108],
+  },
+};
+
+export const Hidable: Story = {
+  args: {
+    isHidable: true,
+    hidableFirstNumber: 5,
   },
 };
