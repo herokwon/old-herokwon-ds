@@ -31,7 +31,7 @@ interface SplitButtonProps
 }
 
 export default function SplitButton({
-  defaultLabel,
+  defaultLabel = '',
   variant = 'default',
   size = 'md',
   spacing = 'default',

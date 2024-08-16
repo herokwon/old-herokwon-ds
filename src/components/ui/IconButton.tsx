@@ -51,6 +51,7 @@ export default function IconButton({
       <LinkableElement
         {...restProps}
         as="button"
+        type={restProps.type || 'button'}
         href={href}
         disabled={isDisabled}
         onClick={e => {
