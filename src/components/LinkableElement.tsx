@@ -22,7 +22,7 @@ export default function LinkableElement<T extends React.ElementType>({
     <Box
       {...props}
       as={as || 'div'}
-      className={`${href ? 'linkable' : ''} ${props.className ?? ''}`}
+      className={`${href ? 'linkable !transition-[background-size,_color]' : ''} ${props.className ?? ''}`}
       onClick={e => {
         props.onClick?.(e);
         href && (href.replace ? replace(href.to) : push(href.to));
