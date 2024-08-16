@@ -12,12 +12,15 @@ const meta = {
     isLoading: false,
     defaultSelectedIndex: 0,
     size: 'md',
-    alignX: 'left',
-    className: 'min-w-[300px]',
+    className: 'min-w-[480px]',
     tabItems: Array.from({ length: 3 }, (_, i) => ({
       index: i,
       heading: `Tab ${i + 1}`,
-      content: <p className="w-full">{`This is content for Tab ${i + 1}.`}</p>,
+      content: (
+        <div className="h-100 w-full rounded-ms px-4 py-3 shadow-primary-light shadow-light-tertiary dark:bg-dark-secondary dark:shadow-primary-dark">
+          <p className="w-full">{`This is content for Tab ${i + 1}.`}</p>
+        </div>
+      ),
     })),
     onChangeSelectedIndex: fn(),
   },
@@ -31,17 +34,5 @@ export const Default: Story = {};
 export const SelectedIndex: Story = {
   args: {
     defaultSelectedIndex: meta.args.tabItems.length - 1,
-  },
-};
-
-export const AlignCenter: Story = {
-  args: {
-    alignX: 'center',
-  },
-};
-
-export const AlignRight: Story = {
-  args: {
-    alignX: 'right',
   },
 };
