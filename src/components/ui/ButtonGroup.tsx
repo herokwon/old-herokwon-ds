@@ -14,7 +14,7 @@ export default function ButtonGroup({
   return (
     <div
       {...props}
-      className={`inline-flex ${
+      className={`flex w-max ${
         direction === 'horizontal'
           ? 'flex-row items-center'
           : 'flex-col justify-center'
