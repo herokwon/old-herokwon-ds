@@ -20,7 +20,7 @@ export default function TagGroup({
           : alignment === 'right'
             ? 'justify-end'
             : 'justify-center'
-      } items-center gap-2 ${props.className ?? ''}`}
+      } max items-center gap-2 is-[:hover>*:not(:hover)]:*:opacity-off ${props.className ?? ''}`}
     >
       {children}
     </div>

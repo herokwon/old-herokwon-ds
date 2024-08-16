@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import type { ElementBaseSize, ElementBorderShape } from '../../types';
@@ -6,10 +7,10 @@ import IconButton from './IconButton';
 
 interface PageIndicatorProps extends React.ComponentPropsWithoutRef<'div'> {
   totalPage: number;
+  defaultSelectedIndex?: number;
   size?: ElementBaseSize;
   shape?: ElementBorderShape;
-  selectedIndex: number;
-  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  onChangeSelectedIndex?: (index: number) => void;
 }
 
 const IndicatorRadiusSize: { [size in ElementBaseSize]: number } = {
@@ -20,17 +21,24 @@ const IndicatorRadiusSize: { [size in ElementBaseSize]: number } = {
 
 export default function PageIndicator({
   totalPage,
+  defaultSelectedIndex = 0,
   size = 'md',
   shape = 'circle',
-  selectedIndex,
-  setSelectedIndex,
+  onChangeSelectedIndex,
   ...props
 }: PageIndicatorProps) {
+  const [selectedIndex, setSelectedIndex] =
+    useState<number>(defaultSelectedIndex);
+
   const onClickHandler = {
     prevButton: (): void => setSelectedIndex(prev => Math.max(0, prev - 1)),
     nextButton: (): void =>
       setSelectedIndex(prev => Math.min(prev + 1, totalPage - 1)),
   };
+
+  useEffect(() => {
+    onChangeSelectedIndex?.(selectedIndex);
+  }, [selectedIndex, onChangeSelectedIndex]);
 
   return (
     <div

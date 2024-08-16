@@ -1,11 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { fn } from '@storybook/test';
 
 import Pagination from './Pagination';
-
-type PaginationRenderProps = {
-  defaultSelectedPage?: number;
-} & React.ComponentPropsWithoutRef<typeof Pagination>;
 
 const meta = {
   title: 'Components/Pagination',
@@ -16,36 +12,17 @@ const meta = {
     pagePerIndex: 5,
     size: 'md',
     shape: 'square',
+    onChangeSelectedPage: fn(),
   },
 } satisfies Meta<typeof Pagination>;
 export default meta;
 
-type Story = StoryObj<typeof Pagination>;
+type Story = StoryObj<typeof meta>;
 
-const PaginationRender = ({
-  defaultSelectedPage,
-  ...props
-}: PaginationRenderProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(
-    Math.floor((defaultSelectedPage ?? 1) - 1) ?? 0,
-  );
+export const Default: Story = {};
 
-  return (
-    <Pagination
-      {...props}
-      selectedIndex={selectedIndex}
-      setSelectedIndex={setSelectedIndex}
-    />
-  );
-};
-
-export const Default: Story = {
-  render: ({ ...props }) => <PaginationRender {...props} />,
-};
-
-export const CircleBorder: Story = {
+export const Circle: Story = {
   args: {
     shape: 'circle',
   },
-  render: ({ ...props }) => <PaginationRender {...props} />,
 };

@@ -14,11 +14,11 @@ export default function ButtonGroup({
   return (
     <div
       {...props}
-      className={`inline-flex ${
+      className={`flex w-max ${
         direction === 'horizontal'
           ? 'flex-row items-center'
           : 'flex-col justify-center'
-      } gap-2 ${props.className ?? ''}`}
+      } gap-2 is-[:hover>*:not(:hover)]:*:opacity-off ${props.className ?? ''}`}
     >
       {children}
     </div>

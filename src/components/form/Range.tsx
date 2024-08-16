@@ -1,15 +1,16 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
+
+import type { AbsolutePositionY, AlignmentX, ElementStatus } from '../../types';
 
 import type { InputProps } from '../../types/form';
 
 import { useInput } from '../../hooks';
 
-import type { AbsolutePositionY, AlignmentX, ElementStatus } from '../../types';
 import InputMessage from './InputMessage';
 
 interface RangeProps
   extends Pick<ElementStatus, 'isDisabled'>,
-    Omit<InputProps, 'label' | 'value' | 'defaultValue'> {
+    Omit<InputProps, 'label' | 'value'> {
   isShowingLabel?: boolean;
   labelDirection?: Exclude<AlignmentX, 'center'> | AbsolutePositionY;
   labelPrefix?: string;
@@ -17,8 +18,8 @@ interface RangeProps
   min?: number;
   max?: number;
   step?: number;
-  selectedValue: number;
-  setSelectedValue: React.Dispatch<React.SetStateAction<number>>;
+  defaultValue?: number;
+  onChangeValue?: (value: number) => void;
 }
 
 const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
@@ -26,18 +27,19 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
     min = 0,
     max = 100,
     step = 1,
+    defaultValue = 0,
     labelDirection = 'left',
     labelPrefix,
     labelSuffix,
     helperMessage,
     errorMessage,
-    selectedValue,
-    setSelectedValue,
+    onChangeValue,
     ...props
   },
   ref,
 ) {
   const { isDisabled = false, isShowingLabel = false, ...restProps } = props;
+  const [selectedValue, setSelectedValue] = useState<number>(defaultValue);
   const percent = useMemo(
     () => (min === max ? 0 : ((selectedValue - min) / (max - min)) * 100),
     [selectedValue, min, max],
@@ -56,6 +58,10 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
     },
   });
 
+  useEffect(() => {
+    onChangeValue?.(selectedValue);
+  }, [selectedValue, onChangeValue]);
+
   return (
     <div className="w-full">
       <div
@@ -71,7 +77,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
       >
         <label
           htmlFor={restProps.id}
-          className={`${isDisabled ? 'disabled' : 'cursor-pointer'} group relative flex items-center justify-center`}
+          className={`${isDisabled ? 'disabled' : 'cursor-pointer'} relative flex items-center justify-center group`}
         >
           <div
             className="absolute left-0 top-0 -z-10 h-4 rounded-full bg-light-blue group-hover:bg-dark-blue dark:bg-dark-blue dark:group-hover:bg-light-blue"
