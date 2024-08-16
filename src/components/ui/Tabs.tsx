@@ -1,36 +1,46 @@
+import { useEffect, useState } from 'react';
+
 import type { AlignmentX, ElementBaseSize, ElementStatus } from '../../types';
 
 import LoadableElement from '../LoadableElement';
 import TextButton from './TextButton';
 
 interface TabItem {
-  index: number;
   heading: string;
-  content: React.ReactNode;
+  content?: React.ReactNode;
 }
 
 interface TabsProps
   extends Omit<ElementStatus, 'isSelected'>,
     React.ComponentPropsWithoutRef<'div'> {
+  defaultSelectedIndex?: number;
   size?: ElementBaseSize;
   alignX?: AlignmentX;
   tabItems: TabItem[];
-  selectedIndex: number;
-  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  onChangeSelectedIndex?: (index: number) => void;
 }
 
 export default function Tabs({
-  size = 'sm',
+  defaultSelectedIndex = 0,
+  size = 'md',
   alignX = 'left',
   tabItems,
-  selectedIndex,
-  setSelectedIndex,
+  onChangeSelectedIndex,
   ...props
 }: TabsProps) {
   const { isDisabled = false, isLoading = false, ...restProps } = props;
+  const [selectedIndex, setSelectedIndex] =
+    useState<number>(defaultSelectedIndex);
+
+  useEffect(() => {
+    onChangeSelectedIndex?.(selectedIndex);
+  }, [selectedIndex, onChangeSelectedIndex]);
 
   return (
-    <div {...restProps} className={`w-full ${restProps.className ?? ''}`}>
+    <div
+      {...restProps}
+      className={`w-full space-y-2 ${restProps.className ?? ''}`}
+    >
       <div
         className={`flex w-full ${
           alignX === 'left'
@@ -40,19 +50,19 @@ export default function Tabs({
               : 'justify-center'
         } relative items-center after:absolute after:left-0 after:top-full after:z-0 after:h-2 after:w-full after:rounded-full after:bg-light-secondary after:content-[''] after:dark:bg-dark-secondary`}
       >
-        {tabItems.map(tabItem => (
+        {tabItems.map((tabItem, index) => (
           <TextButton
-            key={tabItem.index}
+            key={index}
             label={tabItem.heading}
             variant="secondary"
             size={size}
-            onClick={() => setSelectedIndex(tabItem.index)}
+            onClick={() => setSelectedIndex(index)}
             className={`hover:!bg-transparent ${
-              tabItem.index === selectedIndex
+              index === selectedIndex
                 ? 'text-light-blue dark:text-dark-blue'
                 : 'text-light/off hover:text-light/normal dark:text-dark/off dark:hover:text-dark/normal'
             } relative font-semibold transition-colors after:h-2 after:w-full after:rounded-full after:content-[""] ${
-              tabItem.index === selectedIndex
+              index === selectedIndex
                 ? 'after:bg-light-blue after:dark:bg-dark-blue'
                 : 'after:bg-transparent hover:after:bg-black/normal dark:hover:after:bg-white/normal'
             } after:absolute after:left-0 after:top-full after:z-[1] after:transition-colors`}
@@ -62,9 +72,9 @@ export default function Tabs({
       <LoadableElement
         as="div"
         isActive={isLoading}
-        className={`${isDisabled ? 'disabled' : ''} my-4 w-full`}
+        className={`${isDisabled ? 'disabled' : ''} w-full`}
       >
-        {tabItems.find(tabItem => tabItem.index === selectedIndex)?.content}
+        {tabItems[selectedIndex]?.content}
       </LoadableElement>
     </div>
   );
