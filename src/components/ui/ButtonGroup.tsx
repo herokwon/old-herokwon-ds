@@ -18,7 +18,7 @@ export default function ButtonGroup({
         direction === 'horizontal'
           ? 'flex-row items-center'
           : 'flex-col justify-center'
-      } gap-2 ${props.className ?? ''}`}
+      } gap-2 is-[:hover>*:not(:hover)]:*:opacity-off ${props.className ?? ''}`}
     >
       {children}
     </div>
