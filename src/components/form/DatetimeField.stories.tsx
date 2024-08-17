@@ -8,7 +8,9 @@ const meta = {
   tags: ['autodocs'],
   component: DatetimeField,
   args: {
+    size: 'md',
     type: 'date',
+    className: 'min-w-[240px]',
   },
 } satisfies Meta<typeof DatetimeField>;
 export default meta;

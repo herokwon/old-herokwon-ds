@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FaRegEnvelope } from 'react-icons/fa6';
 import { LuLock } from 'react-icons/lu';
-import { PiTextTBold } from 'react-icons/pi';
 
 import TextField from './TextField';
 
@@ -12,7 +11,7 @@ const meta = {
   args: {
     isDisabled: false,
     type: 'text',
-    fieldIcon: PiTextTBold,
+    size: 'md',
   },
 } satisfies Meta<typeof TextField>;
 export default meta;
@@ -30,7 +29,6 @@ export const Required: Story = {
     label: 'Required',
     id: 'required-input',
     required: true,
-    placeholder: 'Required input',
   },
 };
 
@@ -47,7 +45,6 @@ export const Email: Story = {
     type: 'email',
     label: 'Email',
     id: 'email-input',
-    placeholder: 'Email',
     fieldIcon: FaRegEnvelope,
   },
 };
@@ -57,19 +54,20 @@ export const Password: Story = {
     type: 'password',
     label: 'Password',
     id: 'password-input',
-    placeholder: 'Password',
     fieldIcon: LuLock,
   },
 };
 
 export const HelperMessage: Story = {
   args: {
+    placeholder: 'Text Input',
     helperMessage: 'This is a helper message',
   },
 };
 
 export const ErrorMessage: Story = {
   args: {
+    placeholder: 'Text Input',
     errorMessage: 'Error!',
   },
 };
