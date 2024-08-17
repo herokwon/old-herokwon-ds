@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
+import type { Children, ElementStatus } from '../../types';
+
 import type { InputProps, SelectingInput } from '../../types/form';
 import type { FloatingItem } from '../../types/ui';
 
-import type { Children, ElementStatus } from '../../types';
 import Box from '../Box';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
@@ -126,7 +127,8 @@ export default function Select({
                       },
                     }}
                   >
-                    {options.find(option => option.id === selectedId)?.label}
+                    {options.find(option => option.id === selectedId)?.label ??
+                      ''}
                   </Tag>
                 ))}
               </TagGroup>
