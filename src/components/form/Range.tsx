@@ -49,9 +49,9 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
     [labelPrefix, labelSuffix, selectedValue],
   );
   const { hasError, hasMessage, onChangeInput } = useInput({
-    isDisabled: isDisabled,
-    helperMessage: helperMessage,
-    errorMessage: errorMessage,
+    isDisabled,
+    helperMessage,
+    errorMessage,
     onChange: e => {
       const value = Number(e.currentTarget.value);
       !isNaN(value) && setSelectedValue(value);
