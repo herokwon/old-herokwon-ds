@@ -35,6 +35,7 @@ export { default as Dropdown } from './src/components/ui/Dropdown';
 export { default as EmptyData } from './src/components/ui/EmptyData';
 export { default as EmptyImage } from './src/components/ui/EmptyImage';
 export { default as Heading } from './src/components/ui/Heading';
+export { default as Icon } from './src/components/ui/Icon';
 export { default as IconButton } from './src/components/ui/IconButton';
 export { default as InlineMessage } from './src/components/ui/InlineMessage';
 export { default as ListItem } from './src/components/ui/ListItem';
