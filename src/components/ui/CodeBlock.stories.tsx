@@ -24,8 +24,7 @@ export default function CodeBlockExample({ code }: CodeBlockProps) {
     return (
         <CodeBlock language="tsx" code={code} />
     );
-}
-`,
+}`,
   },
   argTypes: {
     language: {
@@ -69,6 +68,6 @@ export const FirstLineNumber: Story = {
 export const Hidable: Story = {
   args: {
     isHidable: true,
-    hidableFirstNumber: 5,
+    hidableFirstNumber: 11,
   },
 };

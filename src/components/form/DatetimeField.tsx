@@ -1,39 +1,38 @@
 import { forwardRef } from 'react';
 import type { IconType } from 'react-icons';
 
+import type { ElementBaseSize, ElementStatus } from '../../types';
+
 import type { DatetimeInput, InputProps } from '../../types/form';
 
 import { useInput } from '../../hooks';
 
-import { ICON_SIZE } from '../../data/constant';
-
-import type { ElementStatus } from '../../types';
+import Icon from '../ui/Icon';
 import InputHeader from './InputHeader';
 import InputMessage from './InputMessage';
 import InputWrapper from './InputWrapper';
 
 interface DatetimeFieldProps
   extends Pick<ElementStatus, 'isDisabled'>,
-    InputProps {
-  type?: DatetimeInput;
+    Omit<InputProps<DatetimeInput>, 'size'> {
+  size?: ElementBaseSize;
   fieldIcon?: IconType;
 }
 
 const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
   function DatetimeField(
-    { type = 'date', label, helperMessage, errorMessage, fieldIcon, ...props },
+    {
+      size = 'md',
+      type = 'date',
+      label,
+      helperMessage,
+      errorMessage,
+      fieldIcon,
+      ...props
+    },
     ref,
   ) {
     const { isDisabled = false, ...restProps } = props;
-    const FieldIcon = fieldIcon ?? null;
-    const inputEventHandlerProps = Object.fromEntries(
-      Object.entries(restProps).filter(prop => prop[0].includes('on')),
-    );
-    const inputNotEventHandlerProps = Object.fromEntries(
-      Object.entries(restProps).filter(
-        prop => !(prop[0] in inputEventHandlerProps),
-      ),
-    );
     const {
       hasHeader,
       hasError,
@@ -44,16 +43,21 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
       onBlurInput,
       onChangeInput,
     } = useInput({
-      isDisabled: isDisabled,
-      label: label,
-      helperMessage: helperMessage,
-      errorMessage: errorMessage,
-      autoFocus: restProps.autoFocus,
-      maxLength: restProps.maxLength,
-      defaultValue: restProps.defaultValue,
-      value: restProps.value,
-      onChange: restProps.onChange,
+      isDisabled,
+      label,
+      helperMessage,
+      errorMessage,
+      ...restProps,
     });
+
+    const inputEventHandlerProps = Object.fromEntries(
+      Object.entries(restProps).filter(prop => prop[0].includes('on')),
+    );
+    const inputNotEventHandlerProps = Object.fromEntries(
+      Object.entries(restProps).filter(
+        prop => !(prop[0] in inputEventHandlerProps),
+      ),
+    );
 
     return (
       <div
@@ -61,18 +65,21 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
       >
         {hasHeader && (
           <InputHeader
+            {...restProps}
             label={label}
-            id={restProps.id}
-            required={restProps.required}
-            maxLength={restProps.maxLength}
+            size={size}
+            hasIcon={!!fieldIcon}
+            isFocused={isFocused}
             currentInputLength={currentInputLength}
           />
         )}
         <InputWrapper
           {...inputEventHandlerProps}
+          size={size}
           isFocused={isFocused}
           hasError={hasError}
           onFocusInput={onFocusInput}
+          className="*:cursor-pointer"
         >
           <input
             {...inputNotEventHandlerProps}
@@ -82,19 +89,14 @@ const DatetimeField = forwardRef<HTMLInputElement, DatetimeFieldProps>(
             onFocus={onFocusInput}
             onBlur={onBlurInput}
             onChange={onChangeInput}
-            className={`w-full bg-inherit px-1 py-2 text-sm outline-none placeholder:opacity-normal ${restProps.className ?? ''}`}
+            className={`w-full outline-none placeholder:opacity-normal ${restProps.className ?? ''}`}
           />
-          {FieldIcon && (
-            <>
-              <div className="h-[1rem] w-1 bg-light-secondary dark:bg-dark-tertiary" />
-              <div
-                className={`aspect-square h-[2rem] w-max p-2 ${
-                  isFocused ? 'opacity-bold' : 'opacity-normal'
-                }`}
-              >
-                <FieldIcon size={ICON_SIZE.md} className="h-full w-full" />
-              </div>
-            </>
+          {fieldIcon && (
+            <Icon
+              icon={fieldIcon}
+              size={size}
+              className={`transition-opacity ${isFocused ? 'opacity-off' : ''}`}
+            />
           )}
         </InputWrapper>
         {hasMessage && (

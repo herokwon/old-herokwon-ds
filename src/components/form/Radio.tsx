@@ -36,7 +36,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
 ) {
   const { isDisabled = false, isChecked = false, ...restProps } = props;
   const { hasError, onChangeInput } = useInput({
-    isDisabled: isDisabled,
+    isDisabled,
     onChange: e => {
       restProps.onChange?.(e.currentTarget.checked);
     },

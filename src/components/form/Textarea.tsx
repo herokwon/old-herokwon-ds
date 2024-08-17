@@ -1,8 +1,9 @@
+import type { ElementStatus } from '../../types';
+
 import type { InputProps } from '../../types/form';
 
 import { useInput } from '../../hooks';
 
-import type { ElementStatus } from '../../types';
 import InputHeader from './InputHeader';
 import InputMessage from './InputMessage';
 
@@ -17,18 +18,20 @@ export default function Textarea({
   ...props
 }: TextareaProps) {
   const { isDisabled = false, ...restProps } = props;
-  const { hasHeader, hasError, hasMessage, currentInputLength, onChangeInput } =
-    useInput<HTMLTextAreaElement>({
-      isDisabled: isDisabled,
-      label: label,
-      helperMessage: helperMessage,
-      errorMessage: errorMessage,
-      autoFocus: restProps.autoFocus,
-      maxLength: restProps.maxLength,
-      defaultValue: restProps.defaultValue,
-      value: restProps.value,
-      onChange: restProps.onChange,
-    });
+  const {
+    hasHeader,
+    hasError,
+    hasMessage,
+    isFocused,
+    currentInputLength,
+    onChangeInput,
+  } = useInput<HTMLTextAreaElement>({
+    isDisabled,
+    label,
+    helperMessage,
+    errorMessage,
+    ...restProps,
+  });
 
   return (
     <div
@@ -36,10 +39,9 @@ export default function Textarea({
     >
       {hasHeader && (
         <InputHeader
+          {...restProps}
           label={label}
-          id={restProps.id}
-          required={restProps.required}
-          maxLength={restProps.maxLength}
+          isFocused={isFocused}
           currentInputLength={currentInputLength}
         />
       )}

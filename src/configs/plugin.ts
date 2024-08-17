@@ -5,6 +5,7 @@ const customVariants: { [key: string]: string | string[] } = {
   'slider-track': ['&::-webkit-slider-runnable-track', '&::-moz-range-track'],
   'not-open': ['&:not([open])'],
   'not-disabled': ['&:not(:disabled)'],
+  'not-hover': ['&:not(:hover)'],
   'group-not-disabled': ['.group:not(:disabled) &'],
   'peer-not-disabled': ['.peer:not(:disabled) ~ &'],
   scrollbar: ['&::-webkit-scrollbar'],

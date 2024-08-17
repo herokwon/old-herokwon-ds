@@ -10,6 +10,8 @@ const meta = {
     isDisabled: false,
     isLoading: false,
     isRemovable: false,
+    stopPropagation: false,
+    preventDefault: false,
     variant: 'default',
     size: 'sm',
     spacing: 'compact',

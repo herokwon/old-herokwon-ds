@@ -10,10 +10,9 @@ import type {
 
 import type { ButtonProps } from '../../types/ui';
 
-import { ICON_SIZE } from '../../data/constant';
-
 import LinkableElement from '../LinkableElement';
 import LoadableElement from '../LoadableElement';
+import Icon from './Icon';
 
 interface IconButtonProps
   extends ElementStatus,
@@ -44,13 +43,13 @@ export default function IconButton({
     isLoading = false,
     ...restProps
   } = props;
-  const Icon = icon;
 
   return (
     <LoadableElement isActive={isLoading} size="sm">
       <LinkableElement
         {...restProps}
         as="button"
+        type={restProps.type || 'button'}
         href={href}
         disabled={isDisabled}
         onClick={e => {
@@ -61,16 +60,10 @@ export default function IconButton({
         className={`button-${variant} ${isSelected ? 'selected' : ''} ${
           !isDisabled && isHoverable ? 'hoverable' : ''
         } ${
-          spacing === 'default'
-            ? 'p-1'
-            : spacing === 'compact'
-              ? 'p-0.5'
-              : '!bg-transparent p-0'
-        } flex items-center justify-center ${
           shape === 'square' ? 'rounded-ms' : 'rounded-full'
-        } outline-none transition-all ${restProps.className ?? ''}`}
+        } flex items-center justify-center outline-none transition-all ${restProps.className ?? ''}`}
       >
-        <Icon size={ICON_SIZE[size]} className="m-1" />
+        <Icon icon={icon} size={size} spacing={spacing} />
       </LinkableElement>
     </LoadableElement>
   );

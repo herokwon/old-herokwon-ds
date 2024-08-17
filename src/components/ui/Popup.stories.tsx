@@ -64,7 +64,7 @@ export const Default: Story = {
 export const Empty: Story = {
   render: ({ ...props }) => (
     <PopupRender {...props}>
-      <EmptyData />
+      <EmptyData className="m-10" />
     </PopupRender>
   ),
 };

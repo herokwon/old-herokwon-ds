@@ -11,10 +11,12 @@ const meta = {
     isDisabled: false,
     isSelected: false,
     isLoading: false,
-    defaultLabel: 'Default label',
+    stopPropagation: false,
+    preventDefault: false,
     variant: 'default',
     size: 'md',
     spacing: 'default',
+    defaultLabel: 'Default label',
     items: Array.from({ length: 3 }, (_, i) => ({
       isDisabled: i === 2,
       children: `Split Button Item ${i + 1}`,

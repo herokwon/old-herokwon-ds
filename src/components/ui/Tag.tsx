@@ -50,7 +50,6 @@ export default function Tag({
               },
             }
       }
-      tabIndex={!restProps.href ? -1 : undefined}
       className={`${isRemoved ? 'hidden' : ''} ${
         isRemovable
           ? 'removable cursor-default last:*:cursor-pointer'
