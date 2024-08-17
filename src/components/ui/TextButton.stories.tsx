@@ -12,6 +12,9 @@ const meta = {
     isDisabled: false,
     isSelected: false,
     isLoading: false,
+    stopPropagation: false,
+    preventDefault: false,
+    variant: 'default',
     size: 'md',
     spacing: 'default',
     shape: 'square',
@@ -25,14 +28,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Default',
-    variant: 'default',
   },
 };
 
 export const Link: Story = {
   args: {
     label: 'Link',
-    variant: 'default',
     href: {
       to: '/#',
       replace: false,
@@ -43,7 +44,6 @@ export const Link: Story = {
 export const IconBefore: Story = {
   args: {
     label: 'Icon Before',
-    variant: 'default',
     iconBefore: {
       content: FaCheck,
     },
@@ -52,7 +52,6 @@ export const IconBefore: Story = {
 export const IconAfter: Story = {
   args: {
     label: 'Icon After',
-    variant: 'default',
     iconAfter: {
       content: FaCheck,
     },

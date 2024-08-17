@@ -2,13 +2,13 @@ import { forwardRef, useState } from 'react';
 import type { IconType } from 'react-icons';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
+import type { ElementBaseSize, ElementStatus } from '../../types';
+
 import type { InputProps, TextInput } from '../../types/form';
 
 import { useInput } from '../../hooks';
 
-import { ICON_SIZE } from '../../data/constant';
-
-import type { ElementStatus } from '../../types';
+import Icon from '../ui/Icon';
 import IconButton from '../ui/IconButton';
 import InputHeader from './InputHeader';
 import InputMessage from './InputMessage';
@@ -16,8 +16,9 @@ import InputWrapper from './InputWrapper';
 
 interface TextFieldProps
   extends React.PropsWithChildren<
-    Pick<ElementStatus, 'isDisabled'> & InputProps<TextInput>
+    Pick<ElementStatus, 'isDisabled'> & Omit<InputProps<TextInput>, 'size'>
   > {
+  size?: ElementBaseSize;
   fieldIcon?: IconType;
 }
 
@@ -25,18 +26,17 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   function TextField(
     {
       children,
+      size = 'md',
       type = 'text',
       label,
-      fieldIcon,
       helperMessage,
       errorMessage,
+      fieldIcon,
       ...props
     },
     ref,
   ) {
     const { isDisabled = false, ...restProps } = props;
-    const FieldIcon = fieldIcon ?? null;
-    const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
     const {
       hasHeader,
       hasError,
@@ -47,16 +47,13 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       onBlurInput,
       onChangeInput,
     } = useInput({
-      isDisabled: isDisabled,
-      label: label,
-      helperMessage: helperMessage,
-      errorMessage: errorMessage,
-      autoFocus: restProps.autoFocus,
-      maxLength: restProps.maxLength,
-      defaultValue: restProps.defaultValue,
-      value: restProps.value,
-      onChange: restProps.onChange,
+      isDisabled,
+      label,
+      helperMessage,
+      errorMessage,
+      ...restProps,
     });
+    const [isHidden, setIsHidden] = useState<boolean>(type === 'password');
 
     return (
       <div
@@ -64,27 +61,28 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       >
         {hasHeader && (
           <InputHeader
+            {...restProps}
+            placeholderMode
+            hasIcon={!!fieldIcon}
             label={label}
-            id={restProps.id}
-            required={restProps.required}
-            maxLength={restProps.maxLength}
+            size={size}
+            isFocused={isFocused}
             currentInputLength={currentInputLength}
           />
         )}
         <InputWrapper
+          size={size}
           isFocused={isFocused}
           hasError={hasError}
           onFocusInput={onFocusInput}
         >
-          {FieldIcon && (
-            <>
-              <div className="aspect-square h-[2rem] w-max p-2 opacity-bold">
-                <FieldIcon size={ICON_SIZE.md} className="h-full w-full" />
-              </div>
-              <div className="mr-1 h-[1rem] w-1 bg-light-secondary dark:bg-dark-tertiary" />
-            </>
+          {fieldIcon && (
+            <Icon
+              icon={fieldIcon}
+              size={size}
+              className={`transition-opacity ${currentInputLength > 0 ? 'opacity-off' : ''}`}
+            />
           )}
-          {children}
           <input
             {...restProps}
             ref={ref}
@@ -93,19 +91,18 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             onFocus={onFocusInput}
             onBlur={onBlurInput}
             onChange={onChangeInput}
-            className={`w-full bg-inherit px-1 py-2 text-sm outline-none placeholder:opacity-normal ${restProps.className ?? ''}`}
+            className={`w-full outline-none placeholder:opacity-normal ${restProps.className ?? ''}`}
           />
-          {type === 'password' && (
-            <div className="aspect-square h-[2rem] w-max p-0.5">
-              <IconButton
-                tabIndex={-1}
-                icon={isHidden ? FaEyeSlash : FaEye}
-                variant="secondary"
-                spacing="compact"
-                className={isHidden ? 'opacity-off hover:opacity-100' : ''}
-                onClick={() => setIsHidden(prev => !prev)}
-              />
-            </div>
+          {type === 'password' ? (
+            <IconButton
+              icon={isHidden ? FaEyeSlash : FaEye}
+              variant="secondary"
+              spacing="compact"
+              className={isHidden ? 'not-hover:opacity-off' : ''}
+              onClick={() => setIsHidden(prev => !prev)}
+            />
+          ) : (
+            children
           )}
         </InputWrapper>
         {hasMessage && (

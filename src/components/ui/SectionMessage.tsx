@@ -5,6 +5,7 @@ import type { FeedbackAction } from '../../types/ui';
 
 import { FEEDBACK_ICONS } from '../../data/constant';
 
+import ButtonGroup from './ButtonGroup';
 import Heading from './Heading';
 import IconButton from './IconButton';
 import InlineMessage from './InlineMessage';
@@ -46,7 +47,7 @@ export default function SectionMessage({
   return (
     <section
       {...restProps}
-      className={`section-message--${variant} group flex w-full max-w-[300px] items-start rounded-ms px-4 py-3 ${
+      className={`section-message--${variant} flex w-full max-w-[300px] items-start rounded-ms px-4 py-3 group ${
         !!props.isHidable ? 'cursor-pointer' : ''
       } ${restProps.className ?? ''}`}
       onClick={() => props.isHidable && setIsHidden(prev => !prev)}
@@ -65,7 +66,7 @@ export default function SectionMessage({
         />
       </span>
       <div
-        className={`my-auto w-full break-all ${
+        className={`my-auto w-full ${
           size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
         } ${isHidden ? 'line-clamp-1' : ''}`}
       >
@@ -87,7 +88,7 @@ export default function SectionMessage({
           {children}
         </span>
         {actions.length > 0 && (
-          <div className="flex w-full items-center justify-end gap-x-1 pb-1 pt-4">
+          <ButtonGroup className="ml-auto mr-0 mt-4">
             {actions.map(action => (
               <TextButton
                 {...action}
@@ -99,7 +100,7 @@ export default function SectionMessage({
                 }}
               />
             ))}
-          </div>
+          </ButtonGroup>
         )}
       </div>
       {props.isHidable && (
@@ -108,7 +109,7 @@ export default function SectionMessage({
           variant="secondary"
           size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
           spacing="none"
-          className={`ml-2 ${
+          className={`my-0.5 ml-2 ${
             isHidden
               ? 'opacity-off group-hover:opacity-normal'
               : 'rotate-180 opacity-normal'

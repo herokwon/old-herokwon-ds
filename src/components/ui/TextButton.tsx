@@ -1,4 +1,5 @@
 import type {
+  Children,
   ContentWithIcon,
   ElementBorderShape,
   ElementExtendedVariant,
@@ -18,7 +19,7 @@ interface TextButtonProps
     ElementWithHref,
     ContentWithIcon,
     ButtonProps {
-  label: React.ReactNode;
+  label: Children;
   variant?: ElementExtendedVariant;
   shape?: ElementBorderShape;
 }
@@ -60,6 +61,7 @@ export default function TextButton({
       <LinkableElement
         {...restProps}
         as="button"
+        type={restProps.type || 'button'}
         href={href}
         disabled={isDisabled}
         onClick={e => {
@@ -81,13 +83,11 @@ export default function TextButton({
                 : 'p-0'
         } flex items-center justify-center ${
           spacing === 'none'
-            ? ''
-            : shape === 'circle'
-              ? 'rounded-full'
-              : 'rounded-ms'
+            ? '!transition-[background-size,_color,_background-color]'
+            : `${shape === 'circle' ? 'rounded-full' : 'rounded-ms'} transition-all`
         } ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-        } outline-none !transition-[background-size,_color,_background-color] ${restProps.className ?? ''}`}
+        } outline-none ${restProps.className ?? ''}`}
       >
         {BeforeIcon && (
           <BeforeIcon

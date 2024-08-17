@@ -1,11 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { fn } from '@storybook/test';
 
 import PageIndicator from './PageIndicator';
-
-type PageIndicatorProps = {
-  defaultSelectedPage?: number;
-} & React.ComponentPropsWithoutRef<typeof PageIndicator>;
 
 const meta = {
   title: 'Components/PageIndicator',
@@ -15,34 +11,17 @@ const meta = {
     totalPage: 3,
     size: 'md',
     shape: 'circle',
+    onChangeSelectedIndex: fn(),
   },
 } satisfies Meta<typeof PageIndicator>;
 export default meta;
 
-type Story = StoryObj<typeof PageIndicator>;
+type Story = StoryObj<typeof meta>;
 
-const PageIndicatorRender = ({
-  defaultSelectedPage,
-  ...props
-}: PageIndicatorProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-
-  return (
-    <PageIndicator
-      {...props}
-      selectedIndex={selectedIndex}
-      setSelectedIndex={setSelectedIndex}
-    />
-  );
-};
-
-export const Default: Story = {
-  render: ({ ...props }) => <PageIndicatorRender {...props} />,
-};
+export const Default: Story = {};
 
 export const SquareBorder: Story = {
   args: {
     shape: 'square',
   },
-  render: ({ ...props }) => <PageIndicatorRender {...props} />,
 };

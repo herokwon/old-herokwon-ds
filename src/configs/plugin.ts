@@ -5,12 +5,14 @@ const customVariants: { [key: string]: string | string[] } = {
   'slider-track': ['&::-webkit-slider-runnable-track', '&::-moz-range-track'],
   'not-open': ['&:not([open])'],
   'not-disabled': ['&:not(:disabled)'],
+  'not-hover': ['&:not(:hover)'],
   'group-not-disabled': ['.group:not(:disabled) &'],
   'peer-not-disabled': ['.peer:not(:disabled) ~ &'],
   scrollbar: ['&::-webkit-scrollbar'],
   'scrollbar-thumb': ['&::-webkit-scrollbar-thumb'],
   'scrollbar-track': ['&::-webkit-scrollbar-track'],
   xs: '@media (min-width: 512px)',
+  'max-xs': '@media not all and (min-width: 512px)',
 };
 
 export default plugin(function ({

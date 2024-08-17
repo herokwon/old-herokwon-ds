@@ -37,11 +37,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
     ...restProps
   } = props;
   const uncontrolled = isChecked === undefined;
-  const disabled = isDisabled;
   const [checked, setChecked] = useState<boolean>(defaultChecked);
   const { hasError, hasMessage, onChangeInput } = useInput({
-    isDisabled: disabled,
-    errorMessage: errorMessage,
+    isDisabled,
+    errorMessage,
     onChange: e => {
       uncontrolled
         ? setChecked(e.currentTarget.checked)
@@ -54,7 +53,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
       <label
         htmlFor={id}
         className={`${
-          disabled ? 'disabled' : 'cursor-pointer group'
+          isDisabled ? 'disabled' : 'cursor-pointer group'
         } flex w-full`}
       >
         <input
@@ -63,7 +62,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
           ref={ref}
           id={id}
           hidden
-          disabled={disabled}
+          disabled={isDisabled}
           checked={uncontrolled ? checked : isChecked}
           className="peer"
           onChange={onChangeInput}

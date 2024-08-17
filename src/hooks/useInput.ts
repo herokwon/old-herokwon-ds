@@ -45,7 +45,7 @@ const useInput = <T extends InputElement = HTMLInputElement>({
   const [isFocused, setIsFocused] = useState<boolean>(autoFocus || false);
   const [currentInputLength, setCurrentInputLength] = useState<number>(
     maxLength && maxLength > 0
-      ? (defaultValue ?? value)?.toString().length ?? 0
+      ? ((defaultValue ?? value)?.toString().length ?? 0)
       : 0,
   );
 
@@ -64,9 +64,7 @@ const useInput = <T extends InputElement = HTMLInputElement>({
   const onChangeInput = (e: React.ChangeEvent<T>) => {
     if (isDisabled) return;
     onChange?.(e);
-    maxLength &&
-      maxLength > 0 &&
-      setCurrentInputLength(e.currentTarget.value.length);
+    setCurrentInputLength(e.currentTarget.value.length);
   };
 
   useEffect(() => {

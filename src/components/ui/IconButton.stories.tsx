@@ -12,7 +12,10 @@ const meta = {
     isDisabled: false,
     isSelected: false,
     isLoading: false,
+    stopPropagation: false,
+    preventDefault: false,
     icon: LuMousePointer2,
+    variant: 'default',
     size: 'md',
     spacing: 'default',
     shape: 'circle',
@@ -23,11 +26,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    variant: 'default',
-  },
-};
+export const Default: Story = {};
 
 export const Primary: Story = {
   args: {
