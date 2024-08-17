@@ -27,7 +27,7 @@ export default function LoadableElement<T extends React.ElementType = 'div'>({
     <Box
       {...props}
       as={as || 'div'}
-      className={`relative w-full ${
+      className={`relative ${
         isActive ? 'first:*:pointer-events-none' : ''
       } ${props.className ?? ''}`}
     >
