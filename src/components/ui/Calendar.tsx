@@ -38,9 +38,9 @@ interface YearlyCalendarProps extends Omit<MonthlyCalendarProps, 'month'> {
 const dayOfTheWeek: readonly string[] = [
   'sun',
   'mon',
-  'thu',
+  'tue',
   'wed',
-  'thur',
+  'thu',
   'fri',
   'sat',
 ];
@@ -291,18 +291,18 @@ const MonthlyCalendar = ({
                       ? 'pointer-events-none hover:!bg-transparent'
                       : ''
                   } ${
-                    index === 0 || isHoliday
-                      ? '!text-light-red hover:!text-light-red dark:!text-dark-red dark:hover:!text-dark-red'
-                      : index === 6
-                        ? '!text-light-blue hover:!text-light-blue dark:!text-dark-blue dark:hover:!text-dark-blue'
-                        : isSelected
-                          ? 'hover:!bg-dark-blue dark:hover:!bg-light-blue'
+                    isSelected
+                      ? 'pointer-events-none hover:!bg-dark-blue dark:hover:!bg-light-blue'
+                      : index === 0 || isHoliday
+                        ? '!text-light-red hover:!text-light-red dark:!text-dark-red dark:hover:!text-dark-red'
+                        : index === 6
+                          ? '!text-light-blue hover:!text-light-blue dark:!text-dark-blue dark:hover:!text-dark-blue'
                           : ''
-                  } !transition-none`}
+                  } not-hover:transition-none`}
                   onClick={e => {
                     e.stopPropagation();
                     setPickedDate(prev => ({
-                      ...prev,
+                      year: viewedDate.year,
                       month: viewedDate.month ?? month,
                       date: date,
                     }));
