@@ -29,7 +29,10 @@ export default function Icon({
             : '!bg-transparent p-0'
       } ${props.className ?? ''}`}
     >
-      <Icon size={ICON_SIZE[size]} className="m-1" />
+      <Icon
+        size={ICON_SIZE[size]}
+        className={spacing === 'none' ? '' : 'm-1'}
+      />
     </div>
   );
 }
