@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 
 import Select from './Select';
 
@@ -17,6 +18,7 @@ const meta = {
       description:
         i < 5 ? undefined : `This is a description for Select Item ${i + 1}`,
     })),
+    onChangeSelectedItems: fn(),
   },
 } satisfies Meta<typeof Select>;
 export default meta;
