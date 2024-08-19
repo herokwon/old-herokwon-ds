@@ -89,8 +89,12 @@
 .section-message--success {
   @apply border-light-green bg-feedback-light-green dark:border-dark-green dark:bg-feedback-dark-green;
 
-  & svg {
+  & > :not(button) svg {
     @apply text-light-green dark:text-dark-green;
+  }
+
+  & > button {
+    @apply text-light-green hover:!bg-light-green hover:!text-white dark:text-dark-green dark:hover:!bg-dark-green;
   }
 
   & .progress-bar {
@@ -101,8 +105,12 @@
 .section-message--info {
   @apply border-light-blue bg-feedback-light-blue dark:border-dark-blue dark:bg-feedback-dark-blue;
 
-  & svg {
+  & > :not(button) svg {
     @apply text-light-blue dark:text-dark-blue;
+  }
+
+  & > button {
+    @apply text-light-blue hover:!bg-light-blue hover:!text-white dark:text-dark-blue dark:hover:!bg-dark-blue;
   }
 
   & .progress-bar {
@@ -113,8 +121,12 @@
 .section-message--warning {
   @apply border-light-yellow bg-feedback-light-yellow dark:border-dark-yellow dark:bg-feedback-dark-yellow;
 
-  & svg {
+  & > :not(button) svg {
     @apply text-light-yellow dark:text-dark-yellow;
+  }
+
+  & > button {
+    @apply text-light-yellow hover:!bg-light-yellow hover:!text-light dark:text-dark-yellow dark:hover:!bg-dark-yellow;
   }
 
   & .progress-bar {
@@ -125,8 +137,12 @@
 .section-message--danger {
   @apply border-light-red bg-feedback-light-red dark:border-dark-red dark:bg-feedback-dark-red;
 
-  & svg {
+  & > :not(button) svg {
     @apply text-light-red dark:text-dark-red;
+  }
+
+  & > button {
+    @apply text-light-red hover:!bg-light-red hover:!text-white dark:text-dark-red dark:hover:!bg-dark-red;
   }
 
   & .progress-bar {
