@@ -23,13 +23,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Default Tag',
+    label: 'Default Tag',
   },
 };
 
 export const Link: Story = {
   args: {
-    children: 'Link Tag',
+    label: 'Link Tag',
     href: {
       to: '/#',
       replace: false,
@@ -39,28 +39,28 @@ export const Link: Story = {
 
 export const Removable: Story = {
   args: {
-    children: 'Removable Tag',
+    label: 'Removable Tag',
     isRemovable: true,
   },
 };
 
 export const Secondary: Story = {
   args: {
-    children: 'Secondary Tag',
+    label: 'Secondary Tag',
     variant: 'secondary',
   },
 };
 
 export const Warning: Story = {
   args: {
-    children: 'Warning Tag',
+    label: 'Warning Tag',
     variant: 'warning',
   },
 };
 
 export const Danger: Story = {
   args: {
-    children: 'Danger Tag',
+    label: 'Danger Tag',
     variant: 'danger',
   },
 };
