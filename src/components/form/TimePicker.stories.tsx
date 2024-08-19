@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { fn } from '@storybook/test';
 
-import type { TimeItem } from '../../types';
 import TimePicker from './TimePicker';
+
+const today = new Date();
 
 const meta = {
   title: 'Components/TimePicker',
@@ -11,47 +12,27 @@ const meta = {
   args: {
     isDisabled: false,
     isLoading: false,
+    defaultPickedTimeItem: {
+      hour: today.getHours(),
+      minute: today.getMinutes(),
+    },
+    onChangePickedTimeItem: fn(),
   },
 } satisfies Meta<typeof TimePicker>;
 export default meta;
 
-type Story = StoryObj<typeof TimePicker>;
+type Story = StoryObj<typeof meta>;
 
-const TimePickerRender = ({
-  ...props
-}: Omit<
-  React.ComponentProps<typeof TimePicker>,
-  'pickedTime' | 'setPickedTime'
->) => {
-  const now = new Date();
-  const [pickedTime, setPickedTime] = useState<TimeItem>({
-    hour: now.getHours(),
-    minute: now.getMinutes(),
-  });
-
-  return (
-    <TimePicker
-      {...props}
-      pickedTime={pickedTime}
-      setPickedTime={setPickedTime}
-    />
-  );
-};
-
-export const Default: Story = {
-  render: ({ ...props }) => <TimePickerRender {...props} />,
-};
+export const Default: Story = {};
 
 export const Disabled: Story = {
   args: {
     isDisabled: true,
   },
-  render: ({ ...props }) => <TimePickerRender {...props} />,
 };
 
 export const Loading: Story = {
   args: {
     isLoading: true,
   },
-  render: ({ ...props }) => <TimePickerRender {...props} />,
 };
