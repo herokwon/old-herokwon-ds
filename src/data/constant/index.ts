@@ -64,7 +64,6 @@ export const DATETIME_INPUTS = [
   'week',
 ] as const;
 
-export const CALENDAR_FORMS = ['monthly', 'yearly'] as const;
 export const MONTHS: Months[] = new Proxy(
   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   {

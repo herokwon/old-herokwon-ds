@@ -1,47 +1,36 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-
-import type { DateItem } from '../../types';
 
 import { MONTHS } from '../../data/constant';
 
 import Calendar from './Calendar';
 
+const today = new Date();
+
 const meta = {
   title: 'Components/Calendar',
   tags: ['autodocs'],
   component: Calendar,
+  args: {
+    className: 'last:*:rounded-ms',
+    defaultPickedDateItem: {
+      year: today.getFullYear(),
+      month: MONTHS[today.getMonth()],
+      date: today.getDate(),
+    },
+  },
 } satisfies Meta<typeof Calendar>;
 export default meta;
 
-type Story = StoryObj<typeof Calendar>;
-
-const CalendarRender = ({
-  ...props
-}: Pick<React.ComponentProps<typeof Calendar>, 'form'>) => {
-  const today = new Date();
-  const todayDateItem: DateItem = {
-    year: today.getFullYear(),
-    month: MONTHS[today.getMonth()],
-    date: today.getDate(),
-  };
-  const [pickedDate, setPickedDate] = useState<DateItem>(todayDateItem);
-
-  return (
-    <Calendar
-      {...props}
-      today={todayDateItem}
-      pickedDate={pickedDate}
-      setPickedDate={setPickedDate}
-      className="last:*:rounded-ms"
-    />
-  );
-};
+type Story = StoryObj<typeof meta>;
 
 export const Monthly: Story = {
-  render: () => <CalendarRender form="monthly" />,
+  args: {
+    variant: 'monthly',
+  },
 };
 
 export const Yearly: Story = {
-  render: () => <CalendarRender form="yearly" />,
+  args: {
+    variant: 'yearly',
+  },
 };

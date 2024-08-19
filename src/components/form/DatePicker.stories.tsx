@@ -1,53 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { fn } from '@storybook/test';
 
-import { getDateItem } from '../../utils';
-
-import type { DateItem } from '../../types';
 import DatePicker from './DatePicker';
 
 const meta = {
   title: 'Components/DatePicker',
   tags: ['autodocs'],
   component: DatePicker,
+  args: {
+    onChangePickedDateItem: fn(),
+  },
 } satisfies Meta<typeof DatePicker>;
 export default meta;
 
-type Story = StoryObj<typeof DatePicker>;
+type Story = StoryObj<typeof meta>;
 
-const DatePickerRender = ({
-  ...props
-}: Omit<
-  React.ComponentProps<typeof DatePicker>,
-  'today' | 'pickeddate' | 'setPickedDate'
->) => {
-  const today = getDateItem(new Date());
-  const [pickedDate, setPickedDate] = useState<DateItem>(today);
-
-  return (
-    <DatePicker
-      {...props}
-      today={today}
-      pickedDate={pickedDate}
-      setPickedDate={setPickedDate}
-    />
-  );
-};
-
-export const Default: Story = {
-  render: ({ ...props }) => <DatePickerRender {...props} />,
-};
+export const Default: Story = {};
 
 export const Disabled: Story = {
   args: {
     isDisabled: true,
   },
-  render: ({ ...props }) => <DatePickerRender {...props} />,
 };
 
 export const Loading: Story = {
   args: {
     isLoading: true,
   },
-  render: ({ ...props }) => <DatePickerRender {...props} />,
 };
+
+<DatePicker />;

@@ -31,6 +31,7 @@ interface SelectProps
     >,
     'children' | 'elemBefore' | 'elemAfter'
   >[];
+  onChangeSelectedItems?: (ids: string[]) => void;
 }
 
 export default function Select({
@@ -41,6 +42,7 @@ export default function Select({
   placeholder,
   helperMessage,
   errorMessage,
+  onChangeSelectedItems,
   ...props
 }: SelectProps) {
   const {
@@ -66,15 +68,13 @@ export default function Select({
   }, [selectedIds]);
 
   useEffect(() => {
-    if (
-      selectingInput !== 'text' &&
-      selectingInput !== 'radio' &&
-      selectedIds.length > 0
-    )
-      return;
-    setIsOpen(false);
+    onChangeSelectedItems?.(selectedIds);
+
+    (selectingInput === 'multi-text' || selectingInput === 'checkbox') &&
+      selectedIds.length === 0 &&
+      setIsOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedIds]);
+  }, [selectedIds, onChangeSelectedItems]);
 
   return (
     <Dropdown
@@ -92,14 +92,14 @@ export default function Select({
         >
           {selectedIds.length > 0 && (
             <div
-              className="flex w-full items-center gap-x-2 px-2 py-[0.3125rem]"
+              className="flex w-full items-center gap-x-2 py-[0.3125rem]"
               onClick={() => setIsOpen(prev => !prev)}
             >
               <TagGroup
                 className={`selected-items ${
                   shouldWrapItems
                     ? ''
-                    : 'flex-nowrap !overflow-x-auto scrollbar-hide'
+                    : 'flex-nowrap overflow-x-auto scrollbar-hide'
                 }`}
                 onWheel={e => {
                   if (e.deltaY === 0) return;
@@ -112,8 +112,10 @@ export default function Select({
                 {selectedIds.map(selectedId => (
                   <Tag
                     key={selectedId}
-                    data-id={selectedId}
-                    className="whitespace-nowrap"
+                    label={
+                      options.find(option => option.id === selectedId)?.label ??
+                      ''
+                    }
                     isRemovable={
                       selectingInput === 'multi-text' ||
                       selectingInput === 'checkbox'
@@ -126,10 +128,9 @@ export default function Select({
                         );
                       },
                     }}
-                  >
-                    {options.find(option => option.id === selectedId)?.label ??
-                      ''}
-                  </Tag>
+                    data-id={selectedId}
+                    className="whitespace-nowrap"
+                  />
                 ))}
               </TagGroup>
               {selectedIds.length > 0 && (
