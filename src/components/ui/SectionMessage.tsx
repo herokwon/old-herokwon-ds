@@ -108,8 +108,8 @@ export default function SectionMessage({
           icon={FaChevronDown}
           variant="secondary"
           size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
-          spacing="none"
-          className={`my-0.5 ml-2 ${
+          spacing="compact"
+          className={`ml-2 ${
             isHidden
               ? 'opacity-off group-hover:opacity-normal'
               : 'rotate-180 opacity-normal'
