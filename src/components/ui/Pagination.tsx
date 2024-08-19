@@ -8,6 +8,7 @@ import {
 
 import type { ElementBaseSize, ElementBorderShape } from '../../types';
 
+import ButtonGroup from './ButtonGroup';
 import IconButton from './IconButton';
 import TextButton from './TextButton';
 
@@ -53,29 +54,31 @@ export default function Pagination({
   return (
     <div
       {...props}
-      className={`flex w-max items-center ${
-        size === 'lg' ? 'gap-x-2' : size === 'sm' ? 'gap-x-1' : 'gap-x-1.5'
+      className={`flex flex-wrap items-center *:flex-wrap ${
+        size === 'lg'
+          ? 'gap-2'
+          : size === 'sm'
+            ? 'gap-1 *:gap-1'
+            : 'gap-1.5 *:gap-1.5'
       } ${props.className ?? ''}`}
     >
-      <IconButton
-        isDisabled={viewedIndex === 0}
-        icon={LuChevronFirst}
-        size={size}
-        shape={shape}
-        onClick={onClickHandler.firstButton}
-      />
-      <IconButton
-        isDisabled={viewedIndex === 0}
-        icon={LuChevronLeft}
-        size={size}
-        shape={shape}
-        onClick={onClickHandler.prevButton}
-      />
-      <div
-        className={`flex h-full items-center ${
-          size === 'lg' ? 'gap-x-2' : size === 'sm' ? 'gap-x-1' : 'gap-x-1.5'
-        }`}
-      >
+      <ButtonGroup focusMode={false}>
+        <IconButton
+          isDisabled={viewedIndex === 0}
+          icon={LuChevronFirst}
+          size={size}
+          shape={shape}
+          onClick={onClickHandler.firstButton}
+        />
+        <IconButton
+          isDisabled={viewedIndex === 0}
+          icon={LuChevronLeft}
+          size={size}
+          shape={shape}
+          onClick={onClickHandler.prevButton}
+        />
+      </ButtonGroup>
+      <ButtonGroup focusMode={false}>
         {Array.from(
           {
             length: Math.min(
@@ -112,21 +115,27 @@ export default function Pagination({
             />
           );
         })}
-      </div>
-      <IconButton
-        isDisabled={viewedIndex === Math.floor((totalPage - 1) / pagePerIndex)}
-        icon={LuChevronRight}
-        size={size}
-        shape={shape}
-        onClick={onClickHandler.nextButton}
-      />
-      <IconButton
-        isDisabled={viewedIndex === Math.floor((totalPage - 1) / pagePerIndex)}
-        icon={LuChevronLast}
-        size={size}
-        shape={shape}
-        onClick={onClickHandler.lastButton}
-      />
+      </ButtonGroup>
+      <ButtonGroup focusMode={false}>
+        <IconButton
+          isDisabled={
+            viewedIndex === Math.floor((totalPage - 1) / pagePerIndex)
+          }
+          icon={LuChevronRight}
+          size={size}
+          shape={shape}
+          onClick={onClickHandler.nextButton}
+        />
+        <IconButton
+          isDisabled={
+            viewedIndex === Math.floor((totalPage - 1) / pagePerIndex)
+          }
+          icon={LuChevronLast}
+          size={size}
+          shape={shape}
+          onClick={onClickHandler.lastButton}
+        />
+      </ButtonGroup>
     </div>
   );
 }

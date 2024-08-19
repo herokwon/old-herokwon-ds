@@ -16,7 +16,7 @@ export default function ButtonGroup({
   return (
     <div
       {...props}
-      className={`flex w-max gap-2 ${
+      className={`flex gap-2 ${
         direction === 'horizontal'
           ? 'flex-row items-center'
           : 'flex-col justify-center'

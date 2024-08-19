@@ -13,7 +13,7 @@ export default function Dots({ length = 3, size = 'md', ...props }: DotsProps) {
   return (
     <div
       {...props}
-      className={`flex w-full items-center ${props.className ?? ''}`}
+      className={`flex items-center ${props.className ?? ''}`}
       style={{
         gap: `${dotSize / 2}px`,
       }}
