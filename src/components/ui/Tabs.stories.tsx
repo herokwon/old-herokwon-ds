@@ -8,16 +8,15 @@ const meta = {
   tags: ['autodocs'],
   component: Tabs,
   args: {
-    isDisabled: false,
-    isLoading: false,
     defaultSelectedIndex: 0,
     size: 'md',
     className: 'min-w-[480px]',
     tabItems: Array.from({ length: 3 }, (_, i) => ({
-      index: i,
+      isDisabled: i === 2,
+      isLoading: false,
       heading: `Tab ${i + 1}`,
       content: (
-        <div className="h-100 w-full rounded-ms px-4 py-3 shadow-primary-light shadow-light-tertiary dark:bg-dark-secondary dark:shadow-primary-dark">
+        <div className="h-100 w-full">
           <p className="w-full">{`This is content for Tab ${i + 1}.`}</p>
         </div>
       ),
@@ -33,6 +32,6 @@ export const Default: Story = {};
 
 export const SelectedIndex: Story = {
   args: {
-    defaultSelectedIndex: meta.args.tabItems.length - 1,
+    defaultSelectedIndex: 1,
   },
 };

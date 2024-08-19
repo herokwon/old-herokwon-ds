@@ -6,14 +6,12 @@ import LoadableElement from '../LoadableElement';
 import ButtonGroup from './ButtonGroup';
 import TextButton from './TextButton';
 
-interface TabItem {
+interface TabItem extends Omit<ElementStatus, 'isSelected'> {
   heading: string;
   content?: React.ReactNode;
 }
 
-interface TabsProps
-  extends Omit<ElementStatus, 'isSelected'>,
-    React.ComponentPropsWithoutRef<'div'> {
+interface TabsProps extends React.ComponentPropsWithoutRef<'div'> {
   defaultSelectedIndex?: number;
   size?: ElementBaseSize;
   tabItems: TabItem[];
@@ -27,7 +25,6 @@ export default function Tabs({
   onChangeSelectedIndex,
   ...props
 }: TabsProps) {
-  const { isDisabled = false, isLoading = false, ...restProps } = props;
   const [selectedIndex, setSelectedIndex] =
     useState<number>(defaultSelectedIndex);
 
@@ -36,33 +33,35 @@ export default function Tabs({
   }, [selectedIndex, onChangeSelectedIndex]);
 
   return (
-    <div
-      {...restProps}
-      className={`w-full space-y-2 ${restProps.className ?? ''}`}
-    >
+    <div {...props} className={`w-full ${props.className ?? ''}`}>
       <ButtonGroup
         focusMode={false}
-        className="!w-full gap-1.5 rounded-ms border-[0.1rem] border-light-secondary p-1.5 dark:border-dark-secondary"
+        className="!w-full gap-2 border-b border-light-secondary px-2 shadow-[0_4px_6px_-4px] shadow-light-tertiary dark:border-dark-secondary dark:shadow-dark-tertiary"
       >
         {tabItems.map((tabItem, index) => (
           <TextButton
             key={index}
+            isDisabled={tabItem.isDisabled}
             label={tabItem.heading}
-            variant={index === selectedIndex ? 'primary' : 'secondary'}
+            variant="secondary"
             size={size}
             onClick={() => setSelectedIndex(index)}
-            className={`w-full ${
-              index === selectedIndex
-                ? 'pointer-events-none font-semibold'
-                : 'not-hover:opacity-normal'
+            className={`w-full rounded-b-none border-b-2 py-1 hover:!bg-transparent ${
+              tabItem.isDisabled
+                ? 'border-b-transparent !opacity-25'
+                : index === selectedIndex
+                  ? 'pointer-events-none border-b-light-blue font-semibold text-light-blue dark:border-b-dark-blue dark:text-dark-blue'
+                  : 'hover:border-black/normal hover:opacity-normal not-hover:border-transparent not-hover:opacity-off dark:hover:border-white/normal'
             }`}
           />
         ))}
       </ButtonGroup>
       <LoadableElement
         as="div"
-        isActive={isLoading}
-        className={`${isDisabled ? 'disabled' : ''} w-full`}
+        isActive={tabItems[selectedIndex]?.isLoading || false}
+        className={`${
+          tabItems[selectedIndex]?.isDisabled ? 'disabled' : ''
+        } w-full px-2 py-4`}
       >
         {tabItems[selectedIndex]?.content}
       </LoadableElement>

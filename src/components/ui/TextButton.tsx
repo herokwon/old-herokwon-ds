@@ -9,10 +9,9 @@ import type {
 
 import type { ButtonProps } from '../../types/ui';
 
-import { ICON_SIZE } from '../../data/constant';
-
 import LinkableElement from '../LinkableElement';
 import LoadableElement from '../LoadableElement';
+import Icon from './Icon';
 
 interface TextButtonProps
   extends ElementStatus,
@@ -43,16 +42,14 @@ export default function TextButton({
     preventDefault = false,
     ...restProps
   } = props;
-  const BeforeIcon = iconBefore?.content ?? null;
-  const AfterIcon = iconAfter?.content ?? null;
   const iconBeforeProps = Object.fromEntries(
     Object.entries(iconBefore ?? {}).filter(
-      prop => prop[0] !== 'content' && prop[0] !== 'size',
+      prop => prop[0] !== 'icon' && prop[0] !== 'size',
     ),
   );
   const iconAfterProps = Object.fromEntries(
     Object.entries(iconAfter ?? {}).filter(
-      prop => prop[0] !== 'content' && prop[0] !== 'size',
+      prop => prop[0] !== 'icon' && prop[0] !== 'size',
     ),
   );
 
@@ -89,10 +86,12 @@ export default function TextButton({
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
         } outline-none ${restProps.className ?? ''}`}
       >
-        {BeforeIcon && (
-          <BeforeIcon
+        {iconBefore?.icon && (
+          <Icon
             {...iconBeforeProps}
-            size={ICON_SIZE[iconBefore?.size ?? size]}
+            icon={iconBefore.icon}
+            size={iconBefore?.size ?? size}
+            spacing="none"
             className={`${
               size === 'lg'
                 ? `${spacing === 'default' ? 'mr-2' : 'mr-1.5'}`
@@ -103,10 +102,12 @@ export default function TextButton({
           />
         )}
         {label}
-        {AfterIcon && (
-          <AfterIcon
+        {iconAfter?.icon && (
+          <Icon
             {...iconAfterProps}
-            size={ICON_SIZE[iconAfter?.size ?? size]}
+            icon={iconAfter.icon}
+            size={iconAfter?.size ?? size}
+            spacing="none"
             className={`${
               size === 'lg'
                 ? `${spacing === 'default' ? 'ml-2' : 'ml-1.5'}`

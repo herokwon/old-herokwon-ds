@@ -45,7 +45,7 @@ export const IconBefore: Story = {
   args: {
     label: 'Icon Before',
     iconBefore: {
-      content: FaCheck,
+      icon: FaCheck,
     },
   },
 };
@@ -53,7 +53,7 @@ export const IconAfter: Story = {
   args: {
     label: 'Icon After',
     iconAfter: {
-      content: FaCheck,
+      icon: FaCheck,
     },
   },
 };

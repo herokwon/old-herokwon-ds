@@ -9,7 +9,7 @@ const meta = {
   component: TagGroup,
   args: {
     children: Array.from({ length: 7 }, (_, i) => (
-      <Tag key={i} isRemovable>{`Tag ${i + 1}`}</Tag>
+      <Tag key={i} label={`Tag ${i + 1}`} isRemovable />
     )),
     alignment: 'left',
     className: 'w-[600px] border p-2',

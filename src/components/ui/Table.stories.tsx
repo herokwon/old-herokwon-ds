@@ -82,7 +82,7 @@ export const Tree: Story = {
               label={dummyItem.name.content}
               variant="secondary"
               iconBefore={{
-                content: LuChevronRight,
+                icon: LuChevronRight,
                 className: `${isActive ? 'rotate-90' : ''} transition-transform`,
               }}
               size="sm"
