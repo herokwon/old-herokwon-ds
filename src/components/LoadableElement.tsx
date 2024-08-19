@@ -33,8 +33,9 @@ export default function LoadableElement<T extends React.ElementType = 'div'>({
     >
       {children}
       <Backdrop
+        variant="local"
         isActive={isActive}
-        className="!absolute bottom-0 left-0 right-0 top-0 z-40 flex !h-full !w-full items-center justify-center"
+        className="flex items-center justify-center"
       >
         <Spinner size={size} />
       </Backdrop>

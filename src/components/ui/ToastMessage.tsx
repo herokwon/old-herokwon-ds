@@ -49,26 +49,26 @@ const ToastMessageContainer = ({
       key={id}
       className={`section-message--${variant} relative flex w-full max-w-[calc(100vw-(1rem*2))] overflow-hidden rounded-ms py-2 pl-2 pr-1`}
       onMouseEnter={() => {
-        if (!countdownRef.current) return;
-
-        setIsPaused(true);
-        clearInterval(countdownRef.current);
-        countdownRef.current = null;
+        if (countdownRef.current) {
+          setIsPaused(true);
+          clearInterval(countdownRef.current);
+          countdownRef.current = null;
+        }
       }}
       onMouseLeave={() => {
-        if (countdownRef.current) return;
-
-        setIsPaused(false);
-        countdownRef.current = setInterval(() => {
-          setRestTime(prev => Math.max(0, prev - 10));
-        }, 10);
+        if (!countdownRef.current) {
+          setIsPaused(false);
+          countdownRef.current = setInterval(() => {
+            setRestTime(prev => Math.max(0, prev - 10));
+          }, 10);
+        }
       }}
       onAnimationEnd={() => {
-        if (restTime > 0) return;
-
-        countdownRef.current && clearInterval(countdownRef.current);
-        countdownRef.current = null;
-        closeMessage(id, { position });
+        if (restTime === 0) {
+          countdownRef.current && clearInterval(countdownRef.current);
+          countdownRef.current = null;
+          closeMessage(id, { position });
+        }
       }}
       style={{
         animation:
@@ -103,9 +103,10 @@ const ToastMessageContainer = ({
       </p>
       <IconButton
         icon={FaXmark}
+        variant="secondary"
         size="sm"
         spacing="none"
-        className="ml-2"
+        className="ml-4"
         onClick={() => {
           countdownRef.current && clearInterval(countdownRef.current);
           countdownRef.current = null;

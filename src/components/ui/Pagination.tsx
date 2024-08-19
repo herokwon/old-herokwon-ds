@@ -53,8 +53,8 @@ export default function Pagination({
   return (
     <div
       {...props}
-      className={`flex w-full items-center ${
-        size === 'lg' ? 'gap-x-1.5' : 'gap-x-1'
+      className={`flex w-max items-center ${
+        size === 'lg' ? 'gap-x-2' : size === 'sm' ? 'gap-x-1' : 'gap-x-1.5'
       } ${props.className ?? ''}`}
     >
       <IconButton
@@ -72,8 +72,8 @@ export default function Pagination({
         onClick={onClickHandler.prevButton}
       />
       <div
-        className={`flex h-full w-full items-center ${
-          size === 'lg' ? 'gap-x-1.5' : 'gap-x-1'
+        className={`flex h-full items-center ${
+          size === 'lg' ? 'gap-x-2' : size === 'sm' ? 'gap-x-1' : 'gap-x-1.5'
         }`}
       >
         {Array.from(

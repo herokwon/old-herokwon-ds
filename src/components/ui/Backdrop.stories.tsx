@@ -9,6 +9,7 @@ const meta = {
   tags: ['autodocs'],
   component: Backdrop,
   args: {
+    variant: 'global',
     isActive: false,
   },
 } satisfies Meta<typeof Backdrop>;

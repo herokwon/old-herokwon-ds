@@ -35,11 +35,15 @@ const ListItem = ({
       {...restProps}
       id={id}
       onClick={e => !isDisabled && restProps.onClick?.(e)}
-      className={`group border-l-2 px-3 py-1.5 ${
-        isSelected
-          ? 'border-light-blue bg-light-secondary dark:border-dark-blue dark:bg-dark-tertiary'
-          : 'border-transparent'
-      } flex w-full cursor-pointer gap-x-2 transition-colors hover:border-light-blue hover:bg-light-secondary dark:hover:border-dark-blue dark:hover:bg-dark-tertiary ${restProps.className ?? ''}`}
+      className={`flex w-full gap-x-2 border-l-2 px-3 py-1.5 transition-colors group ${
+        isDisabled
+          ? 'disabled'
+          : `${
+              isSelected
+                ? 'border-light-blue bg-light-secondary dark:border-dark-blue dark:bg-dark-tertiary'
+                : 'border-transparent'
+            } cursor-pointer hover:border-light-blue hover:bg-light-secondary dark:hover:border-dark-blue dark:hover:bg-dark-tertiary`
+      } ${restProps.className ?? ''}`}
     >
       {elemBefore}
       {children}
@@ -69,7 +73,7 @@ const ListItemText = ({
           {children}
         </Box>
       ) : (
-        <div className={`${isDisabled ? 'disabled' : ''} w-full`}>
+        <div className="w-full">
           <Box
             as={typeof children === 'string' ? 'p' : 'div'}
             className={`w-full whitespace-pre ${

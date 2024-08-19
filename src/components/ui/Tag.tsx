@@ -12,9 +12,8 @@ import TextButton from './TextButton';
 interface TagProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TextButton>,
-    'isSelected' | 'label' | 'variant' | 'size' | 'spacing'
+    'isSelected' | 'variant' | 'size' | 'spacing'
   > {
-  children: React.ComponentPropsWithoutRef<typeof TextButton>['label'];
   isRemovable?: boolean;
   variant?: Exclude<ElementExtendedVariant, 'primary'>;
   size?: Exclude<ElementBaseSize, 'lg'>;
@@ -22,7 +21,7 @@ interface TagProps
 }
 
 export default function Tag({
-  children,
+  label,
   size = 'sm',
   spacing = 'compact',
   iconBefore,
@@ -35,7 +34,7 @@ export default function Tag({
   return (
     <TextButton
       {...restProps}
-      label={children}
+      label={label}
       size={size}
       spacing={spacing}
       iconBefore={iconBefore}
@@ -43,7 +42,8 @@ export default function Tag({
         !isRemovable
           ? iconAfter
           : {
-              content: iconAfter?.content ?? FaXmark,
+              icon: FaXmark,
+              size: 'sm',
               onClick: e => {
                 setIsRemoved(true);
                 iconAfter?.onClick?.(e);
