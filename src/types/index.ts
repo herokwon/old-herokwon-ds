@@ -74,12 +74,12 @@ export interface ContentWithId extends BaseContent {
 export interface ContentWithIcon {
   iconBefore?: ElementEventHandler<SVGElement> &
     Pick<React.ComponentPropsWithoutRef<'svg'>, 'className'> & {
-      content?: IconType;
+      icon?: IconType;
       size?: ElementExtendedSize;
     };
   iconAfter?: ElementEventHandler<SVGElement> &
     Pick<React.ComponentPropsWithoutRef<'svg'>, 'className'> & {
-      content?: IconType;
+      icon?: IconType;
       size?: ElementExtendedSize;
     };
 }
