@@ -1,6 +1,6 @@
 {
   "name": "herokwon-ds",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "private": false,
   "author": {
     "name": "HeroKwon",
@@ -49,11 +49,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@babel/plugin-transform-runtime": "^7.24.7",
-    "@babel/preset-env": "^7.25.3",
+    "@babel/plugin-transform-runtime": "^7.25.4",
+    "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
-    "@chromatic-com/storybook": "^1.6.1",
+    "@chromatic-com/storybook": "^1.7.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-image": "^3.0.3",
@@ -80,7 +80,7 @@
     "autoprefixer": "^10.4.20",
     "chromatic": "^11.7.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "14.2.6",
     "eslint-plugin-storybook": "^0.8.0",
     "postcss": "^8",
     "postcss-import": "^16.1.0",
@@ -91,7 +91,7 @@
     "storybook": "^8.2.9",
     "storybook-dark-mode": "^4.0.2",
     "tailwindcss": "^3.4.10",
-    "tslib": "^2.6.3",
+    "tslib": "^2.7.0",
     "typescript": "^5"
   },
   "peerDependencies": {
@@ -102,6 +102,6 @@
     "react-icons": "^5.3.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.25.0"
+    "@babel/runtime": "^7.25.4"
   }
 }

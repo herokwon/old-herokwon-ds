@@ -2,12 +2,14 @@ import type { PolymorphicElementPropsWithoutRef } from '../types';
 
 import Box from './Box';
 import Backdrop from './ui/Backdrop';
+import Dots from './ui/Dots';
 import Spinner from './ui/Spinner';
 
 type _LoadableElementProps = Pick<
   React.ComponentPropsWithoutRef<typeof Spinner>,
   'size'
 > & {
+  variant?: 'dots' | 'spinner';
   isActive: boolean;
 };
 
@@ -16,11 +18,14 @@ type LoadableElementProps<T extends React.ElementType = 'div'> =
 
 export default function LoadableElement<T extends React.ElementType = 'div'>({
   children,
+  variant = 'spinner',
   isActive,
   as,
   size = 'md',
   ...props
 }: LoadableElementProps<T>) {
+  const LoadingElement = variant === 'dots' ? Dots : Spinner;
+
   return !isActive && !as ? (
     children
   ) : (
@@ -37,7 +42,7 @@ export default function LoadableElement<T extends React.ElementType = 'div'>({
         isActive={isActive}
         className="flex items-center justify-center"
       >
-        <Spinner size={size} />
+        <LoadingElement size={size} />
       </Backdrop>
     </Box>
   );
