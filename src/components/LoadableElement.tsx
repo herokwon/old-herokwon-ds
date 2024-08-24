@@ -26,7 +26,7 @@ export default function LoadableElement<T extends React.ElementType = 'div'>({
 }: LoadableElementProps<T>) {
   const LoadingElement = variant === 'dots' ? Dots : Spinner;
 
-  return !isActive ? (
+  return !isActive && !as ? (
     children
   ) : (
     <Box
