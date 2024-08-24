@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import type { PolymorphicElementPropsWithoutRef } from '../types';
 
 type BoxProps<T extends React.ElementType = 'div'> =
@@ -8,7 +10,7 @@ export default function Box<T extends React.ElementType = 'div'>({
   as,
   ...props
 }: BoxProps<T>) {
-  const Element = as || 'div';
+  const Element = as || Fragment;
 
   return <Element {...props}>{children}</Element>;
 }

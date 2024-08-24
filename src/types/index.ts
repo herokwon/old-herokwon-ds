@@ -47,7 +47,7 @@ type AsProp<T extends React.ElementType> = {
 export type PolymorphicRef<T extends React.ElementType> =
   React.ComponentPropsWithRef<T>['ref'];
 export type PolymorphicElementPropsWithoutRef<
-  T extends React.ElementType = 'div',
+  T extends React.ElementType,
   Props = {},
 > = React.PropsWithChildren<
   AsProp<T> & Props & React.ComponentPropsWithoutRef<T>
