@@ -1,6 +1,6 @@
 import type { DateItem, Months } from '../types';
 
-import { MONTHS } from '../data/constant';
+import { MONTHS } from '../data/constants';
 
 export const getDateHandler = {
   headInMonth: (dayOfTheWeek: number): number => ((7 - dayOfTheWeek) % 7) + 1,

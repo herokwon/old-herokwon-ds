@@ -2,7 +2,7 @@ import type { ElementBaseSize } from '../../types';
 
 import type { FeedbackVariant } from '../../types/ui';
 
-import { FEEDBACK_ICONS } from '../../data/constant';
+import { FEEDBACK_ICONS } from '../../data/constants';
 
 interface InlineMessageProps extends React.ComponentPropsWithoutRef<'div'> {
   heading?: string;

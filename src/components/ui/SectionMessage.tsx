@@ -3,7 +3,7 @@ import { FaChevronDown } from 'react-icons/fa6';
 
 import type { FeedbackAction } from '../../types/ui';
 
-import { FEEDBACK_ICONS } from '../../data/constant';
+import { FEEDBACK_ICONS } from '../../data/constants';
 
 import ButtonGroup from './ButtonGroup';
 import Heading from './Heading';

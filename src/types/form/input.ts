@@ -4,7 +4,7 @@ import {
   DATETIME_INPUTS,
   SELECTING_INPUTS,
   TEXT_INPUTS,
-} from '../../data/constant';
+} from '../../data/constants';
 
 export type InputElement = HTMLInputElement | HTMLTextAreaElement;
 export type InputContent = Omit<ContentWithId, 'children'> & {

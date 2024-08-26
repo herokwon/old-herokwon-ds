@@ -1,6 +1,6 @@
 import type { ElementExtendedSize } from '../../types';
 
-import { ICON_SIZE } from '../../data/constant';
+import { ICON_SIZE } from '../../data/constants';
 
 interface DotsProps extends React.ComponentPropsWithoutRef<'div'> {
   length?: number;

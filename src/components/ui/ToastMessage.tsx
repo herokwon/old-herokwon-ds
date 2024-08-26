@@ -3,7 +3,7 @@ import { FaXmark } from 'react-icons/fa6';
 
 import type { ToastMessage, ToastMessageConfig } from '../../types/ui';
 
-import { FEEDBACK_ICONS } from '../../data/constant';
+import { FEEDBACK_ICONS } from '../../data/constants';
 
 import IconButton from './IconButton';
 
