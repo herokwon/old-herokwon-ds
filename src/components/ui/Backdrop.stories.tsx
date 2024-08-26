@@ -9,38 +9,34 @@ const meta = {
   tags: ['autodocs'],
   component: Backdrop,
   args: {
-    variant: 'global',
     isActive: false,
+    variant: 'global',
   },
 } satisfies Meta<typeof Backdrop>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const BackdropRender = ({
-  ...props
-}: React.ComponentPropsWithoutRef<typeof Backdrop>) => {
-  const [isActive, setIsActive] = useState<boolean>(props.isActive || false);
-
-  useEffect(() => {
-    setIsActive(props.isActive || false);
-  }, [props.isActive]);
-
-  return (
-    <Backdrop
-      isActive={isActive}
-      onClick={() => setIsActive(false)}
-      trigger={
-        <TextButton
-          label="Click on Button"
-          variant="primary"
-          onClick={() => setIsActive(prev => !prev)}
-        />
-      }
-    />
-  );
-};
-
 export const Default: Story = {
-  render: ({ ...props }) => <BackdropRender {...props} />,
+  render: ({ ...props }) => {
+    const [isActive, setIsActive] = useState<boolean>(props.isActive || false);
+
+    useEffect(() => {
+      setIsActive(props.isActive || false);
+    }, [props.isActive]);
+
+    return (
+      <Backdrop
+        isActive={isActive}
+        onClick={() => setIsActive(false)}
+        trigger={
+          <TextButton
+            label="Click on Button"
+            variant="primary"
+            onClick={() => setIsActive(prev => !prev)}
+          />
+        }
+      />
+    );
+  },
 };
