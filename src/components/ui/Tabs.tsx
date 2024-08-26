@@ -36,7 +36,7 @@ export default function Tabs({
     <div {...props} className={`w-full ${props.className ?? ''}`}>
       <ButtonGroup
         focusMode={false}
-        className="!w-full gap-2 border-b border-light-secondary px-2 shadow-[0_4px_6px_-4px] shadow-light-tertiary dark:border-dark-secondary dark:shadow-dark-tertiary"
+        className="!w-full gap-2 border-b border-light-secondary px-2 shadow-[0_4px_6px_-8px] shadow-light-tertiary dark:border-dark-secondary dark:shadow-dark-tertiary"
       >
         {tabItems.map((tabItem, index) => (
           <TextButton

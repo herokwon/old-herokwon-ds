@@ -1,6 +1,6 @@
 interface BackdropProps extends React.ComponentPropsWithoutRef<'section'> {
   variant?: 'global' | 'local';
-  isActive: boolean;
+  isActive?: boolean;
   trigger?: React.ReactNode;
 }
 
@@ -10,7 +10,7 @@ export default function Backdrop({
   trigger,
   ...props
 }: BackdropProps) {
-  const { isActive, ...restProps } = props;
+  const { isActive = false, ...restProps } = props;
 
   return (
     <>
