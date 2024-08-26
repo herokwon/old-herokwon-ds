@@ -2,7 +2,7 @@ import { CgSpinner } from 'react-icons/cg';
 
 import type { ElementExtendedSize } from '../../types';
 
-import { ICON_SIZE } from '../../data/constant';
+import { ICON_SIZE } from '../../data/constants';
 
 interface SpinnerProps
   extends Omit<React.ComponentPropsWithoutRef<'svg'>, 'children'> {

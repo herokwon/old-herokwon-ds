@@ -6,7 +6,7 @@ import type {
   ToastMessage as ToastMessageType,
 } from '../types/ui';
 
-import { TOAST_MESSAGES_POSITIONS } from '../data/constant';
+import { TOAST_MESSAGES_POSITIONS } from '../data/constants';
 
 import ToastMessage from './ui/ToastMessage';
 

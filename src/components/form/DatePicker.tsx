@@ -3,7 +3,7 @@ import { FaCalendarDays } from 'react-icons/fa6';
 
 import type { DateItem, ElementStatus } from '../../types';
 
-import { MONTHS } from '../../data/constant';
+import { MONTHS } from '../../data/constants';
 
 import Calendar from '../ui/Calendar';
 import Dropdown from '../ui/Dropdown';

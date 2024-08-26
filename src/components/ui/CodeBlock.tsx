@@ -3,7 +3,7 @@ import { Fragment, useEffect } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 import { LuCopy } from 'react-icons/lu';
 
-import { CODE_LANGUAGES } from '../../data/constant';
+import { CODE_LANGUAGES } from '../../data/constants';
 
 import Box from '../Box';
 import IconButton from './IconButton';

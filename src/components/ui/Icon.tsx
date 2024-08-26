@@ -2,7 +2,7 @@ import type { IconType } from 'react-icons';
 
 import type { ElementExtendedSize, ElementSpacing } from '../../types';
 
-import { ICON_SIZE } from '../../data/constant';
+import { ICON_SIZE } from '../../data/constants';
 
 interface IconProps extends React.ComponentPropsWithoutRef<'div'> {
   icon: IconType;

@@ -1,6 +1,6 @@
 import type { ContentWithId } from '../../types';
 
-import { FEEDBACK_VARIANTS } from '../../data/constant';
+import { FEEDBACK_VARIANTS } from '../../data/constants';
 
 import TextButton from '../../components/ui/TextButton';
 

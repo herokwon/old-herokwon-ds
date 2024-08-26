@@ -1,6 +1,6 @@
 import type { FeedbackVariant } from '../../types/ui';
 
-import { TOAST_MESSAGES_POSITIONS } from '../../data/constant';
+import { TOAST_MESSAGES_POSITIONS } from '../../data/constants';
 
 export type ToastMessageVariant = Exclude<FeedbackVariant, 'default'>;
 export type ToastMessagePosition = (typeof TOAST_MESSAGES_POSITIONS)[number];

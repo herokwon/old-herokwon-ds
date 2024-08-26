@@ -3,8 +3,6 @@ import { fn } from '@storybook/test';
 
 import TimePicker from './TimePicker';
 
-const today = new Date();
-
 const meta = {
   title: 'Components/TimePicker',
   tags: ['autodocs'],
@@ -13,8 +11,8 @@ const meta = {
     isDisabled: false,
     isLoading: false,
     defaultPickedTimeItem: {
-      hour: today.getHours(),
-      minute: today.getMinutes(),
+      hour: 8,
+      minute: 25,
     },
     onChangePickedTimeItem: fn(),
   },
