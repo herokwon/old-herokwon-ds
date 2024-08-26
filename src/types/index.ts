@@ -7,7 +7,7 @@ import {
   ELEMENT_EXTENDED_SIZES,
   ELEMENT_EXTENDED_VARIANTS,
   ELEMENT_SPACINGS,
-} from '../data/constant';
+} from '../data/constants';
 
 export * from './datetime';
 export * from './position';

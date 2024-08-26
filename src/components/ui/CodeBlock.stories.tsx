@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { CODE_LANGUAGES } from '../../data/constant';
+import { CODE_LANGUAGES } from '../../data/constants';
 
 import CodeBlock from './CodeBlock';
 

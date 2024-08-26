@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ICON_SIZE } from '../../data/constant';
+import { ICON_SIZE } from '../../data/constants';
 
 import Dots from './Dots';
 

@@ -14,7 +14,7 @@ import {
   getTheNumberOfWeeksInMonth,
 } from '../../utils';
 
-import { MONTHS } from '../../data/constant';
+import { MONTHS } from '../../data/constants';
 
 import IconButton from './IconButton';
 import TextButton from './TextButton';
