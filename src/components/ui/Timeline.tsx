@@ -168,7 +168,7 @@ export default function Timeline({
                     : 'order-1 flex-row-reverse'
                   : props.alignY === 'top'
                     ? 'order-2 flex-col'
-                    : 'order-1 flex-col-reverse'
+                    : 'order-1 flex-col-reverse items-center'
               }`}
             >
               <div
@@ -194,7 +194,13 @@ export default function Timeline({
                 }
               >
                 {label}
-                {content}
+                <div
+                  className={`${
+                    size === 'lg' ? 'mt-2' : size === 'sm' ? 'mt-0' : 'mt-1'
+                  } rounded-ms bg-light-secondary px-3 py-1 dark:bg-dark-secondary`}
+                >
+                  {content}
+                </div>
               </div>
             </div>
           ) : (
@@ -202,23 +208,21 @@ export default function Timeline({
               <div
                 className={`m-auto ${
                   direction === 'vertical'
-                    ? `${
-                        props.alignX === 'center-alternative' && index % 2 > 0
-                          ? `order-3 text-start ${
-                              size === 'lg'
-                                ? 'ml-3.5'
-                                : size === 'sm'
-                                  ? 'ml-1.5'
-                                  : 'ml-2.5'
-                            }`
-                          : `order-1 text-end ${
-                              size === 'lg'
-                                ? 'mr-3.5'
-                                : size === 'sm'
-                                  ? 'mr-1.5'
-                                  : 'mr-2.5'
-                            }`
-                      }`
+                    ? props.alignX === 'center-alternative' && index % 2 > 0
+                      ? `order-3 text-start ${
+                          size === 'lg'
+                            ? 'ml-3.5'
+                            : size === 'sm'
+                              ? 'ml-1.5'
+                              : 'ml-2.5'
+                        }`
+                      : `order-1 text-end ${
+                          size === 'lg'
+                            ? 'mr-3.5'
+                            : size === 'sm'
+                              ? 'mr-1.5'
+                              : 'mr-2.5'
+                        }`
                     : `text-center ${
                         props.alignY === 'middle-alternative' && index % 2 > 0
                           ? `order-3 ${
@@ -262,17 +266,21 @@ export default function Timeline({
                 <div
                   className={`flex size-max items-center ${
                     direction === 'vertical'
-                      ? size === 'lg'
-                        ? 'h-[1.75rem]'
-                        : size === 'sm'
-                          ? 'h-xl'
-                          : 'h-[1.5rem]'
+                      ? `my-auto ${
+                          size === 'lg'
+                            ? 'h-[1.75rem]'
+                            : size === 'sm'
+                              ? 'h-xl'
+                              : 'h-[1.5rem]'
+                        }`
                       : 'mx-auto'
                   }`}
                 >
                   <ContentLine direction={direction} />
                 </div>
-                {content}
+                <div className="rounded-ms bg-light-secondary px-3 py-1 dark:bg-dark-secondary">
+                  {content}
+                </div>
               </div>
             </>
           )}
