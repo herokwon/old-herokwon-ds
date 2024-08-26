@@ -1,6 +1,7 @@
 import type { AlignmentX, AlignmentY } from '../../types';
 
-type TableProps<Item extends object = object> = {
+interface TableProps<Item extends object = object>
+  extends React.ComponentPropsWithoutRef<'table'> {
   layout?: 'auto' | 'fixed';
   headerAlignment?: {
     x?: AlignmentX;
@@ -13,7 +14,7 @@ type TableProps<Item extends object = object> = {
   data: Item[];
   getKey: (item: Item) => React.Key;
   getCell: (item: Item) => React.ReactNode;
-};
+}
 
 const Table = <Item extends object>({
   layout = 'auto',
@@ -28,6 +29,7 @@ const Table = <Item extends object>({
   data,
   getKey,
   getCell,
+  ...props
 }: TableProps<Item>) => {
   const itemWithMostKeys =
     data.length === 0
@@ -51,9 +53,8 @@ const Table = <Item extends object>({
 
   return (
     <table
-      className={
-        layout === 'fixed' ? 'table-fixed break-all' : 'last:*:break-all'
-      }
+      {...props}
+      className={`${layout === 'fixed' ? 'table-fixed break-all' : 'last:*:break-all'} ${props.className ?? ''}`}
     >
       <thead
         className={`${
