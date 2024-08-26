@@ -7,7 +7,7 @@ import Popup from './Popup';
 interface TooltipProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof Popup>,
-    'isOpen' | 'trigger' | 'onClose' | 'content'
+    'isOpen' | 'isLoading' | 'trigger' | 'onClose' | 'content'
   > {
   content: Children;
 }
@@ -18,13 +18,11 @@ export default function Tooltip({
   content,
   ...props
 }: TooltipProps) {
-  const { isLoading = false, ...restProps } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <Popup
-      {...restProps}
-      isLoading={isLoading}
+      {...props}
       isOpen={isOpen}
       position={position}
       trigger={children}
@@ -41,17 +39,17 @@ export default function Tooltip({
               : 'only:*:last:*:after:left-0 only:*:last:*:after:border-l-0 only:*:last:*:after:border-r-dark-tertiary'
       } ${
         position.endsWith('top')
-          ? 'only:*:last:*:after:top-0 only:*:last:*:after:translate-y-3/4 only:*:last:*:after:border-y-[calc(0.5rem/2)]'
+          ? 'only:*:last:*:after:top-0 only:*:last:*:after:translate-y-3/4 only:*:last:*:after:border-y-[calc((0.5rem/5)*3)]'
           : position.endsWith('bottom')
-            ? 'only:*:last:*:after:bottom-0 only:*:last:*:after:-translate-y-3/4 only:*:last:*:after:border-y-[calc(0.5rem/2)]'
+            ? 'only:*:last:*:after:bottom-0 only:*:last:*:after:-translate-y-3/4 only:*:last:*:after:border-y-[calc((0.5rem/5)*3)]'
             : position.endsWith('left')
-              ? 'only:*:last:*:after:left-0 only:*:last:*:after:translate-x-3/4 only:*:last:*:after:border-x-[calc(0.5rem/2)]'
+              ? 'only:*:last:*:after:left-0 only:*:last:*:after:translate-x-3/4 only:*:last:*:after:border-x-[calc((0.5rem/5)*3)]'
               : position.endsWith('right')
-                ? 'only:*:last:*:after:right-0 only:*:last:*:after:-translate-x-3/4 only:*:last:*:after:border-x-[calc(0.5rem/2)]'
+                ? 'only:*:last:*:after:right-0 only:*:last:*:after:-translate-x-3/4 only:*:last:*:after:border-x-[calc((0.5rem/5)*3)]'
                 : position.endsWith('middle')
-                  ? 'only:*:last:*:after:top-1/2 only:*:last:*:after:-translate-y-1/2 only:*:last:*:after:border-y-[calc((0.5rem/3)*2)]'
-                  : 'only:*:last:*:after:left-1/2 only:*:last:*:after:-translate-x-1/2 only:*:last:*:after:border-x-[calc((0.5rem/3)*2)]'
-      } ${restProps.className ?? ''}`}
+                  ? 'only:*:last:*:after:top-1/2 only:*:last:*:after:-translate-y-1/2 only:*:last:*:after:border-y-[calc((0.5rem/5)*3)]'
+                  : 'only:*:last:*:after:left-1/2 only:*:last:*:after:-translate-x-1/2 only:*:last:*:after:border-x-[calc((0.5rem/5)*3)]'
+      } ${props.className ?? ''}`}
     >
       {content}
     </Popup>
