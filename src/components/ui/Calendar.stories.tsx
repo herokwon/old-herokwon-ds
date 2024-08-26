@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { MONTHS } from '../../data/constant';
-
 import Calendar from './Calendar';
-
-const today = new Date();
 
 const meta = {
   title: 'Components/Calendar',
@@ -13,9 +9,9 @@ const meta = {
   args: {
     className: 'last:*:rounded-ms',
     defaultPickedDateItem: {
-      year: today.getFullYear(),
-      month: MONTHS[today.getMonth()],
-      date: today.getDate(),
+      year: new Date().getFullYear(),
+      month: 1,
+      date: 1,
     },
   },
 } satisfies Meta<typeof Calendar>;

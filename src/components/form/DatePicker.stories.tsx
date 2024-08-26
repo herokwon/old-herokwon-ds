@@ -8,6 +8,11 @@ const meta = {
   tags: ['autodocs'],
   component: DatePicker,
   args: {
+    defaultPickedDateItem: {
+      year: new Date().getFullYear(),
+      month: 1,
+      date: 1,
+    },
     onChangePickedDateItem: fn(),
   },
 } satisfies Meta<typeof DatePicker>;
