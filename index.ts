@@ -3,6 +3,9 @@ import './index.css';
 // configs
 export * from './src/configs';
 
+// constants
+export { CODE_LANGUAGES } from './src/data/constants';
+
 // common components
 export { default as Box } from './src/components/Box';
 export { default as LinkableElement } from './src/components/LinkableElement';
