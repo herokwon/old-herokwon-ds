@@ -3,14 +3,14 @@ import commonjs from '@rollup/plugin-commonjs';
 import image from '@rollup/plugin-image';
 import json from '@rollup/plugin-json';
 import nodeResolve from '@rollup/plugin-node-resolve';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import postcss from 'rollup-plugin-postcss';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import autoprefixer from 'autoprefixer';
 import cssimport from 'postcss-import';
-import pkg from './package.json' assert { type: 'json' };
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
 import tailwindcss from 'tailwindcss';
+import pkg from './package.json' assert { type: 'json' };
 
 const extensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx'];
 
@@ -47,6 +47,12 @@ const config = [
         ],
         plugins: [
           '@babel/plugin-transform-runtime',
+          [
+            'prismjs', {
+              'languages': 'all',
+              'plugins': ['autoloader'],
+            },
+          ],
         ],
         extensions: extensions,
         include: ['src/**/*'],
