@@ -1,4 +1,4 @@
-import * as Prism from 'prismjs';
+import { highlightAll } from 'prismjs';
 import { Fragment, useEffect } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 import { LuCopy } from 'react-icons/lu';
@@ -47,16 +47,7 @@ export default function CodeBlock({
     code.length === 0 ? 0 : (code.match(/\n/g)?.length ?? 0) + 1;
 
   useEffect(() => {
-    try {
-      if (language === 'tsx') {
-        require('prismjs/components/prism-typescript');
-        require('prismjs/components/prism-jsx');
-        require('prismjs/components/prism-tsx');
-      } else require(`prismjs/components/prism-${language}`);
-      Prism.highlightAll();
-    } catch (error: unknown) {
-      console.error(error);
-    }
+    highlightAll();
   }, [language, code]);
 
   return (
@@ -141,7 +132,7 @@ export default function CodeBlock({
               icon={FaChevronDown}
               variant="secondary"
               shape="square"
-              className="absolute bottom-0 left-1/2 z-0 w-full -translate-x-1/2 rounded-t-none bg-gradient-to-b from-transparent to-dark-primary py-1 text-dark transition-colors only:*:transition-transform hover:!bg-transparent group-[.showing]:mb-2 group-[.showing]:bg-none group-[.showing]:only:*:rotate-180 hover:group-[.showing]:!bg-dark-tertiary/off"
+              className="absolute bottom-0 left-1/2 z-0 w-full -translate-x-1/2 rounded-t-none bg-gradient-to-b from-transparent to-dark-primary py-1 text-dark transition-colors only:*:transition-transform hover:!bg-transparent group-[.showing]:bg-none group-[.showing]:pb-3 group-[.showing]:only:*:rotate-180 hover:group-[.showing]:!bg-dark-tertiary/off"
               onClick={e =>
                 e.currentTarget.parentElement?.classList.toggle('showing')
               }
