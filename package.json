@@ -78,6 +78,7 @@
     "@types/react-dom": "^18",
     "@types/rollup-plugin-peer-deps-external": "^2.2.5",
     "autoprefixer": "^10.4.20",
+    "babel-plugin-prismjs": "^2.1.0",
     "chromatic": "^11.7.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
