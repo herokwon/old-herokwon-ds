@@ -158,7 +158,9 @@ export default plugin(function ({
     },
 
     'code[class*="language-"]': {
+      width: '100%',
       padding: '0.5rem 1rem',
+      'box-sizing': 'content-box',
       'background-color': '#1E293B',
     },
   });
