@@ -1,18 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
 import type { ToastMessage, ToastMessageConfig } from '../../types/ui';
 
-import { FEEDBACK_ICONS } from '../../data/constants';
+import { FEEDBACK_ICONS, ICON_SIZE } from '../../data/constants';
 
+import toast from '../Toast';
 import IconButton from './IconButton';
 
 interface ToastMessageProps extends Pick<ToastMessageConfig, 'position'> {
   messages: ToastMessage[];
-  closeMessage: (
-    idToDelete: string,
-    { position }: Pick<ToastMessageConfig, 'position'>,
-  ) => void;
+  closeMessage: typeof toast.closeMessage;
 }
 
 type ToastMessageContainerProps = ToastMessage &
@@ -30,49 +28,60 @@ const ToastMessageContainer = ({
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
   const [restTime, setRestTime] = useState<number>(duration);
   const [isPaused, setIsPaused] = useState<boolean>(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initialDuration = useMemo(() => duration, []);
 
-  useEffect(() => {
-    if (restTime > 0) return;
+  const setCountdown = () => {
+    if (countdownRef.current) return;
+
+    countdownRef.current = setInterval(() => {
+      setRestTime(prev => Math.max(0, prev - 10));
+    }, 10);
+  };
+  const clearCountdown = () => {
+    if (!countdownRef.current) return;
+
     countdownRef.current && clearInterval(countdownRef.current);
     countdownRef.current = null;
-  }, [restTime, id, position, closeMessage]);
+  };
 
   useEffect(() => {
-    if (!countdownRef.current)
-      countdownRef.current = setInterval(() => {
-        setRestTime(prev => Math.max(0, prev - 10));
-      }, 10);
+    setCountdown();
   }, [duration]);
+
+  useEffect(() => {
+    restTime === 0 && clearCountdown();
+  }, [restTime]);
+
+  useEffect(() => {
+    toast.updateDuration({
+      id,
+      position,
+      duration: restTime,
+    });
+  }, [id, position, restTime]);
 
   return (
     <div
       key={id}
-      className={`section-message--${variant} relative flex w-full max-w-[calc(100vw-(1rem*2))] overflow-hidden rounded-ms py-2 pl-2 pr-1`}
+      className={`section-message--${variant} relative flex w-full max-w-[calc(100vw-(1rem*2))] gap-x-2 overflow-hidden rounded-ms p-2 pr-1`}
       onMouseEnter={() => {
-        if (countdownRef.current) {
-          setIsPaused(true);
-          clearInterval(countdownRef.current);
-          countdownRef.current = null;
-        }
+        setIsPaused(true);
+        clearCountdown();
       }}
       onMouseLeave={() => {
-        if (!countdownRef.current) {
-          setIsPaused(false);
-          countdownRef.current = setInterval(() => {
-            setRestTime(prev => Math.max(0, prev - 10));
-          }, 10);
-        }
+        setIsPaused(false);
+        setCountdown();
       }}
       onAnimationEnd={() => {
-        if (restTime === 0) {
-          countdownRef.current && clearInterval(countdownRef.current);
-          countdownRef.current = null;
-          closeMessage(id, { position });
-        }
+        if (restTime > 0) return;
+
+        clearCountdown();
+        closeMessage({ id, position });
       }}
       style={{
         animation:
-          restTime > 0 && restTime < duration
+          restTime > 0
             ? undefined
             : `${
                 position.endsWith('left')
@@ -82,11 +91,11 @@ const ToastMessageContainer = ({
                     : position.startsWith('top')
                       ? 'show-up-top'
                       : 'show-up-bottom'
-              } 200ms ease-in-out ${restTime === 0 ? 'reverse' : 'normal'} forwards`,
+              } 200ms ease-in-out reverse forwards`,
       }}
     >
-      <span className="my-[0.1875rem] mr-2 h-full w-max">
-        <FeedbackIcon className="h-sm" />
+      <span className="my-0.5 h-full w-max">
+        <FeedbackIcon size={ICON_SIZE.md} />
       </span>
       <p
         className={`whitespace-pre text-sm font-semibold ${
@@ -105,18 +114,18 @@ const ToastMessageContainer = ({
         icon={FaXmark}
         variant="secondary"
         size="sm"
-        spacing="none"
-        className="ml-4"
+        spacing="compact"
+        className="my-0.5 ml-2"
         onClick={() => {
-          countdownRef.current && clearInterval(countdownRef.current);
-          countdownRef.current = null;
-          closeMessage(id, { position });
+          clearCountdown();
+          closeMessage({ id, position });
         }}
       />
       <div
         className="progress-bar absolute bottom-0 left-0 h-2 w-full"
         style={{
-          animation: `toast-progress ${duration}ms linear forwards`,
+          animation: `toast-progress 4s linear forwards`,
+          animationDelay: `-${4000 - initialDuration}ms`,
           animationPlayState: isPaused ? 'paused' : 'running',
         }}
       />
