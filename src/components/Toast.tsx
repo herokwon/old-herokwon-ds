@@ -15,9 +15,30 @@ class Toast {
   private messages: Map<ToastMessagePosition, ToastMessageType[]>;
 
   constructor() {
-    this.root = null;
+    this.root =
+      typeof window === 'undefined'
+        ? null
+        : !document.getElementById('toast-root')
+          ? null
+          : createRoot(document.getElementById('toast-root')!);
     this.messages = new Map(
       TOAST_MESSAGES_POSITIONS.map(position => [position, []]),
+    );
+  }
+
+  updateDuration({
+    id,
+    position,
+    duration,
+  }: Pick<ToastMessageType, 'id'> & Required<ToastMessageConfig>) {
+    if (duration === 0) return;
+
+    this.messages = this.messages.set(
+      position,
+      (this.messages.get(position) ?? []).map(item => ({
+        ...item,
+        duration: item.id === id ? duration : item.duration,
+      })),
     );
   }
 
@@ -25,11 +46,6 @@ class Toast {
     const id = crypto.randomUUID();
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
-
-    if (!this.root) {
-      const container = document.getElementById('toast-root');
-      this.root = !container ? null : createRoot(container);
-    }
 
     this.messages.get(position)?.push({
       id,
@@ -54,11 +70,6 @@ class Toast {
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
 
-    if (!this.root) {
-      const container = document.getElementById('toast-root');
-      this.root = !container ? null : createRoot(container);
-    }
-
     this.messages.get(position)?.push({
       id,
       variant: 'danger',
@@ -81,11 +92,6 @@ class Toast {
     const id = crypto.randomUUID();
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
-
-    if (!this.root) {
-      const container = document.getElementById('toast-root');
-      this.root = !container ? null : createRoot(container);
-    }
 
     this.messages.get(position)?.push({
       id,
@@ -110,11 +116,6 @@ class Toast {
     const position = config?.position ?? 'top-center';
     const duration = config?.duration ?? 4000;
 
-    if (!this.root) {
-      const container = document.getElementById('toast-root');
-      this.root = !container ? null : createRoot(container);
-    }
-
     this.messages.get(position)?.push({
       id,
       variant: 'info',
@@ -133,13 +134,12 @@ class Toast {
     );
   }
 
-  closeMessage(
-    idToDelete: string,
-    { position }: Pick<ToastMessageConfig, 'position'>,
-  ) {
+  closeMessage({
+    id,
+    position,
+  }: Pick<ToastMessageType, 'id'> & Pick<ToastMessageConfig, 'position'>) {
     const indexToDelete =
-      this.messages.get(position)?.findIndex(item => item.id === idToDelete) ??
-      0;
+      this.messages.get(position)?.findIndex(item => item.id === id) ?? 0;
 
     this.messages.get(position)?.splice(indexToDelete, 1);
     this.root?.render(
