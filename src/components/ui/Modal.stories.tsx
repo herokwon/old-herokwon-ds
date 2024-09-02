@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import Heading from './Heading';
 import Modal from './Modal';
 import TextButton from './TextButton';
 
@@ -11,6 +10,7 @@ const meta = {
   component: Modal,
   args: {
     isActive: false,
+    variant: 'default',
   },
 } satisfies Meta<typeof Modal>;
 export default meta;
@@ -27,8 +27,10 @@ export const Default: Story = {
 
     return (
       <Modal
+        {...props}
         isActive={isActive}
         onClose={() => setIsActive(false)}
+        heading={'Hello!'}
         trigger={
           <TextButton
             label="Open Modal"
@@ -37,7 +39,6 @@ export const Default: Story = {
           />
         }
       >
-        <Heading>Hello!</Heading>
         <p>
           This is a modal component composed by <code>dialog</code>.
         </p>
