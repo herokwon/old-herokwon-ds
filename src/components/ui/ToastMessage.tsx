@@ -115,7 +115,7 @@ const ToastMessageContainer = ({
         variant="secondary"
         size="sm"
         spacing="compact"
-        className="my-0.5 ml-2"
+        className="ml-2"
         onClick={() => {
           clearCountdown();
           closeMessage({ id, position });

@@ -1,8 +1,13 @@
 import type { AlignmentX, AlignmentY } from '../../types';
 
-interface TableProps<Item extends object = object>
-  extends React.ComponentPropsWithoutRef<'table'> {
-  layout?: 'auto' | 'fixed';
+type BaseItemProps = {
+  id: string;
+};
+
+interface TableProps<Item extends BaseItemProps>
+  extends React.ComponentPropsWithoutRef<'div'> {
+  layout?: 'auto' | 'dynamic' | 'fixed';
+  wordBreak?: 'normal' | 'break-all' | 'keep-all';
   headerAlignment?: {
     x?: AlignmentX;
     y?: AlignmentY;
@@ -16,8 +21,9 @@ interface TableProps<Item extends object = object>
   getCell: (item: Item) => React.ReactNode;
 }
 
-const Table = <Item extends object>({
+const Table = <Item extends BaseItemProps>({
   layout = 'auto',
+  wordBreak = 'break-all',
   headerAlignment = {
     x: 'center',
     y: 'middle',
@@ -31,74 +37,70 @@ const Table = <Item extends object>({
   getCell,
   ...props
 }: TableProps<Item>) => {
-  const itemWithMostKeys =
-    data.length === 0
-      ? null
-      : [...data].sort((a, b) =>
-          Object.keys(a).length > Object.keys(b).length
-            ? -1
-            : Object.keys(a).length < Object.keys(b).length
-              ? 1
-              : 0,
-        )[0];
-  const headers = !itemWithMostKeys
-    ? []
-    : Object.keys(itemWithMostKeys).filter(
-        (_, i) =>
-          i !==
-          Object.values(itemWithMostKeys).findIndex(
-            value => value === getKey(itemWithMostKeys),
-          ),
-      );
+  const headers = Array.from(
+    new Set(
+      data.flatMap(item => Object.keys(item).filter(key => key !== 'id')),
+    ),
+  );
 
   return (
-    <table
+    <div
       {...props}
-      className={`${layout === 'fixed' ? 'table-fixed break-all' : 'last:*:break-all'} ${props.className ?? ''}`}
+      className={`w-full py-2 x-scrollbar ${props.className ?? ''}`}
     >
-      <thead
-        className={`${
-          headerAlignment.x === 'left'
-            ? 'text-left'
-            : headerAlignment.x === 'right'
-              ? 'text-right'
-              : 'text-center'
-        } ${
-          headerAlignment.y === 'top'
-            ? 'align-top'
-            : headerAlignment.y === 'bottom'
-              ? 'align-bottom'
-              : 'align-middle'
+      <table
+        className={`${layout === 'fixed' ? 'table-fixed' : ''} ${
+          wordBreak === 'break-all'
+            ? 'break-all'
+            : wordBreak === 'normal'
+              ? 'break-normal'
+              : 'break-keep'
         }`}
       >
-        <tr>
-          {headers.map((header, index) => (
-            <TableHeader key={index} scope="col">
-              {header}
-            </TableHeader>
-          ))}
-        </tr>
-      </thead>
-      <tbody
-        className={`${
-          contentAlignment.x === 'left'
-            ? 'text-left'
-            : contentAlignment.x === 'right'
-              ? 'text-right'
-              : 'text-center'
-        } ${
-          contentAlignment.y === 'top'
-            ? 'align-top'
-            : contentAlignment.y === 'bottom'
-              ? 'align-bottom'
-              : 'align-middle'
-        }`}
-      >
-        {data.map(item => {
-          return <tr key={getKey(item)}>{getCell(item)}</tr>;
-        })}
-      </tbody>
-    </table>
+        <thead
+          className={`${
+            headerAlignment.x === 'left'
+              ? 'text-left'
+              : headerAlignment.x === 'right'
+                ? 'text-right'
+                : 'text-center'
+          } ${
+            headerAlignment.y === 'top'
+              ? 'align-top'
+              : headerAlignment.y === 'bottom'
+                ? 'align-bottom'
+                : 'align-middle'
+          }`}
+        >
+          <tr className={layout === 'dynamic' ? 'last:*:w-full' : ''}>
+            {headers.map((header, index) => (
+              <TableHeader key={index} scope="col">
+                {header}
+              </TableHeader>
+            ))}
+          </tr>
+        </thead>
+        <tbody
+          className={`${
+            contentAlignment.x === 'left'
+              ? 'text-left'
+              : contentAlignment.x === 'right'
+                ? 'text-right'
+                : 'text-center'
+          } ${
+            contentAlignment.y === 'top'
+              ? 'align-top'
+              : contentAlignment.y === 'bottom'
+                ? 'align-bottom'
+                : 'align-middle'
+          }`}
+        >
+          {data.map(item => {
+            return <tr key={getKey(item)}>{getCell(item)}</tr>;
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

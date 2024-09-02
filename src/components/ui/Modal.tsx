@@ -1,20 +1,30 @@
 import { useEffect, useRef } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
+import type { Children, ElementExtendedVariant } from '../../types';
+
+import { FEEDBACK_ICONS } from '../../data/constants';
+
 import Backdrop from './Backdrop';
+import Heading from './Heading';
+import Icon from './Icon';
 import IconButton from './IconButton';
 
 interface ModalProps extends React.ComponentPropsWithoutRef<'dialog'> {
   children: React.ReactNode;
   isActive?: boolean;
+  variant?: Exclude<ElementExtendedVariant, 'primary' | 'secondary'>;
+  heading?: Children;
   trigger?: React.ReactNode;
   onClose?: () => void;
 }
 
 export default function Modal({
   children,
+  variant = 'default',
   trigger,
   onClose,
+  heading,
   ...props
 }: ModalProps) {
   const { isActive = false, ...restProps } = props;
@@ -39,12 +49,31 @@ export default function Modal({
         <section className="w-full">
           <IconButton
             icon={FaXmark}
-            spacing="none"
+            variant="secondary"
+            spacing="compact"
             shape="square"
             className="ml-auto mr-0 hover:!bg-light-secondary dark:hover:!bg-dark-tertiary"
             onClick={onClose}
           />
-          <div className="p-1">{children}</div>
+          <div className="space-y-1 p-1">
+            {heading && (
+              <Heading
+                className={`${
+                  variant === 'warning'
+                    ? 'text-light-yellow dark:text-dark-yellow'
+                    : variant === 'danger'
+                      ? 'text-light-red dark:text-dark-red'
+                      : ''
+                } flex items-center gap-2`}
+              >
+                {variant !== 'default' && (
+                  <Icon icon={FEEDBACK_ICONS[variant]} spacing="none" />
+                )}
+                {heading}
+              </Heading>
+            )}
+            {children}
+          </div>
         </section>
       </dialog>
     </Backdrop>
