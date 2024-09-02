@@ -4,6 +4,8 @@ import type { ElementExtendedSize, ElementStatus } from '../../types';
 
 import type { ButtonProps } from '../../types/ui';
 
+import Icon from './Icon';
+
 interface ToggleProps
   extends Pick<ElementStatus, 'isDisabled'>,
     Omit<ButtonProps, 'size' | 'spacing'> {
@@ -64,34 +66,32 @@ export default function Toggle({
           isActive ? 'translate-x-[calc((100%/3)*4)]' : ''
         } z-10 -translate-y-1/2`}
       />
-      <span
+      <div
         className="absolute left-1/2 top-1/2 flex h-3/4 w-full -translate-x-1/2 -translate-y-1/2 items-center whitespace-nowrap transition-all"
         style={{
           paddingLeft: `${(TOGGLE_SIZES[size] / 2) * 0.125}rem`,
           paddingRight: `${(TOGGLE_SIZES[size] / 2) * 0.125}rem`,
         }}
       >
-        {isActive && ActiveIcon && (
-          <span
-            className="mr-auto flex h-full justify-center"
+        {isActive && activeIcon && (
+          <Icon
+            icon={activeIcon}
+            spacing="none"
+            className="mr-auto h-full text-dark"
             style={{
               width: `${TOGGLE_SIZES[size] / 2}rem`,
             }}
-          >
-            <ActiveIcon className="aspect-square h-full w-fit text-dark" />
-          </span>
+          />
         )}
-        {!isActive && InactiveIcon && (
-          <span
-            className="ml-auto flex h-full justify-center"
-            style={{
-              width: `${TOGGLE_SIZES[size] / 2}rem`,
-            }}
-          >
-            <InactiveIcon className="aspect-square h-full w-fit" />
-          </span>
+        {!isActive && inactiveIcon && (
+          <Icon
+            icon={inactiveIcon}
+            spacing="none"
+            className="ml-auto h-full"
+            style={{ width: `${TOGGLE_SIZES[size] / 2}rem` }}
+          />
         )}
-      </span>
+      </div>
     </button>
   );
 }
