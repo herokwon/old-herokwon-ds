@@ -61,7 +61,7 @@ export default function IconButton({
           !isDisabled && isHoverable ? 'hoverable' : ''
         } ${
           shape === 'square' ? 'rounded-ms' : 'rounded-full'
-        } flex size-fit items-center justify-center outline-none transition-all ${restProps.className ?? ''}`}
+        } flex items-center justify-center outline-none transition-all ${restProps.className ?? ''}`}
       >
         <Icon icon={icon} size={size} spacing={spacing} />
       </LinkableElement>
