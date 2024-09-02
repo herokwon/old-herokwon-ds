@@ -21,7 +21,7 @@ export default function Icon({
   return (
     <div
       {...props}
-      className={`flex aspect-square items-center justify-center ${
+      className={`flex aspect-square size-fit items-center justify-center ${
         spacing === 'default'
           ? 'p-1'
           : spacing === 'compact'
@@ -29,7 +29,12 @@ export default function Icon({
             : '!bg-transparent p-0'
       } ${props.className ?? ''}`}
     >
-      <IconElement size={ICON_SIZE[size]} />
+      <IconElement
+        size={ICON_SIZE[size]}
+        className={
+          spacing === 'default' ? 'm-1' : spacing === 'compact' ? 'm-0.5' : ''
+        }
+      />
     </div>
   );
 }
