@@ -84,7 +84,7 @@ export default function TextButton({
             : `${shape === 'circle' ? 'rounded-full' : 'rounded-ms'} transition-all`
         } ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-        } outline-none ${restProps.className ?? ''}`}
+        } whitespace-pre outline-none ${restProps.className ?? ''}`}
       >
         {iconBefore?.icon && (
           <Icon
@@ -94,10 +94,12 @@ export default function TextButton({
             spacing="none"
             className={`${
               size === 'lg'
-                ? `${spacing === 'default' ? 'mr-2' : 'mr-1.5'}`
-                : size === 'sm'
-                  ? `${spacing === 'default' ? 'mr-1' : 'mr-0.5'}`
-                  : `${spacing === 'default' ? 'mr-1.5' : 'mr-1'}`
+                ? spacing === 'default'
+                  ? 'mr-2'
+                  : 'mr-1.5'
+                : spacing === 'default'
+                  ? 'mr-1.5'
+                  : 'mr-1'
             } ${iconBeforeProps.className ?? ''}`}
           />
         )}
@@ -110,10 +112,12 @@ export default function TextButton({
             spacing="none"
             className={`${
               size === 'lg'
-                ? `${spacing === 'default' ? 'ml-2' : 'ml-1.5'}`
-                : size === 'sm'
-                  ? `${spacing === 'default' ? 'ml-1' : 'ml-0.5'}`
-                  : `${spacing === 'default' ? 'ml-1.5' : 'ml-1'}`
+                ? spacing === 'default'
+                  ? 'ml-2'
+                  : 'ml-1.5'
+                : spacing === 'default'
+                  ? 'ml-1.5'
+                  : 'ml-1'
             } ${iconAfterProps.className ?? ''}`}
           />
         )}
