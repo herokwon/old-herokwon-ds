@@ -1,14 +1,11 @@
-import type { Children, ElementDirection, ElementStatus } from '../../types';
+import type { Children, ElementStatus } from '../../types';
 
 import Checkbox from '../form/Checkbox';
 import ListItem from './ListItem';
 import Popup from './Popup';
 
-interface DropdownProps
-  extends Pick<ElementStatus, 'isLoading'>,
-    React.ComponentPropsWithoutRef<typeof Popup> {
-  direction?: ElementDirection;
-}
+type DropdownProps = Pick<ElementStatus, 'isLoading'> &
+  React.ComponentPropsWithoutRef<typeof Popup>;
 
 interface DropdownItemGroupProps extends React.ComponentPropsWithoutRef<'ul'> {
   heading?: Children;
@@ -30,14 +27,15 @@ const Dropdown = ({
       isLoading={isLoading}
       isOpen={isOpen}
       position={position}
+      direction={direction}
       trigger={trigger}
       onClose={onClose}
       className={`${
         direction === 'vertical'
           ? ''
           : isLoading
-            ? 'first:*:only:*:last:*:flex-row *:first:*:only:*:last:*:overflow-y-auto first:*:only:*:last:*:overflow-y-visible'
-            : 'only:*:last:*:flex-row *:only:*:last:*:overflow-y-auto only:*:last:*:overflow-y-visible'
+            ? 'first:*:only:*:last:*:flex-row'
+            : 'only:*:last:*:flex-row'
       } ${restProps.className ?? ''}`}
     >
       {children}

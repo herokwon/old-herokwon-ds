@@ -21,7 +21,7 @@ export default function Heading<T extends HeadingElement = 'h1'>({
   href,
   ...props
 }: HeadingProps<T>) {
-  const Element = as || 'h1';
+  const Element = as ?? 'h1';
 
   return (
     <LinkableElement {...props} as={Element} href={href}>

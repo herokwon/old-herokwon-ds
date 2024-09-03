@@ -80,7 +80,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
           className={`${isDisabled ? 'disabled' : 'cursor-pointer'} relative flex items-center justify-center group`}
         >
           <div
-            className="absolute left-0 top-0 -z-10 h-4 rounded-full bg-light-blue group-hover:bg-dark-blue dark:bg-dark-blue dark:group-hover:bg-light-blue"
+            className="absolute left-0 top-0 z-10 h-4 rounded-full bg-light-blue group-hover:bg-dark-blue dark:bg-dark-blue dark:group-hover:bg-light-blue"
             style={{
               width: `${percent}%`,
             }}
@@ -94,7 +94,7 @@ const Range = forwardRef<HTMLInputElement, RangeProps>(function Range(
             step={step}
             value={selectedValue}
             onChange={onChangeInput}
-            className={`m-auto w-full border-light-blue bg-transparent group-hover:border-dark-blue slider-thumb:bg-light-blue group-hover:slider-thumb:bg-dark-blue dark:border-dark-blue dark:group-hover:border-light-blue dark:slider-thumb:bg-dark-blue dark:slider-thumb:group-hover:bg-light-blue ${restProps.className ?? ''}`}
+            className={`m-auto w-full border-light-blue bg-light-secondary group-hover:border-dark-blue slider-thumb:bg-light-blue group-hover:slider-thumb:bg-dark-blue dark:border-dark-blue dark:bg-dark-secondary dark:group-hover:border-light-blue dark:slider-thumb:bg-dark-blue dark:slider-thumb:group-hover:bg-light-blue ${restProps.className ?? ''}`}
           />
         </label>
         {isShowingLabel && (
