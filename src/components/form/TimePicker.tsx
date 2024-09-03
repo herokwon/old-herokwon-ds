@@ -10,7 +10,7 @@ interface TimePickerProps
   extends Pick<ElementStatus, 'isDisabled'>,
     Omit<
       React.ComponentPropsWithoutRef<typeof Dropdown>,
-      'isOpen' | 'trigger' | 'onClose'
+      'isOpen' | 'direction' | 'trigger' | 'onClose'
     > {
   min?: TimeItem;
   max?: TimeItem;
@@ -68,6 +68,30 @@ export default function TimePicker({
   }, [pickedTimeItem, onChangePickedTimeItem]);
 
   useEffect(() => {
+    const targetHourId =
+      hourItems.find(item => item.content === pickedTimeItem.hour)?.id ?? '';
+    const targetMinuteId =
+      minuteItems.find(item => item.content === pickedTimeItem.minute)?.id ??
+      '';
+
+    const hourDelay = setTimeout(() => {
+      document.getElementById(targetHourId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+      clearTimeout(hourDelay);
+    }, 100);
+    const minuteDelay = setTimeout(() => {
+      document.getElementById(targetMinuteId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+      clearTimeout(minuteDelay);
+    }, 200);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+  useEffect(() => {
     const targetId =
       hourItems.find(item => item.content === pickedTimeItem.hour)?.id ?? '';
 
@@ -77,23 +101,24 @@ export default function TimePicker({
         block: 'center',
       });
       clearTimeout(delay);
-    }, 10);
+    }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pickedTimeItem.hour, isOpen]);
+  }, [pickedTimeItem.hour]);
 
   useEffect(() => {
     const targetId =
       minuteItems.find(item => item.content === pickedTimeItem.minute)?.id ??
       '';
+
     const delay = setTimeout(() => {
       document.getElementById(targetId)?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
       clearTimeout(delay);
-    }, 10);
+    }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pickedTimeItem.minute, isOpen]);
+  }, [pickedTimeItem.minute]);
 
   return (
     <Dropdown
@@ -102,9 +127,11 @@ export default function TimePicker({
       isOpen={isOpen}
       direction="horizontal"
       onClose={() => setIsOpen(false)}
-      className={
-        isLoading ? 'first:*:only:*:last:*:px-2' : 'only:*:last:*:px-2'
-      }
+      className={`${
+        isLoading
+          ? '*:first:*:only:*:last:*:overflow-y-auto first:*:only:*:last:*:px-2'
+          : '*:only:*:last:*:overflow-y-auto only:*:last:*:px-2'
+      } ${restProps.className ?? ''}`}
       trigger={
         <DatetimeField
           readOnly
