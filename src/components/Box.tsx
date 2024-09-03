@@ -10,7 +10,7 @@ export default function Box<T extends React.ElementType>({
   as,
   ...props
 }: BoxProps<T>) {
-  const Element = as || Fragment;
+  const Element = as ?? Fragment;
 
   return <Element {...props}>{children}</Element>;
 }
