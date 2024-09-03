@@ -16,6 +16,7 @@ const meta = {
     isLoading: false,
     isOpen: false,
     position: 'bottom-center',
+    direction: 'vertical',
   },
 } satisfies Meta<typeof Dropdown>;
 export default meta;
@@ -306,7 +307,6 @@ export const MixedItem: Story = {
         isLoading={isLoading}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        className="only:*:last:*:overflow-y-auto"
         trigger={
           <TextButton
             label="Click on Button"
@@ -351,9 +351,9 @@ export const MixedItem: Story = {
                       prev.set(
                         dummyGroupItems[1].id,
                         selectedItem.get(dummyGroupItems[1].id)?.includes(id)
-                          ? selectedItem
+                          ? (selectedItem
                               .get(dummyGroupItems[1].id)
-                              ?.filter(value => value !== id) ?? []
+                              ?.filter(value => value !== id) ?? [])
                           : [
                               ...(selectedItem.get(dummyGroupItems[1].id) ??
                                 []),
@@ -421,9 +421,9 @@ export const MixedItem: Story = {
                         dummyGroupItems[3].id,
                         checked
                           ? [...(prev.get(dummyGroupItems[3].id) ?? []), id]
-                          : prev
+                          : (prev
                               .get(dummyGroupItems[3].id)
-                              ?.filter(value => value !== id) ?? [],
+                              ?.filter(value => value !== id) ?? []),
                       ),
                     ),
                 )

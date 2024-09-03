@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
-import type { AbsolutePosition, ElementStatus } from '../../types';
+import type {
+  AbsolutePosition,
+  ElementDirection,
+  ElementStatus,
+} from '../../types';
 
 import LoadableElement from '../LoadableElement';
 import EmptyData from './EmptyData';
@@ -10,6 +14,7 @@ interface PopupProps
     React.ComponentPropsWithoutRef<'div'> {
   isOpen: boolean;
   position?: AbsolutePosition;
+  direction?: ElementDirection;
   trigger: React.ReactNode;
   onClose: () => void;
 }
@@ -17,6 +22,7 @@ interface PopupProps
 export default function Popup({
   children,
   position = 'bottom-center',
+  direction = 'vertical',
   trigger,
   onClose,
   ...props
@@ -71,9 +77,11 @@ export default function Popup({
           isOpen ? 'open' : ''
         } to-${position} absolute z-10 w-max max-w-[80vw] p-2 transition-all will-change-transform`}
       >
-        <LoadableElement isActive={isLoading}>
+        <LoadableElement isActive={isLoading} className="last:*:rounded-ms">
           <div
-            className={`flex flex-col gap-1 overflow-y-auto rounded-ms border border-light-tertiary bg-light-primary ${typeof children === 'string' ? 'px-2 py-1 text-sm' : 'py-2'} shadow-primary-light shadow-light-tertiary dark:border-dark-tertiary dark:bg-dark-secondary dark:shadow-primary-dark`}
+            className={`flex flex-col gap-2 rounded-ms border border-light-tertiary bg-light-primary ${
+              direction === 'vertical' ? 'y-scrollbar' : 'x-scrollbar'
+            } ${typeof children === 'string' ? 'px-2 py-1 text-sm' : 'py-2'} shadow-primary-light shadow-light-tertiary dark:border-dark-tertiary dark:bg-dark-secondary dark:shadow-primary-dark`}
             style={{
               maxHeight: `${maxHeight}px`,
             }}
