@@ -24,6 +24,7 @@ const meta = {
   component: Table,
   args: {
     layout: 'auto',
+    wordBreak: 'break-all',
     headerAlignment: {
       x: 'center',
       y: 'middle',
@@ -38,7 +39,10 @@ const meta = {
         name: 'Kim',
         age: 23,
       },
-      { id: crypto.randomUUID(), name: 'Kwon' },
+      {
+        id: crypto.randomUUID(),
+        name: 'Kwon',
+      },
     ],
     getKey: item => item.id,
   },
@@ -49,6 +53,49 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    className: 'min-w-[300px]',
+    getCell: item => {
+      const dummyItem = item as DummyDefaultItem;
+
+      return (
+        <>
+          <Table.Data>{dummyItem.name}</Table.Data>
+          <Table.Data>{dummyItem.age}</Table.Data>
+        </>
+      );
+    },
+  },
+};
+
+export const Dynamic: Story = {
+  args: {
+    layout: 'dynamic',
+    wordBreak: 'keep-all',
+    headerAlignment: {
+      x: 'left',
+      y: 'middle',
+    },
+    contentAlignment: {
+      x: 'left',
+      y: 'middle',
+    },
+    className: 'min-w-[300px]',
+    getCell: item => {
+      const dummyItem = item as DummyDefaultItem;
+
+      return (
+        <>
+          <Table.Data>{dummyItem.name}</Table.Data>
+          <Table.Data>{dummyItem.age}</Table.Data>
+        </>
+      );
+    },
+  },
+};
+
+export const Fixed: Story = {
+  args: {
+    layout: 'fixed',
     getCell: item => {
       const dummyItem = item as DummyDefaultItem;
 
@@ -64,6 +111,14 @@ export const Default: Story = {
 
 export const Tree: Story = {
   args: {
+    headerAlignment: {
+      ...meta.args.headerAlignment,
+      x: 'left',
+    },
+    contentAlignment: {
+      ...meta.args.contentAlignment,
+      x: 'left',
+    },
     data: meta.args.data.map(item => ({
       ...item,
       name: {
@@ -86,7 +141,6 @@ export const Tree: Story = {
                 className: `${isActive ? 'rotate-90' : ''} transition-transform`,
               }}
               size="sm"
-              className="w-full !justify-start"
               onClick={() => setIsActive(prev => !prev)}
             />
             <p

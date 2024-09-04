@@ -1,18 +1,29 @@
 import plugin from 'tailwindcss/plugin';
 
 const customVariants: { [key: string]: string | string[] } = {
+  // scrollbar
   scrollbar: '&::-webkit-scrollbar',
   'scrollbar-thumb': '&::-webkit-scrollbar-thumb',
   'scrollbar-track': '&::-webkit-scrollbar-track',
+
+  // range
   'slider-thumb': ['&::-webkit-slider-thumb', '&::-moz-range-thumb'],
   'slider-track': ['&::-webkit-slider-runnable-track', '&::-moz-range-track'],
+
+  // progress
   'progress-bar': '&::-webkit-progress-bar',
   'progress-value': '&::-webkit-progress-value',
+
+  // not-()
   'not-open': '&:not([open])',
   'not-disabled': '&:not(:disabled)',
   'not-hover': '&:not(:hover)',
+
+  // group-() & peer-()
   'group-not-disabled': '.group:not(:disabled) &',
   'peer-not-disabled': '.peer:not(:disabled) ~ &',
+
+  // size
   xs: '@media (min-width: 512px)',
   'max-xs': '@media not all and (min-width: 512px)',
 };
@@ -61,40 +72,46 @@ export default plugin(function ({
     },
 
     // table
-    'table, th, td': {
-      'border-bottom-width': '2px',
-      'border-color': '#E2E8F0',
-
-      '.dark table &': {
-        'border-color': '#334155',
-      },
-    },
     table: {
       width: '100%',
       'border-collapse': 'collapse',
       '& th, & td': {
-        padding: '0.25rem 0.75rem',
+        padding: '0.25rem 1rem',
+        'border-bottom-width': '2px',
+        'border-color': '#E2E8F0',
+        '.dark &': {
+          'border-color': '#1E293B',
+        },
+      },
+      '& th': {
+        'background-color': '#E2E8F0',
+        '.dark &': {
+          'background-color': '#1E293B',
+        },
       },
     },
 
     // input
+    input: {
+      'background-color': 'transparent',
+    },
     'input:autofill, input:autofill:hover, input:autofill:focus, input:autofill:active':
       {
-        'box-shadow': '0 0 0 1000px white inset',
+        'box-shadow': '0 0 0 1000px white inset !important',
       },
     'input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active':
       {
-        '-webkit-box-shadow': '0 0 0 1000px white inset',
-        '-webkit-text-fill-color': 'black',
+        '-webkit-box-shadow': '0 0 0 1000px white inset !important',
+        '-webkit-text-fill-color': 'black !important',
       },
     '.dark input:autofill, .dark input:autofill:hover, .dark input:autofill:focus, .dark input:autofill:active':
       {
-        'box-shadow': '0 0 0 1000px #1e293b inset',
+        'box-shadow': '0 0 0 1000px #121212 inset !important',
       },
     '.dark input:-webkit-autofill, .dark input:-webkit-autofill:hover, .dark input:-webkit-autofill:focus, .dark input:-webkit-autofill:active':
       {
-        '-webkit-box-shadow': '0 0 0 1000px #1e293b inset',
-        '-webkit-text-fill-color': 'white',
+        '-webkit-box-shadow': '0 0 0 1000px #121212 inset !important',
+        '-webkit-text-fill-color': 'white !important',
       },
     'input[type="range"]': {
       height: '4px',
@@ -151,12 +168,10 @@ export default plugin(function ({
       '-ms-hyphens': 'none',
       hyphens: 'none',
     },
-
     'pre[class*="language-"]': {
       padding: '0',
       margin: '0',
     },
-
     'code[class*="language-"]': {
       width: '100%',
       padding: '0.5rem 1rem',

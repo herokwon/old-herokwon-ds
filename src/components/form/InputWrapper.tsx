@@ -35,7 +35,7 @@ export default function InputWrapper({
           : 'border-light-tertiary dark:border-dark-tertiary'
       } ${
         size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-      } overflow-hidden bg-light-primary transition-all dark:bg-dark-secondary ${props.className ?? ''}`}
+      } overflow-hidden ${props.className ?? ''}`}
       style={{
         maxHeight: `calc(${size === 'lg' ? 1.75 : size === 'sm' ? 1.25 : 1.5}rem + (0.25rem * 2) + 1px)`,
       }}

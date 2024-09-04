@@ -1,5 +1,5 @@
 import { highlightAll } from 'prismjs';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 import { LuCopy } from 'react-icons/lu';
 
@@ -45,6 +45,18 @@ export default function CodeBlock({
   const hasHeaderBar = label || isDuplicable;
   const lineNumbers =
     code.length === 0 ? 0 : (code.match(/\n/g)?.length ?? 0) + 1;
+  const codeBlockRef = useRef<HTMLDivElement>(null);
+  const [hasScrollBar, setHasScrollBar] = useState<boolean>(false);
+
+  useEffect(() => {
+    const codeBlockContainer = codeBlockRef.current?.querySelector('pre');
+    if (!codeBlockContainer) return;
+
+    const codeBlockInnerWidth = Array.from(
+      codeBlockContainer?.children ?? [],
+    ).reduce((acc, elem) => acc + elem.clientWidth, 0);
+    setHasScrollBar(codeBlockContainer.clientWidth < codeBlockInnerWidth);
+  }, []);
 
   useEffect(() => {
     highlightAll();
@@ -82,6 +94,7 @@ export default function CodeBlock({
         )}
         <div
           {...restProps}
+          ref={codeBlockRef}
           className={`relative w-full overflow-hidden rounded-ms group ${restProps.className ?? ''}`}
         >
           <pre
@@ -132,7 +145,9 @@ export default function CodeBlock({
               icon={FaChevronDown}
               variant="secondary"
               shape="square"
-              className="absolute bottom-0 left-1/2 z-0 w-full -translate-x-1/2 rounded-t-none bg-gradient-to-b from-transparent to-dark-primary py-1 text-dark transition-colors only:*:transition-transform hover:!bg-transparent group-[.showing]:bg-none group-[.showing]:pb-3 group-[.showing]:only:*:rotate-180 hover:group-[.showing]:!bg-dark-tertiary/off"
+              className={`absolute bottom-0 left-1/2 z-0 w-full -translate-x-1/2 rounded-t-none bg-gradient-to-b from-transparent to-dark-primary text-dark transition-colors only:*:transition-transform hover:!bg-transparent ${
+                hasScrollBar ? 'group-[.showing]:mb-2' : ''
+              } group-[.showing]:bg-none group-[.showing]:only:*:rotate-180 hover:group-[.showing]:!bg-dark-tertiary/off`}
               onClick={e =>
                 e.currentTarget.parentElement?.classList.toggle('showing')
               }

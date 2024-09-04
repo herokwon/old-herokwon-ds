@@ -7,7 +7,7 @@ import Popup from './Popup';
 interface TooltipProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof Popup>,
-    'isOpen' | 'isLoading' | 'trigger' | 'onClose' | 'content'
+    'isOpen' | 'isLoading' | 'direction' | 'trigger' | 'onClose' | 'content'
   > {
   content: Children;
 }

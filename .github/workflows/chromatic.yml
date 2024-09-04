@@ -3,25 +3,45 @@ name: Chromatic Deployment
 
 # Event for the workflow
 on:
-  push:
-    branches: [dev]
+  pull_request:
+    branches:
+      - dev
 
 # List of jobs
 jobs:
   chromatic:
     # Operating System
     runs-on: ubuntu-latest
+    # Outputs
+    outputs:
+      status: ${{ job.status }}
     # Job steps
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Update to the latest version of checkout action
+        uses: actions/checkout@v4 # Update to version 4 of checkout action
         with:
           fetch-depth: 0
 
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4 # Update to version 4 of cache action
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
+
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run Chromatic
-        uses: chromaui/action@latest # Update to the latest version of Chromatic action
+        id: 'chromatic'
+        uses: chromaui/action@latest # Update to the latest version of chromatic action
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2 # Update to version 2 of comment action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          message: '🚀 storybook: ${{ steps.chromatic.outputs.storybookUrl }}'

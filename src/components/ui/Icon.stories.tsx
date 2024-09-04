@@ -10,7 +10,8 @@ const meta = {
   args: {
     size: 'md',
     spacing: 'default',
-    className: 'border rounded-full',
+    className:
+      'border border-light-secondary dark:border-dark-secondary rounded-full',
   },
 } satisfies Meta<typeof Icon>;
 export default meta;

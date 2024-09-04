@@ -8,7 +8,7 @@ export default function Code({ children, ...props }: CodeProps) {
   return (
     <code
       {...props}
-      className={`inline rounded-ms bg-light-tertiary px-1.5 font-medium dark:bg-dark-tertiary ${props.className ?? ''}`}
+      className={`inline rounded-ms bg-light-tertiary px-1 font-medium dark:bg-dark-tertiary ${props.className ?? ''}`}
     >
       {children}
     </code>
