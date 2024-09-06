@@ -6,7 +6,7 @@ import { ICON_SIZE } from '../../data/constants';
 
 interface IconProps extends React.ComponentPropsWithoutRef<'div'> {
   icon: IconType;
-  size?: ElementExtendedSize;
+  size?: ElementExtendedSize | number;
   spacing?: ElementSpacing;
 }
 
@@ -30,7 +30,7 @@ export default function Icon({
       } ${props.className ?? ''}`}
     >
       <IconElement
-        size={ICON_SIZE[size]}
+        size={typeof size === 'number' ? size : ICON_SIZE[size]}
         className={
           spacing === 'default' ? 'm-1' : spacing === 'compact' ? 'm-0.5' : ''
         }

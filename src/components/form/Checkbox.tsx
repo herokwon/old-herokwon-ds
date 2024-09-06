@@ -1,5 +1,4 @@
 import { forwardRef, useState } from 'react';
-import { FaCheck } from 'react-icons/fa6';
 
 import type {
   ContentWithId,
@@ -11,6 +10,7 @@ import type { InputProps } from '../../types/form';
 
 import { useInput } from '../../hooks';
 
+import CheckboxIcon from '../ui/CheckboxIcon';
 import InputMessage from './InputMessage';
 
 interface CheckboxProps
@@ -67,31 +67,11 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
           className="peer"
           onChange={onChangeInput}
         />
-        <span
-          className={`w-max ${
-            size === 'lg' ? 'h-xl' : size === 'sm' ? 'h-xs' : 'h-base'
-          } my-0.5 mr-1.5 flex aspect-square items-center justify-center ${
-            size === 'sm' ? 'rounded-[0.1875rem]' : 'rounded-ms'
-          } border-[0.1rem] ${
-            hasError ? 'border-light-red dark:border-dark-red' : ''
-          } ${
-            isChecked || checked
-              ? 'border-light-blue bg-light-blue dark:border-dark-blue dark:bg-dark-blue'
-              : `${
-                  hasError
-                    ? 'border-light-red dark:border-dark-red'
-                    : 'border-light-tertiary group-hover:peer-not-disabled:border-light-blue dark:border-dark-tertiary dark:group-hover:peer-not-disabled:border-dark-blue'
-                } bg-light-tertiary transition-colors dark:bg-dark-secondary`
-          }`}
-        >
-          <FaCheck
-            className={`h-full w-full ${
-              isChecked || checked
-                ? 'text-dark'
-                : 'text-dark dark:text-dark/normal dark:group-hover:text-dark'
-            } transition-all`}
-          />
-        </span>
+        <CheckboxIcon
+          isChecked={isChecked || checked}
+          hasError={hasError}
+          size={size}
+        />
         {!description ? (
           <p
             className={`block w-full ${
