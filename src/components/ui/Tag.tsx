@@ -43,7 +43,7 @@ export default function Tag({
           ? iconAfter
           : {
               icon: FaXmark,
-              size: 'sm',
+              size: 'xs',
               onClick: e => {
                 setIsRemoved(true);
                 iconAfter?.onClick?.(e);

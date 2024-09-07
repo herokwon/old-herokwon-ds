@@ -9,7 +9,7 @@ const meta = {
   args: {
     variant: 'default',
     size: 'md',
-    className: 'max-w-[300px]',
+    className: 'max-w-[360px]',
   },
 } satisfies Meta<typeof InlineMessage>;
 export default meta;

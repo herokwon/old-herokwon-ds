@@ -25,7 +25,7 @@ const LinkElement = <T extends React.ElementType = 'div'>({
     <Box
       {...props}
       as={as ?? 'div'}
-      className={`linkable !transition-[background-size,_color] ${props.className ?? ''}`}
+      className={`linkable !transition-[background-size,_color,_background-color] ${props.className ?? ''}`}
       onClick={e => {
         props.onClick?.(e);
         href && (href.replace ? replace(href.to) : push(href.to));

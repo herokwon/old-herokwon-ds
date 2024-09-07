@@ -41,6 +41,14 @@
   }
 }
 
+.button-success--no-spacing {
+  @apply hover:text-light-green dark:hover:text-dark-green;
+
+  &.linkable {
+    @apply from-light-green to-light-green dark:from-dark-green dark:to-dark-green;
+  }
+}
+
 .button-warning--no-spacing {
   @apply hover:text-light-yellow dark:hover:text-dark-yellow;
 
@@ -85,6 +93,18 @@
 
     &.selected {
       @apply bg-dark-blue dark:bg-light-blue;
+    }
+  }
+}
+
+.button-success {
+  @apply bg-light-green !text-dark dark:bg-dark-green;
+
+  &:not(:disabled):not(.removable) {
+    @apply bg-light-green hover:bg-dark-green dark:bg-dark-green dark:hover:bg-light-green;
+
+    &.selected {
+      @apply bg-dark-green dark:bg-light-green;
     }
   }
 }

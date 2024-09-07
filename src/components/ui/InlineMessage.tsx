@@ -2,7 +2,7 @@ import type { ElementBaseSize } from '../../types';
 
 import type { FeedbackVariant } from '../../types/ui';
 
-import { FEEDBACK_ICONS } from '../../data/constants';
+import FeedbackIcon from './FeedbackIcon';
 
 interface InlineMessageProps extends React.ComponentPropsWithoutRef<'div'> {
   heading?: string;
@@ -18,37 +18,19 @@ export default function InlineMessage({
   size = 'md',
   ...props
 }: InlineMessageProps) {
-  const FeedbackIcon = FEEDBACK_ICONS[variant];
-
   return (
     <div
       {...props}
       className={`inline-message--${variant} flex w-full bg-transparent ${props.className ?? ''}`}
     >
-      <span
-        className={`h-full w-max ${
-          size === 'lg'
-            ? 'my-1'
-            : size === 'sm'
-              ? 'my-[0.125rem]'
-              : 'my-[0.1875rem]'
-        } ${size === 'sm' ? 'mr-1.5' : 'mr-2'}`}
-      >
-        <FeedbackIcon
-          className={size === 'lg' ? 'h-base' : size === 'sm' ? 'h-xs' : 'h-sm'}
-        />
-      </span>
+      <FeedbackIcon variant={variant} size={size} className="my-1 mr-2" />
       <p
         className={`w-full ${
-          size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
-        } break-all`}
+          size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
+        } text-pretty break-all`}
       >
         {heading.length > 0 && (
-          <strong
-            className={`${size === 'sm' ? 'mr-1.5' : 'mr-2'} whitespace-nowrap`}
-          >
-            {heading}
-          </strong>
+          <strong className="mr-2 whitespace-nowrap">{heading}</strong>
         )}
         {typeof message === 'string' ? (
           <span className={heading.length > 0 ? 'opacity-normal' : ''}>
