@@ -20,7 +20,7 @@ export default function Banner({
       message={children}
       variant={variant}
       size={size}
-      className={`banner rounded-ms px-2 py-1 ${props.className ?? ''}`}
+      className={`banner rounded-ms px-2.5 py-1 ${props.className ?? ''}`}
     />
   );
 }
