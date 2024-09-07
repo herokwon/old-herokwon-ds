@@ -45,7 +45,7 @@ export default function IconButton({
   } = props;
 
   return (
-    <LoadableElement isActive={isLoading}>
+    <LoadableElement isActive={isLoading} variant="spinner">
       <LinkableElement
         {...restProps}
         as="button"

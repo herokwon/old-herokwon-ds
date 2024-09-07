@@ -57,8 +57,10 @@ export default function Tabs({
         ))}
       </ButtonGroup>
       <LoadableElement
-        as="div"
         isActive={tabItems[selectedIndex]?.isLoading || false}
+        variant="spinner"
+        as="div"
+        size={size}
         className={`${
           tabItems[selectedIndex]?.isDisabled ? 'disabled' : ''
         } w-full px-2 py-4`}

@@ -1,16 +1,17 @@
-import type { PolymorphicElementPropsWithoutRef } from '../types';
+import type {
+  ElementExtendedSize,
+  PolymorphicElementPropsWithoutRef,
+} from '../types';
 
 import Box from './Box';
 import Backdrop from './ui/Backdrop';
 import Dots from './ui/Dots';
 import Spinner from './ui/Spinner';
 
-type _LoadableElementProps = Pick<
-  React.ComponentPropsWithoutRef<typeof Spinner>,
-  'size'
-> & {
-  variant?: 'dots' | 'spinner';
+type _LoadableElementProps = {
   isActive: boolean;
+  variant: 'dots' | 'spinner';
+  size?: ElementExtendedSize;
 };
 
 type LoadableElementProps<T extends React.ElementType = 'div'> =
@@ -18,8 +19,8 @@ type LoadableElementProps<T extends React.ElementType = 'div'> =
 
 export default function LoadableElement<T extends React.ElementType = 'div'>({
   children,
-  variant = 'spinner',
   isActive,
+  variant = 'spinner',
   as,
   size = 'md',
   ...props
