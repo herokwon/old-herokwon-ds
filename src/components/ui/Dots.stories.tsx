@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ICON_SIZE } from '../../data/constants';
+import { ELEMENT_EXTENDED_SIZES } from '../../data/constants';
 
 import Dots from './Dots';
 
@@ -20,7 +20,7 @@ export const SelectOptions: Story = {
   argTypes: {
     size: {
       control: 'select',
-      options: [...Object.keys(ICON_SIZE)],
+      options: [...ELEMENT_EXTENDED_SIZES],
     },
   },
 };
