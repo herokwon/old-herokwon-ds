@@ -77,7 +77,11 @@ export default function Popup({
           isOpen ? 'open' : ''
         } to-${position} absolute z-10 w-max max-w-[80vw] p-2 transition-all will-change-transform`}
       >
-        <LoadableElement isActive={isLoading} className="last:*:rounded-ms">
+        <LoadableElement
+          isActive={isLoading}
+          variant="spinner"
+          className="last:*:rounded-ms"
+        >
           <div
             className={`flex flex-col gap-2 rounded-ms border border-light-tertiary bg-light-primary ${
               direction === 'vertical' ? 'y-scrollbar' : 'x-scrollbar'
