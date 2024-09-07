@@ -25,6 +25,7 @@ export const ELEMENT_BASE_VARIANTS = [
 ] as const;
 export const ELEMENT_EXTENDED_VARIANTS = [
   ...ELEMENT_BASE_VARIANTS,
+  'success',
   'warning',
   'danger',
 ] as const;
@@ -78,12 +79,12 @@ export const MONTHS: Months[] = new Proxy(
   },
 );
 
-export const ICON_SIZE: { [size in ElementExtendedSize]: number } = {
-  xs: 8,
-  sm: 12,
-  md: 16,
-  lg: 20,
-  xl: 24,
+export const ICON_SIZE: { [size in ElementExtendedSize]: string } = {
+  xs: '0.75rem',
+  sm: '0.875rem',
+  md: '1rem',
+  lg: '1.125rem',
+  xl: '1.25rem',
 };
 
 export const FEEDBACK_ICONS: { [variant in FeedbackVariant]: IconType } = {

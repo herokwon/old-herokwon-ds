@@ -28,6 +28,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const Link: Story = {
+  args: {
+    href: {
+      to: '/',
+    },
+  },
+};
+
 export const Primary: Story = {
   args: {
     variant: 'primary',

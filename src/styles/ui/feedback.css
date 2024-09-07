@@ -79,7 +79,7 @@
 }
 
 .section-message--default {
-  @apply border-light-tertiary bg-light-secondary dark:border-dark-tertiary dark:bg-dark-secondary;
+  @apply bg-light-secondary !shadow-light-tertiary dark:bg-dark-secondary dark:!shadow-dark-tertiary;
 
   & svg {
     @apply text-light dark:text-dark;
@@ -87,7 +87,7 @@
 }
 
 .section-message--success {
-  @apply border-light-green bg-feedback-light-green dark:border-dark-green dark:bg-feedback-dark-green;
+  @apply bg-feedback-light-green !shadow-light-green dark:bg-feedback-dark-green dark:!shadow-dark-green;
 
   & > :not(button) svg {
     @apply text-light-green dark:text-dark-green;
@@ -103,7 +103,7 @@
 }
 
 .section-message--info {
-  @apply border-light-blue bg-feedback-light-blue dark:border-dark-blue dark:bg-feedback-dark-blue;
+  @apply bg-feedback-light-blue !shadow-light-blue dark:bg-feedback-dark-blue dark:!shadow-dark-blue;
 
   & > :not(button) svg {
     @apply text-light-blue dark:text-dark-blue;
@@ -119,7 +119,7 @@
 }
 
 .section-message--warning {
-  @apply border-light-yellow bg-feedback-light-yellow dark:border-dark-yellow dark:bg-feedback-dark-yellow;
+  @apply bg-feedback-light-yellow !shadow-light-yellow dark:bg-feedback-dark-yellow dark:!shadow-dark-yellow;
 
   & > :not(button) svg {
     @apply text-light-yellow dark:text-dark-yellow;
@@ -135,7 +135,7 @@
 }
 
 .section-message--danger {
-  @apply border-light-red bg-feedback-light-red dark:border-dark-red dark:bg-feedback-dark-red;
+  @apply bg-feedback-light-red !shadow-light-red dark:bg-feedback-dark-red dark:!shadow-dark-red;
 
   & > :not(button) svg {
     @apply text-light-red dark:text-dark-red;

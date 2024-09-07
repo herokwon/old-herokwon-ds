@@ -54,7 +54,7 @@ export default function TextButton({
   );
 
   return (
-    <LoadableElement isActive={isLoading} size="sm">
+    <LoadableElement isActive={isLoading} variant="spinner" size={size}>
       <LinkableElement
         {...restProps}
         as="button"
@@ -66,25 +66,23 @@ export default function TextButton({
           preventDefault && e.preventDefault();
           restProps.onClick?.(e);
         }}
-        className={`button-${
+        className={`flex items-center justify-center whitespace-pre outline-none button-${
           spacing === 'none'
             ? `${variant}--no-spacing bg-underline-[1px]`
             : variant
-        } ${isSelected ? 'selected' : ''} ${
+        } ${isLoading || isDisabled ? '' : isSelected ? `selected ${spacing === 'none' ? 'active' : ''}` : ''} ${
           spacing === 'default'
             ? 'px-2.5 py-1'
             : spacing === 'compact'
               ? 'px-1.5 py-0.5'
-              : isSelected
-                ? 'p-0 active'
-                : 'p-0'
-        } flex items-center justify-center ${
+              : 'p-0'
+        } ${
           spacing === 'none'
             ? '!transition-[background-size,_color,_background-color]'
             : `${shape === 'circle' ? 'rounded-full' : 'rounded-ms'} transition-all`
         } ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
-        } whitespace-pre outline-none ${restProps.className ?? ''}`}
+        } ${restProps.className ?? ''}`}
       >
         {iconBefore?.icon && (
           <Icon

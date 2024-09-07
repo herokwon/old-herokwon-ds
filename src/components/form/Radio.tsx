@@ -10,6 +10,8 @@ import type { InputProps } from '../../types/form';
 
 import { useInput } from '../../hooks';
 
+import RadioIcon from '../ui/RadioIcon';
+
 interface RadioProps
   extends Pick<ElementStatus, 'isDisabled'>,
     Omit<ContentWithId, 'children'>,
@@ -60,19 +62,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
         className="peer"
         onChange={onChangeInput}
       />
-      <span
-        className={`w-max ${
-          size === 'lg' ? 'h-xl' : size === 'sm' ? 'h-xs' : 'h-base'
-        } my-0.5 mr-1.5 flex aspect-square items-center justify-center rounded-full border-[0.1rem] ${
-          isChecked
-            ? 'border-light-blue dark:border-dark-blue'
-            : `${
-                hasError
-                  ? 'border-light-red dark:border-dark-red'
-                  : 'group-hover:peer-not-disabled:border-light-blue dark:group-hover:peer-not-disabled:border-dark-blue'
-              } border-light-tertiary after:opacity-0 dark:border-dark-tertiary`
-        } relative transition-colors after:absolute after:left-1/2 after:top-1/2 after:aspect-square after:h-4/5 after:w-4/5 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-light-blue after:transition-opacity after:content-[""] after:dark:bg-dark-blue`}
-      />
+      <RadioIcon isChecked={isChecked} hasError={hasError} size={size} />
       {!description ? (
         <p
           className={`block w-full ${

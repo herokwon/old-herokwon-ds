@@ -3,11 +3,10 @@ import { FaChevronDown } from 'react-icons/fa6';
 
 import type { FeedbackAction } from '../../types/ui';
 
-import { FEEDBACK_ICONS } from '../../data/constants';
-
 import ButtonGroup from './ButtonGroup';
+import FeedbackIcon from './FeedbackIcon';
 import Heading from './Heading';
-import IconButton from './IconButton';
+import Icon from './Icon';
 import InlineMessage from './InlineMessage';
 import TextButton from './TextButton';
 
@@ -34,7 +33,6 @@ export default function SectionMessage({
   actions = [],
   ...props
 }: SectionMessageProps) {
-  const FeedbackIcon = FEEDBACK_ICONS[variant];
   const restProps = Object.fromEntries(
     Object.entries(props).filter(
       prop => prop[0] !== 'isHidable' && prop[0] !== 'defaultHidden',
@@ -47,53 +45,55 @@ export default function SectionMessage({
   return (
     <section
       {...restProps}
-      className={`section-message--${variant} flex w-full max-w-[300px] items-start rounded-ms px-4 py-3 group ${
+      className={`section-message--${variant} flex w-full items-start rounded-ms px-4 py-3 shadow-sm group ${
         !!props.isHidable ? 'cursor-pointer' : ''
       } ${restProps.className ?? ''}`}
       onClick={() => props.isHidable && setIsHidden(prev => !prev)}
     >
-      <span
-        className={`w-max ${
-          size === 'lg'
-            ? 'my-1'
-            : size === 'sm'
-              ? 'my-[0.125rem]'
-              : 'my-[0.1875rem]'
-        } mr-3`}
-      >
-        <FeedbackIcon
-          className={`${size === 'lg' ? 'w-xl' : size === 'sm' ? 'w-base' : 'w-lg'} !aspect-square h-max`}
-        />
-      </span>
-      <div
-        className={`my-auto w-full ${
-          size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm'
-        } ${isHidden ? 'line-clamp-1' : ''}`}
-      >
+      <FeedbackIcon
+        variant={variant}
+        size={size === 'lg' ? 'xl' : size === 'sm' ? 'md' : 'lg'}
+        className={`mr-3 ${size === 'md' ? 'my-[0.3125rem]' : 'my-1'}`}
+      />
+      <div className={`my-auto w-full ${isHidden ? 'line-clamp-1' : ''}`}>
         {heading.length > 0 && (
           <Heading
             as="h2"
-            className={`block w-full ${
+            className={
               size === 'lg'
-                ? 'text-lg'
+                ? 'text-xl'
                 : size === 'sm'
-                  ? 'text-sm'
-                  : 'text-base'
-            }`}
+                  ? 'text-base'
+                  : 'text-lg'
+            }
           >
             {heading}
           </Heading>
         )}
-        <span className={heading.length > 0 ? 'opacity-normal' : ''}>
+        <div
+          className={`${
+            size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
+          } ${heading.length > 0 ? 'opacity-normal' : ''}`}
+        >
           {children}
-        </span>
+        </div>
         {actions.length > 0 && (
-          <ButtonGroup className="ml-auto mr-0 mt-4">
+          <ButtonGroup focusMode={false} className="mt-4 justify-end">
             {actions.map(action => (
               <TextButton
                 {...action}
                 key={action.id}
-                size={size === 'lg' ? 'md' : 'sm'}
+                variant={
+                  variant !== 'default' &&
+                  variant !== 'info' &&
+                  action.variant === 'primary'
+                    ? variant
+                    : (action.variant ?? 'secondary')
+                }
+                size={size}
+                className={
+                  action.variant === 'secondary' ? 'hover:!bg-transparent' : ''
+                }
                 onClick={e => {
                   e.stopPropagation();
                   action.onClick && action.onClick(e);
@@ -104,16 +104,15 @@ export default function SectionMessage({
         )}
       </div>
       {props.isHidable && (
-        <IconButton
+        <Icon
           icon={FaChevronDown}
-          variant="secondary"
           size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
-          spacing="compact"
-          className={`ml-2 ${
+          spacing="none"
+          className={`ml-2 ${size === 'md' ? 'my-[0.4375rem]' : 'my-1.5'} ${
             isHidden
               ? 'opacity-off group-hover:opacity-normal'
               : 'rotate-180 opacity-normal'
-          } transition-all`}
+          } transition-all hover:!bg-transparent`}
         />
       )}
     </section>

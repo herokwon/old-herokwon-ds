@@ -59,11 +59,13 @@ export default function Modal({
             {heading && (
               <Heading
                 className={`${
-                  variant === 'warning'
-                    ? 'text-light-yellow dark:text-dark-yellow'
-                    : variant === 'danger'
-                      ? 'text-light-red dark:text-dark-red'
-                      : ''
+                  variant === 'success'
+                    ? 'text-light-green dark:text-dark-green'
+                    : variant === 'warning'
+                      ? 'text-light-yellow dark:text-dark-yellow'
+                      : variant === 'danger'
+                        ? 'text-light-red dark:text-dark-red'
+                        : ''
                 } flex items-center gap-2`}
               >
                 {variant !== 'default' && (

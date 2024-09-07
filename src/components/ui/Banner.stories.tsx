@@ -24,7 +24,7 @@ export const Default: Story = {
 
 export const InnerLink: StoryObj<typeof Banner> = {
   render: ({ ...props }) => (
-    <Banner {...props} variant="info">
+    <Banner {...props}>
       This is a default banner message with&nbsp;
       <Link href="/#">link</Link>
     </Banner>

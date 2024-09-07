@@ -15,6 +15,7 @@ const meta = {
     variant: 'default',
     size: 'sm',
     spacing: 'compact',
+    shape: 'square',
   },
 } satisfies Meta<typeof Tag>;
 export default meta;

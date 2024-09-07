@@ -12,6 +12,7 @@ const meta = {
     variant: 'default',
     size: 'md',
     actions: [],
+    className: 'min-w-[480px]',
   },
 } satisfies Meta<typeof SectionMessage>;
 export default meta;
@@ -41,7 +42,7 @@ export const Actions: Story = {
       isDisabled: false,
       id: crypto.randomUUID(),
       label: `action ${i + 1}`,
-      variant: i === 0 ? 'primary' : 'default',
+      variant: i === 0 ? 'primary' : 'secondary',
       onClick: fn(),
     })),
   },
