@@ -45,7 +45,7 @@ export default function IconButton({
   } = props;
 
   return (
-    <LoadableElement isActive={isLoading} size="sm">
+    <LoadableElement isActive={isLoading}>
       <LinkableElement
         {...restProps}
         as="button"
@@ -57,8 +57,14 @@ export default function IconButton({
           preventDefault && e.preventDefault();
           restProps.onClick?.(e);
         }}
-        className={`button-${variant} ${isSelected ? 'selected' : ''} ${
-          !isDisabled && isHoverable ? 'hoverable' : ''
+        className={`button-${variant} ${
+          isLoading || isDisabled
+            ? ''
+            : isSelected
+              ? 'selected'
+              : isHoverable
+                ? 'hoverable'
+                : ''
         } ${
           shape === 'square' ? 'rounded-ms' : 'rounded-full'
         } flex items-center justify-center outline-none transition-all ${restProps.className ?? ''}`}
