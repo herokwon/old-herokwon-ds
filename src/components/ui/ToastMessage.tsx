@@ -113,7 +113,7 @@ const ToastMessageContainer = ({
       <IconButton
         icon={FaXmark}
         variant="secondary"
-        size="sm"
+        size="xs"
         spacing="compact"
         className="ml-2"
         onClick={() => {
