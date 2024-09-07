@@ -13,7 +13,7 @@ const meta = {
     className: 'min-w-[480px]',
     tabItems: Array.from({ length: 3 }, (_, i) => ({
       isDisabled: i === 2,
-      isLoading: false,
+      isLoading: i === 1,
       heading: `Tab ${i + 1}`,
       content: (
         <div className="h-100 w-full">
@@ -33,5 +33,9 @@ export const Default: Story = {};
 export const SelectedIndex: Story = {
   args: {
     defaultSelectedIndex: 1,
+    tabItems: meta.args.tabItems.map((item, index) => ({
+      ...item,
+      isLoading: index === 0,
+    })),
   },
 };
