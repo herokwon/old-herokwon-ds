@@ -1,20 +1,20 @@
 import { CgSpinner } from 'react-icons/cg';
 
-import type { ElementExtendedSize } from '../../types';
+import Icon from './Icon';
 
-import { ICON_SIZE } from '../../data/constants';
-
-interface SpinnerProps
-  extends Omit<React.ComponentPropsWithoutRef<'svg'>, 'children'> {
-  size?: ElementExtendedSize | number;
-}
+type SpinnerProps = Omit<
+  React.ComponentPropsWithoutRef<typeof Icon>,
+  'children' | 'icon' | 'spacing'
+>;
 
 export default function Spinner({ size = 'md', ...props }: SpinnerProps) {
   return (
-    <CgSpinner
+    <Icon
       {...props}
-      size={typeof size === 'number' ? size : ICON_SIZE[size] * 2.5}
-      className={`animate-spin text-light-blue dark:text-dark-blue ${props.className ?? ''}`}
+      icon={CgSpinner}
+      size={size}
+      spacing="none"
+      className={`scale-[2] only:*:animate-spin only:*:text-light-blue dark:only:*:text-dark-blue ${props.className ?? ''}`}
     />
   );
 }
