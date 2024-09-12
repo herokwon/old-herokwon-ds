@@ -72,7 +72,7 @@ export default function CodeBlock({
             } px-1 py-1`}
           >
             {label.length > 0 && (
-              <p className="p-0.5 text-sm font-semibold opacity-normal">
+              <p className="mb-1 p-0.5 text-sm font-semibold leading-none opacity-normal">
                 {label}
               </p>
             )}

@@ -45,7 +45,7 @@ export default function SectionMessage({
   return (
     <section
       {...restProps}
-      className={`section-message--${variant} flex w-full items-start rounded-ms px-4 py-3 shadow-sm group ${
+      className={`section-message--${variant} flex w-full items-start gap-x-3 rounded-ms px-[1.125rem] py-3 shadow-sm group ${
         !!props.isHidable ? 'cursor-pointer' : ''
       } ${restProps.className ?? ''}`}
       onClick={() => props.isHidable && setIsHidden(prev => !prev)}
@@ -53,7 +53,7 @@ export default function SectionMessage({
       <FeedbackIcon
         variant={variant}
         size={size === 'lg' ? 'xl' : size === 'sm' ? 'md' : 'lg'}
-        className={`mr-3 ${size === 'md' ? 'my-[0.3125rem]' : 'my-1'}`}
+        className={size === 'md' ? 'my-[0.3125rem]' : 'my-1'}
       />
       <div className={`my-auto w-full ${isHidden ? 'line-clamp-1' : ''}`}>
         {heading.length > 0 && (
@@ -96,7 +96,7 @@ export default function SectionMessage({
                 }
                 onClick={e => {
                   e.stopPropagation();
-                  action.onClick && action.onClick(e);
+                  action.onClick?.(e);
                 }}
               />
             ))}
@@ -108,11 +108,11 @@ export default function SectionMessage({
           icon={FaChevronDown}
           size={size === 'lg' ? 'md' : size === 'sm' ? 'xs' : 'sm'}
           spacing="none"
-          className={`ml-2 ${size === 'md' ? 'my-[0.4375rem]' : 'my-1.5'} ${
+          className={`ml-6 transition-all hover:!bg-transparent ${size === 'md' ? 'my-[0.4375rem]' : 'my-1.5'} ${
             isHidden
               ? 'opacity-off group-hover:opacity-normal'
               : 'rotate-180 opacity-normal'
-          } transition-all hover:!bg-transparent`}
+          }`}
         />
       )}
     </section>

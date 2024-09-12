@@ -118,7 +118,6 @@ export default plugin(function ({
       width: '100%',
       cursor: 'pointer',
       appearance: 'none',
-      'border-width': '1px',
       'border-radius': '9999px',
       outline: '2px solid transparent',
       'outline-offset': '2px',
