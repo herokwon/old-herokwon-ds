@@ -21,9 +21,9 @@ export default function InlineMessage({
   return (
     <div
       {...props}
-      className={`inline-message--${variant} flex w-full bg-transparent ${props.className ?? ''}`}
+      className={`inline-message--${variant} flex w-full gap-x-2 bg-transparent ${props.className ?? ''}`}
     >
-      <FeedbackIcon variant={variant} size={size} className="my-1 mr-2" />
+      <FeedbackIcon variant={variant} size={size} className="my-1" />
       <p
         className={`w-full ${
           size === 'lg' ? 'text-lg' : size === 'sm' ? 'text-sm' : 'text-base'
