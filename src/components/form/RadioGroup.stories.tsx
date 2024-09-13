@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import type { InputContent } from '../../types/form';
 
@@ -37,7 +37,10 @@ export const Default: Story = {
             id={id}
             {...dummyItem}
             isChecked={id === selectedId}
-            onChange={checked => checked && setSelectedId(id)}
+            onChange={useCallback(
+              (checked: boolean) => checked && setSelectedId(id),
+              [id],
+            )}
           />
         ))}
       </RadioGroup>

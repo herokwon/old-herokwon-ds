@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { ElementStatus } from '../../types';
 
@@ -24,8 +24,8 @@ export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
 const dummyItems: FloatingItem[] = Array.from({ length: 3 }, (_, i) => ({
-  children: `Dropdown Item ${i + 1}`,
   id: crypto.randomUUID(),
+  content: `Dropdown Item ${i + 1}`,
   description:
     i === 2 ? `This is a description for Dropdown Item ${i + 1}` : undefined,
 }));
@@ -36,8 +36,8 @@ const dummyGroupItems: FloatingItemGroup[] = Array.from(
     id: crypto.randomUUID(),
     heading: `Group ${i + 1}`,
     items: Array.from({ length: 3 }, (_, j) => ({
-      children: `Dropdown Item ${j + 1}`,
       id: crypto.randomUUID(),
+      content: `Dropdown Item ${j + 1}`,
       description:
         i === 2
           ? `This is a description for Dropdown Item ${j + 1}`
@@ -90,9 +90,7 @@ export const Disabled: Story = {
 export const TextItem: Story = {
   render: ({ children, isLoading, ...props }) => {
     const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
-    const [selectedItem, setSelectedItem] = useState<string[]>([
-      dummyItems[0].id,
-    ]);
+    const [selectedId, setSelectedId] = useState<string>(dummyItems[0].id);
 
     useEffect(() => {
       setIsOpen(props.isOpen);
@@ -100,7 +98,7 @@ export const TextItem: Story = {
 
     useEffect(() => {
       setIsOpen(false);
-    }, [selectedItem]);
+    }, [selectedId]);
 
     return (
       <Dropdown
@@ -116,15 +114,15 @@ export const TextItem: Story = {
         }
       >
         <Dropdown.TextGroup>
-          {dummyItems.map(({ children, id, description }) => (
+          {dummyItems.map(({ content, id, description }) => (
             <Dropdown.Text
               key={id}
-              isSelected={selectedItem.includes(id)}
+              isSelected={id === selectedId}
               id={id}
               description={description}
-              onClick={() => setSelectedItem([id])}
+              onClick={useCallback(() => setSelectedId(id), [id])}
             >
-              {children}
+              {content}
             </Dropdown.Text>
           ))}
         </Dropdown.TextGroup>
@@ -158,21 +156,23 @@ export const MultiTextItem: Story = {
         }
       >
         <Dropdown.TextGroup>
-          {dummyItems.map(({ children, id, description }) => (
+          {dummyItems.map(({ id, content, description }) => (
             <Dropdown.Text
               key={id}
-              isSelected={selectedItem.includes(id)}
               id={id}
               description={description}
-              onClick={() =>
-                setSelectedItem(prev =>
-                  prev.includes(id)
-                    ? prev.filter(value => value !== id)
-                    : [...prev, id],
-                )
-              }
+              isSelected={selectedItem.includes(id)}
+              onClick={useCallback(
+                () =>
+                  setSelectedItem(prev =>
+                    prev.includes(id)
+                      ? prev.filter(value => value !== id)
+                      : [...prev, id],
+                  ),
+                [id],
+              )}
             >
-              {children}
+              {content}
             </Dropdown.Text>
           ))}
         </Dropdown.TextGroup>
@@ -184,9 +184,7 @@ export const MultiTextItem: Story = {
 export const RadioItem: Story = {
   render: ({ children, isLoading, ...props }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [selectedItem, setSelectedItem] = useState<string[]>([
-      dummyItems[0].id,
-    ]);
+    const [selectedId, setSelectedId] = useState<string>(dummyItems[0].id);
 
     useEffect(() => {
       setIsOpen(props.isOpen);
@@ -194,7 +192,7 @@ export const RadioItem: Story = {
 
     useEffect(() => {
       setIsOpen(false);
-    }, [selectedItem]);
+    }, [selectedId]);
 
     return (
       <Dropdown
@@ -210,15 +208,15 @@ export const RadioItem: Story = {
         }
       >
         <Dropdown.RadioGroup>
-          {dummyItems.map(({ children, id, description }) => (
+          {dummyItems.map(({ id, content, description }) => (
             <Dropdown.Radio
               key={id}
-              isSelected={selectedItem.includes(id)}
               id={id}
               description={description}
-              onChange={() => setSelectedItem([id])}
+              isSelected={id === selectedId}
+              onChange={useCallback(() => setSelectedId(id), [id])}
             >
-              {children}
+              {content}
             </Dropdown.Radio>
           ))}
         </Dropdown.RadioGroup>
@@ -262,21 +260,23 @@ export const CheckboxItem: Story = {
             setSelectedItem(checked ? dummyItems.map(({ id }) => id) : [])
           }
         >
-          {dummyItems.map(({ children, id, description }) => (
+          {dummyItems.map(({ id, content, description }) => (
             <Dropdown.Checkbox
               key={id}
-              isSelected={selectedItem.includes(id)}
               id={id}
               description={description}
-              onChange={() =>
-                setSelectedItem(prev =>
-                  prev.includes(id)
-                    ? prev.filter(value => value !== id)
-                    : [...prev, id],
-                )
-              }
+              isSelected={selectedItem.includes(id)}
+              onChange={useCallback(
+                () =>
+                  setSelectedItem(prev =>
+                    prev.includes(id)
+                      ? prev.filter(value => value !== id)
+                      : [...prev, id],
+                  ),
+                [id],
+              )}
             >
-              {children}
+              {content}
             </Dropdown.Checkbox>
           ))}
         </Dropdown.CheckboxGroup>
@@ -318,19 +318,21 @@ export const MixedItem: Story = {
           id={dummyGroupItems[0].id}
           heading={dummyGroupItems[0].heading}
         >
-          {dummyGroupItems[0].items.map(({ children, id, description }) => (
+          {dummyGroupItems[0].items.map(({ id, content, description }) => (
             <Dropdown.Text
               key={id}
-              isSelected={selectedItem.get(dummyGroupItems[0].id)?.includes(id)}
               id={id}
               description={description}
-              onClick={() =>
-                setSelectedItem(
-                  prev => new Map(prev.set(dummyGroupItems[0].id, [id])),
-                )
-              }
+              isSelected={selectedItem.get(dummyGroupItems[0].id)?.includes(id)}
+              onClick={useCallback(
+                () =>
+                  setSelectedItem(
+                    prev => new Map(prev.set(dummyGroupItems[0].id, [id])),
+                  ),
+                [id],
+              )}
             >
-              {children}
+              {content}
             </Dropdown.Text>
           ))}
         </Dropdown.TextGroup>
@@ -338,33 +340,35 @@ export const MixedItem: Story = {
           id={dummyGroupItems[1].id}
           heading={dummyGroupItems[1].heading}
         >
-          {dummyGroupItems[1].items.map(({ children, id, description }) => (
+          {dummyGroupItems[1].items.map(({ id, content, description }) => (
             <Dropdown.Text
               key={id}
-              isSelected={selectedItem.get(dummyGroupItems[1].id)?.includes(id)}
               id={id}
               description={description}
-              onClick={() =>
-                setSelectedItem(
-                  prev =>
-                    new Map(
-                      prev.set(
-                        dummyGroupItems[1].id,
-                        selectedItem.get(dummyGroupItems[1].id)?.includes(id)
-                          ? (selectedItem
-                              .get(dummyGroupItems[1].id)
-                              ?.filter(value => value !== id) ?? [])
-                          : [
-                              ...(selectedItem.get(dummyGroupItems[1].id) ??
-                                []),
-                              id,
-                            ],
+              isSelected={selectedItem.get(dummyGroupItems[1].id)?.includes(id)}
+              onClick={useCallback(
+                () =>
+                  setSelectedItem(
+                    prev =>
+                      new Map(
+                        prev.set(
+                          dummyGroupItems[1].id,
+                          selectedItem.get(dummyGroupItems[1].id)?.includes(id)
+                            ? (selectedItem
+                                .get(dummyGroupItems[1].id)
+                                ?.filter(value => value !== id) ?? [])
+                            : [
+                                ...(selectedItem.get(dummyGroupItems[1].id) ??
+                                  []),
+                                id,
+                              ],
+                        ),
                       ),
-                    ),
-                )
-              }
+                  ),
+                [id],
+              )}
             >
-              {children}
+              {content}
             </Dropdown.Text>
           ))}
         </Dropdown.TextGroup>
@@ -372,19 +376,21 @@ export const MixedItem: Story = {
           id={dummyGroupItems[2].id}
           heading={dummyGroupItems[2].heading}
         >
-          {dummyGroupItems[2].items.map(({ children, id, description }) => (
+          {dummyGroupItems[2].items.map(({ id, content, description }) => (
             <Dropdown.Radio
               key={id}
-              isSelected={selectedItem.get(dummyGroupItems[2].id)?.includes(id)}
               id={id}
               description={description}
-              onChange={() =>
-                setSelectedItem(
-                  prev => new Map(prev.set(dummyGroupItems[2].id, [id])),
-                )
-              }
+              isSelected={selectedItem.get(dummyGroupItems[2].id)?.includes(id)}
+              onChange={useCallback(
+                () =>
+                  setSelectedItem(
+                    prev => new Map(prev.set(dummyGroupItems[2].id, [id])),
+                  ),
+                [id],
+              )}
             >
-              {children}
+              {content}
             </Dropdown.Radio>
           ))}
         </Dropdown.RadioGroup>
@@ -407,29 +413,31 @@ export const MixedItem: Story = {
             )
           }
         >
-          {dummyGroupItems[3].items.map(({ children, id, description }) => (
+          {dummyGroupItems[3].items.map(({ id, content, description }) => (
             <Dropdown.Checkbox
               key={id}
-              isSelected={selectedItem.get(dummyGroupItems[3].id)?.includes(id)}
               id={id}
               description={description}
-              onChange={checked =>
-                setSelectedItem(
-                  prev =>
-                    new Map(
-                      prev.set(
-                        dummyGroupItems[3].id,
-                        checked
-                          ? [...(prev.get(dummyGroupItems[3].id) ?? []), id]
-                          : (prev
-                              .get(dummyGroupItems[3].id)
-                              ?.filter(value => value !== id) ?? []),
+              isSelected={selectedItem.get(dummyGroupItems[3].id)?.includes(id)}
+              onChange={useCallback(
+                (checked: boolean) =>
+                  setSelectedItem(
+                    prev =>
+                      new Map(
+                        prev.set(
+                          dummyGroupItems[3].id,
+                          checked
+                            ? [...(prev.get(dummyGroupItems[3].id) ?? []), id]
+                            : (prev
+                                .get(dummyGroupItems[3].id)
+                                ?.filter(value => value !== id) ?? []),
+                        ),
                       ),
-                    ),
-                )
-              }
+                  ),
+                [id],
+              )}
             >
-              {children}
+              {content}
             </Dropdown.Checkbox>
           ))}
         </Dropdown.CheckboxGroup>
