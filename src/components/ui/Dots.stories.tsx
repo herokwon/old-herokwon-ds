@@ -10,6 +10,7 @@ const meta = {
   component: Dots,
   args: {
     size: 'md',
+    length: 3,
   },
 } satisfies Meta<typeof Dots>;
 export default meta;

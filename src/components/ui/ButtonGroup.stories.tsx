@@ -11,6 +11,7 @@ const meta = {
   component: ButtonGroup,
   args: {
     direction: 'horizontal',
+    focusMode: true,
   },
 } satisfies Meta<typeof ButtonGroup>;
 export default meta;

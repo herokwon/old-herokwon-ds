@@ -10,10 +10,11 @@ const meta = {
   args: {
     isDisabled: false,
     isShowingLabel: false,
-    labelDirection: 'left',
     min: 0,
     max: 100,
     step: 1,
+    defaultValue: 0,
+    labelDirection: 'left',
     onChangeValue: fn(),
   },
 } satisfies Meta<typeof Range>;
