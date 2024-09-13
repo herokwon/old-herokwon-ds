@@ -9,6 +9,7 @@ const meta = {
   component: PageIndicator,
   args: {
     totalPage: 3,
+    defaultSelectedIndex: 0,
     size: 'md',
     shape: 'circle',
     onChangeSelectedIndex: fn(),

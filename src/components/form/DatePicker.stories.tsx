@@ -8,6 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: DatePicker,
   args: {
+    position: 'bottom-center',
     defaultPickedDateItem: {
       year: new Date().getFullYear(),
       month: 1,

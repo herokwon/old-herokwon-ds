@@ -7,6 +7,7 @@ const meta = {
   tags: ['autodocs'],
   component: Textarea,
   args: {
+    isDisabled: false,
     className: 'min-w-[345px]',
   },
 } satisfies Meta<typeof Textarea>;

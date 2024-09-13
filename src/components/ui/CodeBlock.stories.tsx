@@ -15,6 +15,9 @@ const meta = {
     isDuplicable: true,
     isHidable: false,
     showLineNumbers: true,
+    firstLineNumber: 1,
+    hidableFirstNumber: 11,
+    highlights: [],
     language: 'tsx',
     className: 'max-w-[600px]',
     code: `import CodeBlock from "./CodeBlock";
