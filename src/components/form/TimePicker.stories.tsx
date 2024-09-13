@@ -10,6 +10,7 @@ const meta = {
   args: {
     isDisabled: false,
     isLoading: false,
+    position: 'bottom-center',
     defaultPickedTimeItem: {
       hour: 8,
       minute: 25,

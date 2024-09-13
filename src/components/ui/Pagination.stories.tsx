@@ -10,6 +10,7 @@ const meta = {
   args: {
     totalPage: 100,
     pagePerIndex: 5,
+    defaultSelectedPageNumber: 1,
     size: 'md',
     shape: 'square',
     onChangeSelectedPage: fn(),

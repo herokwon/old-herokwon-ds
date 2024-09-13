@@ -8,6 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: DatetimeField,
   args: {
+    isDisabled: false,
     size: 'md',
     type: 'date',
     className: 'min-w-[240px]',

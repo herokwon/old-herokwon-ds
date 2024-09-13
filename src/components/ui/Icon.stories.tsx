@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FaCheck } from 'react-icons/fa6';
 
+import { ELEMENT_EXTENDED_SIZES } from '../../data/constants';
+
 import Icon from './Icon';
 
 const meta = {
@@ -8,6 +10,7 @@ const meta = {
   tags: ['autodocs'],
   component: Icon,
   args: {
+    icon: FaCheck,
     size: 'md',
     spacing: 'default',
     className:
@@ -18,8 +21,19 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    icon: FaCheck,
+export const SelectOptions: Story = {
+  argTypes: {
+    size: {
+      control: 'select',
+      options: [...ELEMENT_EXTENDED_SIZES],
+    },
+  },
+};
+
+export const InputNumberOptions: Story = {
+  argTypes: {
+    size: {
+      control: 'number',
+    },
   },
 };

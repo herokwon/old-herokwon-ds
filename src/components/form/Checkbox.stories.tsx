@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Checkbox from './Checkbox';
 
@@ -35,7 +35,7 @@ export const Default: StoryObj<typeof Checkbox> = {
       <Checkbox
         {...props}
         isChecked={isChecked}
-        onChange={checked => setIsChecked(checked)}
+        onChange={useCallback((checked: boolean) => setIsChecked(checked), [])}
       />
     );
   },

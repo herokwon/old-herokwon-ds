@@ -11,6 +11,7 @@ const meta = {
     children: Array.from({ length: 7 }, (_, i) => (
       <Tag key={i} label={`Tag ${i + 1}`} isRemovable />
     )),
+    focusMode: true,
     alignment: 'left',
     className: 'w-[600px] border p-2',
   },
