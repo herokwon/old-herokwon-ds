@@ -94,7 +94,7 @@
   }
 
   & > button {
-    @apply text-light-green hover:!bg-light-green hover:!text-white dark:text-dark-green dark:hover:!bg-dark-green;
+    @apply text-light-green hover:text-dark-green dark:text-dark-green dark:hover:text-light-green;
   }
 
   & .progress-bar {
@@ -106,11 +106,11 @@
   @apply bg-feedback-light-blue !shadow-light-blue dark:bg-feedback-dark-blue dark:!shadow-dark-blue;
 
   & > :not(button) svg {
-    @apply text-light-blue dark:text-dark-blue;
+    @apply text-light-blue hover:text-dark-blue dark:text-dark-blue dark:hover:text-light-blue;
   }
 
   & > button {
-    @apply text-light-blue hover:!bg-light-blue hover:!text-white dark:text-dark-blue dark:hover:!bg-dark-blue;
+    @apply text-light-blue dark:text-dark-blue;
   }
 
   & .progress-bar {
@@ -126,7 +126,7 @@
   }
 
   & > button {
-    @apply text-light-yellow hover:!bg-light-yellow hover:!text-light dark:text-dark-yellow dark:hover:!bg-dark-yellow;
+    @apply text-light-yellow hover:text-dark-yellow dark:text-dark-yellow dark:hover:text-light-yellow;
   }
 
   & .progress-bar {
@@ -142,7 +142,7 @@
   }
 
   & > button {
-    @apply text-light-red hover:!bg-light-red hover:!text-white dark:text-dark-red dark:hover:!bg-dark-red;
+    @apply text-light-red hover:text-dark-red dark:text-dark-red dark:hover:text-light-red;
   }
 
   & .progress-bar {
