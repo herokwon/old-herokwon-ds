@@ -57,7 +57,7 @@ export default function Calendar({
   onChangePickedDateItem,
   ...props
 }: CalendarProps) {
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
   const [viewedDate, setViewedDate] = useState<ViewedDate>({
     year: defaultViewedDate?.year ?? today.getFullYear(),
     month:
@@ -101,6 +101,10 @@ export default function Calendar({
             },
       ),
   };
+
+  useEffect(() => {
+    defaultPickedDateItem && setPickedDateItem(defaultPickedDateItem);
+  }, [defaultPickedDateItem]);
 
   useEffect(() => {
     onChangePickedDateItem?.(pickedDateItem);
