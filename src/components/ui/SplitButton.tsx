@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 
 import type {
+  Children,
   ElementBaseVariant,
   ElementEventHandler,
   ElementSpacing,
@@ -15,9 +16,14 @@ import Dropdown from './Dropdown';
 import IconButton from './IconButton';
 import TextButton from './TextButton';
 
-type SplitButtonItem = FloatingItem<
-  Pick<ElementStatus, 'isDisabled'> &
-    ElementEventHandler<HTMLElement, 'onClick'>
+type SplitButtonItem = Omit<
+  FloatingItem<
+    Pick<ElementStatus, 'isDisabled'> &
+      ElementEventHandler<HTMLElement, 'onClick'> & {
+        label: Children;
+      }
+  >,
+  'content'
 >;
 
 interface SplitButtonProps
@@ -64,7 +70,7 @@ export default function SplitButton({
             {...restProps}
             isDisabled={isDisabled}
             isSelected={isOpen}
-            label={selectedItem?.children ?? defaultLabel}
+            label={selectedItem?.label ?? defaultLabel}
             variant={variant}
             size={size}
             spacing={spacing}
@@ -98,14 +104,7 @@ export default function SplitButton({
     >
       <Dropdown.TextGroup>
         {items.map(
-          ({
-            children,
-            isDisabled,
-            id,
-            description,
-            elemBefore,
-            elemAfter,
-          }) => (
+          ({ isDisabled, id, label, description, elemBefore, elemAfter }) => (
             <Dropdown.Text
               key={id}
               isDisabled={isDisabled}
@@ -116,7 +115,7 @@ export default function SplitButton({
               elemAfter={elemAfter}
               onClick={() => setSelectedId(id)}
             >
-              {children}
+              {label}
             </Dropdown.Text>
           ),
         )}

@@ -1,16 +1,14 @@
 import { useState } from 'react';
 
-import type { Children } from '../../types';
+import type { ContentWithId } from '../../types';
 
 import Popup from './Popup';
 
-interface TooltipProps
-  extends Omit<
+type TooltipProps = Pick<ContentWithId, 'content'> &
+  Omit<
     React.ComponentPropsWithoutRef<typeof Popup>,
     'isOpen' | 'isLoading' | 'direction' | 'trigger' | 'onClose' | 'content'
-  > {
-  content: Children;
-}
+  >;
 
 export default function Tooltip({
   children,

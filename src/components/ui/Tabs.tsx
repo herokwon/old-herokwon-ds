@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 
-import type { ElementBaseSize, ElementStatus } from '../../types';
+import type {
+  ContentWithId,
+  ElementBaseSize,
+  ElementStatus,
+} from '../../types';
 
 import LoadableElement from '../LoadableElement';
 import ButtonGroup from './ButtonGroup';
 import TextButton from './TextButton';
 
-interface TabItem extends Omit<ElementStatus, 'isSelected'> {
+interface TabItem
+  extends Omit<ElementStatus, 'isSelected'>,
+    Partial<Pick<ContentWithId, 'content'>> {
   heading: string;
-  content?: React.ReactNode;
 }
 
 interface TabsProps extends React.ComponentPropsWithoutRef<'div'> {
