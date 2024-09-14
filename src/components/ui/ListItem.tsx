@@ -10,23 +10,45 @@ import Box from '../Box';
 import Checkbox from '../form/Checkbox';
 import Radio from '../form/Radio';
 
-type ListItemProps = PropsWithChildren<
-  Omit<
-    Omit<ElementStatus, 'isLoading'> &
-      Omit<FloatingItem, 'id' | 'content'> &
-      React.ComponentPropsWithoutRef<'li'>,
-    'children'
-  >
+type ListItemVariant = 'ordered' | 'unordered';
+
+type ListItemProps<T extends ListItemVariant> = React.ComponentPropsWithoutRef<
+  T extends 'ordered' ? 'ol' : 'ul'
+> & {
+  variant: T;
+};
+
+type ListItemWrapperProps = PropsWithChildren<
+  Omit<ElementStatus, 'isLoading'> &
+    Omit<FloatingItem, 'id' | 'content'> &
+    Omit<React.ComponentPropsWithoutRef<'li'>, 'children'>
 >;
 
-interface ListItemTextProps extends ListItemProps {
+export interface ListItemTextProps extends ListItemWrapperProps {
   id: string;
   size?: ElementBaseSize;
 }
 
-interface ListItemInputProps extends Omit<ListItemTextProps, 'onChange'> {
+export interface ListItemInputProps
+  extends Omit<ListItemTextProps, 'onChange'> {
   onChange?: (checked: boolean) => void;
 }
+
+const ListItem = <T extends ListItemVariant>({
+  children,
+  variant,
+  ...props
+}: ListItemProps<T>) => {
+  return (
+    <Box
+      {...props}
+      as={variant === 'ordered' ? 'ol' : 'ul'}
+      className={`w-full ${props.className ?? ''}`}
+    >
+      {children}
+    </Box>
+  );
+};
 
 const ListItemWrapper = ({
   children,
@@ -34,7 +56,7 @@ const ListItemWrapper = ({
   elemBefore,
   elemAfter,
   ...props
-}: ListItemProps) => {
+}: ListItemWrapperProps) => {
   const { isDisabled = false, isSelected = false, ...restProps } = props;
 
   return (
@@ -56,28 +78,6 @@ const ListItemWrapper = ({
       {children}
       {elemAfter}
     </li>
-  );
-};
-
-const ListItemOrderedGroup = ({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'ol'>) => {
-  return (
-    <ol {...props} className={`w-full ${props.className ?? ''}`}>
-      {children}
-    </ol>
-  );
-};
-
-const ListItemUnorderedGroup = ({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'ul'>) => {
-  return (
-    <ul {...props} className={`w-full ${props.className ?? ''}`}>
-      {children}
-    </ul>
   );
 };
 
@@ -200,12 +200,8 @@ const ListItemCheckbox = ({
   );
 };
 
-const ListItem = {
-  OrderedGroup: ListItemOrderedGroup,
-  UnorderedGroup: ListItemUnorderedGroup,
-  Text: ListItemText,
-  Radio: ListItemRadio,
-  Checkbox: ListItemCheckbox,
-};
+ListItem.Text = ListItemText;
+ListItem.Radio = ListItemRadio;
+ListItem.Checkbox = ListItemCheckbox;
 
 export default ListItem;
