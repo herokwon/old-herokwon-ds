@@ -4,7 +4,7 @@ import EmptyDataImg from '../../assets/empty_data.png';
 
 type EmptyDataProps = Pick<
   React.ComponentPropsWithoutRef<typeof Image>,
-  'width' | 'height' | 'fill' | 'sizes' | 'loading' | 'unoptimized' | 'onLoad'
+  'width' | 'height' | 'fill' | 'sizes' | 'unoptimized' | 'onLoad'
 > &
   Omit<React.ComponentPropsWithoutRef<'div'>, 'onLoad'> & {
     emptyMessage?: string;
@@ -15,7 +15,6 @@ export default function EmptyData({
   height,
   fill = false,
   sizes,
-  loading,
   unoptimized = false,
   onLoad,
   emptyMessage = '',
@@ -31,9 +30,8 @@ export default function EmptyData({
         priority
         fill={fill}
         sizes={fill ? sizes : undefined}
-        width={fill ? undefined : width ?? 100}
-        height={fill ? undefined : height ?? 100}
-        loading={loading}
+        width={fill ? undefined : (width ?? 100)}
+        height={fill ? undefined : (height ?? 100)}
         unoptimized={unoptimized}
         onLoad={onLoad}
         className="object-cover object-center opacity-bold dark:opacity-normal"
