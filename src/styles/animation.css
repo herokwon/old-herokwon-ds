@@ -48,7 +48,7 @@
   }
 }
 
-@keyframes show-up-left {
+@keyframes fade-in-left {
   from {
     transform: translateX(-200%);
     pointer-events: none;
@@ -61,7 +61,7 @@
   }
 }
 
-@keyframes show-up-right {
+@keyframes fade-in-right {
   from {
     transform: translateX(200%);
     pointer-events: none;
@@ -74,7 +74,7 @@
   }
 }
 
-@keyframes show-up-top {
+@keyframes fade-in-top {
   from {
     transform: translateY(-200%);
     pointer-events: none;
@@ -87,7 +87,7 @@
   }
 }
 
-@keyframes show-up-bottom {
+@keyframes fade-in-bottom {
   from {
     transform: translateY(200%);
     pointer-events: none;
@@ -97,5 +97,57 @@
     transform: translateX(0);
     pointer-events: auto;
     opacity: 1;
+  }
+}
+
+@keyframes fade-out-left {
+  from {
+    transform: translateX(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-200%);
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out-right {
+  from {
+    transform: translateX(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+  to {
+    transform: translateX(200%);
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out-top {
+  from {
+    transform: translateY(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-200%);
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out-bottom {
+  from {
+    transform: translateX(0);
+    pointer-events: auto;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(200%);
+    pointer-events: none;
+    opacity: 0;
   }
 }

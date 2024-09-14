@@ -14,13 +14,13 @@ import InputHeader from './InputHeader';
 import InputMessage from './InputMessage';
 import InputWrapper from './InputWrapper';
 
-interface TextFieldProps
-  extends React.PropsWithChildren<
-    Pick<ElementStatus, 'isDisabled'> & Omit<InputProps<TextInput>, 'size'>
-  > {
-  size?: ElementBaseSize;
-  fieldIcon?: IconType;
-}
+type TextFieldProps = React.PropsWithChildren<
+  Pick<ElementStatus, 'isDisabled'> &
+    Omit<InputProps<TextInput>, 'size'> & {
+      size?: ElementBaseSize;
+      fieldIcon?: IconType;
+    }
+>;
 
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   function TextField(
@@ -88,10 +88,10 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             ref={ref}
             type={type !== 'password' ? type : isHidden ? 'password' : 'text'}
             disabled={isDisabled}
+            className={`w-full outline-none placeholder:opacity-normal ${restProps.className ?? ''}`}
             onFocus={onFocusInput}
             onBlur={onBlurInput}
             onChange={onChangeInput}
-            className={`w-full outline-none placeholder:opacity-normal ${restProps.className ?? ''}`}
           />
           {type === 'password' ? (
             <IconButton

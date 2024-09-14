@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { IconType } from 'react-icons';
 
 import type { ElementExtendedSize, ElementStatus } from '../../types';
@@ -8,12 +9,12 @@ import Icon from './Icon';
 
 interface ToggleProps
   extends Pick<ElementStatus, 'isDisabled'>,
-    Omit<ButtonProps, 'size' | 'spacing'> {
+    Omit<ButtonProps, 'size' | 'spacing' | 'onChange'> {
   size?: ElementExtendedSize;
-  isActive: boolean;
-  setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  defaultActive?: boolean;
   activeIcon?: IconType;
   inactiveIcon?: IconType;
+  onChange?: (state: boolean) => void;
 }
 
 const TOGGLE_SIZES: { [size in ElementExtendedSize]: number } = {
@@ -26,20 +27,27 @@ const TOGGLE_SIZES: { [size in ElementExtendedSize]: number } = {
 
 export default function Toggle({
   size = 'md',
-  isActive,
-  setIsActive,
   activeIcon,
   inactiveIcon,
+  onChange,
   ...props
 }: ToggleProps) {
   const {
     isDisabled = false,
+    defaultActive = false,
     stopPropagation = false,
     preventDefault = false,
     ...restProps
   } = props;
-  const InactiveIcon = inactiveIcon ?? null;
-  const ActiveIcon = activeIcon ?? null;
+  const [isActive, setIsActive] = useState<boolean>(defaultActive);
+
+  useEffect(() => {
+    setIsActive(defaultActive);
+  }, [defaultActive]);
+
+  useEffect(() => {
+    onChange?.(isActive);
+  }, [isActive, onChange]);
 
   return (
     <button

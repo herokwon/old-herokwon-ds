@@ -15,7 +15,7 @@ import InputMessage from './InputMessage';
 
 interface CheckboxProps
   extends Pick<ElementStatus, 'isDisabled'>,
-    Omit<ContentWithId, 'children'>,
+    Omit<ContentWithId, 'content'>,
     Required<Pick<InputProps, 'label'>>,
     Omit<
       InputProps,
