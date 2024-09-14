@@ -19,8 +19,8 @@ const meta = {
     defaultLabel: 'Default label',
     items: Array.from({ length: 3 }, (_, i) => ({
       isDisabled: i === 2,
-      children: `Split Button Item ${i + 1}`,
       id: crypto.randomUUID(),
+      label: `Split Button Item ${i + 1}`,
       description: `This is a description for Split Button Item ${i + 1}`,
       onClick: fn(),
     })),

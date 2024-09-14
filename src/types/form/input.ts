@@ -7,7 +7,7 @@ import {
 } from '../../data/constants';
 
 export type InputElement = HTMLInputElement | HTMLTextAreaElement;
-export type InputContent = Omit<ContentWithId, 'children'> & {
+export type InputContent = Omit<ContentWithId, 'content'> & {
   label: Children;
 };
 

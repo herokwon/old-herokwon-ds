@@ -5,8 +5,8 @@ import { LuCopy } from 'react-icons/lu';
 
 import { CODE_LANGUAGES } from '../../data/constants';
 
-import Box from '../Box';
 import IconButton from './IconButton';
+import Tooltip from './Tooltip';
 
 type CodeLanguages = (typeof CODE_LANGUAGES)[number];
 
@@ -42,7 +42,6 @@ export default function CodeBlock({
     showLineNumbers = true,
     ...restProps
   } = props;
-  const hasHeaderBar = label || isDuplicable;
   const lineNumbers =
     code.length === 0 ? 0 : (code.match(/\n/g)?.length ?? 0) + 1;
   const codeBlockRef = useRef<HTMLDivElement>(null);
@@ -64,33 +63,11 @@ export default function CodeBlock({
 
   return (
     code.length > 0 && (
-      <Box as={hasHeaderBar || isHidable ? 'div' : Fragment} className="w-full">
-        {hasHeaderBar && (
-          <div
-            className={`flex h-36 w-full items-end ${
-              !label && isDuplicable ? 'justify-end' : 'justify-between'
-            } px-1 py-1`}
-          >
-            {label.length > 0 && (
-              <p className="mb-1 p-0.5 text-sm font-semibold leading-none opacity-normal">
-                {label}
-              </p>
-            )}
-            {isDuplicable && (
-              <IconButton
-                icon={LuCopy}
-                variant="secondary"
-                spacing="compact"
-                shape="square"
-                onClick={async () => {
-                  await navigator.clipboard
-                    .writeText(code)
-                    .then(() => onCopy?.())
-                    .catch((error: unknown) => onCopyError?.(error));
-                }}
-              />
-            )}
-          </div>
+      <div className="w-full">
+        {label.length > 0 && (
+          <p className="mb-1 p-0.5 text-sm font-semibold leading-none opacity-normal">
+            {label}
+          </p>
         )}
         <div
           {...restProps}
@@ -140,6 +117,25 @@ export default function CodeBlock({
               {code}
             </code>
           </pre>
+          {isDuplicable && (
+            <Tooltip
+              position="bottom-right"
+              content="코드 복사"
+              className="!absolute right-0 top-0 z-10 m-2"
+            >
+              <IconButton
+                icon={LuCopy}
+                shape="square"
+                className="!bg-light-secondary !text-light hover:!bg-light-tertiary"
+                onClick={async () => {
+                  await navigator.clipboard
+                    .writeText(code)
+                    .then(() => onCopy?.())
+                    .catch((error: unknown) => onCopyError?.(error));
+                }}
+              />
+            </Tooltip>
+          )}
           {isHidable && (
             <IconButton
               icon={FaChevronDown}
@@ -154,7 +150,7 @@ export default function CodeBlock({
             />
           )}
         </div>
-      </Box>
+      </div>
     )
   );
 }

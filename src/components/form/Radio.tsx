@@ -14,7 +14,7 @@ import RadioIcon from '../ui/RadioIcon';
 
 interface RadioProps
   extends Pick<ElementStatus, 'isDisabled'>,
-    Omit<ContentWithId, 'children'>,
+    Omit<ContentWithId, 'content'>,
     Required<Pick<InputProps, 'label'>>,
     Omit<
       InputProps,
@@ -33,15 +33,13 @@ interface RadioProps
 }
 
 const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
-  { id, size = 'md', label, description, ...props },
+  { id, size = 'md', label, description, onChange, ...props },
   ref,
 ) {
   const { isDisabled = false, isChecked = false, ...restProps } = props;
   const { hasError, onChangeInput } = useInput({
     isDisabled,
-    onChange: e => {
-      restProps.onChange?.(e.currentTarget.checked);
-    },
+    onChange: e => onChange?.(e.currentTarget.checked),
   });
 
   return (

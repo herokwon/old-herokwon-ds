@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import type { SelectingInput } from '../../types/form';
 import type { FloatingItem } from '../../types/ui';
@@ -16,8 +16,8 @@ export default meta;
 type Story = StoryObj<typeof ListItem>;
 
 const dummyItems: FloatingItem[] = Array.from({ length: 3 }, (_, i) => ({
-  children: `List Item ${i + 1}`,
   id: crypto.randomUUID(),
+  content: `List Item ${i + 1}`,
 }));
 
 const ListItemRender = ({
@@ -29,48 +29,52 @@ const ListItemRender = ({
 
   return (
     <ul className="w-full space-y-2">
-      {dummyItems.map(({ children, id }) =>
+      {dummyItems.map(({ id, content }) =>
         selectingInput === 'radio' ? (
           <ListItem.Radio
             key={id}
-            isSelected={selectedIds.includes(id)}
             id={id}
-            onChange={() => setSelectedIds([id])}
+            isSelected={selectedIds.includes(id)}
+            onChange={useCallback(() => setSelectedIds([id]), [id])}
           >
-            {children}
+            {content}
           </ListItem.Radio>
         ) : selectingInput === 'checkbox' ? (
           <ListItem.Checkbox
             key={id}
-            isSelected={selectedIds.includes(id)}
             id={id}
-            onChange={() =>
-              setSelectedIds(prev =>
-                prev.includes(id)
-                  ? prev.filter(value => value !== id)
-                  : [...prev, id],
-              )
-            }
+            isSelected={selectedIds.includes(id)}
+            onChange={useCallback(
+              () =>
+                setSelectedIds(prev =>
+                  prev.includes(id)
+                    ? prev.filter(value => value !== id)
+                    : [...prev, id],
+                ),
+              [id],
+            )}
           >
-            {children}
+            {content}
           </ListItem.Checkbox>
         ) : (
           <ListItem.Text
             key={id}
-            isSelected={selectedIds.includes(id)}
             id={id}
-            onClick={() =>
-              setSelectedIds(
-                selectingInput === 'text'
-                  ? [id]
-                  : prev =>
-                      prev.includes(id)
-                        ? prev.filter(value => value !== id)
-                        : [...prev, id],
-              )
-            }
+            isSelected={selectedIds.includes(id)}
+            onClick={useCallback(
+              () =>
+                setSelectedIds(
+                  selectingInput === 'text'
+                    ? [id]
+                    : prev =>
+                        prev.includes(id)
+                          ? prev.filter(value => value !== id)
+                          : [...prev, id],
+                ),
+              [id],
+            )}
           >
-            {children}
+            {content}
           </ListItem.Text>
         ),
       )}

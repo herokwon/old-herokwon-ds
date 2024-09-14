@@ -65,7 +65,7 @@ export type PropsWithChildren<Props = {}> = Omit<Props, 'children'> & {
   children: Children;
 };
 export interface BaseContent {
-  children: Children;
+  content: Children;
   description?: string;
 }
 export interface ContentWithId extends BaseContent {

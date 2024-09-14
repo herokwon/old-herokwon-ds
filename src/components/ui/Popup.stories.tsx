@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useEffect, useState } from 'react';
-import { FaArrowRight } from 'react-icons/fa6';
+import { useCallback, useEffect, useState } from 'react';
+
+import type { ContentWithId } from '../../types';
 
 import EmptyData from './EmptyData';
 import ListItem from './ListItem';
@@ -21,91 +22,151 @@ export default meta;
 
 type Story = StoryObj<typeof Popup>;
 
-const PopupRender = ({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof Popup>) => {
-  const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
+const dummyItems: ContentWithId[] = Array.from({ length: 3 }, (_, i) => ({
+  id: crypto.randomUUID(),
+  content: `Popup Item ${i + 1}`,
+}));
 
-  useEffect(() => {
-    setIsOpen(props.isOpen);
-  }, [props.isOpen]);
-
-  return (
-    <Popup
-      {...props}
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      className="only:*:last:*:overflow-visible"
-      trigger={
-        <TextButton
-          label="Click on Button"
-          onClick={() => setIsOpen(prev => !prev)}
-        />
-      }
-    >
-      {children}
-    </Popup>
-  );
-};
+const dummyNestedItems: ContentWithId[] = Array.from({ length: 3 }, (_, j) => ({
+  id: crypto.randomUUID(),
+  content: `Popup Nested Item ${j + 1}`,
+}));
 
 export const Default: Story = {
-  render: ({ ...props }) => (
-    <PopupRender {...props}>
-      {Array.from({ length: 3 }, (_, i) => (
-        <ListItem.Text key={i} id={crypto.randomUUID()}>
-          {`Popup Item ${i + 1}`}
-        </ListItem.Text>
-      ))}
-    </PopupRender>
-  ),
+  render: ({ ...props }) => {
+    const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
+    const [selectedId, setSelectedId] = useState<string>('');
+
+    useEffect(() => {
+      setIsOpen(props.isOpen);
+    }, [props.isOpen]);
+
+    return (
+      <Popup
+        {...props}
+        isOpen={isOpen}
+        onClose={useCallback(() => setIsOpen(false), [])}
+        trigger={
+          <TextButton
+            label="Click on Button"
+            onClick={useCallback(() => setIsOpen(prev => !prev), [])}
+          />
+        }
+      >
+        <ListItem.UnorderedGroup>
+          {dummyItems.map(({ id, content }) => (
+            <ListItem.Text
+              key={id}
+              id={id}
+              isSelected={id === selectedId}
+              onClick={useCallback(() => setSelectedId(id), [id])}
+            >
+              {content}
+            </ListItem.Text>
+          ))}
+        </ListItem.UnorderedGroup>
+      </Popup>
+    );
+  },
 };
 
 export const Empty: Story = {
-  render: ({ ...props }) => (
-    <PopupRender {...props}>
-      <EmptyData className="m-10" />
-    </PopupRender>
-  ),
+  render: ({ ...props }) => {
+    const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
+
+    useEffect(() => {
+      setIsOpen(props.isOpen);
+    }, [props.isOpen]);
+
+    return (
+      <Popup
+        {...props}
+        isOpen={isOpen}
+        onClose={useCallback(() => setIsOpen(false), [])}
+        trigger={
+          <TextButton
+            label="Click on Button"
+            onClick={useCallback(() => setIsOpen(prev => !prev), [])}
+          />
+        }
+      >
+        <EmptyData className="m-12" emptyMessage="No data" />
+      </Popup>
+    );
+  },
 };
 
 export const Nested: StoryObj<typeof Popup> = {
   render: ({ ...props }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(props.isOpen);
+    const [isNestedOpen, setIsNestedOpen] = useState<boolean>(false);
+    const [selectedId, setSelectedId] = useState<string>('');
+
+    useEffect(() => {
+      setIsOpen(props.isOpen);
+    }, [props.isOpen]);
 
     return (
-      <PopupRender {...props}>
-        {Array.from({ length: 3 }, (_, i) =>
-          i === 2 ? (
-            <Popup
-              key={i}
-              isOpen={isOpen}
-              position="right-top"
-              onClose={() => setIsOpen(false)}
-              trigger={
-                <ListItem.Text
-                  key={i}
-                  id={crypto.randomUUID()}
-                  onClick={() => setIsOpen(prev => !prev)}
-                  elemAfter={<FaArrowRight className="my-auto" />}
-                >
-                  {`Popup Item ${i + 1}`}
-                </ListItem.Text>
-              }
-            >
-              {Array.from({ length: 3 }, (_, j) => (
-                <ListItem.Text key={j} id={crypto.randomUUID()}>
-                  {`Popup Nested Item ${j + 1}`}
-                </ListItem.Text>
-              ))}
-            </Popup>
-          ) : (
-            <ListItem.Text key={i} id={crypto.randomUUID()}>
-              {`Popup Item ${i + 1}`}
-            </ListItem.Text>
-          ),
-        )}
-      </PopupRender>
+      <Popup
+        {...props}
+        isOpen={isOpen}
+        onClose={useCallback(() => setIsOpen(false), [])}
+        className="only:*:last:*:overflow-y-visible"
+        trigger={
+          <TextButton
+            label="Click on Button"
+            onClick={useCallback(() => setIsOpen(prev => !prev), [])}
+          />
+        }
+      >
+        <ListItem.UnorderedGroup>
+          {dummyItems.map(({ id, content }, index) =>
+            index === 2 ? (
+              <Popup
+                key={id}
+                isOpen={isNestedOpen}
+                position="right-top"
+                onClose={useCallback(() => setIsNestedOpen(false), [])}
+                trigger={
+                  <ListItem.Text
+                    key={id}
+                    id={id}
+                    isSelected={id === selectedId}
+                    onClick={useCallback(
+                      () => setIsNestedOpen(prev => !prev),
+                      [],
+                    )}
+                  >
+                    {content}
+                  </ListItem.Text>
+                }
+              >
+                <ListItem.UnorderedGroup>
+                  {dummyNestedItems.map(({ id, content }) => (
+                    <ListItem.Text
+                      key={id}
+                      id={id}
+                      isSelected={id === selectedId}
+                      onClick={useCallback(() => setSelectedId(id), [id])}
+                    >
+                      {content}
+                    </ListItem.Text>
+                  ))}
+                </ListItem.UnorderedGroup>
+              </Popup>
+            ) : (
+              <ListItem.Text
+                key={id}
+                id={id}
+                isSelected={id === selectedId}
+                onClick={useCallback(() => setSelectedId(id), [id])}
+              >
+                {content}
+              </ListItem.Text>
+            ),
+          )}
+        </ListItem.UnorderedGroup>
+      </Popup>
     );
   },
 };

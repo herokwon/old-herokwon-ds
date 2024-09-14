@@ -8,7 +8,6 @@ type EmptyImageProps = Pick<
   | 'height'
   | 'fill'
   | 'sizes'
-  | 'loading'
   | 'unoptimized'
   | 'onLoad'
   | 'className'
@@ -20,7 +19,6 @@ export default function EmptyImage({
   height,
   fill = false,
   sizes,
-  loading,
   unoptimized = false,
   className,
   style,
@@ -32,9 +30,8 @@ export default function EmptyImage({
       priority
       fill={fill}
       sizes={fill ? sizes : undefined}
-      width={fill ? undefined : width ?? 100}
-      height={fill ? undefined : height ?? 100}
-      loading={loading}
+      width={fill ? undefined : (width ?? 100)}
+      height={fill ? undefined : (height ?? 100)}
       unoptimized={unoptimized}
       onLoad={onLoad}
       className={`object-cover object-center opacity-bold dark:opacity-normal ${className ?? ''}`}
