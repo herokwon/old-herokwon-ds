@@ -28,7 +28,7 @@ const ListItemRender = ({
   const [selectedIds, setSelectedIds] = useState<string[]>([dummyItems[0].id]);
 
   return (
-    <ul className="w-full space-y-2">
+    <ListItem variant="unordered" className="space-y-2">
       {dummyItems.map(({ id, content }) =>
         selectingInput === 'radio' ? (
           <ListItem.Radio
@@ -78,7 +78,7 @@ const ListItemRender = ({
           </ListItem.Text>
         ),
       )}
-    </ul>
+    </ListItem>
   );
 };
 

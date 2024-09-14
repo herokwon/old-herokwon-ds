@@ -49,24 +49,26 @@ const DropdownItemGroup = ({
   ...props
 }: DropdownItemGroupProps) => {
   return !heading ? (
-    <ListItem.UnorderedGroup
+    <ListItem
       {...props}
+      variant="unordered"
       className={`space-y-1 ${props.className ?? ''}`}
     >
       {children}
-    </ListItem.UnorderedGroup>
+    </ListItem>
   ) : (
     <div className="w-full space-y-2 py-2">
       <strong className="block w-full whitespace-pre px-[calc(0.75rem+2px)] text-sm font-[900] opacity-bold">
         {heading}
       </strong>
       <hr className="w-full border-light-tertiary dark:border-dark-tertiary" />
-      <ListItem.UnorderedGroup
+      <ListItem
         {...props}
-        className={`w-full space-y-1 ${props.className ?? ''}`}
+        variant="unordered"
+        className={`space-y-1 ${props.className ?? ''}`}
       >
         {children}
-      </ListItem.UnorderedGroup>
+      </ListItem>
     </div>
   );
 };

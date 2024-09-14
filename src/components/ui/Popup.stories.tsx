@@ -53,7 +53,7 @@ export const Default: Story = {
           />
         }
       >
-        <ListItem.UnorderedGroup>
+        <ListItem variant="unordered">
           {dummyItems.map(({ id, content }) => (
             <ListItem.Text
               key={id}
@@ -64,7 +64,7 @@ export const Default: Story = {
               {content}
             </ListItem.Text>
           ))}
-        </ListItem.UnorderedGroup>
+        </ListItem>
       </Popup>
     );
   },
@@ -119,7 +119,7 @@ export const Nested: StoryObj<typeof Popup> = {
           />
         }
       >
-        <ListItem.UnorderedGroup>
+        <ListItem variant="unordered">
           {dummyItems.map(({ id, content }, index) =>
             index === 2 ? (
               <Popup
@@ -141,7 +141,7 @@ export const Nested: StoryObj<typeof Popup> = {
                   </ListItem.Text>
                 }
               >
-                <ListItem.UnorderedGroup>
+                <ListItem variant="unordered">
                   {dummyNestedItems.map(({ id, content }) => (
                     <ListItem.Text
                       key={id}
@@ -152,7 +152,7 @@ export const Nested: StoryObj<typeof Popup> = {
                       {content}
                     </ListItem.Text>
                   ))}
-                </ListItem.UnorderedGroup>
+                </ListItem>
               </Popup>
             ) : (
               <ListItem.Text
@@ -165,7 +165,7 @@ export const Nested: StoryObj<typeof Popup> = {
               </ListItem.Text>
             ),
           )}
-        </ListItem.UnorderedGroup>
+        </ListItem>
       </Popup>
     );
   },
