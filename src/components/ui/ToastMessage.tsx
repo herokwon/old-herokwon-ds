@@ -3,9 +3,8 @@ import { FaXmark } from 'react-icons/fa6';
 
 import type { ToastMessage, ToastMessageConfig } from '../../types/ui';
 
-import { FEEDBACK_ICONS, ICON_SIZE } from '../../data/constants';
-
 import toast from '../Toast';
+import FeedbackIcon from './FeedbackIcon';
 import IconButton from './IconButton';
 
 interface ToastMessageProps extends Pick<ToastMessageConfig, 'position'> {
@@ -24,7 +23,6 @@ const ToastMessageContainer = ({
   position,
   closeMessage,
 }: ToastMessageContainerProps) => {
-  const FeedbackIcon = FEEDBACK_ICONS[variant];
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
   const [restTime, setRestTime] = useState<number>(duration);
   const [isPaused, setIsPaused] = useState<boolean>(false);
@@ -64,7 +62,7 @@ const ToastMessageContainer = ({
   return (
     <div
       key={id}
-      className={`section-message--${variant} relative flex w-full max-w-[calc(100vw-(1rem*2))] gap-x-2 overflow-hidden rounded-ms p-2 pr-1`}
+      className={`section-message--${variant} relative flex items-start gap-x-2.5 overflow-hidden rounded-ms p-2.5 pl-[0.9375rem] shadow-sm`}
       onMouseEnter={() => {
         setIsPaused(true);
         clearCountdown();
@@ -80,25 +78,32 @@ const ToastMessageContainer = ({
         closeMessage({ id, position });
       }}
       style={{
+        width: 'clamp(256px, 100%, 512px)',
         animation:
           restTime > 0
-            ? undefined
+            ? `${
+                position.endsWith('left')
+                  ? 'fade-in-left'
+                  : position.endsWith('right')
+                    ? 'fade-in-right'
+                    : position.startsWith('top')
+                      ? 'fade-in-top'
+                      : 'fade-in-bottom'
+              } 200ms ease-in-out forwards`
             : `${
                 position.endsWith('left')
-                  ? 'show-up-left'
+                  ? 'fade-out-left'
                   : position.endsWith('right')
-                    ? 'show-up-right'
+                    ? 'fade-out-right'
                     : position.startsWith('top')
-                      ? 'show-up-top'
-                      : 'show-up-bottom'
-              } 200ms ease-in-out reverse forwards`,
+                      ? 'fade-out-top'
+                      : 'fade-out-bottom'
+              } 200ms ease-in-out forwards`,
       }}
     >
-      <span className="my-0.5 h-full w-max">
-        <FeedbackIcon size={ICON_SIZE.md} />
-      </span>
+      <FeedbackIcon variant={variant} size="md" className="my-0.5" />
       <p
-        className={`whitespace-pre text-sm font-semibold ${
+        className={`flex-grow whitespace-pre-wrap text-sm font-semibold ${
           variant === 'success'
             ? 'text-feedback-light-green dark:text-feedback-dark-green'
             : variant === 'danger'
@@ -113,12 +118,23 @@ const ToastMessageContainer = ({
       <IconButton
         icon={FaXmark}
         variant="secondary"
-        size="xs"
-        spacing="compact"
-        className="ml-2"
-        onClick={() => {
-          clearCountdown();
-          closeMessage({ id, position });
+        size="sm"
+        spacing="none"
+        className="my-[0.1875rem] ml-5 hover:!bg-transparent"
+        onClick={e => {
+          e.currentTarget.parentElement!.style.animation = `${
+            position.endsWith('left')
+              ? 'fade-out-left'
+              : position.endsWith('right')
+                ? 'fade-out-right'
+                : position.startsWith('top')
+                  ? 'fade-out-top'
+                  : 'fade-out-bottom'
+          } 200ms ease-in-out forwards`;
+          e.currentTarget.parentElement!.onanimationend = () => {
+            clearCountdown();
+            closeMessage({ id, position });
+          };
         }}
       />
       <div
