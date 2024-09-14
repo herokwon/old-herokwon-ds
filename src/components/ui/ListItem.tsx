@@ -1,4 +1,8 @@
-import type { ElementBaseSize, ElementStatus } from '../../types';
+import type {
+  ElementBaseSize,
+  ElementStatus,
+  PropsWithChildren,
+} from '../../types';
 
 import type { FloatingItem } from '../../types/ui';
 
@@ -6,22 +10,25 @@ import Box from '../Box';
 import Checkbox from '../form/Checkbox';
 import Radio from '../form/Radio';
 
-type ListItemProps = Omit<
-  FloatingItem<Omit<ElementStatus, 'isLoading'>>,
-  'id'
-> &
-  Omit<React.ComponentPropsWithoutRef<'li'>, 'children'>;
+type ListItemProps = PropsWithChildren<
+  Omit<
+    Omit<ElementStatus, 'isLoading'> &
+      Omit<FloatingItem, 'id' | 'content'> &
+      React.ComponentPropsWithoutRef<'li'>,
+    'children'
+  >
+>;
 
-type ListItemTextProps = ListItemProps & {
+interface ListItemTextProps extends ListItemProps {
   id: string;
   size?: ElementBaseSize;
-};
+}
 
-type ListItemInputProps = Omit<ListItemTextProps, 'onChange'> & {
+interface ListItemInputProps extends Omit<ListItemTextProps, 'onChange'> {
   onChange?: (checked: boolean) => void;
-};
+}
 
-const ListItem = ({
+const ListItemWrapper = ({
   children,
   id,
   elemBefore,
@@ -52,6 +59,28 @@ const ListItem = ({
   );
 };
 
+const ListItemOrderedGroup = ({
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<'ol'>) => {
+  return (
+    <ol {...props} className={`w-full ${props.className ?? ''}`}>
+      {children}
+    </ol>
+  );
+};
+
+const ListItemUnorderedGroup = ({
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<'ul'>) => {
+  return (
+    <ul {...props} className={`w-full ${props.className ?? ''}`}>
+      {children}
+    </ul>
+  );
+};
+
 const ListItemText = ({
   children,
   id,
@@ -62,7 +91,7 @@ const ListItemText = ({
   const { isDisabled = false, ...restProps } = props;
 
   return (
-    <ListItem {...restProps} isDisabled={isDisabled} id={id}>
+    <ListItemWrapper {...restProps} isDisabled={isDisabled} id={id}>
       {!description || description.length === 0 ? (
         <Box
           as={typeof children === 'string' ? 'p' : 'div'}
@@ -99,7 +128,7 @@ const ListItemText = ({
           </p>
         </div>
       )}
-    </ListItem>
+    </ListItemWrapper>
   );
 };
 
@@ -114,7 +143,7 @@ const ListItemRadio = ({
   const { isDisabled = false, isSelected = false, ...restProps } = props;
 
   return (
-    <ListItem
+    <ListItemWrapper
       {...restProps}
       isDisabled={isDisabled}
       isSelected={isSelected}
@@ -133,7 +162,7 @@ const ListItemRadio = ({
         description={description}
         onChange={onChange}
       />
-    </ListItem>
+    </ListItemWrapper>
   );
 };
 
@@ -148,7 +177,7 @@ const ListItemCheckbox = ({
   const { isDisabled = false, isSelected = false, ...restProps } = props;
 
   return (
-    <ListItem
+    <ListItemWrapper
       {...restProps}
       isDisabled={isDisabled}
       isSelected={isSelected}
@@ -167,12 +196,16 @@ const ListItemCheckbox = ({
         description={description}
         onChange={onChange}
       />
-    </ListItem>
+    </ListItemWrapper>
   );
 };
 
-ListItem.Text = ListItemText;
-ListItem.Radio = ListItemRadio;
-ListItem.Checkbox = ListItemCheckbox;
+const ListItem = {
+  OrderedGroup: ListItemOrderedGroup,
+  UnorderedGroup: ListItemUnorderedGroup,
+  Text: ListItemText,
+  Radio: ListItemRadio,
+  Checkbox: ListItemCheckbox,
+};
 
 export default ListItem;
