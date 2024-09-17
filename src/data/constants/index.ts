@@ -30,6 +30,7 @@ export const ELEMENT_EXTENDED_VARIANTS = [
   'danger',
 ] as const;
 export const ELEMENT_DIRECTIONS = ['horizontal', 'vertical'] as const;
+export const ELEMENT_BORDER_SHAPES = ['circle', 'square'] as const;
 
 export const FEEDBACK_VARIANTS = [
   'default',
