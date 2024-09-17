@@ -45,11 +45,7 @@ const ToastMessageContainer = ({
 
   useEffect(() => {
     setCountdown();
-  }, [duration]);
-
-  useEffect(() => {
-    restTime === 0 && clearCountdown();
-  }, [restTime]);
+  }, [initialDuration]);
 
   useEffect(() => {
     toast.updateDuration({
@@ -62,7 +58,7 @@ const ToastMessageContainer = ({
   return (
     <div
       key={id}
-      className={`section-message--${variant} relative flex items-start gap-x-2.5 overflow-hidden rounded-ms p-2.5 pl-[0.9375rem] shadow-sm`}
+      className={`section-message--${variant} relative flex w-full max-w-[512px] items-start gap-x-2.5 overflow-hidden rounded-ms p-2.5 pl-[0.9375rem] shadow-sm`}
       onMouseEnter={() => {
         setIsPaused(true);
         clearCountdown();
@@ -74,31 +70,32 @@ const ToastMessageContainer = ({
       onAnimationEnd={() => {
         if (restTime > 0) return;
 
-        clearCountdown();
-        closeMessage({ id, position });
+        const delay = setTimeout(() => {
+          clearCountdown();
+          closeMessage({ id, position });
+          clearTimeout(delay);
+        });
       }}
       style={{
-        width: 'clamp(256px, 100%, 512px)',
-        animation:
+        animation: `${
           restTime > 0
-            ? `${
-                position.endsWith('left')
-                  ? 'fade-in-left'
-                  : position.endsWith('right')
-                    ? 'fade-in-right'
-                    : position.startsWith('top')
-                      ? 'fade-in-top'
-                      : 'fade-in-bottom'
-              } 200ms ease-in-out forwards`
-            : `${
-                position.endsWith('left')
-                  ? 'fade-out-left'
-                  : position.endsWith('right')
-                    ? 'fade-out-right'
-                    : position.startsWith('top')
-                      ? 'fade-out-top'
-                      : 'fade-out-bottom'
-              } 200ms ease-in-out forwards`,
+            ? initialDuration === 4000
+              ? position.endsWith('left')
+                ? 'fade-in-left'
+                : position.endsWith('right')
+                  ? 'fade-in-right'
+                  : position.startsWith('top')
+                    ? 'fade-in-top'
+                    : 'fade-in-bottom'
+              : ''
+            : position.endsWith('left')
+              ? 'fade-out-left'
+              : position.endsWith('right')
+                ? 'fade-out-right'
+                : position.startsWith('top')
+                  ? 'fade-out-top'
+                  : 'fade-out-bottom'
+        } 200ms ease-in-out forwards`,
       }}
     >
       <FeedbackIcon variant={variant} size="md" className="my-0.5" />
@@ -120,9 +117,16 @@ const ToastMessageContainer = ({
         variant="secondary"
         size="sm"
         spacing="none"
-        className="my-[0.1875rem] ml-5 hover:!bg-transparent"
+        className="my-1 ml-5 hover:!bg-transparent"
         onClick={e => {
-          e.currentTarget.parentElement!.style.animation = `${
+          const toastMessageContainer = e.currentTarget.parentElement;
+          if (!toastMessageContainer) return;
+
+          toastMessageContainer.onanimationend = () => {
+            clearCountdown();
+            closeMessage({ id, position });
+          };
+          toastMessageContainer.style.animation = `${
             position.endsWith('left')
               ? 'fade-out-left'
               : position.endsWith('right')
@@ -131,10 +135,6 @@ const ToastMessageContainer = ({
                   ? 'fade-out-top'
                   : 'fade-out-bottom'
           } 200ms ease-in-out forwards`;
-          e.currentTarget.parentElement!.onanimationend = () => {
-            clearCountdown();
-            closeMessage({ id, position });
-          };
         }}
       />
       <div
