@@ -24,6 +24,7 @@ interface CalendarProps extends React.ComponentPropsWithoutRef<'div'> {
   holidays?: DateItem[];
   defaultViewedDate?: ViewedDate;
   defaultPickedDateItem?: DateItem;
+  onChangeViewedDate?: (viewedDate: ViewedDate) => void;
   onChangePickedDateItem?: (pickedDateItem: DateItem) => void;
 }
 
@@ -54,6 +55,7 @@ export default function Calendar({
   holidays = [],
   defaultViewedDate,
   defaultPickedDateItem,
+  onChangeViewedDate,
   onChangePickedDateItem,
   ...props
 }: CalendarProps) {
@@ -105,6 +107,10 @@ export default function Calendar({
   useEffect(() => {
     defaultPickedDateItem && setPickedDateItem(defaultPickedDateItem);
   }, [defaultPickedDateItem]);
+
+  useEffect(() => {
+    onChangeViewedDate?.(viewedDate);
+  }, [viewedDate, onChangeViewedDate]);
 
   useEffect(() => {
     onChangePickedDateItem?.(pickedDateItem);

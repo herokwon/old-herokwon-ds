@@ -13,7 +13,10 @@ import DatetimeField from './DatetimeField';
 type DatePickerProps = Pick<ElementStatus, 'isDisabled'> &
   Pick<
     React.ComponentPropsWithoutRef<typeof Calendar>,
-    'defaultViewedDate' | 'defaultPickedDateItem' | 'onChangePickedDateItem'
+    | 'defaultViewedDate'
+    | 'defaultPickedDateItem'
+    | 'onChangeViewedDate'
+    | 'onChangePickedDateItem'
   > &
   Omit<
     React.ComponentPropsWithoutRef<typeof Dropdown>,
@@ -23,6 +26,7 @@ type DatePickerProps = Pick<ElementStatus, 'isDisabled'> &
 export default function DatePicker({
   defaultViewedDate,
   defaultPickedDateItem,
+  onChangeViewedDate,
   onChangePickedDateItem,
   ...props
 }: DatePickerProps) {
@@ -67,6 +71,7 @@ export default function DatePicker({
         variant="monthly"
         defaultViewedDate={defaultViewedDate}
         defaultPickedDateItem={pickedDateItem}
+        onChangeViewedDate={onChangeViewedDate}
         onChangePickedDateItem={useCallback((pickedDateItem: DateItem) => {
           setPickedDateItem(pickedDateItem);
         }, [])}
