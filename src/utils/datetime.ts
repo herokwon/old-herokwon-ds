@@ -1,4 +1,4 @@
-import type { DateItem, Months } from '../types';
+import type { DateItem, ElementStatus, Months } from '../types';
 
 import { MONTHS } from '../data/constants';
 
@@ -11,13 +11,13 @@ export const getDateHandler = {
 };
 
 export const getDayHandler = {
-  firstDateInMonth: (year: number, month: Months) =>
+  firstDateInMonth: (year: number, month: Months): number =>
     new Date(`${year}-${month.toString().padStart(2, '0')}-01`).getDay(),
   lastDateInMonth: (
     year: number,
     month: Months,
     totalDatesOfMonth: ReturnType<typeof getDateHandler.month>,
-  ) =>
+  ): number =>
     new Date(
       `${year}-${month.toString().padStart(2, '0')}-${totalDatesOfMonth}`,
     ).getDay(),
@@ -28,6 +28,75 @@ export const getDateItem = (date: Date): DateItem => ({
   month: MONTHS[date.getMonth()],
   date: date.getDate(),
 });
+
+export const getDateItemsOfWeek = ({
+  weeklyIndex,
+  viewedDate,
+  pickedDate,
+  holidays = [],
+  firstDayInMonth,
+  totalDatesInThisMonth,
+  totalDatesInLastMonth,
+}: {
+  weeklyIndex: number;
+  viewedDate: Omit<DateItem, 'date'>;
+  pickedDate: DateItem;
+  holidays?: DateItem[];
+  firstDayInMonth: number;
+  totalDatesInThisMonth: number;
+  totalDatesInLastMonth: number;
+}): (Omit<ElementStatus, 'isLoading'> & DateItem & { isHoliday: boolean })[] =>
+  Array.from({ length: 7 }, (_, index) => {
+    const dailyIndex: number = weeklyIndex * 7 + index - firstDayInMonth;
+    const item: DateItem = {
+      year:
+        dailyIndex < 0
+          ? viewedDate.month === 1
+            ? viewedDate.year - 1
+            : viewedDate.year
+          : dailyIndex >= totalDatesInThisMonth
+            ? viewedDate.month === 12
+              ? viewedDate.year + 1
+              : viewedDate.year
+            : viewedDate.year,
+      month:
+        dailyIndex < 0
+          ? viewedDate.month
+          : dailyIndex >= totalDatesInThisMonth
+            ? viewedDate.month === 12
+              ? MONTHS[viewedDate.month]
+              : viewedDate.month
+            : viewedDate.month,
+      date:
+        dailyIndex < 0
+          ? totalDatesInLastMonth + dailyIndex + 1
+          : dailyIndex >= totalDatesInThisMonth
+            ? dailyIndex + 1 - totalDatesInThisMonth
+            : dailyIndex + 1,
+    };
+
+    const isDisabled: boolean =
+      dailyIndex < 0 || dailyIndex >= totalDatesInThisMonth;
+    const isSelected: boolean =
+      !isDisabled &&
+      item.year === pickedDate.year &&
+      item.month === pickedDate.month &&
+      item.date === pickedDate.date;
+    const isHoliday: boolean =
+      holidays.findIndex(
+        holiday =>
+          holiday.year === item.year &&
+          holiday.month === item.month &&
+          holiday.date === item.date,
+      ) > -1;
+
+    return {
+      isDisabled,
+      isSelected,
+      isHoliday,
+      ...item,
+    };
+  });
 
 export const getTheNumberOfWeeksInMonth = (
   year: number,
