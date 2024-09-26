@@ -14,9 +14,9 @@ type DatePickerProps = Pick<ElementStatus, 'isDisabled'> &
   Pick<
     React.ComponentPropsWithoutRef<typeof Calendar>,
     | 'defaultViewedDate'
-    | 'defaultPickedDateItem'
+    | 'defaultPickedDate'
     | 'onChangeViewedDate'
-    | 'onChangePickedDateItem'
+    | 'onChangePickedDate'
   > &
   Omit<
     React.ComponentPropsWithoutRef<typeof Dropdown>,
@@ -25,16 +25,16 @@ type DatePickerProps = Pick<ElementStatus, 'isDisabled'> &
 
 export default function DatePicker({
   defaultViewedDate,
-  defaultPickedDateItem,
+  defaultPickedDate,
   onChangeViewedDate,
-  onChangePickedDateItem,
+  onChangePickedDate,
   ...props
 }: DatePickerProps) {
   const { isDisabled = false, isLoading = false, ...restProps } = props;
   const today = useMemo(() => new Date(), []);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [pickedDateItem, setPickedDateItem] = useState<DateItem>(
-    defaultPickedDateItem ?? {
+    defaultPickedDate ?? {
       year: today.getFullYear(),
       month: MONTHS[today.getMonth()],
       date: today.getDate(),
@@ -43,8 +43,7 @@ export default function DatePicker({
 
   useEffect(() => {
     setIsOpen(false);
-    onChangePickedDateItem?.(pickedDateItem);
-  }, [pickedDateItem, onChangePickedDateItem]);
+  }, [pickedDateItem]);
 
   return (
     <Dropdown
@@ -70,9 +69,9 @@ export default function DatePicker({
       <Calendar
         variant="monthly"
         defaultViewedDate={defaultViewedDate}
-        defaultPickedDateItem={pickedDateItem}
+        defaultPickedDate={pickedDateItem}
         onChangeViewedDate={onChangeViewedDate}
-        onChangePickedDateItem={useCallback((pickedDateItem: DateItem) => {
+        onChangePickedDate={useCallback((pickedDateItem: DateItem) => {
           setPickedDateItem(pickedDateItem);
         }, [])}
         className="p-4 dark:*:*:last:*:bg-dark-secondary dark:hover:[&[data-selected='false']]:*:*:last:*:!bg-dark-tertiary"
