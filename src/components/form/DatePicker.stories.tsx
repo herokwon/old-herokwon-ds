@@ -9,12 +9,12 @@ const meta = {
   component: DatePicker,
   args: {
     position: 'bottom-center',
-    defaultPickedDateItem: {
+    defaultPickedDate: {
       year: new Date().getFullYear(),
       month: 1,
       date: 1,
     },
-    onChangePickedDateItem: fn(),
+    onChangePickedDate: fn(),
   },
 } satisfies Meta<typeof DatePicker>;
 export default meta;
