@@ -8,7 +8,7 @@ const meta = {
   component: Calendar,
   args: {
     className: 'last:*:rounded-ms',
-    defaultPickedDateItem: {
+    defaultPickedDate: {
       year: new Date().getFullYear(),
       month: 1,
       date: 1,
