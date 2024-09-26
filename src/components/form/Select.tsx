@@ -29,7 +29,7 @@ interface SelectProps
         label: Children;
       }
     >,
-    'children' | 'elemBefore' | 'elemAfter'
+    'content' | 'elemBefore' | 'elemAfter'
   >[];
   onChangeSelectedItems?: (ids: string[]) => void;
 }

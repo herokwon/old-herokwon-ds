@@ -79,6 +79,15 @@ export const MONTHS: Months[] = new Proxy(
     },
   },
 );
+export const DAYS_OF_THE_WEEK = [
+  'sun',
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+] as const;
 
 export const ICON_SIZE: { [size in ElementExtendedSize]: string } = {
   xs: '0.75rem',

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import type {
@@ -8,13 +8,15 @@ import type {
   ViewedDate,
 } from '../../types';
 
+import { useCalendar } from '../../hooks';
+
 import {
   getDateHandler,
   getDayHandler,
   getTheNumberOfWeeksInMonth,
 } from '../../utils';
 
-import { MONTHS } from '../../data/constants';
+import { DAYS_OF_THE_WEEK, MONTHS } from '../../data/constants';
 
 import IconButton from './IconButton';
 import TextButton from './TextButton';
@@ -23,92 +25,40 @@ interface CalendarProps extends React.ComponentPropsWithoutRef<'div'> {
   variant: CalendarVariant;
   holidays?: DateItem[];
   defaultViewedDate?: ViewedDate;
-  defaultPickedDateItem?: DateItem;
-  onChangePickedDateItem?: (pickedDateItem: DateItem) => void;
+  defaultPickedDate?: DateItem;
+  onChangeViewedDate?: (viewedDate: ViewedDate) => void;
+  onChangePickedDate?: (pickedDate: DateItem) => void;
 }
 
 interface MonthlyCalendarProps
   extends Required<Pick<CalendarProps, 'holidays'>> {
   month: Months;
   viewedDate: ViewedDate;
-  pickedDateItem: DateItem;
-  setPickedDateItem: React.Dispatch<React.SetStateAction<DateItem>>;
+  pickedDate: DateItem;
+  setPickedDate: React.Dispatch<React.SetStateAction<DateItem>>;
 }
 
 interface YearlyCalendarProps extends Omit<MonthlyCalendarProps, 'month'> {
   setViewedDate: React.Dispatch<React.SetStateAction<ViewedDate>>;
 }
 
-const DAYS_OF_THE_WEEK: readonly string[] = [
-  'sun',
-  'mon',
-  'tue',
-  'wed',
-  'thu',
-  'fri',
-  'sat',
-];
-
 export default function Calendar({
   variant,
   holidays = [],
   defaultViewedDate,
-  defaultPickedDateItem,
-  onChangePickedDateItem,
+  defaultPickedDate,
+  onChangeViewedDate,
+  onChangePickedDate,
   ...props
 }: CalendarProps) {
-  const today = useMemo(() => new Date(), []);
-  const [viewedDate, setViewedDate] = useState<ViewedDate>({
-    year: defaultViewedDate?.year ?? today.getFullYear(),
-    month:
-      variant === 'yearly'
-        ? null
-        : (defaultViewedDate?.month ?? MONTHS[today.getMonth()]),
-  });
-  const [pickedDateItem, setPickedDateItem] = useState<DateItem>(
-    defaultPickedDateItem ?? {
-      year: today.getFullYear(),
-      month: MONTHS[today.getMonth()],
-      date: today.getDate(),
-    },
-  );
-
-  const clickHandler: { [key: string]: () => void } = {
-    prevButton: () =>
-      setViewedDate(prev =>
-        !prev.month
-          ? {
-              ...prev,
-              year: prev.year - 1,
-            }
-          : {
-              ...prev,
-              year: prev.month === 1 ? prev.year - 1 : prev.year,
-              month: MONTHS[MONTHS.indexOf(prev.month) - 1],
-            },
-      ),
-    nextButton: () =>
-      setViewedDate(prev =>
-        !prev.month
-          ? {
-              ...prev,
-              year: prev.year + 1,
-            }
-          : {
-              ...prev,
-              year: prev.month === 12 ? prev.year + 1 : prev.year,
-              month: MONTHS[MONTHS.indexOf(prev.month) + 1],
-            },
-      ),
-  };
-
-  useEffect(() => {
-    defaultPickedDateItem && setPickedDateItem(defaultPickedDateItem);
-  }, [defaultPickedDateItem]);
-
-  useEffect(() => {
-    onChangePickedDateItem?.(pickedDateItem);
-  }, [pickedDateItem, onChangePickedDateItem]);
+  const { viewedDate, pickedDate, clickHandler, setViewedDate, setPickedDate } =
+    useCalendar({
+      variant,
+      defaultViewedDate,
+      defaultPickedDate,
+      onChangeViewedDate,
+      onChangePickedDate,
+    });
 
   return (
     <div {...props} className={`w-full ${props.className ?? ''}`}>
@@ -166,17 +116,17 @@ export default function Calendar({
         <YearlyCalendar
           holidays={holidays}
           viewedDate={viewedDate}
-          pickedDateItem={pickedDateItem}
+          pickedDate={pickedDate}
           setViewedDate={setViewedDate}
-          setPickedDateItem={setPickedDateItem}
+          setPickedDate={setPickedDate}
         />
       ) : (
         <MonthlyCalendar
           holidays={holidays}
           month={viewedDate.month}
           viewedDate={viewedDate}
-          pickedDateItem={pickedDateItem}
-          setPickedDateItem={setPickedDateItem}
+          pickedDate={pickedDate}
+          setPickedDate={setPickedDate}
         />
       )}
     </div>
@@ -187,8 +137,8 @@ const MonthlyCalendar = ({
   month,
   holidays,
   viewedDate,
-  pickedDateItem,
-  setPickedDateItem,
+  pickedDate,
+  setPickedDate,
 }: MonthlyCalendarProps) => {
   const theNumberOfWeeksInMonth = useMemo(
     () =>
@@ -258,9 +208,9 @@ const MonthlyCalendar = ({
               const isSelected =
                 0 <= dailyIndex &&
                 dailyIndex < datesInThisMonth &&
-                viewedDate.year === pickedDateItem.year &&
-                (viewedDate.month ?? month) === pickedDateItem.month &&
-                date === pickedDateItem.date;
+                viewedDate.year === pickedDate.year &&
+                (viewedDate.month ?? month) === pickedDate.month &&
+                date === pickedDate.date;
               const isHoliday =
                 dailyIndex < 0
                   ? !!holidays.find(
@@ -319,7 +269,7 @@ const MonthlyCalendar = ({
                   } not-hover:transition-none`}
                   onClick={e => {
                     e.stopPropagation();
-                    setPickedDateItem({
+                    setPickedDate({
                       year: viewedDate.year,
                       month: viewedDate.month ?? month,
                       date: date,
@@ -339,8 +289,8 @@ const YearlyCalendar = ({
   holidays,
   viewedDate,
   setViewedDate,
-  pickedDateItem,
-  setPickedDateItem,
+  pickedDate,
+  setPickedDate,
 }: YearlyCalendarProps) => {
   return (
     <div className="flex w-fit flex-wrap justify-around gap-4">
@@ -362,8 +312,8 @@ const YearlyCalendar = ({
             month={month}
             holidays={holidays}
             viewedDate={viewedDate}
-            pickedDateItem={pickedDateItem}
-            setPickedDateItem={setPickedDateItem}
+            pickedDate={pickedDate}
+            setPickedDate={setPickedDate}
           />
         </div>
       ))}
